@@ -98,6 +98,27 @@ type UpdateReportPayload {
   report: Report!
 }
 
+input MentorInput {
+  name: String
+  email: String
+  signature: String
+}
+
+input PaperInput {
+  client: String
+  mentor: MentorInput
+  periodStart: String
+  periodEnd: String
+  subject: String
+  status: PaperStatus
+}
+
+input AnswerPaperInput {
+  id: ID!
+  questionId: ID!
+  answer: String!
+}
+
 type Mutation {
   """
   [DEV] Login as a user.
@@ -215,6 +236,21 @@ type Mutation {
   Create OAuth Code
   """
   createOAuthCode: String!
+
+  """
+  Create Paper
+  """
+  postPaper(input: PaperInput!, id: ID): Paper!
+
+  """
+  Delete Paper
+  """
+  deletePaper(id: ID!): Boolean!
+
+  """
+  Update Paper
+  """
+  answerPaper(input: AnswerPaperInput!): PaperFormData!
 }
 
 type LaraConfig {
@@ -291,6 +327,11 @@ type Query {
   Get the alexa account linking url
   """
   alexaLinkingUrl: String
+
+  """
+  Get the PAPER
+  """
+  getPaper(id: ID!, token: String): Paper
 }
 
 type PrintPayload {
@@ -479,4 +520,41 @@ enum UserTypeEnum {
   User is an Admin
   """
   Admin
+}
+
+enum PaperStatus {
+  InProgress
+  TraineeDone
+  MentorDone
+  InReview
+  Archived
+}
+
+type PaperFormData {
+  id: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type Mentor {
+  name: String!
+  email: String!
+  signature: String!
+}
+
+type Paper {
+  id: ID!
+  trainee: Trainee!
+  status: PaperStatus!
+  traineeForm: [PaperFormData!]!
+  trainerForm: [PaperFormData!]!
+  conclusion: String
+  archivedAt: String
+  createdAt: String!
+  client: String!
+  mentor: Mentor!
+  periodStart: String!
+  periodEnd: String!
+  subject: String!
 }
