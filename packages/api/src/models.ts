@@ -4,6 +4,7 @@ import {
   GqlCommentableInterface,
   GqlDay,
   GqlEntry,
+  GqlPaper,
   GqlReport,
   GqlTrainee,
   GqlTrainer,
@@ -62,5 +63,9 @@ export type Day = Omit<GqlDay, 'entries' | 'comments'> & {
 export type Report = Omit<GqlReport, 'days' | 'comments' | 'nextReportLink' | 'previousReportLink'> & {
   days: Day[]
   comments: Comment[]
+  traineeId: string
+}
+
+export type Paper = Omit<GqlPaper, 'trainee'> & {
   traineeId: string
 }
