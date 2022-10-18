@@ -81,6 +81,7 @@ export const permissions = shield<unknown, Context>(
       updateDay: and(authenticated, trainee),
       updateEntryOrder: and(authenticated, trainee),
       updateCurrentTrainee: and(authenticated, trainee),
+      updateTraineeTimetableSettings: and(authenticated, trainee),
 
       // Trainer mutations
       claimTrainee: and(authenticated, trainer),
@@ -93,6 +94,13 @@ export const permissions = shield<unknown, Context>(
       updateTrainer: and(authenticated, admin),
       markUserForDeletion: and(authenticated, admin),
       unmarkUserForDeletion: and(authenticated, admin),
+
+      //Timetable mutations
+      createTimetable: and(authenticated, trainee),
+      deleteTimetableEntry: and(authenticated, trainee),
+      deleteTimetable: and(authenticated, trainee),
+      updateTimetable: and(authenticated, trainee),
+      autoFillReport: and(authenticated, trainee),
     },
   },
   { allowExternalErrors: true }

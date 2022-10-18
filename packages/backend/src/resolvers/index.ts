@@ -6,6 +6,7 @@ import { configResolver } from './config.resolver'
 import { dayResolver, dayTraineeResolver } from './day.resolver'
 import { entryTraineeResolver } from './entry.resolver'
 import { reportResolver, reportTraineeResolver } from './report.resolver'
+import { timetableTraineeResolver } from './timetable.resolver'
 import { traineeResolver, traineeTraineeResolver } from './trainee.resolver'
 import { trainerResolver } from './trainer.resolver'
 import { userResolver } from './user.resolver'
@@ -36,4 +37,5 @@ export const resolvers = [
   trainerAdminResolver,
 
   alexaResolver,
+  timetableTraineeResolver,
 ]

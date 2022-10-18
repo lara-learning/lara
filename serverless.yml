@@ -45,6 +45,10 @@ custom:
         sources:
           - table: ${self:custom.config.table.report}
             sources: [packages/backend/seeds/reports.json]
+      timetable:
+        sources:
+          - table: ${self:custom.config.table.timetable}
+            sources: [packages/backend/seeds/timetable.json]
   jetpack:
     preInclude:
       - '!**'
@@ -65,6 +69,7 @@ custom:
       user: ${self:custom.stage}-lara-user-table
       report: ${self:custom.stage}-lara-report-table
       company: ${self:custom.stage}-lara-company-table
+      timetable: ${self:custom.stage}-lara-timetable-table
     lambda:
       print: ${self:service}-${self:custom.stage}-print
       email: ${self:service}-${self:custom.stage}-email
@@ -74,6 +79,7 @@ custom:
       userType: userGSI1
       userEmail: userGSI4
       userTrainerId: userGSI6
+      timetableTraineeId: timetableGSI1
       userOAuthCode: userOAuthCode
     s3:
       export: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-export-bucket
@@ -150,10 +156,12 @@ functions:
       USER_TABLE: ${self:custom.config.table.user}
       REPORT_TABLE: ${self:custom.config.table.report}
       COMPANY_TABLE: ${self:custom.config.table.company}
+      TIMETABLE_TABLE: ${self:custom.config.table.timetable}
       PRINT_FUNCTION: ${self:custom.config.lambda.print}
       EMAIL_FUNCTION: ${self:custom.config.lambda.email}
       REPORT_WEEK_TRAINEEID_INDEX: ${self:custom.config.gsi.reportWeekTraineeId}
       REPORT_TRAINEEID_STATUS_INDEX: ${self:custom.config.gsi.reportTraineeIdStatus}
+      TIMETABLE_TRAINEEID_INDEX: ${self:custom.config.gsi.timetableTraineeId}
       USER_TYPE_INDEX: ${self:custom.config.gsi.userType}
       USER_EMAIL_INDEX: ${self:custom.config.gsi.userEmail}
       USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
@@ -345,6 +353,28 @@ resources:
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.config.table.company}
+
+    TimetableTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: traineeId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.config.gsi.timetableTraineeId}
+            KeySchema:
+              - AttributeName: traineeId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.timetable}
 
     AttachmentsBucket:
       Type: AWS::S3::Bucket

@@ -4,11 +4,13 @@ export const lightTheme: DefaultTheme = {
   // Basic
   header: '#4065FA',
   surface: '#FFFFFF',
+  surfaceSecondary: '#4065FA',
   background: '#F5F5F5',
   supportIcon: '#F5F5F5',
   progressBar: '#F5F5F5',
   overlay: '#333333',
   faq: '#AAB8EC',
+  separator: '#F5F5F5',
 
   //Fonts
   darkFont: '#333333',
@@ -17,6 +19,7 @@ export const lightTheme: DefaultTheme = {
   blueFont: '#4065FA',
   placeholder: '#B8B8B8',
   headerFont: '#FFFFFF',
+  timetableFont: '#FFFFFF',
 
   buttonPrimaryFont: '#FFFFFF',
 

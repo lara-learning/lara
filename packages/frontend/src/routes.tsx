@@ -21,6 +21,8 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
+import { TimetableOverviewPage } from './pages/timetable-overview-page'
+import TimetablePage from './pages/timetable-page'
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
 
@@ -55,8 +57,8 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
           routes.push({ path: '/archive', component: ArchivePage })
           routes.push({ path: '/report/:year/:week', component: ReportPage })
           routes.push({ path: '/report/missing', component: MissingPage })
-
           routes.push({ path: '/alexa', component: AlexaPage })
+          routes.push({ path: '/timetable', component: TimetablePage })
         } else {
           // Trainee need onboarding!
           routes.push({ path: '/', component: OnboardingPage })
@@ -68,7 +70,7 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
         // Routes for trainers
         routes.push({ path: '/', exact: true, render: () => <Redirect to={redirectRoute} /> })
-
+        routes.push({ path: '/timetable', component: TimetableOverviewPage })
         routes.push({ path: '/reports/:trainee?', exact: true, component: TrainerReportsPage })
         routes.push({ path: '/reports/:trainee/:year/:week', component: ReportReviewPage })
         routes.push({ path: '/trainees/:trainee?', component: TraineePage })

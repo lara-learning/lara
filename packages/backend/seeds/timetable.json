@@ -1,0 +1,91 @@
+[
+  {
+    "id": "123",
+    "traineeId": "123",
+    "title": "Stundenplan Block I",
+    "dateStart": "2022-05-01T22:00:00.000Z",
+    "dateEnd": "2022-09-01T22:00:00.000Z",
+    "entries": [
+      {
+        "id": "123-1",
+        "day": "monday",
+        "timeStart": "07",
+        "timeEnd": "08",
+        "subject": "Sport",
+        "teacher": "Frau Sportlich",
+        "room": "Turnhalle I",
+        "notes": "Geschichte von Sportspielen: Rückschlagsportarten"
+      },
+      {
+        "id": "123-2",
+        "day": "monday",
+        "timeStart": "09",
+        "timeEnd": "15",
+        "subject": "Anwendungsentwicklung",
+        "teacher": "Herr Wendlich",
+        "room": "219",
+        "notes": "Lernfeld I"
+      },
+      {
+        "id": "123-3",
+        "day": "tuesday",
+        "timeStart": "07",
+        "timeEnd": "11",
+        "subject": "Englisch",
+        "teacher": "Herr Englich",
+        "room": "312",
+        "notes": "Lernfeld II"
+      },
+      {
+        "id": "123-4",
+        "day": "wednesday",
+        "timeStart": "09",
+        "timeEnd": "13",
+        "subject": "IT-Systeme",
+        "teacher": "Herr Itsyme",
+        "room": "219",
+        "notes": "Cisco Kurs I"
+      },
+      {
+        "id": "123-7",
+        "day": "wednesday",
+        "timeStart": "13",
+        "timeEnd": "17",
+        "subject": "IT-Workshop",
+        "teacher": "Herr Itsyme",
+        "room": "219",
+        "notes": "Cisco Kurs I"
+      },
+      {
+        "id": "123-5",
+        "day": "friday",
+        "timeStart": "07",
+        "timeEnd": "10",
+        "subject": "Organisation und Gesellschaft",
+        "teacher": "Herr Arsell",
+        "room": "319",
+        "notes": "ArbeitnehmerInnenrecht"
+      },
+      {
+        "id": "123-8",
+        "day": "friday",
+        "timeStart": "10",
+        "timeEnd": "13",
+        "subject": "Anwendungsentwicklung",
+        "teacher": "Herr Arsell",
+        "room": "319",
+        "notes": "Design-Pattern"
+      },
+      {
+        "id": "123-6",
+        "day": "thursday",
+        "timeStart": "09",
+        "timeEnd": "13",
+        "subject": "Sprache und Kommunikation",
+        "teacher": "Frau Sprachlich",
+        "room": "119",
+        "notes": "Kündigungen"
+      }
+    ]
+  }
+]

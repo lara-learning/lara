@@ -47,6 +47,13 @@ export const generateTrainee = async (options: GenerateTraineeOptions): Promise<
     id: v4(),
     createdAt: new Date().toISOString(),
     type: 'Trainee',
+    timetableSettings: {
+      onBoardingTimetable: false,
+      weekendSchool: false,
+      preFillClass: false,
+    },
+    language: 'de',
+    theme: 'light',
     ...options,
   }
 

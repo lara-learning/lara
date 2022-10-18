@@ -59,6 +59,9 @@ const Navigation: React.FunctionComponent = () => {
         <StyledNavItem exact to={'/'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.dashhboard}
         </StyledNavItem>
+        <StyledNavItem to={'/timetable'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.timetable}
+        </StyledNavItem>
         <StyledNavItem to={'/archive'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.archive}
         </StyledNavItem>
@@ -74,6 +77,9 @@ const Navigation: React.FunctionComponent = () => {
       <>
         <StyledNavItem to={'/reports'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.reports}
+        </StyledNavItem>
+        <StyledNavItem to={'/timetable'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.timetable}
         </StyledNavItem>
         <StyledNavItem to={'/trainees'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.trainees}

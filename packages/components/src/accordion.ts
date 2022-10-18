@@ -48,3 +48,12 @@ export const StyledAccordionIcon = styled(StyledIcon)<AccordionState>`
   transform: rotate(${(props) => (props.active ? '180deg' : '0deg')});
   transition: all 0.2s;
 `
+
+export const StyledAccordionSubTitle = styled(StyledAccordionTitle)<AccordionState>`
+  ${(props) =>
+    props.active &&
+    `
+      font-size:${FontSizes.smallCopy};
+      font-weight: normal;
+    `};
+`

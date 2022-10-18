@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { Container } from './container'
 import { Spacings } from './spacing'
@@ -10,6 +10,7 @@ interface ModalOverlayProps {
 
 interface ModalContainerProps {
   large?: boolean
+  timetable?: boolean
 }
 
 export interface ModelStylingProps extends ModalOverlayProps, ModalContainerProps {}
@@ -37,12 +38,18 @@ const ModalContainer = styled(Container)<ModalContainerProps>`
   flex-direction: column;
   min-width: 300px;
   max-width: ${(props) => (props.large ? '800px' : '580px')};
+  ${(props) =>
+    props.timetable &&
+    css`
+      overflow: scroll;
+      max-height: 95vh;
+    `}
 `
 
-export const ModalLayout: React.FC<ModalLayoutProps> = ({ show, button, children, large }) => {
+export const ModalLayout: React.FC<ModalLayoutProps> = ({ show, button, children, large, timetable }) => {
   return (
     <ModalOverlay show={show}>
-      <ModalContainer large={large} padding={'l'}>
+      <ModalContainer large={large} timetable={timetable} padding={'l'}>
         {children}
         {button}
       </ModalContainer>

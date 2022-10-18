@@ -93,6 +93,10 @@ type MutateEntryPayload {
   report: Report!
 }
 
+type MutateTimetablePayload {
+  timetables: [Timetable]
+}
+
 type UpdateReportPayload {
   trainee: Trainee!
   report: Report!
@@ -202,6 +206,11 @@ type Mutation {
   updateTrainer(input: UpdateTrainerInput!, id: ID!): Trainer
 
   """
+  Updates Timetable settings of Trainee.
+  """
+  updateTraineeTimetableSettings(input: TimetableUserSettingsInput): Trainee
+
+  """
   Link Alexa account
   """
   linkAlexa(code: String!, state: String!): UserInterface
@@ -215,6 +224,31 @@ type Mutation {
   Create OAuth Code
   """
   createOAuthCode: String!
+
+  """
+  Create timetable
+  """
+  createTimetable(input: TimetableInput!): Trainee
+
+  """
+  Delete timetable by id
+  """
+  deleteTimetable(timetableId: ID!): Trainee
+
+  """
+  Update timetable
+  """
+  updateTimetable(input: TimetableUpdateInput!): Trainee
+
+  """
+  Fills report with timetable content
+  """
+  autoFillReport(reportId: ID!): Report
+
+  """
+  Delete entry in timetable
+  """
+  deleteTimetableEntry(input: TimetableEntryInput!, timetableId: ID!): Trainee
 }
 
 type LaraConfig {
@@ -291,6 +325,11 @@ type Query {
   Get the alexa account linking url
   """
   alexaLinkingUrl: String
+
+  """
+  Get all Timetables for Trainee
+  """
+  timetables(traineeId: ID!): [Timetable]
 }
 
 type PrintPayload {
@@ -337,10 +376,48 @@ enum ReportStatus {
   archived
 }
 
+enum Weekday {
+  """
+  Days of the Week
+  """
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+}
+
+type TimetableUserSettings {
+  """
+  Settings for Trainee timetable
+  """
+  onBoardingTimetable: Boolean
+  weekendSchool: Boolean
+  preFillClass: Boolean
+}
+
+type TimetableEntry {
+  id: ID!
+  day: Weekday!
+  timeStart: Int!
+  timeEnd: Int!
+  subject: String!
+  teacher: String
+  room: String
+  notes: String
+}
+
+type Timetable {
+  id: ID!
+  traineeId: ID!
+  title: String!
+  dateStart: String!
+  dateEnd: String!
+  entries: [TimetableEntry!]!
+}
+
 type Trainee implements UserInterface {
-  """
-  The url for the users avatar image.
-  """
   avatar: String!
   company: Company!
   course: String
@@ -364,6 +441,42 @@ type Trainee implements UserInterface {
   deleteAt: String
   openReportsCount: Int!
   alexaSkillLinked: Boolean
+  timetableSettings: TimetableUserSettings
+  timetables: [Timetable]
+}
+
+input TimetableUserSettingsInput {
+  onBoardingTimetable: Boolean
+  weekendSchool: Boolean
+  preFillClass: Boolean
+}
+
+input TimetableInput {
+  traineeId: ID!
+  title: String!
+  dateStart: String!
+  dateEnd: String!
+  entries: [TimetableEntryInput!]!
+}
+
+input TimetableUpdateInput {
+  id: ID!
+  traineeId: ID!
+  title: String!
+  dateStart: String!
+  dateEnd: String!
+  entries: [TimetableEntryInput!]!
+}
+
+input TimetableEntryInput {
+  id: ID
+  day: Weekday!
+  timeStart: Int!
+  timeEnd: Int!
+  subject: String!
+  teacher: String
+  room: String
+  notes: String
 }
 
 input CreateTraineeInput {

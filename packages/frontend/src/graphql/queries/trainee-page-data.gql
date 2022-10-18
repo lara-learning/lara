@@ -16,6 +16,12 @@ query TraineePageData {
       id
       name
     }
+    timetables {
+      id
+      title
+      dateStart
+      dateEnd
+    }
   }
   currentUser {
     id

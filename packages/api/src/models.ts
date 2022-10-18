@@ -13,9 +13,9 @@ import {
 export type User = Trainee | Trainer | Admin
 
 /**
- * This values, that are omited from the gql types,
+ * This values, that are omitted from the gql types,
  * aren't stored in the DB and therefor can't be accessed
- * during the runtime in the backend. Only after beeing
+ * during the runtime in the backend. Only after being
  * transformed by GraphQL these fields are available
  */
 type ResolvedUserFields = 'avatar' | 'username' | 'alexaSkillLinked'
@@ -33,7 +33,7 @@ export type UserInterface = Omit<GqlUserInterface, ResolvedUserFields> & {
 }
 
 export type Trainee = UserInterface &
-  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount'> & {
+  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount' | 'timetables'> & {
     trainerId?: string
     companyId?: string
   }

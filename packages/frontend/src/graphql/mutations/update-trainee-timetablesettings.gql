@@ -1,0 +1,10 @@
+mutation UpdateTraineeTimetableSettings($input: TimetableUserSettingsInput!) {
+  updateTraineeTimetableSettings(input: $input) {
+    id
+    timetableSettings {
+      onBoardingTimetable
+      weekendSchool
+      preFillClass
+    }
+  }
+}
