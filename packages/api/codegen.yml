@@ -22,3 +22,4 @@ generates:
         Trainer: ./models#Trainer
         Trainee: ./models#Trainee
         UserInterface: ./models#UserInterface
+        Paper: ./models#Paper

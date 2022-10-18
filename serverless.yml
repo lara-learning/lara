@@ -63,6 +63,7 @@ custom:
       user: ${self:custom.stage}-lara-user-table
       report: ${self:custom.stage}-lara-report-table
       company: ${self:custom.stage}-lara-company-table
+      paper: ${self:custom.stage}-lara-paper-table
     lambda:
       print: ${self:service}-${self:custom.stage}-print
       email: ${self:service}-${self:custom.stage}-email
@@ -133,6 +134,7 @@ functions:
         Resource:
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}/index/*'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.paper}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.report}'
@@ -149,6 +151,7 @@ functions:
       USER_TABLE: ${self:custom.config.table.user}
       REPORT_TABLE: ${self:custom.config.table.report}
       COMPANY_TABLE: ${self:custom.config.table.company}
+      PAPER_TABLE: ${self:custom.config.table.paper}
       PRINT_FUNCTION: ${self:custom.config.lambda.print}
       EMAIL_FUNCTION: ${self:custom.config.lambda.email}
       REPORT_WEEK_TRAINEEID_INDEX: ${self:custom.config.gsi.reportWeekTraineeId}
@@ -344,6 +347,19 @@ resources:
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.config.table.company}
+
+    PaperTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.paper}
 
     AttachmentsBucket:
       Type: AWS::S3::Bucket

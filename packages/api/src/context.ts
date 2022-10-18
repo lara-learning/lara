@@ -8,7 +8,7 @@ type ExpressContext = {
   res: Response
 }
 
-type BaseContext = {
+export type BaseContext = {
   event: APIGatewayProxyEvent
   express: ExpressContext
 }

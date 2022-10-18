@@ -4,6 +4,7 @@ const {
   USER_TABLE,
   COMPANY_TABLE,
   REPORT_TABLE,
+  PAPER_TABLE,
   REPORT_WEEK_TRAINEEID_INDEX,
   REPORT_TRAINEEID_STATUS_INDEX,
   USER_TYPE_INDEX,
@@ -22,6 +23,10 @@ if (!USER_TABLE) {
 
 if (!COMPANY_TABLE) {
   throw new Error('Missing Env Variable: "COMPANY_TABLE"')
+}
+
+if (!PAPER_TABLE) {
+  throw new Error('Missing Env Variable: "PAPER_TABLE"')
 }
 
 if (!REPORT_WEEK_TRAINEEID_INDEX) {
@@ -52,6 +57,7 @@ if (!USER_OAUTH_CODE_INDEX) {
 export const userTableName = USER_TABLE
 export const companyTabelName = COMPANY_TABLE
 export const reportTableName = REPORT_TABLE
+export const paperTableName = PAPER_TABLE
 
 // GSI's for the report table
 export const reportWeekTraineeIdIndex = REPORT_WEEK_TRAINEEID_INDEX
