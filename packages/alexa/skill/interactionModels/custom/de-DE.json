@@ -1,0 +1,558 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "lara berichte",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": ["Abbruch"]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": ["Hilf mir", "Help", "Was jetzt", "Was kann ich tun", "Hilfe"]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": ["Halt Stop", "Ende", "Beenden", "Halt", "Stop"]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "CreateEntryIntent",
+          "slots": [
+            {
+              "name": "day",
+              "type": "AMAZON.DATE",
+              "samples": ["{day}", "Für {day}"]
+            },
+            {
+              "name": "time",
+              "type": "AMAZON.DURATION"
+            },
+            {
+              "name": "text",
+              "type": "AMAZON.SearchQuery",
+              "samples": ["{text}"]
+            }
+          ],
+          "samples": [
+            "Einen Eintrag für {day} erstellen",
+            "Erstelle einen {time} Eintrag für {day}",
+            "Erstelle einen {time} Eintrag",
+            "Erstelle einen neuen {time} Eintrag",
+            "Neuer Eintrag mit dem Text {text}",
+            "Neuer Eintrag für {day} für {time}",
+            "Neuer Eintrag für {day}",
+            "Neuer Eintrag",
+            "Eintrag erstellen für {day}",
+            "Eintrag hinzufügen",
+            "Füge einen neuen Eintrag hinzu",
+            "Eintrag für {day}",
+            "Erstelle Eintrag für {day}",
+            "Mache einen neuen Eintrag für {day}",
+            "Mache neuen Eintrag",
+            "Mache einen neuen Eintrag",
+            "Erstelle einen neuen Eintrag in meinem Berichtsheft",
+            "Eintrag erstellen",
+            "Erstelle einen Eintrag",
+            "Erstelle einen Eintrag für den {day}",
+            "Erstelle einen neuen Laraeintrag",
+            "Erstelle einen neuen eintrag für {day} mit {time}",
+            "Erstelle einen neuen eintrag für {day} für {time}",
+            "Erstelle einen Eintrag mit dem Text {text}",
+            "Erstelle einen Eintrag mit der Zeit {time}",
+            "Erstelle einen neuen Eintrag für {day} und {time}",
+            "Erstelle für {day} einen Eintrag mit {time}",
+            "Erstelle für {day} einen neuen Eintrag",
+            "Erstelle einen Eintrag für {day}",
+            "Erstelle Eintrag",
+            "Erstelle neuen Eintrag",
+            "Erstelle einen neuen Eintrag"
+          ]
+        },
+        {
+          "name": "UpdateDayIntent",
+          "slots": [
+            {
+              "name": "day",
+              "type": "AMAZON.DATE",
+              "samples": ["{day}"]
+            },
+            {
+              "name": "status",
+              "type": "DayStatus",
+              "samples": ["{status}"]
+            }
+          ],
+          "samples": [
+            "Ich {status} {day}",
+            "Ich bin {day} in der {status}",
+            "Ich bin {day} im {status}",
+            "Ich hab {day}  {status}",
+            "Ich bin {day}  {status}",
+            "Aktualisiere den Status von {day}",
+            "Setzte den Status von {day}",
+            "Ändere den Status von {day}",
+            "Den Status von {day} zu {status} ändern",
+            "Den Status von {day} auf {status} ändern",
+            "Den Status ändern von {day} zu {status}",
+            "Den Status ändern von {day} auf {status}",
+            "Ändere {day} zu {status}",
+            "Setzte {day} zu {status}",
+            "Setzte {day} auf {status}",
+            "Ändere {day} auf {status}",
+            "Ändere meinen Status zu {status}",
+            "Ändere den {day} Tagesstatus zu {status}",
+            "Ändere den Status auf {status}",
+            "Ich bin {status}",
+            "{day} bin ich {status}",
+            "Meinen {day} Status auf {status}",
+            "Setzte den Tag auf {status}",
+            "Ändere den Status für {day} zu {status}",
+            "Statusänderung",
+            "Ändere den Tagesstatus zu {status} ",
+            "Tagesstatus ändern",
+            "Ändere den Status",
+            "Ändere den Tagesstatus",
+            "Status ändern",
+            "Den Status zu {status} ändern",
+            "Den Status von {day} ändern",
+            "Den Status ändern",
+            "Ändere den Status zu {status}",
+            "Ändere den Status für {day} auf {status}",
+            "Ändere den Status für {day}"
+          ]
+        },
+        {
+          "name": "SubmitReportIntent",
+          "slots": [
+            {
+              "name": "date",
+              "type": "AMAZON.DATE"
+            },
+            {
+              "name": "week",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "year",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER"
+            }
+          ],
+          "samples": [
+            "Bericht {week} aus {year} übergeben",
+            "Bericht {week} aus {year} abgeben",
+            "Bericht {week} von {year} abgeben",
+            "Bericht {week} von {year} übergeben",
+            "Bericht {week} abgeben",
+            "Bericht {week} übergeben",
+            "Gebe den Bericht der KW {week} von {year} ab",
+            "Gebe den Bericht der KW {week} aus {year} ab",
+            "Gebe den Bericht {week} aus {year} ab",
+            "Gebe den Bericht {week} von {year} ab",
+            "Gebe den Bericht {week} ab",
+            "Übergebe den Bericht {week} von {year}",
+            "Übergebe den Bericht {week} im Jahr {year}",
+            "Übergebe den Bericht {week}",
+            "Übergebe den Bericht {week} an meinen Ausbilder",
+            "Gebe den Bericht der KW {week} im Jahr {year} ab",
+            "Gebe den Bericht der Kalendarwoche {week} im Jahr {year} ab",
+            "Gebe den Bericht der KW {week} ab",
+            "Gebe den Bericht der Kalendarwoche {week} ab",
+            "Bericht der {date} übergeben",
+            "Bericht von {date} übergeben",
+            "Bericht der {date} für die Überprüfung abgeben",
+            "Bericht von {date} für die Überprüfung abgeben",
+            "Bericht für die Überprüfung abgeben",
+            "Bericht einreichen",
+            "Bericht der {date} abgeben",
+            "Bericht von {date} abgeben",
+            "Übergib die Einträge von {date}",
+            "Übergib den Bericht der {date} an meinen Ausbilder",
+            "Übergib den Bericht von {date} an meinen Ausbilder",
+            "Bericht übergeben",
+            "Übergebe meinen Bericht an meinen Ausbilder",
+            "Übergebe meinen Bericht für diese Woche an meinen Ausbilder",
+            "Bericht abgeben",
+            "Übergib den Bericht an meinen Ausbilder ",
+            "Übergib die Einträge",
+            "Übergib die Einträge an meinen Ausbilder",
+            "Übergebe den Bericht an meinen Ausbilder",
+            "Übergebe einen Bericht an den Ausbilder",
+            "Übergebe den Bericht an den Ausbilder",
+            "Übergebe den Bericht von {date} an meinen Ausbilder",
+            "Übergebe den Bericht der {date} an meinen Ausbilder",
+            "Gebe den Bericht ab",
+            "Gebe Bericht ab",
+            "Gib bericht ab",
+            "Gib einen bericht ab",
+            "Gebe den Bericht der {date} ab",
+            "Gib den aktuellen Bericht ab",
+            "Gebe den Bericht von {date} ab",
+            "Übergebe einen Bericht",
+            "Übergebe ein Berichtsheft",
+            "Gebe einen Bericht ab",
+            "Gebe ein Berichtsheft ab"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": ["Jaha", "Jep", "Jo", "Ja", "Yes"]
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": ["Nope", "Nö", "Nein", "No"]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "id": "SCHOOL",
+              "name": {
+                "value": "Schule",
+                "synonyms": ["Berufsschule"]
+              }
+            },
+            {
+              "id": "SICK",
+              "name": {
+                "value": "Krank",
+                "synonyms": ["Sick"]
+              }
+            },
+            {
+              "id": "VACATION",
+              "name": {
+                "value": "Urlaub",
+                "synonyms": ["Ferien", "Frei"]
+              }
+            },
+            {
+              "id": "WORK",
+              "name": {
+                "value": "Arbeit",
+                "synonyms": ["Work"]
+              }
+            }
+          ],
+          "name": "DayStatus"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "CreateEntryIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "day",
+              "type": "AMAZON.DATE",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1312844970170.983205036823"
+              }
+            },
+            {
+              "name": "time",
+              "type": "AMAZON.DURATION",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1040713863305.104543220898"
+              }
+            },
+            {
+              "name": "text",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1211081563959.1209165137782"
+              }
+            }
+          ],
+          "delegationStrategy": "SKILL_RESPONSE"
+        },
+        {
+          "name": "UpdateDayIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "day",
+              "type": "AMAZON.DATE",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1424637686422.360115277797"
+              }
+            },
+            {
+              "name": "status",
+              "type": "DayStatus",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1424637686422.124794967862"
+              }
+            }
+          ],
+          "delegationStrategy": "SKILL_RESPONSE"
+        },
+        {
+          "name": "SubmitReportIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "date",
+              "type": "AMAZON.DATE",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "week",
+              "type": "AMAZON.NUMBER",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "year",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            }
+          ],
+          "delegationStrategy": "SKILL_RESPONSE"
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.370267093230.1265678612147",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welche Zeit soll der Eintrag haben?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1432370830132.127734568195",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag ist der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1610959178963.412618935945",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welchen text?"
+          },
+          {
+            "type": "PlainText",
+            "value": " Welchen text hat der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1211081563959.1209165137782",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welchen Text hat der  Eintrag?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welchen Text?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welchen Text soll der Eintrag haben?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1211081563959.413052923806",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welche Zeit?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welche Zeit hat der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1211081563959.934508096183",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Eintrag für welchen Tag?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag ist der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1203271604148.892303551592",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag soll der Eintrag sein?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1040713863305.104543220898",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welche Zeit hat der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1040713863305.1198368847081",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag ist der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.516964492388.53404264262",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Bitte nenne den Login Code aus deinen Lara Einstellungen."
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.573925831631.711894707685",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag soll ich den Status ändern?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.573925831631.1353430990649",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welchen Status soll der Tag haben?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Auf welchen Status soll ich den Tag ändern?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1486621341670.85114420804",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welches Datum hat der Bericht?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welches Datum hat das Berichtsheft?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.61500630414.610136556225",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welches Datum hat der Bericht?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.244444392407.731637474590",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welchen Status soll der Eintrag haben?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1312844970170.983205036823",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag soll der Eintrag sein?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welcher Tag?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Für welchen Tag ist der Eintrag?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1424637686422.360115277797",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welcher Tag?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Welchen Tag soll ich ändern?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1424637686422.124794967862",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welchen Status soll der Tag haben?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Auf welchen Status soll ich den Tag ändern?"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "89"
+}

@@ -1,0 +1,23 @@
+query SettingsPageData {
+  currentUser {
+    id
+    type
+    language
+    theme
+    notification
+    ... on Trainee {
+      company {
+        id
+        name
+      }
+      startDate
+      endDate
+      course
+      alexaSkillLinked
+    }
+  }
+  companies {
+    id
+    name
+  }
+}

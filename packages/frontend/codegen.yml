@@ -1,0 +1,19 @@
+overwrite: true
+schema: '../api/schema.gql'
+documents: '**/*.gql'
+generates:
+  src/graphql/index.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      maybeValue: T | undefined
+      reactApolloVersion: 3
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      withResultType: false
+      withMutationFn: false
+      withMutationOptionsType: false
+      addDocBlocks: false

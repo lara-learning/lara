@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.settings.json",
+
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable"],
+    "jsx": "react",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "strictNullChecks": true
+  },
+  "include": ["src/**/*"],
+  "references": [{ "path": "../components" }],
+  "exclude": ["/src/graphql/index.tsx", "dist"]
+}

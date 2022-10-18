@@ -1,0 +1,9 @@
+query AdminTrainersPage {
+  trainers {
+    id
+    firstName
+    lastName
+    avatar
+    deleteAt
+  }
+}

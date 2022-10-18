@@ -1,0 +1,45 @@
+{
+  "name": "@lara/backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^8.2.0",
+    "@lara/api": "^1.0.0",
+    "apollo-server-lambda": "^3.3.0",
+    "casual": "^1.6.2",
+    "cors": "^2.8.5",
+    "date-fns": "^2.22.1",
+    "date-fns-tz": "^1.1.4",
+    "date-holidays": "^3.8.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "graphql-middleware": "^6.0.10",
+    "graphql-shield": "^7.5.0",
+    "i18next": "^20.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.1",
+    "object-hash": "^2.2.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.76",
+    "@types/cookie": "^0.4.1",
+    "@types/i18n": "^0.13.0",
+    "@types/jest": "^29.1.2",
+    "@types/node-fetch": "^2.5.10",
+    "@types/object-hash": "^2.2.1",
+    "@types/uuid": "^8.3.0",
+    "aws-sdk": "^2.950.0",
+    "jest": "^29.2.0",
+    "ts-jest": "^29.0.3"
+  }
+}

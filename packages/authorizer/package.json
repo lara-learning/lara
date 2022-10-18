@@ -1,0 +1,16 @@
+{
+  "name": "@lara/authorizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.76"
+  }
+}

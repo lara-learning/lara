@@ -1,0 +1,14 @@
+mutation updateReportReportReviewPage($id: ID!, $summary: String, $department: String, $status: String) {
+  updateReport(id: $id, summary: $summary, department: $department, status: $status) {
+    report {
+      id
+      summary
+      department
+      status
+    }
+    trainee {
+      id
+      openReportsCount
+    }
+  }
+}

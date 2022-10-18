@@ -1,0 +1,6 @@
+mutation TraineeSettingsUpdateTrainee($course: String) {
+  updateCurrentTrainee(input: { course: $course }) {
+    id
+    course
+  }
+}

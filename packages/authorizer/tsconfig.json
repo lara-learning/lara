@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "keyofStringsOnly": false,
+    "baseUrl": ".",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "inlineSources": false,
+    "jsx": "react"
+  },
+  "include": ["src/**/*"]
+}

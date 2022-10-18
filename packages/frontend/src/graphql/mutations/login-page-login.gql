@@ -1,0 +1,7 @@
+mutation LoginPageLogin($token: String!) {
+  login(googleToken: $token) {
+    accessToken
+    refreshToken
+    expiresIn
+  }
+}

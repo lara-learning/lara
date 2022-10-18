@@ -1,0 +1,11 @@
+mutation deleteEntry($id: ID!) {
+  deleteEntry(id: $id) {
+    day {
+      id
+      __typename
+      entries {
+        id
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
+  currentUser {
+    id
+    firstName
+    lastName
+    avatar
+    username
+  }
+  reportForTrainee(year: $year, week: $week, id: $trainee) {
+    id
+    week
+    year
+    summary
+    department
+    status
+    comments {
+      id
+      text
+      user {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+    days {
+      status
+      date
+      id
+      entries {
+        id
+        text
+        time
+        orderId
+        comments {
+          id
+          text
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+      comments {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+          avatar
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+query OnboardingPageData {
+  currentUser {
+    id
+    firstName
+  }
+}

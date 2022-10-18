@@ -1,0 +1,21 @@
+query TraineeSettingsData {
+  currentUser {
+    ... on Trainee {
+      id
+      company {
+        id
+        name
+      }
+      startDate
+      endDate
+      course
+      __typename
+      id
+      trainer {
+        firstName
+        lastName
+        avatar
+      }
+    }
+  }
+}

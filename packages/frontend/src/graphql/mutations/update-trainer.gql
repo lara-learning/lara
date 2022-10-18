@@ -1,0 +1,10 @@
+mutation UpdateTrainer($input: UpdateTrainerInput!, $id: ID!) {
+  updateTrainer(input: $input, id: $id) {
+    id
+    firstName
+    lastName
+    email
+    avatar
+    type
+  }
+}

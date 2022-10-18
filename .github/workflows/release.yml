@@ -1,0 +1,30 @@
+########################################################
+# Action to run on release                             #
+# Production build and deployment                      #
+########################################################
+name: Action on release
+on:
+  release:
+    types: [published]
+
+jobs:
+  install:
+    uses: ./.github/workflows/reusable-install-job.yml
+
+  build:
+    needs: install
+    uses: ./.github/workflows/reusable-build-job.yml
+    with:
+      environmentName: production
+      debug: 'false'
+      mode: production
+    secrets: inherit
+
+  deploy:
+    needs: [install, build]
+    uses: ./.github/workflows/reusable-deploy-job.yml
+    with:
+      alexaSkillStage: live
+      debug: 'false'
+      target: production
+    secrets: inherit

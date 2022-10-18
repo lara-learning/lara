@@ -1,0 +1,25 @@
+query TrainerReportsPageData {
+  currentUser {
+    id
+    theme
+    ... on Trainer {
+      trainees {
+        username
+        firstName
+        lastName
+        id
+        avatar
+        openReportsCount
+        reports {
+          days {
+            status
+          }
+          id
+          status
+          week
+          year
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+	"name": "@lara/db-migration",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"license": "MIT",
+	"author": "",
+	"main": "index.js",
+	"scripts": {
+		"migrate": "node src/index.js"
+	},
+	"dependencies": {
+		"aws-sdk": "^2.938.0",
+		"camelcase": "^6.2.0",
+		"dotenv": "^10.0.0",
+		"promise-mysql": "^5.0.3"
+	}
+}

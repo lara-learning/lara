@@ -1,0 +1,25 @@
+mutation updateEntryOrder($entryId: ID!, $dayId: ID!, $orderId: Int!) {
+  updateEntryOrder(entryId: $entryId, dayId: $dayId, orderId: $orderId) {
+    entry {
+      id
+      orderId
+    }
+    day {
+      id
+      entries {
+        id
+        orderId
+      }
+    }
+    report {
+      id
+      days {
+        id
+        entries {
+          id
+          orderId
+        }
+      }
+    }
+  }
+}

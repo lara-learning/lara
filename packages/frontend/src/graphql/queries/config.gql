@@ -1,0 +1,16 @@
+query Config {
+  config {
+    minWorkDayMinutes
+    maxWorkDayMinutes
+    expectedWorkDayMinutes
+
+    minEducationDayMinutes
+    maxEducationDayMinutes
+
+    maxEntryMinutes
+
+    maxPeriodYearsCount
+
+    finishedWeekDayCount
+  }
+}

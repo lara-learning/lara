@@ -1,0 +1,98 @@
+########################################################
+# Reusable test workflow                               #
+########################################################
+name: test
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    name: lint-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - run: yarn lint:verify
+  
+  format:
+    name: format-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - run: yarn format:verify
+
+  sort-package-json:
+    name: sort-package-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - run: yarn sort-package-jsons:verify
+    
+  test:
+    name: test-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - name: Download built dist and lib
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-and-lib
+          path: packages
+      - run: yarn test
+
+  generate:
+    name: generate-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - run: yarn generate:verify

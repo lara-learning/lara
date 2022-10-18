@@ -1,0 +1,6 @@
+mutation linkAlexa($code: String!, $state: String!) {
+  linkAlexa(code: $code, state: $state) {
+    id
+    alexaSkillLinked
+  }
+}

@@ -1,0 +1,10 @@
+query NavigationData {
+  currentUser {
+    __typename
+    type
+    id
+    firstName
+    lastName
+    avatar
+  }
+}

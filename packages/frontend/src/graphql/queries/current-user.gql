@@ -1,0 +1,22 @@
+query CurrentUser {
+  currentUser {
+    id
+    language
+    theme
+    type
+    ... on Trainee {
+      company {
+        id
+      }
+      startDate
+      endDate
+      course
+    }
+    ... on Trainer {
+      id
+      trainees {
+        id
+      }
+    }
+  }
+}

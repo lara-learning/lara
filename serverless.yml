@@ -1,0 +1,356 @@
+service: lara-app
+frameworkVersion: '3'
+useDotenv: true # will load env variables locally from the .env file
+variablesResolutionMode: 20210326
+
+provider:
+  name: aws
+  region: eu-central-1
+  stage: dev
+  memorySize: 5120
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
+
+plugins:
+  - serverless-jetpack
+  - serverless-iam-roles-per-function
+  - serverless-dynamodb-local
+  - serverless-s3-sync
+  - serverless-s3-local
+  - serverless-offline
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  serverless-offline:
+    useChildProcesses: true
+  dynamodb:
+    stages:
+      - dev
+    inMemory: false
+    start:
+      port: 8000
+      seed: true
+      migrate: true
+    seed:
+      companies:
+        sources:
+          - table: ${self:custom.config.table.company}
+            sources: [packages/backend/seeds/companies.json]
+      users:
+        sources:
+          - table: ${self:custom.config.table.user}
+            sources: [packages/backend/seeds/users.json]
+      reports:
+        sources:
+          - table: ${self:custom.config.table.report}
+            sources: [packages/backend/seeds/reports.json]
+  jetpack:
+    preInclude:
+      - '!**'
+  s3:
+    host: localhost
+    directory: /tmp
+    port: 8181
+  s3Sync:
+    noSync: true
+    buckets:
+      - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-staging
+        localDir: packages/frontend/dist
+      - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-production
+        localDir: packages/frontend/dist
+
+  config:
+    table:
+      user: ${self:custom.stage}-lara-user-table
+      report: ${self:custom.stage}-lara-report-table
+      company: ${self:custom.stage}-lara-company-table
+    lambda:
+      print: ${self:service}-${self:custom.stage}-print
+      email: ${self:service}-${self:custom.stage}-email
+    gsi:
+      reportWeekTraineeId: reportGSI1
+      reportTraineeIdStatus: reportGSI2
+      userType: userGSI1
+      userEmail: userGSI4
+      userTrainerId: userGSI6
+      userOAuthCode: userOAuthCode
+    s3:
+      export: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-export-bucket
+    ses:
+      region: ${self:provider.environment.SES_REGION, self:provider.region}
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+functions:
+  graphql:
+    handler: packages/backend/lib/handler.server
+    events:
+      - http:
+          path: /backend/{proxy+}
+          method: any
+          authorizer:
+            name: authorizer
+            resultTtlInSeconds: 0
+            type: token
+          cors:
+            origin: ${self:provider.environment.FRONTEND_URL}
+            allowCredentials: true
+      - http:
+          path: /backend/
+          method: any
+          authorizer:
+            name: authorizer
+            resultTtlInSeconds: 0
+            type: token
+          cors:
+            origin: ${self:provider.environment.FRONTEND_URL}
+            allowCredentials: true
+    package:
+      include:
+        - 'packages/backend/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/backend'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - lambda:InvokeFunction
+        Resource:
+          - 'arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:custom.config.lambda.print}'
+          - 'arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:custom.config.lambda.email}'
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:Query
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:BatchWriteItem
+          - dynamodb:DeleteItem
+        Resource:
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}/index/*'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}/index/*'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.report}'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.report}/index/*'
+      - Effect: 'Allow'
+        Action:
+          - 's3:DeleteObject'
+          - 's3:PutObject'
+          - 's3:GetObject'
+        Resource:
+          - 'arn:aws:s3:::${self:custom.config.s3.export}/*'
+    environment:
+      STAGE: ${self:custom.stage}
+      USER_TABLE: ${self:custom.config.table.user}
+      REPORT_TABLE: ${self:custom.config.table.report}
+      COMPANY_TABLE: ${self:custom.config.table.company}
+      PRINT_FUNCTION: ${self:custom.config.lambda.print}
+      EMAIL_FUNCTION: ${self:custom.config.lambda.email}
+      REPORT_WEEK_TRAINEEID_INDEX: ${self:custom.config.gsi.reportWeekTraineeId}
+      REPORT_TRAINEEID_STATUS_INDEX: ${self:custom.config.gsi.reportTraineeIdStatus}
+      USER_TYPE_INDEX: ${self:custom.config.gsi.userType}
+      USER_EMAIL_INDEX: ${self:custom.config.gsi.userEmail}
+      USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
+      USER_OAUTH_CODE_INDEX: ${self:custom.config.gsi.userOAuthCode}
+      EXPORT_BUCKET: ${self:custom.config.s3.export}
+
+  authorizer:
+    handler: packages/authorizer/lib/handler.handler
+    package:
+      include:
+        - 'packages/authorizer/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/authorizer'
+
+  print:
+    handler: packages/print/lib/handler.handler
+    timeout: 900
+    package:
+      include:
+        - 'packages/print/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/print'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - lambda:InvokeFunction
+        Resource:
+          - 'arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:custom.config.lambda.email}'
+      - Effect: 'Allow'
+        Action:
+          - 's3:PutObject'
+          - 's3:GetObject'
+        Resource:
+          - 'arn:aws:s3:::${self:custom.config.s3.export}/*'
+    environment:
+      EMAIL_FUNCTION: ${self:custom.config.lambda.email}
+      EXPORT_BUCKET: ${self:custom.config.s3.export}
+
+  email:
+    handler: packages/email/lib/handler.handler
+    timeout: 900
+    package:
+      include:
+        - 'packages/email/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/email'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ses:SendEmail
+          - ses:SendRawEmail
+          - ses:SendTemplatedEmail
+        Resource:
+          - 'arn:aws:ses:${self:custom.config.ses.region}:*:identity/${self:provider.environment.SES_EMAIL}'
+      - Effect: 'Allow'
+        Action:
+          - 's3:GetObject'
+        Resource:
+          - 'arn:aws:s3:::${self:custom.config.s3.export}/*'
+    environment:
+      EXPORT_BUCKET: ${self:custom.config.s3.export}
+      SES_REGION: ${self:custom.config.ses.region}
+
+  cleanup:
+    handler: packages/cleanup/lib/handler.handler
+    events:
+      - schedule: cron(0 0 * * ? *)
+    package:
+      include:
+        - 'packages/cleanup/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/cleanup'
+
+  alexa:
+    handler: packages/alexa/lib/handler.handler
+    events:
+      - http:
+          path: /alexa/
+          method: post
+    package:
+      include:
+        - 'packages/alexa/**'
+    jetpack:
+      roots:
+        - '.'
+        - 'packages/alexa'
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: type
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: trainerId
+            AttributeType: S
+          - AttributeName: oAuthCode
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.config.gsi.userType}
+            KeySchema:
+              - AttributeName: type
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.userEmail}
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.userTrainerId}
+            KeySchema:
+              - AttributeName: trainerId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.userOAuthCode}
+            KeySchema:
+              - AttributeName: oAuthCode
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.user}
+
+    ReportTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: traineeId
+            AttributeType: S
+          - AttributeName: week
+            AttributeType: N
+          - AttributeName: status
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.config.gsi.reportWeekTraineeId}
+            KeySchema:
+              - AttributeName: week
+                KeyType: HASH
+              - AttributeName: traineeId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.reportTraineeIdStatus}
+            KeySchema:
+              - AttributeName: traineeId
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.report}
+
+    CompanyTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.company}
+
+    AttachmentsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.config.s3.export}
+        LifecycleConfiguration:
+          Rules:
+            - Status: Enabled
+              ExpirationInDays: 1

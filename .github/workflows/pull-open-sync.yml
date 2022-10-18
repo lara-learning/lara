@@ -1,0 +1,22 @@
+########################################################
+# Action to run on pullrequests                        #
+########################################################
+name: Action on Pullrequest creation and update
+on: pull_request
+
+jobs:
+  install:
+    uses: ./.github/workflows/reusable-install-job.yml
+
+  build:
+    needs: install
+    uses: ./.github/workflows/reusable-build-job.yml
+    with:
+      environmentName: staging
+      debug: 'true'
+      mode: ""
+    secrets: inherit
+
+  test:
+    needs: [install, build]
+    uses: ./.github/workflows/reusable-test-job.yml

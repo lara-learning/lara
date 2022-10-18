@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ESNext",
+    "lib": ["ESNEXT", "DOM"],
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "keyofStringsOnly": false
+  },
+  "references": [{ "path": "../api" }],
+  "include": ["src/**/*"]
+}

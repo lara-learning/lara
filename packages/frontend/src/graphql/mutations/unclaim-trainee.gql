@@ -1,0 +1,16 @@
+mutation unclaimTrainee($id: ID!) {
+  unclaimTrainee(id: $id) {
+    trainee {
+      id
+      trainer {
+        id
+      }
+    }
+    trainer {
+      id
+      trainees {
+        id
+      }
+    }
+  }
+}

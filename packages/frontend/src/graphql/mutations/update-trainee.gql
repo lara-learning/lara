@@ -1,0 +1,15 @@
+mutation UpdateTrainee($input: UpdateTraineeInput!, $id: ID!) {
+  updateTrainee(input: $input, id: $id) {
+    id
+    startDate
+    startOfToolUsage
+    endDate
+    firstName
+    lastName
+    email
+    avatar
+    company {
+      id
+    }
+  }
+}

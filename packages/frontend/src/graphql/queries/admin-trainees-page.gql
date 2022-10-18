@@ -1,0 +1,13 @@
+query AdminTraineesPage {
+  trainees {
+    id
+    firstName
+    lastName
+    avatar
+    deleteAt
+  }
+  companies {
+    id
+    name
+  }
+}

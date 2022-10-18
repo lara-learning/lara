@@ -1,0 +1,51 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "de-DE": {
+          "summary": "Verwalte deine Lara Berichte mit Hilfe von Alexa.",
+          "examplePhrases": [
+            "Alexa, öffne Lara Berichte",
+            "Alexa, starte Lara Berichte",
+            "Alexa, starte Lara Berichte und füge einen neuen Eintrag hinzu."
+          ],
+          "keywords": ["Lara", "Lara-App", "Laraheft", "Lara", "Berichte"],
+          "name": "Lara Berichte",
+          "description": "Dieser Skill ermöglicht die Verwaltung von Berichten der Webanwendung Lara. Du kannst unter anderem Einträge erstellen, Tage bearbeiten oder Berichte abgeben. Um den Skill benutzen zu können musst du über ein Lara-Konto verfügen.",
+          "smallIconUri": "file://assets/images/de-DE_smallIconUri.png",
+          "largeIconUri": "file://assets/images/de-DE_largeIconUri.png"
+        }
+      },
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "isAvailableWorldwide": false,
+      "category": "ORGANIZERS_AND_ASSISTANTS",
+      "distributionMode": "PUBLIC",
+      "distributionCountries": ["DE"]
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sslCertificateType": "Wildcard",
+          "uri": "https://3o3lop4va9.execute-api.eu-central-1.amazonaws.com/luis/alexa"
+        },
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "de-DE": {
+          "privacyPolicyUrl": "https://www.termsfeed.com/live/d07ee53e-1683-42b7-8da7-c8f52e605efe"
+        }
+      },
+      "containsAds": false,
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "keyofStringsOnly": false,
+    "baseUrl": ".",
+    "outDir": "lib",
+    "rootDir": "src",
+    "strictNullChecks": true,
+    "module": "CommonJS"
+  },
+  "include": ["src/**/*"]
+}

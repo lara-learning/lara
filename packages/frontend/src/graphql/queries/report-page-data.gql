@@ -1,0 +1,64 @@
+query ReportPageData($year: Int!, $week: Int!) {
+  currentUser {
+    ... on Trainee {
+      startOfToolUsage
+      endOfToolUsage
+    }
+    id
+    firstName
+    lastName
+    avatar
+    username
+  }
+  reportForYearAndWeek(year: $year, week: $week) {
+    id
+    week
+    year
+    summary
+    department
+    status
+    previousReportLink
+    nextReportLink
+    comments {
+      id
+      text
+      user {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+    days {
+      status
+      date
+      id
+      comments {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+          avatar
+        }
+      }
+      entries {
+        id
+        text
+        time
+        orderId
+        comments {
+          id
+          text
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+mutation DebugSetUsertype($usertype: String!) {
+  _devsetusertype(type: $usertype) {
+    user {
+      id
+      __typename
+    }
+  }
+}

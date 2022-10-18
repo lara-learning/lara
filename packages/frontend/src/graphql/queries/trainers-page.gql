@@ -1,0 +1,8 @@
+query TrainersPage {
+  trainers {
+    id
+    firstName
+    lastName
+    avatar
+  }
+}

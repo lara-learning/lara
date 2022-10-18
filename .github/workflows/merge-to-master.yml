@@ -1,0 +1,36 @@
+########################################################
+# Action to run on pullrequest merge to master         #
+# Staging build and deployment                         #
+########################################################
+name: Action on Pullrequest push to master
+on: 
+  push:
+    branches:    
+      - 'master'
+
+jobs:
+  install:
+    uses: ./.github/workflows/reusable-install-job.yml
+
+  build:
+    needs: install
+    uses: ./.github/workflows/reusable-build-job.yml
+    with:
+      environmentName: staging
+      debug: 'true'
+      mode: ""
+    secrets: inherit
+
+  deploy:
+    needs: [install, build]
+    uses: ./.github/workflows/reusable-deploy-job.yml
+    with:
+      alexaSkillStage: development
+      debug: 'true'
+      target: staging
+    secrets: inherit
+
+  e2e-test:
+    needs: deploy
+    uses: ./.github/workflows/reusable-e2e-test-job.yml
+    secrets: inherit

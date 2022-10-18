@@ -1,0 +1,6 @@
+mutation SignatureSettingsUpdateSignature($signature: String) {
+  updateCurrentUser(input: { signature: $signature }) {
+    id
+    signature
+  }
+}

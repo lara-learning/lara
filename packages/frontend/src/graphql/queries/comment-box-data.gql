@@ -1,0 +1,5 @@
+query CommentBoxData {
+  currentUser {
+    id
+  }
+}

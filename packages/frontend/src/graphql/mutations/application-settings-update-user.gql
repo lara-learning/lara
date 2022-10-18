@@ -1,0 +1,9 @@
+mutation ApplicationSettingsUpdateUser($language: String, $theme: String, $notification: Boolean) {
+  updateCurrentUser(input: { language: $language, theme: $theme, notification: $notification }) {
+    language
+    theme
+    notification
+    __typename
+    id
+  }
+}

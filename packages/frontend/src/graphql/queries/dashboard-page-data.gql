@@ -1,0 +1,55 @@
+query DashboardPageData($currentYear: Int!, $currentWeek: Int!) {
+  currentUser {
+    id
+    theme
+  }
+  reports(statuses: [todo, reopened, review]) {
+    id
+    week
+    year
+    status
+    department
+    days {
+      status
+      entries {
+        id
+        time
+      }
+    }
+    __typename
+  }
+  reportForYearAndWeek(year: $currentYear, week: $currentWeek) {
+    id
+    status
+    days {
+      status
+      date
+      id
+      entries {
+        id
+        text
+        time
+        orderId
+        comments {
+          id
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+      comments {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+          avatar
+        }
+      }
+    }
+  }
+}

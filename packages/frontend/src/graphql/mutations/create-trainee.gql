@@ -1,0 +1,18 @@
+mutation CreateTrainee($input: CreateTraineeInput!) {
+  createTrainee(input: $input) {
+    id
+    company {
+      id
+    }
+    startDate
+    startOfToolUsage
+    endDate
+    course
+    avatar
+    firstName
+    lastName
+    email
+    type
+    deleteAt
+  }
+}

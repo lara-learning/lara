@@ -1,0 +1,27 @@
+[
+  {
+    "id": "expGermany",
+    "name": "ExampleCompany Deutschland GmbH",
+    "logo": "exp-logo.png"
+  },
+  {
+    "id": "expSwip",
+    "name": "ExampleCompany Swip GmbH",
+    "logo": "exps-logo.png"
+  },
+  {
+    "id": "expCommerce",
+    "name": "ExampleCompany Commerce GmbH",
+    "logo": "expc-logo.png"
+  },
+  {
+    "id": "expContent",
+    "name": "ExampleCompany Content GmbH",
+    "logo": "exp-logo.png"
+  },
+  {
+    "id": "expAg",
+    "name": "ExampleCompany AG",
+    "logo": "exp-logo.png"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/components"
+    },
+    {
+      "path": "./packages/backend"
+    },
+    {
+      "path": "./packages/print"
+    },
+    {
+      "path": "./packages/email"
+    },
+    {
+      "path": "./packages/api"
+    },
+    {
+      "path": "./packages/authorizer"
+    },
+    {
+      "path": "./packages/cleanup"
+    },
+    {
+      "path": "./packages/alexa"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<mjml>
+  <mj-head>
+    <mj-preview>Post von Lara</mj-preview>
+    <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" />
+
+    <mj-attributes>
+      <mj-title>Lara</mj-title>
+      <mj-all font-family="Inter, Arial" line-height="16px" />
+      <mj-class name="header" font-size="30px" font-weight="800" align="center" line-height="32px" />
+      <mj-class
+        name="linkButton"
+        background-color="#4065FA"
+        font-weight="600"
+        inner-padding="12px 32px"
+        line-height="1"
+      />
+      <mj-class name="infoText" color="#707070" align="center" />
+      <mj-class name="paddingText" />
+    </mj-attributes>
+
+    <mj-style> .box-shadow a { box-shadow: rgb(0 0 0 / 20%) 0px 4px 9px; } </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-section background-size="600px 846px" background-repeat="no-repeat" background-url="{{ DEFAULTBACKGROUND }}">
+      <mj-column width="70%">
+        <mj-spacer height="104px" />
+
+        <mj-text mj-class="header" height="48px">{{ HEADLINE }}</mj-text>
+
+        <mj-spacer height="24px" />
+
+        <mj-image align="center" width="128px" src="{{ HEADLINEIMAGE }}" />
+
+        <mj-spacer height="32px" />
+
+        <mj-text mj-class="paddingText">{{ GREETING }},</mj-text>
+        <mj-text mj-class="paddingText">{{ MAINTEXT }}</mj-text>
+
+        <mj-spacer height="32px" />
+
+        <mj-button mj-class="linkButton" css-class="box-shadow" href="{{ BUTTONLINK }}"> {{ BUTTONTEXT }} </mj-button>
+
+        <mj-spacer height="48px" />
+
+        <mj-text mj-class="infoText"> {{ INFOTEXT }} </mj-text>
+
+        <mj-spacer height="256px" />
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -1,0 +1,7 @@
+mutation DebugLogin($id: String!) {
+  _devloginuser(id: $id) {
+    accessToken
+    refreshToken
+    expiresIn
+  }
+}

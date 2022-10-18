@@ -1,0 +1,23 @@
+query TraineePageData {
+  trainees {
+    id
+    username
+    firstName
+    lastName
+    course
+    avatar
+    startDate
+    trainer {
+      id
+      firstName
+      lastName
+    }
+    company {
+      id
+      name
+    }
+  }
+  currentUser {
+    id
+  }
+}

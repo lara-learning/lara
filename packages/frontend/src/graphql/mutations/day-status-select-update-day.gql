@@ -1,0 +1,7 @@
+mutation DayStatusSelectUpdateDay($id: ID!, $status: String) {
+  updateDay(id: $id, status: $status) {
+    id
+    status
+    __typename
+  }
+}

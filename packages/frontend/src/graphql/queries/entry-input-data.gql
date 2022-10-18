@@ -1,0 +1,10 @@
+query EntryInputData {
+  currentUser {
+    id
+    type
+    firstName
+    lastName
+    avatar
+    username
+  }
+}

@@ -1,0 +1,6 @@
+query SignatureSettingsData {
+  currentUser {
+    id
+    signature
+  }
+}

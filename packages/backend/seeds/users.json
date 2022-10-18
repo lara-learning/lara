@@ -1,0 +1,46 @@
+[
+  {
+    "id": "123",
+    "companyId": "expGermany",
+    "course": "Trainee Course",
+    "createdAt": "2019-08-01T11:25:18.000Z",
+    "email": "trainee@exampleCompany.com",
+    "firstName": "Trainee",
+    "lastName": "Traineeson",
+    "language": "de",
+    "startDate": "2019-08-01T22:00:00.000Z",
+    "endDate": "2023-07-31T22:00:00.000Z",
+    "theme": "light",
+    "token": "123",
+    "type": "Trainee",
+    "trainerId": "456"
+  },
+  {
+    "id": "456",
+    "companyId": "expGermany",
+    "course": "Trainer Course",
+    "createdAt": "2021-04-08T12:43:48.736Z",
+    "email": "trainer@exampleCompany.com",
+    "firstName": "Trainer",
+    "lastName": "Trainerson",
+    "language": "de",
+    "startDate": "2019-05-06T22:00:00.000Z",
+    "endDate": "2022-05-06T22:00:00.000Z",
+    "theme": "light",
+    "token": "456",
+    "type": "Trainer"
+  },
+  {
+    "id": "789",
+    "type": "Admin",
+    "companyId": "expGermany",
+    "createdAt": "2021-04-08T12:43:48.736Z",
+    "firstName": "Adm",
+    "language": "de",
+    "lastName": "Ini",
+    "notification": true,
+    "theme": "light",
+    "email": "admin@exampleCompany.com",
+    "token": "789"
+  }
+]

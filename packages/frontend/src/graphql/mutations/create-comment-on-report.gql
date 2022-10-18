@@ -1,0 +1,19 @@
+mutation createCommentOnReport($id: ID!, $text: String!, $traineeId: ID!) {
+  createCommentOnReport(id: $id, text: $text, traineeId: $traineeId) {
+    commentable {
+      ... on Report {
+        id
+        comments {
+          id
+          text
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+    }
+  }
+}

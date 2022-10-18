@@ -1,0 +1,6 @@
+mutation unlinkAlexa {
+  unlinkAlexa {
+    id
+    alexaSkillLinked
+  }
+}

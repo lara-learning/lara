@@ -1,0 +1,67 @@
+########################################################
+# Reusable build workflow                              #
+########################################################
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      environmentName:
+        required: true
+        type: string
+      debug:
+        required: true
+        type: string
+      mode:
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build-job
+    env:
+      ENVIRONMENT_NAME: ${{ inputs.environmentName }}
+      DEBUG: ${{ inputs.debug }}
+      MODE: ${{ inputs.mode }}
+      AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}
+      URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
+      COMPANY_ABBREVIATION: ${{ secrets.COMPANY_ABBREVIATION }}
+      OLD_COMPANY_NAME: ${{ secrets.OLD_COMPANY_NAME }}
+      NEW_COMPANY_NAME: ${{ secrets.NEW_COMPANY_NAME }}
+      AVATAR_URL: ${{ secrets.AVATAR_URL }}
+      LARA_VERSION: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+##############
+# Set BACKEND_URL env varibale this way, so not all variables have to be passed to the reusable workflow
+      - name: Set production BE Url
+        if: env.ENVIRONMENT_NAME == 'production'
+        run: |
+          echo "BACKEND_URL=${{ secrets.PRODUCTION_BE_URL }}" >> $GITHUB_ENV
+      - name: Set staging BE Url
+        if: env.ENVIRONMENT_NAME == 'staging'
+        run: |
+          echo "BACKEND_URL=${{ secrets.STAGING_BE_URL }}" >> $GITHUB_ENV
+##############
+      - name: Compile and build
+        run: yarn clean && yarn compile && yarn build
+      - name: Upload dist and lib
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-and-lib
+          path: |
+            packages/*/dist
+            packages/*/lib

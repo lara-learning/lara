@@ -1,0 +1,17 @@
+mutation createEntry($dayId: String!, $input: EntryInput!) {
+  createEntry(input: $input, dayId: $dayId) {
+    day {
+      id
+      __typename
+      entries {
+        id
+        text
+        time
+        orderId
+        comments {
+          id
+        }
+      }
+    }
+  }
+}

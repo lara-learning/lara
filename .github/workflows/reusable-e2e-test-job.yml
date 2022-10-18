@@ -1,0 +1,39 @@
+########################################################
+# Reusable e2e-test workflow                           #
+########################################################
+name: e2e-test
+
+on:
+  workflow_call:
+
+jobs:
+  e2e:
+    name: e2e-job
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:focal
+    env:
+      USER_ID: ${{ secrets.TEST_TRAINEE_ID }}
+      URL: ${{ secrets.STAGING_FE_URL }}
+      BASICAUTHENTICATION_USERNAME: ${{ secrets.BASICAUTHENTICATION_USERNAME }}
+      BASICAUTHENTICATION_PASSWORD: ${{ secrets.BASICAUTHENTICATION_PASSWORD }}
+      ENVIRONMENT_NAME: staging
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules 
+            packages/*/node_modules
+            .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+      - name: Download built dist and lib
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-and-lib
+          path: packages
+      - run: |
+          cd packages/e2e
+          unset NODE_OPTIONS
+          yarn
+          npx playwright install
+          npx playwright test

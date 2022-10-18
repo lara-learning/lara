@@ -1,0 +1,19 @@
+mutation createCommentOnEntry($id: ID!, $text: String!, $traineeId: ID!) {
+  createCommentOnEntry(id: $id, text: $text, traineeId: $traineeId) {
+    commentable {
+      ... on Entry {
+        id
+        comments {
+          id
+          text
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+    }
+  }
+}

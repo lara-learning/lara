@@ -1,0 +1,9 @@
+query DayInputData {
+  currentUser {
+    id
+    firstName
+    lastName
+    avatar
+    type
+  }
+}

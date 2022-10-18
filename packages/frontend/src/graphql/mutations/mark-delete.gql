@@ -1,0 +1,13 @@
+mutation MarkUserForDelete($id: ID!) {
+  markUserForDeletion(id: $id) {
+    id
+
+    ... on Trainee {
+      deleteAt
+    }
+
+    ... on Trainer {
+      deleteAt
+    }
+  }
+}
