@@ -15,4 +15,4 @@ In order to keep working on this project as efficient as possible, please follow
 1. Assign the task to you.
 2. Create a branch for the task you want to work on. Branches should be named by schema you find under naming conventions.
 3. Commit changes to this branch
-4. Once you finished your task, create a merge request to `master`. A merge request needs at least one approval by another team member.
+4. Once you finished your task, create a merge request to `main`. A merge request needs at least one approval by another team member.

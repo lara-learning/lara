@@ -156,7 +156,7 @@ The following variables should be added to your cloned version of Lara.
   - run `serverless deploy —stage [stage]`
 - For remote deployment:
   - set all GitHub Actions environment variables
-  - for a staging deployment create a push on master
+  - for a staging deployment create a push on main
   - for a production deployment create a tag
 
 #### Set the correct url's

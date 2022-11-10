@@ -1,12 +1,12 @@
 ########################################################
-# Action to run on pullrequest merge to master         #
+# Action to run on pullrequest merge to main         #
 # Staging build and deployment                         #
 ########################################################
-name: Action on Pullrequest push to master
+name: Action on Pullrequest push to main
 on: 
   push:
     branches:    
-      - 'master'
+      - 'main'
 
 jobs:
   install:
