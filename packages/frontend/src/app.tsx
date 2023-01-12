@@ -1,5 +1,6 @@
 import React from 'react'
 import { Router, Switch } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import ApolloProvider from './apollo-provider'
 import AppHistory from './app-history'
@@ -17,9 +18,11 @@ export const App: React.FunctionComponent = () => {
 
   return (
     <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
-      <ApolloProvider>
-        <InnerApp />
-      </ApolloProvider>
+      <GoogleOAuthProvider clientId={ENVIRONMENT.googleClientID}>
+        <ApolloProvider>
+          <InnerApp />
+        </ApolloProvider>
+      </GoogleOAuthProvider>
     </AuthenticationContext.Provider>
   )
 }
