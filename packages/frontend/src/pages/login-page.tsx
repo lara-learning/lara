@@ -49,6 +49,7 @@ const LoginPage: React.FunctionComponent = () => {
   if (authLoading) {
     return <SplashPage />
   }
+
   return (
     <Template type={'Secondary'}>
       <Spacer bottom="xxl">
