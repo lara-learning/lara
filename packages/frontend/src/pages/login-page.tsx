@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
+import { TokenResponse, useGoogleLogin } from '@react-oauth/google'
 
 import { Container, Paragraph, Spacer, StyledLogo } from '@lara/components'
 
 import AppHistory from '../app-history'
-import { PrimaryButton } from '../components/button'
 import { useLoginPageLoginMutation } from '../graphql'
 import { useAuthentication } from '../hooks/use-authentication'
 import { Template } from '../templates/template'
 import { SplashPage } from './splash-page'
+import { PrimaryButton } from '../components/button'
 
 const LoginPage: React.FunctionComponent = () => {
   const { login } = useAuthentication()
@@ -16,14 +16,19 @@ const LoginPage: React.FunctionComponent = () => {
 
   const [authLoading, setAuthLoading] = useState(false)
 
-  const onLoginSuccess = (googleResponse: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse: TokenResponse) => onLoginSuccess(tokenResponse),
+    onError: () => onLoginFailure,
+  })
+
+  const onLoginSuccess = (tokenResponse: TokenResponse) => {
     setAuthLoading(true)
 
-    if (!('getAuthResponse' in googleResponse)) {
+    if (!tokenResponse) {
       return
     }
 
-    const accessToken = googleResponse.getAuthResponse().access_token
+    const accessToken = tokenResponse.access_token
 
     mutate({ variables: { token: accessToken } }).then((response) => {
       const { data } = response
@@ -57,16 +62,7 @@ const LoginPage: React.FunctionComponent = () => {
           </Paragraph>
         </Spacer>
         <Paragraph center noMargin>
-          <GoogleLogin
-            render={({ onClick, disabled }) => (
-              <PrimaryButton onClick={onClick} disabled={disabled}>
-                sign in with Google
-              </PrimaryButton>
-            )}
-            clientId={ENVIRONMENT.googleClientID}
-            onSuccess={onLoginSuccess}
-            onFailure={onLoginFailure}
-          />
+          <PrimaryButton onClick={() => googleLogin()}>sign in with Google</PrimaryButton>
         </Paragraph>
       </Container>
     </Template>
