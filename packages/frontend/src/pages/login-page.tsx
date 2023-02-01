@@ -9,6 +9,7 @@ import { useLoginPageLoginMutation } from '../graphql'
 import { useAuthentication } from '../hooks/use-authentication'
 import { Template } from '../templates/template'
 import { SplashPage } from './splash-page'
+import { SignInButton } from '../components/ms-sign-in-button'
 
 const LoginPage: React.FunctionComponent = () => {
   const { login } = useAuthentication()
@@ -57,16 +58,19 @@ const LoginPage: React.FunctionComponent = () => {
           </Paragraph>
         </Spacer>
         <Paragraph center noMargin>
-          <GoogleLogin
-            render={({ onClick, disabled }) => (
-              <PrimaryButton onClick={onClick} disabled={disabled}>
-                sign in with Google
-              </PrimaryButton>
-            )}
-            clientId={ENVIRONMENT.googleClientID}
-            onSuccess={onLoginSuccess}
-            onFailure={onLoginFailure}
-          />
+          <Spacer bottom="xs">
+            <GoogleLogin
+              render={({ onClick, disabled }) => (
+                <PrimaryButton onClick={onClick} disabled={disabled}>
+                  sign in with Google
+                </PrimaryButton>
+              )}
+              clientId={ENVIRONMENT.googleClientID}
+              onSuccess={onLoginSuccess}
+              onFailure={onLoginFailure}
+            />
+          </Spacer>
+          <SignInButton />
         </Paragraph>
       </Container>
     </Template>
