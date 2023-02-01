@@ -16,7 +16,7 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
 
-  const handleLogin = async (loginType: any) => {
+  const handleLogin = (loginType: any) => {
     if (loginType === 'redirect') {
       instance.loginRedirect(loginRequest).catch((e) => {
         console.log(e)
