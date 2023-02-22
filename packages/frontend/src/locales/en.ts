@@ -289,6 +289,8 @@ const englishTranslation: Translation = {
     reports: 'Reports',
     trainees: 'Trainees',
     trainer: 'Trainer',
+    mentor: 'mentor',
+    paper: 'Paper',
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',
@@ -364,7 +366,20 @@ const englishTranslation: Translation = {
       'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
     success: 'The trainer {0} has been created',
   },
+  createMentor: {
+    title: 'New Mentor',
+    description:
+      'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
+    success: 'The trainer {0} has been created',
+  },
   deleteTrainer: {
+    title: 'Delete {0}?',
+    description:
+      'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',
+    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+  },
+
+  deleteMentor: {
     title: 'Delete {0}?',
     description:
       'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',

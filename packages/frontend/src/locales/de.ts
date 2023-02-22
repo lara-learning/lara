@@ -293,7 +293,9 @@ const germanTranslation: Translation = {
     reports: 'Berichte',
     trainees: 'Auszubildende',
     trainer: 'Ausbilder',
+    mentor: 'Ausbildungsbeauftragte',
     dashhboard: 'Dashboard',
+    paper: 'Paper',
     archive: 'Archiv',
     settings: 'Einstellungen',
   },
@@ -368,7 +370,19 @@ const germanTranslation: Translation = {
       'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
+  createMentor: {
+    title: 'Neuer Ausbildungsbeauftragte',
+    description:
+      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+  },
   deleteTrainer: {
+    title: '{0} wirklich löschen?',
+    description:
+      'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',
+    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+  },
+  deleteMentor: {
     title: '{0} wirklich löschen?',
     description:
       'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',

@@ -4,6 +4,7 @@ import {
   GqlCommentableInterface,
   GqlDay,
   GqlEntry,
+  GqlMentor,
   GqlPaper,
   GqlReport,
   GqlTrainee,
@@ -11,7 +12,7 @@ import {
   GqlUserInterface,
 } from './graphql'
 
-export type User = Trainee | Trainer | Admin
+export type User = Trainee | Trainer | Mentor | Admin
 
 /**
  * This values, that are omited from the gql types,
@@ -40,6 +41,8 @@ export type Trainee = UserInterface &
   }
 
 export type Trainer = UserInterface & Omit<GqlTrainer, ResolvedUserFields | 'trainees'>
+
+export type Mentor = UserInterface & Omit<GqlMentor, ResolvedUserFields>
 
 export type Admin = UserInterface & Omit<GqlAdmin, ResolvedUserFields>
 

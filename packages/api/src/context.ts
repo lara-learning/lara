@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, Context as AWSContext } from 'aws-lambda'
 import { Request, Response } from 'express'
 
-import { Trainee, Trainer, Admin, User } from './models'
+import { Trainee, Trainer, Admin, Mentor, User } from './models'
 
 type ExpressContext = {
   req: Request
@@ -27,6 +27,10 @@ export type TrainerContext = BaseContext & {
 
 export type TraineeContext = BaseContext & {
   currentUser: Trainee
+}
+
+export type MentorContext = BaseContext & {
+  currentUser: Mentor
 }
 
 export type AdminContext = BaseContext & {

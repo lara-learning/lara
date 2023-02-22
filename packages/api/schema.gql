@@ -203,6 +203,11 @@ type Mutation {
   createTrainer(input: CreateTrainerInput!): Trainer
 
   """
+  Creates Mentor.
+  """
+  createMentor(input: CreateMentorInput!): Mentor
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -221,6 +226,11 @@ type Mutation {
   Updates Trainer.
   """
   updateTrainer(input: UpdateTrainerInput!, id: ID!): Trainer
+
+  """
+  Updates Mentor.
+  """
+  updateMentor(input: UpdateMentorInput!, id: ID!): Mentor
 
   """
   Link Alexa account
@@ -307,6 +317,11 @@ type Query {
   Get all Trainers
   """
   trainers: [Trainer!]!
+
+  """
+  Get all Trainers
+  """
+  mentors: [Mentor!]!
 
   """
   Print single report or report batch
@@ -437,7 +452,19 @@ input CreateTrainerInput {
   lastName: String!
 }
 
+input CreateMentorInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
 input UpdateTrainerInput {
+  email: String
+  firstName: String
+  lastName: String
+}
+
+input UpdateMentorInput {
   email: String
   firstName: String
   lastName: String
@@ -454,6 +481,23 @@ type Trainer implements UserInterface {
   signature: String
   theme: String
   trainees: [Trainee!]!
+  type: UserTypeEnum!
+  username: String!
+  email: String!
+  deleteAt: String
+  alexaSkillLinked: Boolean
+}
+
+type Mentor implements UserInterface {
+  avatar: String!
+  createdAt: String!
+  firstName: String!
+  id: ID!
+  language: String
+  lastName: String!
+  notification: Boolean
+  signature: String
+  theme: String
   type: UserTypeEnum!
   username: String!
   email: String!
@@ -517,6 +561,11 @@ enum UserTypeEnum {
   Trainer
 
   """
+  User is a Mentor
+  """
+  Mentor
+
+  """
   User is an Admin
   """
   Admin
@@ -535,12 +584,6 @@ type PaperFormData {
   question: String!
   answer: String
   hint: String
-}
-
-type Mentor {
-  name: String!
-  email: String!
-  signature: String!
 }
 
 type Paper {

@@ -279,6 +279,8 @@ export default interface Translation {
     reports: string
     trainees: string
     trainer: string
+    mentor: string
+    paper: string
     dashhboard: string
     archive: string
     settings: string
@@ -343,7 +345,17 @@ export default interface Translation {
     description: string
     success: string
   }
+  createMentor: {
+    title: string
+    description: string
+    success: string
+  }
   deleteTrainer: {
+    title: string
+    description: string
+    success: string
+  }
+  deleteMentor: {
     title: string
     description: string
     success: string

@@ -12,7 +12,7 @@ type EditUser = Pick<Trainee | Trainer, 'id' | 'firstName' | 'lastName' | 'avata
 
 interface EditUserRowProps {
   user: EditUser
-  baseUrl: 'trainees' | 'trainer'
+  baseUrl: 'trainees' | 'trainer' | 'mentor'
 }
 
 export const EditUserRow: React.FunctionComponent<EditUserRowProps> = ({ user, baseUrl }) => {
