@@ -1,7 +1,14 @@
 import { addMonths, isFuture, isToday, subWeeks } from 'date-fns'
 import { GraphQLError } from 'graphql'
 
-import { AdminContext, GqlResolvers, Trainee, Trainer, User } from '@lara/api'
+import {
+  AdminContext,
+  GqlResolvers,
+  Mentor,
+  Trainee,
+  Trainer,
+  User
+} from '@lara/api'
 
 import { isAdmin, isTrainee, isTrainer } from '../permissions'
 import { traineeById } from '../repositories/trainee.repo'
@@ -13,6 +20,8 @@ import { deleteTrainer, generateTrainer, validateTrainer } from '../services/tra
 import { avatar, username } from '../services/user.service'
 import { parseISODateString } from '../utils/date'
 import { t } from '../i18n'
+import {generateMentor, validateMentor} from "../services/mentor.service";
+import {mentorById} from "../repositories/mentor.repo";
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {
@@ -121,6 +130,40 @@ export const trainerAdminResolver: GqlResolvers<AdminContext> = {
       // because we don't know what exactly changed
       // if we use update DDB would throw an error
       return saveUser(updatedTrainer)
+    },
+  },
+}
+export const mentorAdminResolver: GqlResolvers<AdminContext> = {
+  Mutation: {
+    createMentor: async (_parent, { input }, { currentUser }) => {
+      const existingUser = await userByEmail(input.email)
+
+      if (existingUser) {
+        throw new GraphQLError(t('errors.userAlreadyExists', currentUser.language))
+      }
+
+      const newMentor = await generateMentor(input)
+
+      return saveUser(newMentor)
+    },
+    updateMentor: async (_parent, { input, id }, { currentUser }) => {
+      const mentor = await mentorById(id)
+
+      if (!mentor) {
+        throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
+
+      const updatedMentor: Mentor = {
+        ...mentor,
+        ...input,
+      }
+
+      await validateMentor(updatedMentor)
+
+      // we need to save the user and not update it
+      // because we don't know what exactly changed
+      // if we use update DDB would throw an error
+      return saveUser(updatedMentor)
     },
   },
 }

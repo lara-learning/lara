@@ -1,4 +1,13 @@
-import { Admin, EmailPayload, EmailTranslations, Report, Trainee, Trainer, User } from '@lara/api'
+import {
+  Admin,
+  EmailPayload,
+  EmailTranslations,
+  Mentor,
+  Report,
+  Trainee,
+  Trainer,
+  User
+} from '@lara/api'
 import { invokeLambda } from '../aws/lambda'
 
 import { t } from '../i18n'
@@ -64,7 +73,7 @@ export const sendNotificationMail = async (report: Report, sender: User): Promis
 }
 
 // creates Payload for admin if a user will be deleted
-export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer): EmailPayload => {
+export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer | Mentor): EmailPayload => {
   const link = isTrainee(user) ? envLink(`/trainees/${user.id}`) : envLink(`/trainer/${user.id}`)
   return {
     emailType: 'deleteUser',
@@ -93,7 +102,7 @@ export const trainerDeletionMailPayload = (trainer: Trainer, user: Trainee): Ema
 }
 
 // creates Payload for the user that will be deleted
-export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer): EmailPayload => {
+export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer | Mentor): EmailPayload => {
   return {
     emailType: 'deleteAccount',
     userData: {
@@ -110,7 +119,7 @@ export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer)
  * If UserToDelete is a Trainee the Trainer will be notified too.
  * @param userToDelete
  */
-export const sendDeletionMail = async (userToDelete: Trainee | Trainer): Promise<void> => {
+export const sendDeletionMail = async (userToDelete: Trainee | Mentor | Trainer): Promise<void> => {
   const admins = await allAdmins()
 
   // notify admins

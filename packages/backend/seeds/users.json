@@ -42,5 +42,20 @@
     "theme": "light",
     "email": "admin@exampleCompany.com",
     "token": "789"
+  },
+  {
+    "id": "1011",
+    "type": "Mentor",
+    "companyId": "expGermany",
+    "createdAt": "2021-04-08T12:43:48.736Z",
+    "firstName": "Men",
+    "language": "de",
+    "lastName": "Tor",
+    "notification": true,
+    "startDate": "2019-05-06T22:00:00.000Z",
+    "endDate": "2029-05-06T22:00:00.000Z",
+    "theme": "light",
+    "email": "mentor@exampleCompany.com",
+    "token": "1011"
   }
 ]

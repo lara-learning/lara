@@ -1,12 +1,13 @@
 import React from 'react'
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom'
 
-import { Admin, Trainee, Trainer, UserTypeEnum } from './graphql'
+import { Admin, Trainee, Trainer, Mentor, UserTypeEnum } from './graphql'
 import { useAuthentication } from './hooks/use-authentication'
 import strings from './locales/localization'
 import { AdminEditUserPage } from './pages/admin-edit-user-page'
 import { AdminTraineesPage } from './pages/admin-trainees-page'
 import { AdminTrainerPage } from './pages/admin-trainer-page'
+import { AdminMentorPage } from './pages/admin-mentor-page'
 import { AlexaPage } from './pages/alexa-page'
 import ArchivePage from './pages/archive-page'
 import DashboardPage from './pages/dashboard-page'
@@ -29,6 +30,7 @@ type RoutesProps = {
     | Pick<Trainee, 'language' | 'type' | 'course' | '__typename'>
     | (Pick<Trainer, 'type' | 'language' | '__typename'> & { trainees: Pick<Trainee, 'id'>[] })
     | Pick<Admin, 'type' | 'language' | '__typename'>
+    | Pick<Mentor, 'type' | 'language' | '__typename'>
 }
 
 const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
@@ -74,6 +76,11 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
         routes.push({ path: '/trainees/:trainee?', component: TraineePage })
       }
 
+      if (currentUser.type === UserTypeEnum.Mentor && currentUser.__typename === 'Mentor') {
+        // Routes for Mentor
+        routes.push({ path: '/', exact: true, render: () => <Redirect to="/paper" />})
+      }
+
       if (currentUser.type === UserTypeEnum.Admin && currentUser.__typename === 'Admin') {
         // Routes for admins
 
@@ -81,6 +88,8 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
         routes.push({ path: '/trainer', exact: true, component: AdminTrainerPage })
         routes.push({ path: '/trainer/:id', component: AdminEditUserPage })
+
+        routes.push({ path: '/mentor', exact: true, component: AdminMentorPage })
 
         routes.push({ path: '/trainees', exact: true, component: AdminTraineesPage })
         routes.push({ path: '/trainees/:id', component: AdminEditUserPage })

@@ -50,6 +50,7 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
             <select onChange={selectUsertype} value={currentUser && currentUser.type}>
               <option value="Trainee">Trainee</option>
               <option value="Trainer">Trainer</option>
+              <option value="Mentor">Mentor</option>
               <option value="Admin">Admin</option>
             </select>
           </label>

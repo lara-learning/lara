@@ -57,6 +57,7 @@ export const permissions = shield<unknown, Context>(
       // Admin Queris
       getUser: and(authenticated, admin),
       trainers: and(authenticated, admin),
+      mentors: and(authenticated, admin),
     },
     Mutation: {
       _devsetusertype: and(authenticated, debug),
@@ -67,6 +68,9 @@ export const permissions = shield<unknown, Context>(
       linkAlexa: authenticated,
       unlinkAlexa: authenticated,
       createOAuthCode: authenticated,
+
+      /**createMentor: authenticated,
+      updateMentor: authenticated,**/
 
       // Trainee and Trainer mutations
       updateReport: and(authenticated, or(trainee, trainer)),

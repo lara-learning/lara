@@ -1,0 +1,9 @@
+query AdminMentorPage {
+  mentors {
+    id
+    firstName
+    lastName
+    avatar
+    deleteAt
+  }
+}
