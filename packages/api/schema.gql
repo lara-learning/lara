@@ -468,6 +468,8 @@ input UpdateMentorInput {
   email: String
   firstName: String
   lastName: String
+  startDate: String
+  endDate: String
 }
 
 type Trainer implements UserInterface {
@@ -499,6 +501,8 @@ type Mentor implements UserInterface {
   signature: String
   theme: String
   type: UserTypeEnum!
+  startDate: String
+  endDate: String
   username: String!
   email: String!
   deleteAt: String

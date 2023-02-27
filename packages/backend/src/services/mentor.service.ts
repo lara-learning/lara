@@ -17,10 +17,12 @@ type GenerateMentorOptions = {
  * @returns New Mentor
  */
 export const generateMentor = async (options: GenerateMentorOptions): Promise<Mentor> => {
+  const date = new Date();
   const mentor: Mentor = {
     id: v4(),
-    createdAt: new Date().toISOString(),
+    createdAt: date.toISOString(),
     type: 'Mentor',
+    deleteAt: date.setMonth(date.getMonth() + 4).toLocaleString(),
     ...options,
   }
 

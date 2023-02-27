@@ -89,6 +89,7 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
         routes.push({ path: '/trainer/:id', component: AdminEditUserPage })
 
         routes.push({ path: '/mentor', exact: true, component: AdminMentorPage })
+        routes.push({ path: '/mentor/:id', component: AdminEditUserPage })
 
         routes.push({ path: '/trainees', exact: true, component: AdminTraineesPage })
         routes.push({ path: '/trainees/:id', component: AdminEditUserPage })

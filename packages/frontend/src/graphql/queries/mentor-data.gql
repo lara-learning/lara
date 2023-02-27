@@ -3,6 +3,8 @@ query MentorsPage {
     id
     firstName
     lastName
+    startDate
+    endDate
     avatar
   }
 }
