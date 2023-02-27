@@ -3,7 +3,6 @@ import React from 'react'
 
 import { AdminCreateUserLayout, AdminOverviewLayout, H1, Paragraph } from '@lara/components'
 
-import { TrainerForm, EditTrainerFormData } from '../components/trainer-form'
 import { EditUserRow } from '../components/edit-user-row'
 import { Fab } from '../components/fab'
 import Loader from '../components/loader'
@@ -16,6 +15,7 @@ import {
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
+import {EditMentorFormData, MentorForm} from "../components/mentor-form";
 
 export const AdminMentorPage: React.FC = () => {
   const { loading, data } = useAdminMentorPageQuery()
@@ -25,7 +25,7 @@ export const AdminMentorPage: React.FC = () => {
 
   const [showModal, setShowModal] = React.useState(false)
 
-  const createMentor = async (data: EditTrainerFormData) => {
+  const createMentor = async (data: EditMentorFormData) => {
     await mutate({
       variables: { input: data },
       updateQueries: {
@@ -60,7 +60,6 @@ export const AdminMentorPage: React.FC = () => {
     <Template type="Main">
       <AdminOverviewLayout heading={<H1>{strings.navigation.mentor}</H1>}>
         {loading && <Loader />}
-
         {!loading && data?.mentors.map((mentor) => <EditUserRow key={mentor.id} user={mentor} baseUrl="mentor" />)}
       </AdminOverviewLayout>
 
@@ -76,7 +75,7 @@ export const AdminMentorPage: React.FC = () => {
           }
         >
           {!loading ? (
-            <TrainerForm blurSubmit={false} submit={createMentor} cancel={() => setShowModal(false)} />
+            <MentorForm blurSubmit={false} submit={createMentor} cancel={() => setShowModal(false)} />
           ) : (
             <Loader />
           )}

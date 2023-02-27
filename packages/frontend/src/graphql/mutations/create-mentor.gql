@@ -4,7 +4,10 @@ mutation CreateMentor($input: CreateMentorInput!) {
     avatar
     firstName
     lastName
+    startDate
+    endDate
     email
     type
+    deleteAt
   }
 }

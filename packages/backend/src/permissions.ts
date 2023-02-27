@@ -1,6 +1,14 @@
 import { and, or, rule, shield } from 'graphql-shield'
 
-import { Admin, AuthenticatedContext, Context, Trainee, Trainer, User } from '@lara/api'
+import {
+  Admin,
+  AuthenticatedContext,
+  Context,
+  Mentor,
+  Trainee,
+  Trainer,
+  User
+} from '@lara/api'
 
 const { DEBUG } = process.env
 
@@ -21,6 +29,14 @@ export const isTrainer = (user: User): user is Trainer => {
 const trainer = rule({ cache: 'contextual' })(
   (_parent, _args, ctx: AuthenticatedContext) => isTrainer(ctx.currentUser) || 'Wrong Usertype'
 )
+
+export const isMentor = (user: User): user is Mentor => {
+  return user.type === 'Mentor'
+}
+
+/*const mentor = rule({ cache: 'contextual' })(
+  (_parent, _args, ctx: AuthenticatedContext) => isMentor(ctx.currentUser) || 'Wrong Usertype'
+)*/
 
 export const isAdmin = (user: User): user is Admin => {
   return user.type === 'Admin'
@@ -69,8 +85,8 @@ export const permissions = shield<unknown, Context>(
       unlinkAlexa: authenticated,
       createOAuthCode: authenticated,
 
-      /**createMentor: authenticated,
-      updateMentor: authenticated,**/
+      createMentor: and(authenticated, admin, trainer, trainee),
+      updateMentor: and(authenticated, admin, trainer, trainee),
 
       // Trainee and Trainer mutations
       updateReport: and(authenticated, or(trainee, trainer)),

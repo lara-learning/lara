@@ -14,6 +14,7 @@ import { Template } from '../templates/template'
 import { Box, Flex } from '@rebass/grid'
 import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
+import {EditMentor} from "../components/edit-mentor-content";
 
 type AdminEditUserPageParams = {
   id: string
@@ -84,6 +85,23 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
             />
           }
           content={<EditTrainer trainer={data.getUser} />}
+          actions={renderDeleteAction(data.getUser.deleteAt)}
+        />
+      )}
+
+      {/* Edit Mentor page */}
+      {!loading && data?.getUser?.__typename === 'Mentor' && (
+        <EditUserLayout
+          backButton={
+            <NavigationButtonLink
+              label={strings.back}
+              to="/mentor"
+              icon="ChevronLeft"
+              isLeft
+              iconColor="iconLightGrey"
+            />
+          }
+          content={<EditMentor mentor={data.getUser} />}
           actions={renderDeleteAction(data.getUser.deleteAt)}
         />
       )}

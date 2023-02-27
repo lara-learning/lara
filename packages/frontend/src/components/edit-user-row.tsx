@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom'
 
 import { EditUserRowLayout } from '@lara/components'
 
-import { Trainee, Trainer } from '../graphql'
+import {Mentor, Trainee, Trainer} from '../graphql'
 import strings from '../locales/localization'
 import { SecondaryButton } from './button'
 import { UserInfo } from './user-info'
 
-type EditUser = Pick<Trainee | Trainer, 'id' | 'firstName' | 'lastName' | 'avatar' | 'deleteAt'>
+type EditUser = Pick<Trainee | Trainer | Mentor, 'id' | 'firstName' | 'lastName' | 'avatar' | 'deleteAt'>
 
 interface EditUserRowProps {
   user: EditUser

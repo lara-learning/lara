@@ -150,12 +150,14 @@ export type Mentor = UserInterface & {
   createdAt: Scalars['String'];
   deleteAt?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  endDate?: Maybe<Scalars['String']>;
   firstName: Scalars['String'];
   id: Scalars['ID'];
   language?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   notification?: Maybe<Scalars['Boolean']>;
   signature?: Maybe<Scalars['String']>;
+  startDate?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
   type: UserTypeEnum;
   username: Scalars['String'];
@@ -602,8 +604,10 @@ export type UpdateCurrentTraineeInput = {
 
 export type UpdateMentorInput = {
   email?: InputMaybe<Scalars['String']>;
+  endDate?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
+  startDate?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateReportPayload = {
@@ -718,7 +722,7 @@ export type CreateMentorMutationVariables = Exact<{
 }>;
 
 
-export type CreateMentorMutation = { __typename?: 'Mutation', createMentor?: { __typename?: 'Mentor', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | undefined };
+export type CreateMentorMutation = { __typename?: 'Mutation', createMentor?: { __typename?: 'Mentor', id: string, avatar: string, firstName: string, lastName: string, startDate?: string | undefined, endDate?: string | undefined, email: string, type: UserTypeEnum, deleteAt?: string | undefined } | undefined };
 
 export type CreateOAuthCodeMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -846,7 +850,7 @@ export type UpdateMentorMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMentorMutation = { __typename?: 'Mutation', updateMentor?: { __typename?: 'Mentor', id: string, firstName: string, lastName: string, email: string, avatar: string, type: UserTypeEnum } | undefined };
+export type UpdateMentorMutation = { __typename?: 'Mutation', updateMentor?: { __typename?: 'Mentor', id: string, startDate?: string | undefined, endDate?: string | undefined, firstName: string, lastName: string, email: string, avatar: string, type: UserTypeEnum } | undefined };
 
 export type UpdateReportReportReviewPageMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -947,12 +951,12 @@ export type UserPageQueryVariables = Exact<{
 }>;
 
 
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type MentorsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MentorsPageQuery = { __typename?: 'Query', mentors: Array<{ __typename?: 'Mentor', id: string, firstName: string, lastName: string, avatar: string }> };
+export type MentorsPageQuery = { __typename?: 'Query', mentors: Array<{ __typename?: 'Mentor', id: string, firstName: string, lastName: string, startDate?: string | undefined, endDate?: string | undefined, avatar: string }> };
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1174,8 +1178,11 @@ export const CreateMentorDocument = gql`
     avatar
     firstName
     lastName
+    startDate
+    endDate
     email
     type
+    deleteAt
   }
 }
     `;
@@ -1474,6 +1481,8 @@ export const UpdateMentorDocument = gql`
     mutation UpdateMentor($input: UpdateMentorInput!, $id: ID!) {
   updateMentor(input: $input, id: $id) {
     id
+    startDate
+    endDate
     firstName
     lastName
     email
@@ -1911,6 +1920,11 @@ export const UserPageDocument = gql`
         avatar
       }
     }
+    ... on Mentor {
+      deleteAt
+      startDate
+      endDate
+    }
   }
   companies {
     id
@@ -1934,6 +1948,8 @@ export const MentorsPageDocument = gql`
     id
     firstName
     lastName
+    startDate
+    endDate
     avatar
   }
 }
