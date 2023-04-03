@@ -17,6 +17,7 @@ const germanTranslation: Translation = {
   done: 'fertig',
   markDelete: 'für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
+  deleteAt: 'Löschen nach',
   cancel: 'Abbrechen',
   deactivate: 'Deaktivieren',
   traineeShipYear: 'Jahr der Ausbildung',
@@ -41,6 +42,28 @@ const germanTranslation: Translation = {
     reportToArciveAddedSuccess:
       'Dein Bericht über {0}{1} wurde von {name} genehmigt und befindet sich jetzt in deinem Archiv.',
   },
+
+  paper: {
+    empty: {
+      headline: "Briefing/Kick-Off Gespräch",
+      description: "Dein Azubi kommt auf eine neue Station und es steht das Kick-Off Gespräch an? Hier kannst du das Briefing für die Station ausfüllen und vorbereiten. Damit kannst du einene Rahmen über den Umfang und die Themen der Ausbildungssation deines Azubis festlegen.",
+      createBriefing: "Briefing erstellen"
+    },
+    createBriefing: {
+      title: "Briefing",
+      firstnameMentor: "Vorname des Ausbildungsbeauftragten",
+      lastnameMentor: "Nachname des Ausbildungsbeauftragten",
+      emailMentor: "Email des Mentors",
+      firstnameTrainee: "Vorname des Auszubildenden",
+      lastnameTrainee: "Nachname des Auszubildenden",
+      emailTrainee: "Email des Auszubildenden",
+      department: "Abteilung",
+      customer: "Kunde",
+      projectPeriod: "Stations Zeitraum",
+      schoolPeriod: "Schulzeitraum",
+    }
+  },
+
   archivePage: {
     header: 'Archiv',
     tableHead: {

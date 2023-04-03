@@ -4,6 +4,8 @@ query AdminMentorPage {
     firstName
     lastName
     avatar
+    startDate
+    endDate
     deleteAt
   }
 }

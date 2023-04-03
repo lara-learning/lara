@@ -7,14 +7,15 @@ import { FontSizes } from './font-size'
 
 export interface StyledLinkProps extends LinkProps {
   isLeft?: boolean
+  alignLeft?: boolean
 }
 
 // isLeft props needs to be removed from LinkProps
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledLink = styled(({ isLeft, ...rest }) => <Link {...rest} />)<StyledLinkProps>`
+const StyledLink = styled(({ isLeft, alignLeft, ...rest }) => <Link {...rest} />)<StyledLinkProps>`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${(props) => (props.alignLeft ? 'flex-start' : 'center')};
   flex-direction: ${(props) => (props.isLeft ? 'row' : 'row-reverse')};
   border-radius: ${BorderRadii.xxs};
   text-decoration: none;
@@ -31,12 +32,13 @@ interface NavigationButtonLinkLayoutProps {
   icon: JSX.Element
   label: string
   isLeft: boolean
+  alignLeft: boolean
   to: string
 }
 
-export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({ icon, isLeft, label, to }) => {
+export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({ icon, isLeft, alignLeft, label, to }) => {
   return (
-    <StyledLink isLeft={isLeft} to={to}>
+    <StyledLink isLeft={isLeft} alignLeft={alignLeft} to={to}>
       {icon}
       <Label>{label}</Label>
     </StyledLink>

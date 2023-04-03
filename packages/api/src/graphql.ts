@@ -69,8 +69,10 @@ export type GqlCreateCommentPayload = {
 
 export type GqlCreateMentorInput = {
   email: Scalars['String'];
+  endDate?: InputMaybe<Scalars['String']>;
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  startDate?: InputMaybe<Scalars['String']>;
 };
 
 export type GqlCreateTraineeInput = {
@@ -151,12 +153,14 @@ export type GqlMentor = GqlUserInterface & {
   createdAt: Scalars['String'];
   deleteAt?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  endDate?: Maybe<Scalars['String']>;
   firstName: Scalars['String'];
   id: Scalars['ID'];
   language?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   notification?: Maybe<Scalars['Boolean']>;
   signature?: Maybe<Scalars['String']>;
+  startDate?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
   type: GqlUserTypeEnum;
   username: Scalars['String'];
@@ -601,8 +605,10 @@ export type GqlUpdateCurrentTraineeInput = {
 
 export type GqlUpdateMentorInput = {
   email?: InputMaybe<Scalars['String']>;
+  endDate?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
+  startDate?: InputMaybe<Scalars['String']>;
 };
 
 export type GqlUpdateReportPayload = {
@@ -905,12 +911,14 @@ export type GqlMentorResolvers<ContextType = Context, ParentType extends GqlReso
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   deleteAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  endDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  startDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
   username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;

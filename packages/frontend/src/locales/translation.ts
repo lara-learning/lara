@@ -16,6 +16,7 @@ export default interface Translation {
   done: string
   markDelete: string
   unmarkDelete: string
+  deleteAt: string
   deactivate: string
   traineeShipYear: string
   claimed: string
@@ -36,6 +37,27 @@ export default interface Translation {
     declinedReportMessage: string
     reportToArciveAddedSuccessTitle: string
     reportToArciveAddedSuccess: string
+  }
+
+  paper: {
+    empty: {
+      headline: string
+      description: string
+      createBriefing: string
+    }
+    createBriefing: {
+      title: string,
+      firstnameMentor: string
+      lastnameMentor: string
+      emailMentor: string
+      firstnameTrainee: string
+      lastnameTrainee: string
+      emailTrainee: string
+      department: string
+      customer: string
+      projectPeriod: string
+      schoolPeriod: string
+    }
   }
   archivePage: {
     header: string

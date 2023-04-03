@@ -32,7 +32,7 @@ export const AdminMentorPage: React.FC = () => {
         AdminMentorPage: (prevData, { mutationResult }) => {
           return {
             ...prevData,
-            Mentor: [...prevData.mentor, mutationResult.data?.createMentor],
+            Mentors: [...prevData.mentors, mutationResult.data?.createMentor],
           }
         },
       },
