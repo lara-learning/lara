@@ -120,6 +120,7 @@ type MentorFormLayoutProps = {
   emailInput: JSX.Element
   startDateInput: JSX.Element
   endDateInput: JSX.Element
+  deleteDateInput: JSX.Element
   periodSpacer: JSX.Element
   buttonControls?: JSX.Element
 }
@@ -129,6 +130,7 @@ export const MentorFormLayout: React.FC<MentorFormLayoutProps> = ({
   emailInput,
   startDateInput,
   endDateInput,
+  deleteDateInput,
   periodSpacer,
   buttonControls,
 }) => {
@@ -146,6 +148,8 @@ export const MentorFormLayout: React.FC<MentorFormLayoutProps> = ({
           {periodSpacer}
           <div>{endDateInput}</div>
         </StyledFormGridDateItem>
+
+        <StyledFormGridItem>{deleteDateInput}</StyledFormGridItem>
       </StyledFormGrid>
 
       {buttonControls && <StyledButtonControls>{buttonControls}</StyledButtonControls>}

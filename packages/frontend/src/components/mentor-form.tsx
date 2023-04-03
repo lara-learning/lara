@@ -15,7 +15,7 @@ import {format, parseISO} from "date-fns";
 import {Mentor} from "../graphql";
 
 interface EditMentorFormProps {
-  mentor?: Pick<Mentor, 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate'>
+  mentor?: Pick<Mentor, 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
   submit: (data: EditMentorFormData) => Promise<void>
   cancel?: () => void
   blurSubmit: boolean
@@ -27,6 +27,7 @@ export interface EditMentorFormData {
   email: string
   startDate: string
   endDate: string
+  deleteAt: string
 }
 
 const inputLabelProps: TextProps = {
@@ -161,6 +162,21 @@ export const MentorForm: React.FC<EditMentorFormProps> = ({ mentor, submit, blur
                 })
                 : register('endDate', { required: strings.validation.required, validate: validateEndDate }))}
               error={Boolean(errors.endDate)}
+              onBlur={blurSubmit ? onSubmit : undefined}
+            />
+          </>
+        }
+        deleteDateInput={
+          <>
+            <Text color={getFontColor(errors.deleteAt)} {...inputLabelProps}>
+              {strings.deleteAt}
+            </Text>
+            <Input
+              type="date"
+              block
+              disabled={updating}
+              defaultValue={mentor?.deleteAt && format(parseISO(mentor.deleteAt), 'yyyy-MM-dd')}
+              error={Boolean(errors.deleteAt)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
           </>

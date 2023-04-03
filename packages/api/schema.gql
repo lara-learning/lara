@@ -261,6 +261,16 @@ type Mutation {
   Update Paper
   """
   answerPaper(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Creates Entry for Lara Paper
+  """
+  createPaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Deletes Entry for Lara Paper
+  """
+  deletePaperEntry(id: ID!): PaperFormData!
 }
 
 type LaraConfig {
@@ -456,6 +466,8 @@ input CreateMentorInput {
   email: String!
   firstName: String!
   lastName: String!
+  startDate: String
+  endDate: String
 }
 
 input UpdateTrainerInput {
@@ -595,7 +607,7 @@ type Paper {
   trainee: Trainee!
   status: PaperStatus!
   traineeForm: [PaperFormData!]!
-  trainerForm: [PaperFormData!]!
+  briefing: [PaperFormData!]!
   conclusion: String
   archivedAt: String
   createdAt: String!

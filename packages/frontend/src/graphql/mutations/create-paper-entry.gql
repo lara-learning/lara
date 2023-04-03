@@ -1,0 +1,10 @@
+mutation createPaperEntry($input: AnswerPaperInput!) {
+  createPaperEntry(input: $input) {
+      __typename
+      entries {
+        id
+        question
+        answer
+    }
+  }
+}

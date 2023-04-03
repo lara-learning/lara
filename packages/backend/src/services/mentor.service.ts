@@ -1,13 +1,15 @@
-import { v4 } from 'uuid'
+import {v4} from 'uuid'
 
 import {Mentor} from '@lara/api'
 
-import { deleteUser } from '../repositories/user.repo'
+import {deleteUser} from '../repositories/user.repo'
 
 type GenerateMentorOptions = {
   firstName: string
   lastName: string
   email: string
+  startDate?: string
+  endDate?: string
 }
 
 /**
@@ -18,11 +20,11 @@ type GenerateMentorOptions = {
  */
 export const generateMentor = async (options: GenerateMentorOptions): Promise<Mentor> => {
   const date = new Date();
+
   const mentor: Mentor = {
     id: v4(),
     createdAt: date.toISOString(),
     type: 'Mentor',
-    deleteAt: date.setMonth(date.getMonth() + 4).toLocaleString(),
     ...options,
   }
 
@@ -46,7 +48,5 @@ export const validateMentor = async (_mentor: Mentor): Promise<void> => {
  * @returns Boolean indicating success
  */
 export const deleteMentor = async (mentor: Mentor): Promise<boolean> => {
-  const deleteMentorSuccess = await deleteUser(mentor)
-
-  return deleteMentorSuccess
+  return await deleteUser(mentor)
 }

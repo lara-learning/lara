@@ -34,7 +34,7 @@ export const isMentor = (user: User): user is Mentor => {
   return user.type === 'Mentor'
 }
 
-/*const mentor = rule({ cache: 'contextual' })(
+/*const _mentor = rule({ cache: 'contextual' })(
   (_parent, _args, ctx: AuthenticatedContext) => isMentor(ctx.currentUser) || 'Wrong Usertype'
 )*/
 
@@ -85,8 +85,8 @@ export const permissions = shield<unknown, Context>(
       unlinkAlexa: authenticated,
       createOAuthCode: authenticated,
 
-      createMentor: and(authenticated, admin, trainer, trainee),
-      updateMentor: and(authenticated, admin, trainer, trainee),
+      createMentor: and(authenticated, or(trainer, admin, trainee)),
+      updateMentor: and(authenticated, or(trainer, admin, trainee)),
 
       // Trainee and Trainer mutations
       updateReport: and(authenticated, or(trainee, trainer)),

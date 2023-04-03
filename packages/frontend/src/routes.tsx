@@ -22,8 +22,11 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
+import TrainerPaperPage from "./pages/trainer-paper-page";
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
+import {PaperCreateBriefing} from "./pages/paper-create-briefing";
+import {PaperBriefing} from "./pages/paper-briefing";
 
 type RoutesProps = {
   currentUser?:
@@ -70,6 +73,10 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
         // Routes for trainers
         routes.push({ path: '/', exact: true, render: () => <Redirect to={redirectRoute} /> })
+
+        routes.push({ path: '/paper', exact: true, component: TrainerPaperPage })
+        routes.push({ path: '/paper/createBriefing', exact: true, component: PaperCreateBriefing })
+        routes.push({ path: '/paper/briefing', exact: true, component: PaperBriefing })
 
         routes.push({ path: '/reports/:trainee?', exact: true, component: TrainerReportsPage })
         routes.push({ path: '/reports/:trainee/:year/:week', component: ReportReviewPage })

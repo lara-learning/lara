@@ -67,8 +67,10 @@ export type CreateCommentPayload = {
 
 export type CreateMentorInput = {
   email: Scalars['String'];
+  endDate?: InputMaybe<Scalars['String']>;
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  startDate?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateTraineeInput = {
@@ -891,7 +893,7 @@ export type UpdateTrainerMutation = { __typename?: 'Mutation', updateTrainer?: {
 export type AdminMentorPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdminMentorPageQuery = { __typename?: 'Query', mentors: Array<{ __typename?: 'Mentor', id: string, firstName: string, lastName: string, avatar: string, deleteAt?: string | undefined }> };
+export type AdminMentorPageQuery = { __typename?: 'Query', mentors: Array<{ __typename?: 'Mentor', id: string, firstName: string, lastName: string, avatar: string, startDate?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined }> };
 
 export type AdminTraineesPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1590,6 +1592,8 @@ export const AdminMentorPageDocument = gql`
     firstName
     lastName
     avatar
+    startDate
+    endDate
     deleteAt
   }
 }

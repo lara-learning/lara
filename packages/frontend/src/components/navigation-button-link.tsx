@@ -15,9 +15,11 @@ const NavigationButtonLink: React.FunctionComponent<NavigationButtonLinkProps> =
   iconColor,
   to,
   isLeft,
+  alignLeft,
 }: NavigationButtonLinkProps) => (
   <NavigationButtonLinkLayout
     isLeft={Boolean(isLeft)}
+    alignLeft={Boolean(alignLeft)}
     to={to}
     label={label}
     icon={<>{icon && <StyledIcon color={iconColor} name={icon} size="35px" />}</>}
