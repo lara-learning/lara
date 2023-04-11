@@ -1,13 +1,12 @@
-import { PublicClientApplication } from '@azure/msal-browser'
-
-const redirectDomain = 'localhost:8080'
+const redirectDomain = 'http://localhost:8080'
 const redirectUrl = redirectDomain
-const tenantId = 'e0793d39-0939-496d-b129-198edd916feb'
+const { MICROSOFT_API_KEY } = process.env
+const { MICROSOFT_TENANT_ID } = process.env
 
 export const msalConfig = {
   auth: {
-    clientId: 'test',
-    authority: 'https://login.microsoftonline.com/' + tenantId,
+    clientId: MICROSOFT_API_KEY,
+    authority: 'https://login.microsoftonline.com/' + MICROSOFT_TENANT_ID,
     redirectUri: redirectUrl,
   },
   cache: {
@@ -19,5 +18,3 @@ export const msalConfig = {
 export const loginRequest = {
   scopes: ['User.Read', 'openid', 'profile'],
 }
-
-export const MyMSALObj = new PublicClientApplication(msalConfig)

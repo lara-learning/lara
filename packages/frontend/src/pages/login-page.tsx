@@ -23,12 +23,10 @@ const LoginPage: React.FunctionComponent = () => {
     if (!('getAuthResponse' in googleResponse)) {
       return
     }
-
-    const accessToken = googleResponse.getAuthResponse().access_token
-
+    const accessToken =  googleResponse.getAuthResponse().access_token
+    console.log(accessToken)
     mutate({ variables: { token: accessToken } }).then((response) => {
       const { data } = response
-
       if (!data?.login) {
         return AppHistory.getInstance().push('/no-user-found')
       }
