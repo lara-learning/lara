@@ -2,7 +2,7 @@ import React from 'react'
 
 import { StyledEntryContainer, StyledInputTextArea, StyledTextTimeInputWrapper } from '@lara/components'
 
-import {AnswerPaperInput} from '../graphql'
+import {AnswerPaperInput, PaperFormData} from '../graphql'
 import strings from '../locales/localization'
 import {useFocusState} from "../hooks/use-focus-state";
 
@@ -10,7 +10,7 @@ interface PaperTextInputProps {
   onSave: (paperInput: AnswerPaperInput) => any
   onDelete?: () => any
   clearOnSave?: boolean
-  entry: Pick<AnswerPaperInput,| 'id' | 'questionId' | 'answer'>
+  entry: Pick<PaperFormData,| 'id' | 'question' | 'answer'>
   disabled?: boolean
   autoFocus?: boolean
 }
@@ -71,11 +71,9 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
     if (!textInput.current) {
       return
     }
-    console.log("test")
-    //TODO
     onSave({
       answer: textInput.current.value,
-      questionId: entry.questionId,
+      question: entry.question,
       id: entry.id,
     })
   }

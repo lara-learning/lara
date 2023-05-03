@@ -1,0 +1,24 @@
+#query PaperPageData($userId: ID!) {
+#  currentUser {
+#    id
+#    theme
+#  }
+#  papers(userId: $userId) {
+#    id
+#    trainee
+#    trainer
+#    client
+#    mentor
+#    periodStart
+#    periodEnd
+#    subject
+#    status
+#    briefing {
+#      id
+#      question
+#      answer
+#      hint
+#    }
+#    __typename
+#  }
+#}

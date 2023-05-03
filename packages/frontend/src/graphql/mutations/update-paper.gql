@@ -1,0 +1,19 @@
+mutation updatePaper($input: PaperUpdateInput!) {
+   updatePaper(input: $input) {
+     id
+     trainee
+     trainer
+     client
+     mentor
+     periodStart
+     periodEnd
+     subject
+     status
+     briefing {
+       id
+       question
+       answer
+       hint
+     }
+    }
+}

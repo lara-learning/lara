@@ -25,7 +25,7 @@ export const generateMentor = async (options: GenerateMentorOptions): Promise<Me
     id: v4(),
     createdAt: date.toISOString(),
     type: 'Mentor',
-    ...options,
+    ...options
   }
 
   await validateMentor(mentor)

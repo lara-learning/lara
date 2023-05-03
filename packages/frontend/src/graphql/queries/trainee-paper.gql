@@ -1,0 +1,24 @@
+query TraineePaperData {
+  currentUser {
+    ... on Trainee {
+      id
+      papers {
+        id
+        trainee
+        trainer
+        client
+        mentor
+        periodStart
+        periodEnd
+        subject
+        status
+        briefing {
+          id
+          question
+          answer
+          hint
+        }
+      }
+    }
+  }
+}

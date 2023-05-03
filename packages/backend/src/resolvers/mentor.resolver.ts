@@ -10,6 +10,9 @@ export const mentorResolver: GqlResolvers<MentorContext> = {
     username,
     alexaSkillLinked,
     deleteAt: (model) => endOfToolUsage(model).toISOString(),
+    // papers: async (model) => {
+    //   return papersByTrainee(model.id)
+    // }
   },
 }
 //TODO endDate wird nicht gesetzt

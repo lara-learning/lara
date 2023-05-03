@@ -54,7 +54,7 @@ export const PaperBriefing: React.FC = () => {
       <PaperLayout>
         <div>
           {filteredQAs.map(({ question: q, answer: a }, index) => (
-            <PaperAccordion paperInput={{id: index.toString(), questionId: q, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
+            <PaperAccordion paperInput={{id: index.toString(), question: q, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
               {a}
             </PaperAccordion>
           ))}
