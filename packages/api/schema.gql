@@ -104,18 +104,46 @@ input MentorInput {
   signature: String
 }
 
+
+input PaperEntryInput {
+  id: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type MutatePaperPayload {
+  papers: [Paper]
+}
+
 input PaperInput {
-  client: String
-  mentor: MentorInput
-  periodStart: String
-  periodEnd: String
-  subject: String
-  status: PaperStatus
+  trainee: ID!
+  trainer: ID!
+  client: String!
+  mentor: ID!
+  periodStart: String!
+  periodEnd: String!
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+}
+
+input PaperUpdateInput {
+  id: ID!
+  trainee: ID!
+  trainer: ID!
+  client: String!
+  mentor: ID!
+  periodStart: String!
+  periodEnd: String!
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
 }
 
 input AnswerPaperInput {
   id: ID!
-  questionId: ID!
+  question: String!
   answer: String!
 }
 
@@ -250,17 +278,22 @@ type Mutation {
   """
   Create Paper
   """
-  postPaper(input: PaperInput!, id: ID): Paper!
-
-  """
-  Delete Paper
-  """
-  deletePaper(id: ID!): Boolean!
+  createPaper(input: PaperInput!): Paper!
 
   """
   Update Paper
   """
-  answerPaper(input: AnswerPaperInput!): PaperFormData!
+  updatePaper(input: PaperUpdateInput!): Paper!
+
+  """
+  Delete Paper
+  """
+  deletePaper(paperId: ID!): Trainer!
+
+  """
+  Updates Entry for Lara Paper
+  """
+  updatePaperEntry(input: AnswerPaperInput!): PaperFormData!
 
   """
   Creates Entry for Lara Paper
@@ -356,7 +389,12 @@ type Query {
   """
   Get the PAPER
   """
-  getPaper(id: ID!, token: String): Paper
+  getPaper(id: ID!): Paper
+
+  """
+  Get all Papers for a User
+  """
+  papers(userId: ID!): [Paper]!
 }
 
 type PrintPayload {
@@ -419,6 +457,7 @@ type Trainee implements UserInterface {
   lastName: String!
   notification: Boolean
   reports: [Report!]!
+  papers: [Paper]
   signature: String
   startDate: String
   startOfToolUsage: String
@@ -495,6 +534,7 @@ type Trainer implements UserInterface {
   signature: String
   theme: String
   trainees: [Trainee!]!
+  papers: [Paper]
   type: UserTypeEnum!
   username: String!
   email: String!
@@ -513,6 +553,7 @@ type Mentor implements UserInterface {
   signature: String
   theme: String
   type: UserTypeEnum!
+  papers: [Paper]
   startDate: String
   endDate: String
   username: String!
@@ -604,15 +645,15 @@ type PaperFormData {
 
 type Paper {
   id: ID!
-  trainee: Trainee!
+  trainee: ID!
+  trainer: ID!
   status: PaperStatus!
-  traineeForm: [PaperFormData!]!
   briefing: [PaperFormData!]!
   conclusion: String
   archivedAt: String
   createdAt: String!
   client: String!
-  mentor: Mentor!
+  mentor: ID!
   periodStart: String!
   periodEnd: String!
   subject: String!

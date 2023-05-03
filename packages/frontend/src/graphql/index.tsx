@@ -35,7 +35,7 @@ export type Admin = UserInterface & {
 export type AnswerPaperInput = {
   answer: Scalars['String'];
   id: Scalars['ID'];
-  questionId: Scalars['ID'];
+  question: Scalars['String'];
 };
 
 export type Comment = {
@@ -158,6 +158,7 @@ export type Mentor = UserInterface & {
   language?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   notification?: Maybe<Scalars['Boolean']>;
+  papers?: Maybe<Array<Maybe<Paper>>>;
   signature?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
@@ -178,14 +179,17 @@ export type MutateEntryPayload = {
   report: Report;
 };
 
+export type MutatePaperPayload = {
+  __typename?: 'MutatePaperPayload';
+  papers?: Maybe<Array<Maybe<Paper>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** [DEV] Login as a user. */
   _devloginuser?: Maybe<OAuthPayload>;
   /** [DEV] Sets the users type. */
   _devsetusertype: DevSetUserPayload;
-  /** Update Paper */
-  answerPaper: PaperFormData;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<TrainerTraineePayload>;
   /** Creates a new comment on a Day which is identified by the id argument. */
@@ -200,6 +204,10 @@ export type Mutation = {
   createMentor?: Maybe<Mentor>;
   /** Create OAuth Code */
   createOAuthCode: Scalars['String'];
+  /** Create Paper */
+  createPaper: Paper;
+  /** Creates Entry for Lara Paper */
+  createPaperEntry: PaperFormData;
   /** Creates Trainee. */
   createTrainee?: Maybe<Trainee>;
   /** Creates Trainer. */
@@ -207,15 +215,15 @@ export type Mutation = {
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: MutateEntryPayload;
   /** Delete Paper */
-  deletePaper: Scalars['Boolean'];
+  deletePaper: Trainer;
+  /** Deletes Entry for Lara Paper */
+  deletePaperEntry: PaperFormData;
   /** Link Alexa account */
   linkAlexa?: Maybe<UserInterface>;
   /** Login via google. */
   login?: Maybe<OAuthPayload>;
   /** Marks User to be deleted */
   markUserForDeletion?: Maybe<UserInterface>;
-  /** Create Paper */
-  postPaper: Paper;
   /** Unclaims a Trainee by the current Trainer */
   unclaimTrainee?: Maybe<TrainerTraineePayload>;
   /** Unlink Alexa account */
@@ -232,6 +240,10 @@ export type Mutation = {
   updateEntryOrder: MutateEntryPayload;
   /** Updates Mentor. */
   updateMentor?: Maybe<Mentor>;
+  /** Update Paper */
+  updatePaper: Paper;
+  /** Updates Entry for Lara Paper */
+  updatePaperEntry: PaperFormData;
   /** Updates report which is identified by the id argument. */
   updateReport?: Maybe<UpdateReportPayload>;
   /** Updates Trainee. */
@@ -248,11 +260,6 @@ export type Mutation_DevloginuserArgs = {
 
 export type Mutation_DevsetusertypeArgs = {
   type: Scalars['String'];
-};
-
-
-export type MutationAnswerPaperArgs = {
-  input: AnswerPaperInput;
 };
 
 
@@ -293,6 +300,16 @@ export type MutationCreateMentorArgs = {
 };
 
 
+export type MutationCreatePaperArgs = {
+  input: PaperInput;
+};
+
+
+export type MutationCreatePaperEntryArgs = {
+  input: AnswerPaperInput;
+};
+
+
 export type MutationCreateTraineeArgs = {
   input: CreateTraineeInput;
 };
@@ -309,6 +326,11 @@ export type MutationDeleteEntryArgs = {
 
 
 export type MutationDeletePaperArgs = {
+  paperId: Scalars['ID'];
+};
+
+
+export type MutationDeletePaperEntryArgs = {
   id: Scalars['ID'];
 };
 
@@ -326,12 +348,6 @@ export type MutationLoginArgs = {
 
 export type MutationMarkUserForDeletionArgs = {
   id: Scalars['ID'];
-};
-
-
-export type MutationPostPaperArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  input: PaperInput;
 };
 
 
@@ -380,6 +396,16 @@ export type MutationUpdateMentorArgs = {
 };
 
 
+export type MutationUpdatePaperArgs = {
+  input: PaperUpdateInput;
+};
+
+
+export type MutationUpdatePaperEntryArgs = {
+  input: AnswerPaperInput;
+};
+
+
 export type MutationUpdateReportArgs = {
   department?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -409,18 +435,25 @@ export type OAuthPayload = {
 export type Paper = {
   __typename?: 'Paper';
   archivedAt?: Maybe<Scalars['String']>;
+  briefing: Array<PaperFormData>;
   client: Scalars['String'];
   conclusion?: Maybe<Scalars['String']>;
   createdAt: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Mentor;
+  mentor: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: PaperStatus;
   subject: Scalars['String'];
-  trainee: Trainee;
-  traineeForm: Array<PaperFormData>;
-  trainerForm: Array<PaperFormData>;
+  trainee: Scalars['ID'];
+  trainer: Scalars['ID'];
+};
+
+export type PaperEntryInput = {
+  answer?: InputMaybe<Scalars['String']>;
+  hint?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  question: Scalars['String'];
 };
 
 export type PaperFormData = {
@@ -432,12 +465,15 @@ export type PaperFormData = {
 };
 
 export type PaperInput = {
-  client?: InputMaybe<Scalars['String']>;
-  mentor?: InputMaybe<MentorInput>;
-  periodEnd?: InputMaybe<Scalars['String']>;
-  periodStart?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<PaperStatus>;
-  subject?: InputMaybe<Scalars['String']>;
+  briefing: Array<PaperEntryInput>;
+  client: Scalars['String'];
+  mentor: Scalars['ID'];
+  periodEnd: Scalars['String'];
+  periodStart: Scalars['String'];
+  status: PaperStatus;
+  subject: Scalars['String'];
+  trainee: Scalars['ID'];
+  trainer: Scalars['ID'];
 };
 
 export enum PaperStatus {
@@ -447,6 +483,19 @@ export enum PaperStatus {
   MentorDone = 'MentorDone',
   TraineeDone = 'TraineeDone'
 }
+
+export type PaperUpdateInput = {
+  briefing: Array<PaperEntryInput>;
+  client: Scalars['String'];
+  id: Scalars['ID'];
+  mentor: Scalars['ID'];
+  periodEnd: Scalars['String'];
+  periodStart: Scalars['String'];
+  status: PaperStatus;
+  subject: Scalars['String'];
+  trainee: Scalars['ID'];
+  trainer: Scalars['ID'];
+};
 
 export type PrintPayload = {
   __typename?: 'PrintPayload';
@@ -469,6 +518,8 @@ export type Query = {
   getUser?: Maybe<UserInterface>;
   /** Get all Trainers */
   mentors: Array<Mentor>;
+  /** Get all Papers for a User */
+  papers: Array<Maybe<Paper>>;
   /** Print single report or report batch */
   print: PrintPayload;
   /** Finds the report for a specifig trainee on the requested year and week. */
@@ -488,12 +539,16 @@ export type Query = {
 
 export type QueryGetPaperArgs = {
   id: Scalars['ID'];
-  token?: InputMaybe<Scalars['String']>;
 };
 
 
 export type QueryGetUserArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryPapersArgs = {
+  userId: Scalars['ID'];
 };
 
 
@@ -565,6 +620,7 @@ export type Trainee = UserInterface & {
   lastName: Scalars['String'];
   notification?: Maybe<Scalars['Boolean']>;
   openReportsCount: Scalars['Int'];
+  papers?: Maybe<Array<Maybe<Paper>>>;
   reports: Array<Report>;
   signature?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
@@ -587,6 +643,7 @@ export type Trainer = UserInterface & {
   language?: Maybe<Scalars['String']>;
   lastName: Scalars['String'];
   notification?: Maybe<Scalars['Boolean']>;
+  papers?: Maybe<Array<Maybe<Paper>>>;
   signature?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
   trainees: Array<Trainee>;
@@ -731,6 +788,20 @@ export type CreateOAuthCodeMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type CreateOAuthCodeMutation = { __typename?: 'Mutation', createOAuthCode: string };
 
+export type CreatePaperEntryMutationVariables = Exact<{
+  input: AnswerPaperInput;
+}>;
+
+
+export type CreatePaperEntryMutation = { __typename?: 'Mutation', createPaperEntry: { __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined } };
+
+export type CreatePaperMutationVariables = Exact<{
+  input: PaperInput;
+}>;
+
+
+export type CreatePaperMutation = { __typename?: 'Mutation', createPaper: { __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
+
 export type CreateTraineeMutationVariables = Exact<{
   input: CreateTraineeInput;
 }>;
@@ -854,6 +925,13 @@ export type UpdateMentorMutationVariables = Exact<{
 
 export type UpdateMentorMutation = { __typename?: 'Mutation', updateMentor?: { __typename?: 'Mentor', id: string, startDate?: string | undefined, endDate?: string | undefined, firstName: string, lastName: string, email: string, avatar: string, type: UserTypeEnum } | undefined };
 
+export type UpdatePaperMutationVariables = Exact<{
+  input: PaperUpdateInput;
+}>;
+
+
+export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
+
 export type UpdateReportReportReviewPageMutationVariables = Exact<{
   id: Scalars['ID'];
   summary?: InputMaybe<Scalars['String']>;
@@ -970,6 +1048,13 @@ export type OnboardingPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string } | { __typename?: 'Mentor', id: string, firstName: string } | { __typename?: 'Trainee', id: string, firstName: string } | { __typename?: 'Trainer', id: string, firstName: string } | undefined };
 
+export type PaperPageDataQueryVariables = Exact<{
+  userId: Scalars['ID'];
+}>;
+
+
+export type PaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, papers: Array<{ __typename: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> };
+
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
@@ -1012,7 +1097,12 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<st
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, papers?: Array<{ __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+
+export type TraineePaperDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TraineePaperDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Mentor' } | { __typename?: 'Trainee', id: string, papers?: Array<{ __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainer' } | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1203,6 +1293,47 @@ export function useCreateOAuthCodeMutation(baseOptions?: Apollo.MutationHookOpti
         return Apollo.useMutation<CreateOAuthCodeMutation, CreateOAuthCodeMutationVariables>(CreateOAuthCodeDocument, options);
       }
 export type CreateOAuthCodeMutationHookResult = ReturnType<typeof useCreateOAuthCodeMutation>;
+export const CreatePaperEntryDocument = gql`
+    mutation createPaperEntry($input: AnswerPaperInput!) {
+  createPaperEntry(input: $input) {
+    id
+    question
+    answer
+    hint
+  }
+}
+    `;
+export function useCreatePaperEntryMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaperEntryMutation, CreatePaperEntryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePaperEntryMutation, CreatePaperEntryMutationVariables>(CreatePaperEntryDocument, options);
+      }
+export type CreatePaperEntryMutationHookResult = ReturnType<typeof useCreatePaperEntryMutation>;
+export const CreatePaperDocument = gql`
+    mutation createPaper($input: PaperInput!) {
+  createPaper(input: $input) {
+    id
+    trainee
+    trainer
+    client
+    mentor
+    periodStart
+    periodEnd
+    subject
+    status
+    briefing {
+      id
+      question
+      answer
+      hint
+    }
+  }
+}
+    `;
+export function useCreatePaperMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaperMutation, CreatePaperMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePaperMutation, CreatePaperMutationVariables>(CreatePaperDocument, options);
+      }
+export type CreatePaperMutationHookResult = ReturnType<typeof useCreatePaperMutation>;
 export const CreateTraineeDocument = gql`
     mutation CreateTrainee($input: CreateTraineeInput!) {
   createTrainee(input: $input) {
@@ -1498,6 +1629,32 @@ export function useUpdateMentorMutation(baseOptions?: Apollo.MutationHookOptions
         return Apollo.useMutation<UpdateMentorMutation, UpdateMentorMutationVariables>(UpdateMentorDocument, options);
       }
 export type UpdateMentorMutationHookResult = ReturnType<typeof useUpdateMentorMutation>;
+export const UpdatePaperDocument = gql`
+    mutation updatePaper($input: PaperUpdateInput!) {
+  updatePaper(input: $input) {
+    id
+    trainee
+    trainer
+    client
+    mentor
+    periodStart
+    periodEnd
+    subject
+    status
+    briefing {
+      id
+      question
+      answer
+      hint
+    }
+  }
+}
+    `;
+export function useUpdatePaperMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePaperMutation, UpdatePaperMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePaperMutation, UpdatePaperMutationVariables>(UpdatePaperDocument, options);
+      }
+export type UpdatePaperMutationHookResult = ReturnType<typeof useUpdatePaperMutation>;
 export const UpdateReportReportReviewPageDocument = gql`
     mutation updateReportReportReviewPage($id: ID!, $summary: String, $department: String, $status: String) {
   updateReport(
@@ -2008,6 +2165,42 @@ export function useOnboardingPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHoo
         }
 export type OnboardingPageDataQueryHookResult = ReturnType<typeof useOnboardingPageDataQuery>;
 export type OnboardingPageDataLazyQueryHookResult = ReturnType<typeof useOnboardingPageDataLazyQuery>;
+export const PaperPageDataDocument = gql`
+    query PaperPageData($userId: ID!) {
+  currentUser {
+    id
+    theme
+  }
+  papers(userId: $userId) {
+    id
+    trainee
+    trainer
+    client
+    mentor
+    periodStart
+    periodEnd
+    subject
+    status
+    briefing {
+      id
+      question
+      answer
+      hint
+    }
+    __typename
+  }
+}
+    `;
+export function usePaperPageDataQuery(baseOptions: Apollo.QueryHookOptions<PaperPageDataQuery, PaperPageDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PaperPageDataQuery, PaperPageDataQueryVariables>(PaperPageDataDocument, options);
+      }
+export function usePaperPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PaperPageDataQuery, PaperPageDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PaperPageDataQuery, PaperPageDataQueryVariables>(PaperPageDataDocument, options);
+        }
+export type PaperPageDataQueryHookResult = ReturnType<typeof usePaperPageDataQuery>;
+export type PaperPageDataLazyQueryHookResult = ReturnType<typeof usePaperPageDataLazyQuery>;
 export const PrintDataDocument = gql`
     query PrintData($ids: [ID!]!) {
   print(ids: $ids) {
@@ -2254,6 +2447,23 @@ export const TraineePageDataDocument = gql`
       firstName
       lastName
     }
+    papers {
+      id
+      trainee
+      trainer
+      client
+      mentor
+      periodStart
+      periodEnd
+      subject
+      status
+      briefing {
+        id
+        question
+        answer
+        hint
+      }
+    }
     company {
       id
       name
@@ -2274,6 +2484,42 @@ export function useTraineePageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
         }
 export type TraineePageDataQueryHookResult = ReturnType<typeof useTraineePageDataQuery>;
 export type TraineePageDataLazyQueryHookResult = ReturnType<typeof useTraineePageDataLazyQuery>;
+export const TraineePaperDataDocument = gql`
+    query TraineePaperData {
+  currentUser {
+    ... on Trainee {
+      id
+      papers {
+        id
+        trainee
+        trainer
+        client
+        mentor
+        periodStart
+        periodEnd
+        subject
+        status
+        briefing {
+          id
+          question
+          answer
+          hint
+        }
+      }
+    }
+  }
+}
+    `;
+export function useTraineePaperDataQuery(baseOptions?: Apollo.QueryHookOptions<TraineePaperDataQuery, TraineePaperDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TraineePaperDataQuery, TraineePaperDataQueryVariables>(TraineePaperDataDocument, options);
+      }
+export function useTraineePaperDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TraineePaperDataQuery, TraineePaperDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TraineePaperDataQuery, TraineePaperDataQueryVariables>(TraineePaperDataDocument, options);
+        }
+export type TraineePaperDataQueryHookResult = ReturnType<typeof useTraineePaperDataQuery>;
+export type TraineePaperDataLazyQueryHookResult = ReturnType<typeof useTraineePaperDataLazyQuery>;
 export const TraineeSettingsDataDocument = gql`
     query TraineeSettingsData {
   currentUser {

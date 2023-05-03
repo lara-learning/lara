@@ -37,6 +37,18 @@ export interface CreateBriefingFormData {
   department: string
 }
 
+export interface CreatePaperProps {
+  trainee: string
+  trainer: string
+  client: string
+  mentor: string
+  periodStart: string
+  periodEnd: string
+  subject: string
+  status: string
+  briefing: []
+}
+
 const inputLabelProps: TextProps = {
   spacing: '1.2px',
   weight: 700,

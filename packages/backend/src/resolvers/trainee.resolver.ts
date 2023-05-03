@@ -35,6 +35,9 @@ export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
     openReportsCount: async (model) => {
       return reportsWithinApprenticeship(model, ['reopened', 'todo']).then((reports) => reports.length)
     },
+    // papers: async (model) => {
+    //   return papersByTrainee(model.id)
+    // },
   },
 }
 

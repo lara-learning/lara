@@ -17,6 +17,9 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
     avatar,
     username,
     alexaSkillLinked,
+    // papers: async (model) => {
+    //   return papersByTrainee(model.id)
+    // },
   },
   Query: {
     trainees: allTrainees,

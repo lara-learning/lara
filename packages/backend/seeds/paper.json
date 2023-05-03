@@ -1,0 +1,18 @@
+{
+  "trainee": "123",
+  "trainer": "456",
+  "client": "String",
+  "mentor": "1011",
+  "periodStart": "2022-08-07T05:14:28.000Z",
+  "periodEnd": "2025-08-07T05:14:28.000Z",
+  "subject": "String",
+  "status": "InProgress",
+  "briefing": [
+    {
+      "id": "1",
+      "answer": "dasdasd",
+      "question": "sadasdasd",
+      "hint": "DSAdasd"
+    }
+  ]
+}

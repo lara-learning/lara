@@ -12,6 +12,23 @@ query TraineePageData {
       firstName
       lastName
     }
+    papers {
+      id
+      trainee
+      trainer
+      client
+      mentor
+      periodStart
+      periodEnd
+      subject
+      status
+      briefing {
+        id
+        question
+        answer
+        hint
+      }
+    }
     company {
       id
       name

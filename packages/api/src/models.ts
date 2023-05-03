@@ -5,7 +5,7 @@ import {
   GqlDay,
   GqlEntry,
   GqlMentor,
-  GqlPaper,
+  GqlPaper, GqlPaperFormData,
   GqlReport,
   GqlTrainee,
   GqlTrainer,
@@ -35,7 +35,7 @@ export type UserInterface = Omit<GqlUserInterface, ResolvedUserFields> & {
 }
 
 export type Trainee = UserInterface &
-  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount'> & {
+  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount' | 'papers' > & {
     trainerId?: string
     companyId?: string
   }
@@ -69,6 +69,6 @@ export type Report = Omit<GqlReport, 'days' | 'comments' | 'nextReportLink' | 'p
   traineeId: string
 }
 
-export type Paper = Omit<GqlPaper, 'trainee'> & {
-  traineeId: string
+export type Paper = Omit<GqlPaper, 'briefing'> & {
+  briefing: GqlPaperFormData[],
 }
