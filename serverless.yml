@@ -45,6 +45,10 @@ custom:
         sources:
           - table: ${self:custom.config.table.report}
             sources: [packages/backend/seeds/reports.json]
+      papers:
+        sources:
+          - table: ${self:custom.config.table.paper}
+            sources: [packages/backend/seeds/papers.json]
   jetpack:
     preInclude:
       - '!**'
@@ -74,6 +78,7 @@ custom:
       reportTraineeIdStatus: reportGSI2
       userType: userGSI1
       userEmail: userGSI4
+      paperTraineeId: paperGSI1
       userTrainerId: userGSI6
       userOAuthCode: userOAuthCode
     s3:
@@ -136,6 +141,7 @@ functions:
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.paper}'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.paper}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.report}'
@@ -159,6 +165,7 @@ functions:
       REPORT_TRAINEEID_STATUS_INDEX: ${self:custom.config.gsi.reportTraineeIdStatus}
       USER_TYPE_INDEX: ${self:custom.config.gsi.userType}
       USER_EMAIL_INDEX: ${self:custom.config.gsi.userEmail}
+      PAPER_TRAINEE_ID_INDEX: ${self:custom.config.gsi.paperTraineeId}
       USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
       USER_OAUTH_CODE_INDEX: ${self:custom.config.gsi.userOAuthCode}
       EXPORT_BUCKET: ${self:custom.config.s3.export}
@@ -356,9 +363,18 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: traineeId
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.config.gsi.paperTraineeId}
+            KeySchema:
+              - AttributeName: traineeId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.config.table.paper}
 

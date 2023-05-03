@@ -117,10 +117,10 @@ type MutatePaperPayload {
 }
 
 input PaperInput {
-  trainee: ID!
-  trainer: ID!
+  traineeId: ID!
+  trainerId: ID!
   client: String!
-  mentor: ID!
+  mentorId: ID!
   periodStart: String!
   periodEnd: String!
   subject: String!
@@ -130,10 +130,10 @@ input PaperInput {
 
 input PaperUpdateInput {
   id: ID!
-  trainee: ID!
-  trainer: ID!
+  traineeId: ID!
+  trainerId: ID!
   client: String!
-  mentor: ID!
+  mentorId: ID!
   periodStart: String!
   periodEnd: String!
   subject: String!
@@ -645,15 +645,15 @@ type PaperFormData {
 
 type Paper {
   id: ID!
-  trainee: ID!
-  trainer: ID!
+  traineeId: ID!
+  trainerId: ID!
   status: PaperStatus!
   briefing: [PaperFormData!]!
   conclusion: String
   archivedAt: String
   createdAt: String!
   client: String!
-  mentor: ID!
+  mentorId: ID!
   periodStart: String!
   periodEnd: String!
   subject: String!

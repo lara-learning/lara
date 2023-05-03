@@ -4,10 +4,10 @@ query TraineePaperData {
       id
       papers {
         id
-        trainee
-        trainer
+        traineeId
+        trainerId
         client
-        mentor
+        mentorId
         periodStart
         periodEnd
         subject

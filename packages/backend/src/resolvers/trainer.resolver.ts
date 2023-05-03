@@ -8,6 +8,7 @@ import { updateUser } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { avatar, username } from '../services/user.service'
 import { createT } from '../i18n'
+import {papersByTrainee} from "../repositories/paper.repo";
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
   Trainer: {
@@ -17,9 +18,9 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
     avatar,
     username,
     alexaSkillLinked,
-    // papers: async (model) => {
-    //   return papersByTrainee(model.id)
-    // },
+    papers: async (model) => {
+      return papersByTrainee(model.id)
+    },
   },
   Query: {
     trainees: allTrainees,

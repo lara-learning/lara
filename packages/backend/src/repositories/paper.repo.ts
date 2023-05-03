@@ -2,8 +2,8 @@ import {GqlPaper, GqlPaperUpdateInput, Paper} from '@lara/api'
 
 import {
   deleteItem,
-  paperTableName,
-  putItem,
+  paperTableName, paperTraineeIdIndex,
+  putItem, queryObjects,
   updateObject,
   UpdateObjectOptions
 } from '../db'
@@ -20,6 +20,6 @@ export const deletePaper = async (paper: Paper): Promise<boolean> => {
   return deleteItem(paperTableName, { id: paper.id })
 }
 
-// export const papersByTrainee = (trainee: string): Promise<GqlPaper[] | undefined> => {
-//   return queryObjects<GqlPaper>(paperTableName, paperTraineeId, { trainee })
-// }
+ export const papersByTrainee = (traineeId: string): Promise<GqlPaper[] | undefined> => {
+   return queryObjects<GqlPaper>(paperTableName, paperTraineeIdIndex, { traineeId })
+}

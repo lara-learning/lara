@@ -27,7 +27,7 @@ import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
 import {PaperCreateBriefing} from "./pages/paper-create-briefing";
 import {PaperBriefing} from "./pages/paper-briefing";
-import {PaperOverviewPage} from "./pages/paper-overview-page";
+import {TraineePaperPage} from "./pages/trainee-paper-page";
 
 type RoutesProps = {
   currentUser?:
@@ -55,7 +55,7 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
       if (currentUser.type === UserTypeEnum.Trainee && currentUser.__typename === 'Trainee') {
         // Routes for trainees
 
-        routes.push({ path: '/paper', exact: true, component: PaperOverviewPage })
+        routes.push({ path: '/paper', exact: true, component: TraineePaperPage })
 
         if (currentUser.course) {
           // Trainee is ready to go

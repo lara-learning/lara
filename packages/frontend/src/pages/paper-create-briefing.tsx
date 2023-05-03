@@ -1,15 +1,14 @@
 import React from 'react'
 
-import {
-  PaperCreateLayout,
-  H1, Spacer,
-} from '@lara/components'
+import {H1, PaperCreateLayout, Spacer,} from '@lara/components'
 import strings from '../locales/localization'
 import {Template} from "../templates/template";
 import {GraphQLError} from "graphql/index";
 import {
+  PaperStatus,
   useAdminMentorPageQuery,
-  useCreateMentorMutation
+  useCreateMentorMutation,
+  useCreatePaperMutation
 } from "../graphql";
 import {useToastContext} from "../hooks/use-toast-context";
 import Loader from "../components/loader";
@@ -23,12 +22,36 @@ import {RouteComponentProps} from "react-router";
 export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  = ({history}) => {
 
   const {loading} = useAdminMentorPageQuery()
-  const [mutate] = useCreateMentorMutation()
+  const [createMentorMutation] = useCreateMentorMutation()
+  const [createPaperMutation] = useCreatePaperMutation()
 
   const {addToast} = useToastContext()
 
+  const createPaper = async (data: CreateBriefingFormData) => {
+    await createPaperMutation({
+      variables: {
+        input: {
+          briefing: [],
+          client: data.customer,
+          mentorId: "1011",
+          traineeId: "123",
+          trainerId: "456",
+          //TODO
+          periodStart: "2022-08-07T05:14:28.000Z",
+          periodEnd: "2022-08-07T05:14:28.000Z",
+          status: PaperStatus.InProgress,
+          subject: data.department,
+
+        }
+      },
+    })
+      .then(() => {
+        console.log("drrtdt")
+        history.push('/paper/briefing')
+      })
+  }
   const createMentor = async (data: CreateBriefingFormData) => {
-    await mutate({
+    await createMentorMutation({
       variables: {
         input: {
           email: data.emailMentor,
@@ -54,7 +77,7 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           text: strings.formatString(strings.createMentor.success, `${data?.firstNameMentor} ${data?.lastNameMentor}`).toString(),
           type: 'success',
         })
-        history.push('/paper/briefing')
+        createPaper(data)
       })
       .catch((exception: GraphQLError) => {
         addToast({

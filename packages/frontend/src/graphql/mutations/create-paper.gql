@@ -1,10 +1,10 @@
 mutation createPaper($input: PaperInput!) {
   createPaper(input: $input) {
     id
-    trainee
-    trainer
+    traineeId
+    trainerId
     client
-    mentor
+    mentorId
     periodStart
     periodEnd
     subject

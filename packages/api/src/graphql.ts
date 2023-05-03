@@ -441,13 +441,13 @@ export type GqlPaper = {
   conclusion?: Maybe<Scalars['String']>;
   createdAt: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: GqlPaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export type GqlPaperEntryInput = {
@@ -468,13 +468,13 @@ export type GqlPaperFormData = {
 export type GqlPaperInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: GqlPaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export type GqlPaperStatus =
@@ -488,13 +488,13 @@ export type GqlPaperUpdateInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: GqlPaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export type GqlPrintPayload = {
@@ -1051,13 +1051,13 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
-  mentor?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  mentorId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   periodEnd?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   periodStart?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<GqlResolversTypes['PaperStatus'], ParentType, ContextType>;
   subject?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  trainee?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
-  trainer?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  trainerId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

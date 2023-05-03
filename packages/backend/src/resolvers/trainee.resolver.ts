@@ -21,6 +21,7 @@ import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
 import { avatar, username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
+import {papersByTrainee} from "../repositories/paper.repo";
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
   Trainee: {
@@ -35,9 +36,9 @@ export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
     openReportsCount: async (model) => {
       return reportsWithinApprenticeship(model, ['reopened', 'todo']).then((reports) => reports.length)
     },
-    // papers: async (model) => {
-    //   return papersByTrainee(model.id)
-    // },
+    papers: async (model) => {
+      return papersByTrainee(model.id)
+    },
   },
 }
 
