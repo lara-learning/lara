@@ -1,10 +1,10 @@
 mutation updatePaper($input: PaperUpdateInput!) {
    updatePaper(input: $input) {
      id
-     trainee
-     trainer
+     traineeId
+     trainerId
      client
-     mentor
+     mentorId
      periodStart
      periodEnd
      subject

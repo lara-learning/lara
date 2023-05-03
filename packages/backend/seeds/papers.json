@@ -1,0 +1,40 @@
+[
+  {
+    "id": "1",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Solaris",
+    "mentorId": "1011",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "subject": "Android Entwicklung",
+    "status": "InProgress",
+    "briefing": [
+      {
+        "id": "1",
+        "answer": "dasdasd",
+        "question": "sadasdasd",
+        "hint": "DSAdasd"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Solaris",
+    "mentorId": "1011",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "subject": "IOS Entwicklung",
+    "status": "InProgress",
+    "briefing": [
+      {
+        "id": "1",
+        "answer": "dasdasd",
+        "question": "sadasdasd",
+        "hint": "DSAdasd"
+      }
+    ]
+  }
+]

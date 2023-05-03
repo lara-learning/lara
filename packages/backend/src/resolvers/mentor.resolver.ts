@@ -3,6 +3,7 @@ import {GqlResolvers, Mentor, MentorContext} from '@lara/api'
 import {alexaSkillLinked} from '../services/alexa.service'
 import {avatar, username} from '../services/user.service'
 import {parseISODateString} from "../utils/date";
+import {papersByTrainee} from "../repositories/paper.repo";
 
 export const mentorResolver: GqlResolvers<MentorContext> = {
   Mentor: {
@@ -10,9 +11,9 @@ export const mentorResolver: GqlResolvers<MentorContext> = {
     username,
     alexaSkillLinked,
     deleteAt: (model) => endOfToolUsage(model).toISOString(),
-    // papers: async (model) => {
-    //   return papersByTrainee(model.id)
-    // }
+    papers: async (model) => {
+      return papersByTrainee(model.id)
+    }
   },
 }
 //TODO endDate wird nicht gesetzt

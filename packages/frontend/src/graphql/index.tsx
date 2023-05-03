@@ -440,13 +440,13 @@ export type Paper = {
   conclusion?: Maybe<Scalars['String']>;
   createdAt: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: PaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export type PaperEntryInput = {
@@ -467,13 +467,13 @@ export type PaperFormData = {
 export type PaperInput = {
   briefing: Array<PaperEntryInput>;
   client: Scalars['String'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: PaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export enum PaperStatus {
@@ -488,13 +488,13 @@ export type PaperUpdateInput = {
   briefing: Array<PaperEntryInput>;
   client: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Scalars['ID'];
+  mentorId: Scalars['ID'];
   periodEnd: Scalars['String'];
   periodStart: Scalars['String'];
   status: PaperStatus;
   subject: Scalars['String'];
-  trainee: Scalars['ID'];
-  trainer: Scalars['ID'];
+  traineeId: Scalars['ID'];
+  trainerId: Scalars['ID'];
 };
 
 export type PrintPayload = {
@@ -800,7 +800,7 @@ export type CreatePaperMutationVariables = Exact<{
 }>;
 
 
-export type CreatePaperMutation = { __typename?: 'Mutation', createPaper: { __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
+export type CreatePaperMutation = { __typename?: 'Mutation', createPaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
 
 export type CreateTraineeMutationVariables = Exact<{
   input: CreateTraineeInput;
@@ -930,7 +930,7 @@ export type UpdatePaperMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
+export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } };
 
 export type UpdateReportReportReviewPageMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1053,7 +1053,7 @@ export type PaperPageDataQueryVariables = Exact<{
 }>;
 
 
-export type PaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, papers: Array<{ __typename: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> };
+export type PaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, papers: Array<{ __typename: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> };
 
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
@@ -1097,12 +1097,12 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<st
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, papers?: Array<{ __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type TraineePaperDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePaperDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Mentor' } | { __typename?: 'Trainee', id: string, papers?: Array<{ __typename?: 'Paper', id: string, trainee: string, trainer: string, client: string, mentor: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainer' } | undefined };
+export type TraineePaperDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Mentor' } | { __typename?: 'Trainee', id: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainer' } | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1312,10 +1312,10 @@ export const CreatePaperDocument = gql`
     mutation createPaper($input: PaperInput!) {
   createPaper(input: $input) {
     id
-    trainee
-    trainer
+    traineeId
+    trainerId
     client
-    mentor
+    mentorId
     periodStart
     periodEnd
     subject
@@ -1633,10 +1633,10 @@ export const UpdatePaperDocument = gql`
     mutation updatePaper($input: PaperUpdateInput!) {
   updatePaper(input: $input) {
     id
-    trainee
-    trainer
+    traineeId
+    trainerId
     client
-    mentor
+    mentorId
     periodStart
     periodEnd
     subject
@@ -2173,10 +2173,10 @@ export const PaperPageDataDocument = gql`
   }
   papers(userId: $userId) {
     id
-    trainee
-    trainer
+    traineeId
+    trainerId
     client
-    mentor
+    mentorId
     periodStart
     periodEnd
     subject
@@ -2449,10 +2449,10 @@ export const TraineePageDataDocument = gql`
     }
     papers {
       id
-      trainee
-      trainer
+      traineeId
+      trainerId
       client
-      mentor
+      mentorId
       periodStart
       periodEnd
       subject
@@ -2491,10 +2491,10 @@ export const TraineePaperDataDocument = gql`
       id
       papers {
         id
-        trainee
-        trainer
+        traineeId
+        trainerId
         client
-        mentor
+        mentorId
         periodStart
         periodEnd
         subject

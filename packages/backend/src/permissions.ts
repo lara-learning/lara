@@ -68,7 +68,7 @@ export const permissions = shield<unknown, Context>(
       reportForTrainee: and(authenticated, trainer),
 
       // Trainer and Admin Queries
-      trainees: and(authenticated, or(trainer, admin)),
+      trainees: authenticated,
 
       // Admin Queris
       getUser: and(authenticated, admin),
@@ -105,8 +105,8 @@ export const permissions = shield<unknown, Context>(
       // Trainer mutations
       claimTrainee: and(authenticated, trainer),
       unclaimTrainee: and(authenticated, trainer),
-      createPaper: and(authenticated, trainer),
-      updatePaper: and(authenticated, trainer),
+      createPaper: and(authenticated, or(trainee, trainer)),
+      updatePaper: and(authenticated, or(trainee, trainer)),
 
       //Admin mutations
       createTrainee: and(authenticated, admin),
