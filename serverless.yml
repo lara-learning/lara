@@ -77,6 +77,8 @@ custom:
       userType: userGSI1
       userEmail: userGSI4
       paperTraineeId: paperGSI1
+      paperTrainerId: paperGSI2
+      paperMentorId: paperGSI3
       userTrainerId: userGSI6
       userOAuthCode: userOAuthCode
     s3:
@@ -165,6 +167,8 @@ functions:
       USER_TYPE_INDEX: ${self:custom.config.gsi.userType}
       USER_EMAIL_INDEX: ${self:custom.config.gsi.userEmail}
       PAPER_TRAINEE_ID_INDEX: ${self:custom.config.gsi.paperTraineeId}
+      PAPER_TRAINER_ID_INDEX: ${self:custom.config.gsi.paperTrainerId}
+      PAPER_MENTOR_ID_INDEX: ${self:custom.config.gsi.paperMentorId}
       USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
       USER_OAUTH_CODE_INDEX: ${self:custom.config.gsi.userOAuthCode}
       EXPORT_BUCKET: ${self:custom.config.s3.export}
@@ -364,6 +368,10 @@ resources:
             AttributeType: S
           - AttributeName: traineeId
             AttributeType: S
+          - AttributeName: trainerId
+            AttributeType: S
+          - AttributeName: mentorId
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -371,6 +379,18 @@ resources:
           - IndexName: ${self:custom.config.gsi.paperTraineeId}
             KeySchema:
               - AttributeName: traineeId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.paperTrainerId}
+            KeySchema:
+              - AttributeName: trainerId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.paperMentorId}
+            KeySchema:
+              - AttributeName: mentorId
                 KeyType: HASH
             Projection:
               ProjectionType: ALL

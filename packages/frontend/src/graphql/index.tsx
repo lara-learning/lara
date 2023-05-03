@@ -1109,6 +1109,11 @@ export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>
 
 export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Mentor' } | { __typename: 'Trainee', id: string, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, company: { __typename?: 'Company', id: string, name: string }, trainer?: { __typename?: 'Trainer', firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer' } | undefined };
 
+export type TrainerPaperPageDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TrainerPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart: string, periodEnd: string, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | undefined };
+
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2553,6 +2558,43 @@ export function useTraineeSettingsDataLazyQuery(baseOptions?: Apollo.LazyQueryHo
         }
 export type TraineeSettingsDataQueryHookResult = ReturnType<typeof useTraineeSettingsDataQuery>;
 export type TraineeSettingsDataLazyQueryHookResult = ReturnType<typeof useTraineeSettingsDataLazyQuery>;
+export const TrainerPaperPageDataDocument = gql`
+    query TrainerPaperPageData {
+  currentUser {
+    id
+    theme
+    ... on Trainer {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        subject
+        status
+        briefing {
+          id
+          question
+          answer
+          hint
+        }
+      }
+    }
+  }
+}
+    `;
+export function useTrainerPaperPageDataQuery(baseOptions?: Apollo.QueryHookOptions<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>(TrainerPaperPageDataDocument, options);
+      }
+export function useTrainerPaperPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>(TrainerPaperPageDataDocument, options);
+        }
+export type TrainerPaperPageDataQueryHookResult = ReturnType<typeof useTrainerPaperPageDataQuery>;
+export type TrainerPaperPageDataLazyQueryHookResult = ReturnType<typeof useTrainerPaperPageDataLazyQuery>;
 export const TrainerReportsPageDataDocument = gql`
     query TrainerReportsPageData {
   currentUser {
