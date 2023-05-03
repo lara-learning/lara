@@ -22,7 +22,7 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
-import TrainerPaperPage from "./pages/trainer-paper-page";
+import {TrainerPaperPage} from "./pages/trainer-paper-page";
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
 import {PaperCreateBriefing} from "./pages/paper-create-briefing";
