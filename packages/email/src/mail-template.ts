@@ -114,6 +114,16 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
         BUTTONTEXT: link.settings,
       }
       break
+    case 'paperBriefing':
+      emailVariables = {
+        ...emailVariables,
+        DEFAULTBACKGROUND: createBase64UrlfromPng('background_2.png'),
+        HEADLINE: headline.paperBriefing,
+        HEADLINEIMAGE: createBase64UrlfromPng('folder.png'),
+        MAINTEXT: message.paperBriefing,
+        BUTTONTEXT: link.paperBriefing,
+      }
+      break
     default:
       console.error('no email type selected to generate html')
   }

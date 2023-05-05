@@ -1,19 +1,23 @@
 import React, {useEffect, useState} from 'react'
 
 import {
-  PaperLayout,
+  H2,
+  PaperLayout, Paragraph,
 } from '@lara/components'
 
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import PaperAccordion from "../components/paper-accordion";
-import {PrimaryButton} from "../components/button";
-import {useParams} from "react-router";
+import {PrimaryButton, SecondaryButton} from "../components/button";
+import {RouteComponentProps, useParams} from "react-router";
 import {
   PaperFormData,
   PaperStatus, Trainer,
   useTrainerPaperPageDataQuery, useUpdatePaperMutation
 } from "../graphql";
+import Modal from "../components/modal";
+import {Box, Flex} from "@rebass/grid";
+import PaperModal from "../assets/illustrations/paper-modal-illustraion";
 interface PaperBriefingParams {
   paperId: string
 }
@@ -36,19 +40,16 @@ const briefingQuestions = (): Question[] => {
 }
 
 
-export const PaperBriefing: React.FunctionComponent<PaperBriefingParams> = () => {
+export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBriefingParams>> = ({ history }) => {
   const { paperId} = useParams<PaperBriefingParams>()
-  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>({
-    answer: '',
-    question: '',
-    id: '',
-    hint: '',
-  })
+  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
 
   const QAs = briefingQuestions()
   const [filteredQAs] = useState(QAs)
+  const [showHandoverModal, setShowHandoverModal] = React.useState(false)
 
+  const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const trainerPaperPageData = useTrainerPaperPageDataQuery()
   const [updatePaperMutation] = useUpdatePaperMutation()
 
@@ -57,8 +58,9 @@ export const PaperBriefing: React.FunctionComponent<PaperBriefingParams> = () =>
 
   const paper = currentUser?.papers?.find(paper => paper?.id == paperId)
   useEffect(() => {
-    setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
-    console.log(paperBriefing)
+    if(paperBriefingInput) {
+      setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
+    }
   },[paperBriefingInput])
 
   if (!currentUser) {
@@ -66,6 +68,9 @@ export const PaperBriefing: React.FunctionComponent<PaperBriefingParams> = () =>
   }
 
   const updatePaper = async (paperBriefing: PaperFormData[]) => {
+    paperBriefing.sort(function(a, b) {
+      return parseInt(a.id) - parseInt(b.id);
+    });
     await updatePaperMutation({
       variables: {
         input: {
@@ -81,17 +86,10 @@ export const PaperBriefing: React.FunctionComponent<PaperBriefingParams> = () =>
           trainerId: currentUser.id
         }
       },
+    }).then(() => {
+      history.push('/paper/')
     })
 }
-  // const statusChange = (status: EntryStatusType) => handleStatusChange && handleStatusChange(status)
-
-  /*const handleSave = (newPaperInput: AnswerPaperInput) => {
-    if (newPaperInput.answer === paperInput.answer) {
-      return
-    }
-
-    statusChange(StatusTypes.loading)
-  }*/
 
   return (
     <Template type="Main">
@@ -103,9 +101,28 @@ export const PaperBriefing: React.FunctionComponent<PaperBriefingParams> = () =>
             </PaperAccordion>
           ))}
         </div>
-        <PrimaryButton type="submit" onClick={() =>updatePaper(paperBriefing)}>
+        <PrimaryButton type="submit" onClick={toggleHandoverModal}>
           {strings.continue}
         </PrimaryButton>
+        <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
+          <Flex flexDirection={"column"}>
+            <PaperModal/>
+            <H2>{strings.paper.modal.title}</H2>
+            <Paragraph>{strings.paper.modal.description}</Paragraph>
+            <Flex my={'2'}>
+              <Box pr={'2'} width={1 / 2}>
+                <SecondaryButton fullsize onClick={toggleHandoverModal}>
+                  {strings.cancel}
+                </SecondaryButton>
+              </Box>
+              <Box pl={'2'} width={1 / 2}>
+                <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
+                  {strings.paper.modal.createBriefing}
+                </PrimaryButton>
+              </Box>
+            </Flex>
+          </Flex>
+        </Modal>
       </PaperLayout>
     </Template>
   )
