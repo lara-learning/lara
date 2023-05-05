@@ -58,6 +58,44 @@ export default interface Translation {
       projectPeriod: string
       schoolPeriod: string
     }
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: string
+        hint: string
+      }
+      procedure: {
+        question: string
+        hint: string
+      }
+      learningContent: {
+        question: string
+        hint: string
+      }
+      frameworkPlan: {
+        question: string
+        hint: string
+      }
+      tasksAndDutiesTrainee: {
+        question: string
+        hint: string
+      }
+      tasksAndDutiesMentor: {
+        question: string
+        hint: string
+      }
+      primeBlueAntMyTe: {
+        question: string
+        hint: string
+      }
+      feedback: {
+        question: string
+        hint: string
+      }
+      otherRemarks: {
+        question: string
+        hint: string
+      }
+    }
   }
   archivePage: {
     header: string

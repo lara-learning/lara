@@ -2,86 +2,41 @@ import {motion} from 'framer-motion'
 import React from 'react'
 
 import {
-  IconName,
   Spacer,
   StyledAccordionIcon,
   StyledPaperAccordionContainer,
-  StyledPaperAccordionHeader, StyledPaperAccordionTitle,
+  StyledPaperAccordionHeader,
+  StyledPaperAccordionText,
+  StyledPaperAccordionTitle,
 } from '@lara/components'
 import PaperTextInput from "./paper-text-input";
 import {
-  AnswerPaperInput, PaperFormData,
-  useCreatePaperEntryMutation
+  PaperFormData,
+  Trainer,
+  useTrainerPaperPageDataQuery,
 } from "../graphql";
-import {EntryStatusType, StatusTypes} from "./day-input";
 
 interface PaperAccordionProps {
   paperInput: PaperFormData;
+  setPaperBriefing: (value: PaperFormData) => void;
   title: string
   children?: React.ReactNode
   forceActive?: boolean
 }
 
-const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput, title, forceActive
+const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput,setPaperBriefing, title, forceActive
 }) => {
   const [activeState, setActiveState] = React.useState(false)
-  const [createPaperEntryMutation] = useCreatePaperEntryMutation()
-  const StatusIcons: Record<string, IconName> = {
-    success: 'Success',
-    error: 'Error',
-    loading: 'Loader',
+  const trainerPaperPageData = useTrainerPaperPageDataQuery()
+
+
+  const currentUser = trainerPaperPageData?.data?.currentUser as Trainer
+
+
+  if (!currentUser) {
+    return null
   }
-  const [_statusVisible, setStatusVisible] = React.useState(false)
-  const [statusTimeout, setStatusTimeout] = React.useState<number>()
-  const [_status, setStatus] = React.useState<EntryStatusType & { icon: IconName }>({
-    message: '',
-    type: '',
-    icon: 'Loader',
-  })
-  const handleStatusChange = (newStatus: EntryStatusType) => {
-    clearTimeout(statusTimeout)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    setStatus({ ...newStatus, icon: StatusIcons[newStatus.type] })
-    setStatusVisible(true)
 
-    if (newStatus.type !== 'loading') {
-      const timeout = window.setTimeout(() => {
-        setStatusVisible(false)
-      }, 1000)
-
-      setStatusTimeout(timeout)
-    }
-  }
-  const createEntry = (paperInput: AnswerPaperInput) => {
-
-    createPaperEntryMutation({
-      variables: {
-        input: {
-          answer: paperInput.answer,
-          id: paperInput.id,
-          question: paperInput.question,
-        },
-      },
-      optimisticResponse: {
-        createPaperEntry: {
-          __typename: 'PaperFormData',
-          ...paperInput,
-          hint: "das",
-        },
-      },
-    })
-    .then(() => handleStatusChange(StatusTypes.save.success))
-    .catch(() => handleStatusChange(StatusTypes.save.error))
-  }
- // const statusChange = (status: EntryStatusType) => handleStatusChange && handleStatusChange(status)
-
-  /*const handleSave = (newPaperInput: AnswerPaperInput) => {
-    if (newPaperInput.answer === paperInput.answer) {
-      return
-    }
-
-    statusChange(StatusTypes.loading)
-  }*/
   const handleClick = () => {
     setActiveState(!activeState)
   }
@@ -107,9 +62,13 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
           overflow: 'hidden',
         }}
       >
+        <StyledPaperAccordionText>
+          {paperInput.hint}
+        </StyledPaperAccordionText>
+
         <Spacer top="s" right="xxl" bottom="xs">
-          <PaperTextInput entry={paperInput} clearOnSave={true}
-                          onSave={createEntry}/>
+          <PaperTextInput entry={paperInput} clearOnSave={false}
+                          onSave={setPaperBriefing}/>
         </Spacer>
       </motion.div>
     </StyledPaperAccordionContainer>

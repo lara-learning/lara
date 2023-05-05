@@ -5,7 +5,7 @@ import {
   paperTableName, paperTraineeIdIndex, paperTrainerIdIndex,
   putItem, queryObjects,
   updateObject,
-  UpdateObjectOptions
+  UpdateObjectOptions, getItem
 } from '../db'
 
 export const updatePaper = async (updatedPaper: GqlPaperUpdateInput, options: UpdateObjectOptions<GqlPaperUpdateInput>): Promise<GqlPaperUpdateInput> => {
@@ -20,7 +20,11 @@ export const deletePaper = async (paper: Paper): Promise<boolean> => {
   return deleteItem(paperTableName, { id: paper.id })
 }
 
- export const papersByTrainee = (traineeId: string): Promise<GqlPaper[] | undefined> => {
+export const papersById = (id: string): Promise<Paper | undefined> => {
+  return getItem(paperTableName, { id })
+}
+
+export const papersByTrainee = (traineeId: string): Promise<GqlPaper[] | undefined> => {
    return queryObjects<GqlPaper>(paperTableName, paperTraineeIdIndex, { traineeId })
 }
 export const papersByTrainer = (trainerId: string): Promise<GqlPaper[] | undefined> => {

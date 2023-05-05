@@ -21,6 +21,10 @@ export const StyledPaperAccordionContainer = styled(Container)`
   }
 `
 
+export const StyledPaperAccordionText = styled(Paragraph)`
+  font-size: ${FontSizes.copy};
+`
+
 export const StyledPaperAccordionHeader = styled.div`
   cursor: pointer;
   display: flex;

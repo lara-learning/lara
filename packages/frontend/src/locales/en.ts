@@ -58,6 +58,44 @@ const englishTranslation: Translation = {
       customer: "Kunde",
       projectPeriod: "Stations Zeitraum",
       schoolPeriod: "Schulzeitraum",
+    },
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: "Gegenstand der Arbeit:",
+        hint: "Nenne hier bitte die allgemeine Tätigkeit/Aufgabe, die Inhalt der Projektstation ist."
+      },
+      procedure: {
+        question: "Vorgehen",
+        hint: "Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll."
+      },
+      learningContent: {
+        question: "Lerninhalte Station",
+        hint: "Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen."
+      },
+      frameworkPlan: {
+        question: "Rahmenplan Lerninhalte",
+        hint: "Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden."
+      },
+      tasksAndDutiesTrainee: {
+        question: "Aufgaben und Pflichten des Azubis",
+        hint: "Nenne hier (falls gewollt), welche Aufgaben und Pflichten dein Azubi zu erfüllen hat. "
+      },
+      tasksAndDutiesMentor: {
+        question: "Aufgaben und Pflichten des Ausbildungsbeauftragten",
+        hint: "Nenne hier (falls gewollt), welche Aufgaben und Pflichten der Ausbildungsbeauftragte zu erfüllen hat."
+      },
+      primeBlueAntMyTe:{
+        question:"Prime / BlueAnt",
+        hint: "Fasse hier kurz zusammen auf welchen Posten der Azubi seine Stunden/Aufwände buchen kann/soll."
+      },
+      feedback: {
+        question: "Feedback",
+        hint: "Hier ist im Briefing einmal kurz zusammenefasst, was unter Feedback zu verstehen ist. Du kannst den Vorlagen Text bei Bedarf natürlich noch ergänzen."
+      },
+      otherRemarks: {
+        question: "Sonstige Anmerkungen",
+        hint: "string"
+      }
     }
   },
   archivePage: {

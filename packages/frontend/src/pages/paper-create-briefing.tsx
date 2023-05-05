@@ -6,9 +6,10 @@ import {Template} from "../templates/template";
 import {GraphQLError} from "graphql/index";
 import {
   PaperStatus,
+  Trainer,
   useAdminMentorPageQuery,
-  useCreateMentorMutation,
-  useCreatePaperMutation
+  useCreateMentorMutation, useCreatePaperMutation,
+  useTrainerPaperPageDataQuery,
 } from "../graphql";
 import {useToastContext} from "../hooks/use-toast-context";
 import Loader from "../components/loader";
@@ -24,8 +25,20 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
   const {loading} = useAdminMentorPageQuery()
   const [createMentorMutation] = useCreateMentorMutation()
   const [createPaperMutation] = useCreatePaperMutation()
+  const traineePaperPageData = useTrainerPaperPageDataQuery()
 
   const {addToast} = useToastContext()
+  let mentorId = ""
+
+  if (!traineePaperPageData) {
+    return null
+  }
+
+  const currentUser = traineePaperPageData?.data?.currentUser as Trainer
+
+  if (!currentUser) {
+    return null
+  }
 
   const createPaper = async (data: CreateBriefingFormData) => {
     await createPaperMutation({
@@ -33,22 +46,22 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
         input: {
           briefing: [],
           client: data.customer,
-          mentorId: "1011",
-          traineeId: "123",
-          trainerId: "456",
+          mentorId: mentorId,
+          traineeId: data.trainee,
+          trainerId: currentUser.id,
           //TODO
-          periodStart: "2022-08-07T05:14:28.000Z",
-          periodEnd: "2022-08-07T05:14:28.000Z",
+          periodStart: data.startDateProjectInput,
+          periodEnd: data.endDateProjectInput,
           status: PaperStatus.InProgress,
-          subject: data.department,
+          subject: data.department
 
         }
       },
-    })
-      .then(() => {
-        console.log("drrtdt")
-        history.push('/paper/briefing')
-      })
+    }).then((response)=> {
+      const paperId = response?.data?.createPaper.id
+        history.push('/paper/briefing/' + paperId)
+      }
+    )
   }
   const createMentor = async (data: CreateBriefingFormData) => {
     await createMentorMutation({
@@ -70,7 +83,8 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
         },
       },
     })
-      .then(() => {
+      .then((result) => {
+        mentorId = result?.data?.createMentor?.id ? result?.data?.createMentor?.id : ""
         addToast({
           icon: 'PersonNew',
           title: strings.createMentor.title,
@@ -78,6 +92,7 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           type: 'success',
         })
         createPaper(data)
+
       })
       .catch((exception: GraphQLError) => {
         addToast({
@@ -87,7 +102,6 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
         })
       })
   }
-  //TODO company hinzufügen
 
   return (
     <Template type="Main">
