@@ -1,5 +1,5 @@
-import { addMonths, isFuture, isToday, subWeeks } from 'date-fns'
-import { GraphQLError } from 'graphql'
+import {addMonths, isFuture, isToday, subWeeks} from 'date-fns'
+import {GraphQLError} from 'graphql'
 
 import {
   AdminContext,
@@ -12,14 +12,29 @@ import {
 
 import {isAdmin, isMentor, isTrainee, isTrainer} from '../permissions'
 import {allTrainees, traineeById} from '../repositories/trainee.repo'
-import {allTrainers, trainerById } from '../repositories/trainer.repo'
-import { allUsers, saveUser, updateUser, userByEmail, userById } from '../repositories/user.repo'
-import { sendDeletionMail } from '../services/email.service'
-import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
-import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
-import { avatar, username } from '../services/user.service'
-import { parseISODateString } from '../utils/date'
-import { t } from '../i18n'
+import {allTrainers, trainerById} from '../repositories/trainer.repo'
+import {
+  allUsers,
+  saveUser,
+  updateUser,
+  userByEmail,
+  userById
+} from '../repositories/user.repo'
+import {sendDeletionMail} from '../services/email.service'
+import {
+  deleteTrainee,
+  generateReports,
+  generateTrainee,
+  validateTrainee
+} from '../services/trainee.service'
+import {
+  deleteTrainer,
+  generateTrainer,
+  validateTrainer
+} from '../services/trainer.service'
+import {avatar, username} from '../services/user.service'
+import {parseISODateString} from '../utils/date'
+import {t} from '../i18n'
 import {
   deleteMentor,
   generateMentor,
@@ -77,6 +92,14 @@ export const adminResolver: GqlResolvers<AdminContext> = {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
       }
 
+      return user
+    },
+    getUserByEmail: async (_parent, { email }, { currentUser }) => {
+      const user = await userByEmail(email)
+
+      if (!user || isAdmin(user)) {
+        throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
       return user
     },
   },

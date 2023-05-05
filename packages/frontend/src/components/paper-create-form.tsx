@@ -5,48 +5,35 @@ import {
   Text,
   TextProps,
   DefaultTheme,
-  Spacer
+  Spacer, StyledSelect
 } from '@lara/components'
 
 import strings from '../locales/localization'
 import {PrimaryButton} from './button'
 import {useValidationHelper} from '../helper/validation-helper'
-import {Mentor} from "../graphql";
+import {PaperInput, Trainer, useTrainerReportsPageDataQuery} from "../graphql";
 import {CreateBriefingLayout} from "@lara/components/lib/paper-form";
+import {Mentor} from "@lara/api";
 
 interface CreateBriefingFormProps {
   mentor?: Pick<Mentor, 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
+  paper?: PaperInput
   submit: (data: CreateBriefingFormData) => Promise<void>
   cancel?: () => void
   blurSubmit: boolean
 }
 
 export interface CreateBriefingFormData {
-  firstNameTrainee: string
-  lastNameTrainee: string
-  emailTrainee: string
+  trainee: string
   firstNameMentor: string
   lastNameMentor: string
   emailMentor: string
   customer: string
-  //companyId: string
   startDateProjectInput: string
   endDateProjectInput: string
   startDateSchool: string
   endDateSchool: string
   department: string
-}
-
-export interface CreatePaperProps {
-  trainee: string
-  trainer: string
-  client: string
-  mentor: string
-  periodStart: string
-  periodEnd: string
-  subject: string
-  status: string
-  briefing: []
 }
 
 const inputLabelProps: TextProps = {
@@ -60,6 +47,8 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
                                                                      submit,
                                                                      blurSubmit
                                                                    }) => {
+  const { data } = useTrainerReportsPageDataQuery()
+
   const {validateEmail} = useValidationHelper()
 
   const {
@@ -70,68 +59,38 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
 
   const onSubmit = handleSubmit((formdata) => {
     setUpdating(true)
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     submit(formdata).then(() => {
       setUpdating(false)
     })
   })
 
   const [updating, setUpdating] = React.useState(false)
+  const currentUser = data?.currentUser as Trainer
 
   const getFontColor = (hasError: unknown): keyof DefaultTheme => (hasError ? 'errorRed' : 'darkFont')
   return (
     <form onSubmit={onSubmit}>
       <CreateBriefingLayout
-        firstNameTraineeInput={
+        traineeInput={
           <>
             <Text
-              color={getFontColor(errors.firstNameTrainee)} {...inputLabelProps}>
+              color={getFontColor(errors.trainee)} {...inputLabelProps}>
               {strings.paper.createBriefing.firstnameTrainee}
             </Text>
-            <Input
-              {...register('firstNameTrainee', {
-                required: strings.validation.required,
-              })}
+            <StyledSelect
+              {...register('trainee', { required: strings.validation.required })}
+              defaultValue={currentUser.trainees[0].id}
               disabled={updating}
-              error={Boolean(errors.firstNameTrainee)}
-              onBlur={blurSubmit ? onSubmit : undefined}
-            />
-          </>
-        }
-        lastNameTraineeInput={
-          <>
-            <Text
-              color={getFontColor(errors.lastNameTrainee)} {...inputLabelProps}>
-              {strings.paper.createBriefing.lastnameTrainee}
-            </Text>
-            <Input
-              {...register('lastNameTrainee', {
-                required: strings.validation.required,
+              onChange={onSubmit}
+            >
+              {currentUser.trainees.map((trainee, index) => {
+                return (
+                  <option value={trainee.id} key={index}>
+                    {trainee.firstName} {trainee.lastName}
+                  </option>
+                )
               })}
-              disabled={updating}
-              error={Boolean(errors.lastNameTrainee)}
-              onBlur={blurSubmit ? onSubmit : undefined}
-            />
-          </>
-        }
-        emailTraineeInput={
-          <>
-            <Text
-              color={getFontColor(errors.emailTrainee)} {...inputLabelProps}>
-              {strings.paper.createBriefing.emailTrainee}
-            </Text>
-            <Input
-              type="email"
-              {...register('emailTrainee', {
-                required: true,
-                validate: validateEmail,
-              })}
-              disabled={updating}
-              error={Boolean(errors.emailTrainee)}
-              onBlur={blurSubmit ? onSubmit : undefined}
-            />
+            </StyledSelect>
           </>
         }
         firstNameMentorInput={
@@ -199,26 +158,6 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
             </Spacer>
           </>
         }
-        /** companyInput={
-           <>
-             <Text color={getFontColor(errors.companyId)} {...inputLabelProps}>
-               {strings.company}
-             </Text>
-             <StyledSelect
-               {...register('companyId', { required: strings.validation.required })}
-               disabled={updating}
-               onChange={onSubmit}
-             >
-               {companies.map((comp, i) => {
-                 return (
-                   <option value={comp.id} key={i}>
-                     {comp.name}
-                   </option>
-                 )
-               })}
-             </StyledSelect>
-           </>
-         }*/
         startDateProjectInput={
           <>
             <Text

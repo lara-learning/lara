@@ -1,20 +1,20 @@
 import {
-  BaseContext,
+  BaseContext, GqlPaperEntryInput,
   GqlResolvers,
 } from '@lara/api'
-import {generatePaper} from "../services/paper.service";
-import {savePaper} from "../repositories/paper.repo";
+import {generatePaper, generatePaperEntry} from "../services/paper.service";
+import {savePaper, updatePaper} from "../repositories/paper.repo";
 
 export const paperResolver: GqlResolvers<BaseContext> = {
   Mutation: {
     createPaper: async (_parent, { input}) => {
       return savePaper(generatePaper(input))
     },
-    /*updatePaper: async (_parent, {input}) => {
+    updatePaper: async (_parent, {input}) => {
       const briefing = input.briefing.map((entry: GqlPaperEntryInput) => generatePaperEntry(entry))
       return await updatePaper({...input, briefing}, {updateKeys: ['briefing']})
     },
-    deletePaperEntry: async (_parent, { paperId, input }, { currentUser }) => {
+   /* deletePaperEntry: async (_parent, { paperId, input }, { currentUser }) => {
       const paper = await paperByTrainer(currentUser.id)
 
       if (!paper) {

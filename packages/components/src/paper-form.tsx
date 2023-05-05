@@ -34,14 +34,11 @@ const StyledButtonControls = styled.div`
 `
 
 type CreateBriefingLayoutProps = {
-  firstNameTraineeInput: JSX.Element
-  lastNameTraineeInput: JSX.Element
-  emailTraineeInput: JSX.Element
+  traineeInput: JSX.Element
   firstNameMentorInput: JSX.Element
   lastNameMentorInput: JSX.Element
   emailMentorInput: JSX.Element
   customerInput: JSX.Element
- // companyInput: JSX.Element
   startDateProjectInput: JSX.Element
   endDateProjectInput: JSX.Element
   startDateSchoolInput: JSX.Element
@@ -52,14 +49,11 @@ type CreateBriefingLayoutProps = {
   buttonControls?: JSX.Element
 }
 export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
-  firstNameTraineeInput,
-  lastNameTraineeInput,
-  emailTraineeInput,
+  traineeInput,
   firstNameMentorInput,
   lastNameMentorInput,
   emailMentorInput,
   customerInput,
-  //companyInput,
   startDateProjectInput,
   endDateProjectInput,
   startDateSchoolInput,
@@ -72,11 +66,7 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
   return (
     <StyledFormContainer>
       <StyledFormGrid>
-        <StyledFormGridItem>{firstNameTraineeInput}</StyledFormGridItem>
-
-        <StyledFormGridItem>{lastNameTraineeInput}</StyledFormGridItem>
-
-        <StyledFormGridItem>{emailTraineeInput}</StyledFormGridItem>
+        <StyledFormGridItem>{traineeInput}</StyledFormGridItem>
 
         <StyledFormGridItem>{firstNameMentorInput}</StyledFormGridItem>
 
@@ -99,10 +89,8 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
           {periodSchoolSpacer}
           <div>{endDateSchoolInput}</div>
         </StyledFormGridDateItem>
-
       </StyledFormGrid>
-
-      {buttonControls && <StyledButtonControls>{buttonControls}</StyledButtonControls>}
+      <StyledButtonControls>{buttonControls}</StyledButtonControls>
     </StyledFormContainer>
   )
 }

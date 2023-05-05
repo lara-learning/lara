@@ -121,8 +121,8 @@ input PaperInput {
   trainerId: ID!
   client: String!
   mentorId: ID!
-  periodStart: String!
-  periodEnd: String!
+  periodStart: String
+  periodEnd: String
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
@@ -134,8 +134,8 @@ input PaperUpdateInput {
   trainerId: ID!
   client: String!
   mentorId: ID!
-  periodStart: String!
-  periodEnd: String!
+  periodStart: String
+  periodEnd: String
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
@@ -145,6 +145,7 @@ input AnswerPaperInput {
   id: ID!
   question: String!
   answer: String!
+  hint: String!
 }
 
 type Mutation {
@@ -377,6 +378,11 @@ type Query {
   getUser(id: ID!): UserInterface
 
   """
+  Get a User by Email
+  """
+  getUserByEmail(email: String!): UserInterface
+
+  """
   Will look for Users to delete
   """
   cleanup: Boolean!
@@ -386,15 +392,6 @@ type Query {
   """
   alexaLinkingUrl: String
 
-  """
-  Get the PAPER
-  """
-  getPaper(id: ID!): Paper
-
-  """
-  Get all Papers for a User
-  """
-  papers(userId: ID!): [Paper]!
 }
 
 type PrintPayload {
@@ -651,10 +648,10 @@ type Paper {
   briefing: [PaperFormData!]!
   conclusion: String
   archivedAt: String
-  createdAt: String!
+  createdAt: String
   client: String!
   mentorId: ID!
-  periodStart: String!
-  periodEnd: String!
+  periodStart: String
+  periodEnd: String
   subject: String!
 }

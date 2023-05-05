@@ -10,7 +10,7 @@ interface PaperTextInputProps {
   onSave: (paperInput: AnswerPaperInput) => any
   onDelete?: () => any
   clearOnSave?: boolean
-  entry: Pick<PaperFormData,| 'id' | 'question' | 'answer'>
+  entry: PaperFormData
   disabled?: boolean
   autoFocus?: boolean
 }
@@ -75,6 +75,7 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
       answer: textInput.current.value,
       question: entry.question,
       id: entry.id,
+      hint: entry.hint ? entry.hint : '',
     })
   }
 

@@ -28,6 +28,7 @@ import TrainerReportsPage from './pages/trainer-reports-page'
 import {PaperCreateBriefing} from "./pages/paper-create-briefing";
 import {PaperBriefing} from "./pages/paper-briefing";
 import {TraineePaperPage} from "./pages/trainee-paper-page";
+import {MentorPaperPage} from "./pages/mentor-paper-page";
 
 type RoutesProps = {
   currentUser?:
@@ -79,7 +80,7 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
         routes.push({ path: '/paper', exact: true, component: TrainerPaperPage })
         routes.push({ path: '/paper/createBriefing', exact: true, component: PaperCreateBriefing })
-        routes.push({ path: '/paper/briefing', exact: true, component: PaperBriefing })
+        routes.push({ path: '/paper/briefing/:paperId', exact: true, component: PaperBriefing })
 
         routes.push({ path: '/reports/:trainee?', exact: true, component: TrainerReportsPage })
         routes.push({ path: '/reports/:trainee/:year/:week', component: ReportReviewPage })
@@ -88,7 +89,7 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
       if (currentUser.type === UserTypeEnum.Mentor && currentUser.__typename === 'Mentor') {
         // Routes for Mentor
-        routes.push({ path: '/', exact: true, render: () => <Redirect to="/paper" />})
+        routes.push({ path: '/paper', exact: true, component: MentorPaperPage })
       }
 
       if (currentUser.type === UserTypeEnum.Admin && currentUser.__typename === 'Admin') {

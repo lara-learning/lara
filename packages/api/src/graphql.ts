@@ -36,6 +36,7 @@ export type GqlAdmin = GqlUserInterface & {
 
 export type GqlAnswerPaperInput = {
   answer: Scalars['String'];
+  hint: Scalars['String'];
   id: Scalars['ID'];
   question: Scalars['String'];
 };
@@ -439,11 +440,11 @@ export type GqlPaper = {
   briefing: Array<GqlPaperFormData>;
   client: Scalars['String'];
   conclusion?: Maybe<Scalars['String']>;
-  createdAt: Scalars['String'];
+  createdAt?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   mentorId: Scalars['ID'];
-  periodEnd: Scalars['String'];
-  periodStart: Scalars['String'];
+  periodEnd?: Maybe<Scalars['String']>;
+  periodStart?: Maybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -469,8 +470,8 @@ export type GqlPaperInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String'];
   mentorId: Scalars['ID'];
-  periodEnd: Scalars['String'];
-  periodStart: Scalars['String'];
+  periodEnd?: InputMaybe<Scalars['String']>;
+  periodStart?: InputMaybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -489,8 +490,8 @@ export type GqlPaperUpdateInput = {
   client: Scalars['String'];
   id: Scalars['ID'];
   mentorId: Scalars['ID'];
-  periodEnd: Scalars['String'];
-  periodStart: Scalars['String'];
+  periodEnd?: InputMaybe<Scalars['String']>;
+  periodStart?: InputMaybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -512,14 +513,12 @@ export type GqlQuery = {
   config: GqlLaraConfig;
   /** Returns the logged in user. This user can be either a Trainee or a Trainer. */
   currentUser?: Maybe<GqlUserInterface>;
-  /** Get the PAPER */
-  getPaper?: Maybe<GqlPaper>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
+  /** Get a User by Email */
+  getUserByEmail?: Maybe<GqlUserInterface>;
   /** Get all Trainers */
   mentors: Array<GqlMentor>;
-  /** Get all Papers for a User */
-  papers: Array<Maybe<GqlPaper>>;
   /** Print single report or report batch */
   print: GqlPrintPayload;
   /** Finds the report for a specifig trainee on the requested year and week. */
@@ -537,18 +536,13 @@ export type GqlQuery = {
 };
 
 
-export type GqlQueryGetPaperArgs = {
-  id: Scalars['ID'];
-};
-
-
 export type GqlQueryGetUserArgs = {
   id: Scalars['ID'];
 };
 
 
-export type GqlQueryPapersArgs = {
-  userId: Scalars['ID'];
+export type GqlQueryGetUserByEmailArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -1049,11 +1043,11 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   briefing?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
   client?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
-  createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   mentorId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
-  periodEnd?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  periodStart?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  periodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  periodStart?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<GqlResolversTypes['PaperStatus'], ParentType, ContextType>;
   subject?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
@@ -1080,10 +1074,9 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   companies?: Resolver<Maybe<Array<GqlResolversTypes['Company']>>, ParentType, ContextType>;
   config?: Resolver<GqlResolversTypes['LaraConfig'], ParentType, ContextType>;
   currentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
-  getPaper?: Resolver<Maybe<GqlResolversTypes['Paper']>, ParentType, ContextType, RequireFields<GqlQueryGetPaperArgs, 'id'>>;
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
+  getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserByEmailArgs, 'email'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
-  papers?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlQueryPapersArgs, 'userId'>>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
