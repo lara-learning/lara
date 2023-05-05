@@ -11,13 +11,11 @@ import {
 import strings from '../locales/localization'
 import {PrimaryButton} from './button'
 import {useValidationHelper} from '../helper/validation-helper'
-import {PaperInput, Trainer, useTrainerReportsPageDataQuery} from "../graphql";
+import {Trainer} from "../graphql";
 import {CreateBriefingLayout} from "@lara/components/lib/paper-form";
-import {Mentor} from "@lara/api";
 
 interface CreateBriefingFormProps {
-  mentor?: Pick<Mentor, 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
-  paper?: PaperInput
+  trainer?: Trainer,
   submit: (data: CreateBriefingFormData) => Promise<void>
   cancel?: () => void
   blurSubmit: boolean
@@ -43,11 +41,10 @@ const inputLabelProps: TextProps = {
   uppercase: true,
 }
 
-export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
+export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
                                                                      submit,
                                                                      blurSubmit
                                                                    }) => {
-  const { data } = useTrainerReportsPageDataQuery()
 
   const {validateEmail} = useValidationHelper()
 
@@ -65,8 +62,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
   })
 
   const [updating, setUpdating] = React.useState(false)
-  const currentUser = data?.currentUser as Trainer
-
+  const currentUser = trainer
   const getFontColor = (hasError: unknown): keyof DefaultTheme => (hasError ? 'errorRed' : 'darkFont')
   return (
     <form onSubmit={onSubmit}>
@@ -79,11 +75,11 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
             </Text>
             <StyledSelect
               {...register('trainee', { required: strings.validation.required })}
-              defaultValue={currentUser.trainees[0].id}
+              defaultValue={currentUser?.trainees[0].id}
               disabled={updating}
               onChange={onSubmit}
             >
-              {currentUser.trainees.map((trainee, index) => {
+              {currentUser?.trainees.map((trainee, index) => {
                 return (
                   <option value={trainee.id} key={index}>
                     {trainee.firstName} {trainee.lastName}

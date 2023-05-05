@@ -19,6 +19,23 @@ export type PrintReport = {
   summary: string
 }
 
+export type PrintPaper = {
+  status: string
+  briefing: PrintBriefing[]
+  client: string
+  periodStart: string
+  periodEnd: string
+  subject: string
+  department: string
+}
+
+export type PrintBriefing = {
+  question: string
+  hint: string
+  answer: string
+  id: string
+}
+
 export type PrintUserData = {
   firstName: string
   lastName: string
@@ -33,6 +50,13 @@ export type PrintReportData = {
   apprenticeYear: number
   reportPeriod: string
   report: PrintReport
+  signatureDate: string
+}
+
+export type PrintPaperData = {
+  filename: string
+  apprenticeYear: number
+  paper: PrintPaper
   signatureDate: string
 }
 

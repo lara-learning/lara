@@ -35,7 +35,6 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
   }
 
   const currentUser = traineePaperPageData?.data?.currentUser as Trainer
-
   if (!currentUser) {
     return null
   }
@@ -118,7 +117,7 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           headline={<H1 noMargin>{strings.paper.createBriefing.title}</H1>}
         >
           {!loading ? (
-            <PaperCreateForm blurSubmit={false} submit={createMentor}
+            <PaperCreateForm trainer={currentUser} blurSubmit={false} submit={createMentor}
             />
           ) : (
             <Loader/>

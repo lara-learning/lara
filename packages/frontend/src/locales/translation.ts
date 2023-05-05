@@ -95,6 +95,11 @@ export default interface Translation {
         question: string
         hint: string
       }
+    },
+    modal: {
+      title: string,
+      description: string
+      createBriefing: string
     }
   }
   archivePage: {

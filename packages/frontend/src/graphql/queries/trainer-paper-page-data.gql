@@ -3,6 +3,13 @@ query TrainerPaperPageData {
     id
     theme
     ... on Trainer {
+      trainees {
+        username
+        firstName
+        lastName
+        id
+        avatar
+      }
       papers {
         id
         traineeId

@@ -3,7 +3,11 @@ import { createGlobalStyle } from 'styled-components'
 
 import { lightTheme, ThemeProvider } from '@lara/components'
 
-import { PrintUserData, PrintReport, PrintTranslations } from '@lara/api'
+import {
+  PrintUserData,
+  PrintReport,
+  PrintTranslations, PrintBriefing, PrintPaper,
+} from '@lara/api'
 import {
   Spacings,
   StyledPrintDay,
@@ -49,6 +53,14 @@ type TemplateProps = {
   report: PrintReport
   signatureDate: string
 }
+type PaperTemplateProps = {
+  userData: PrintUserData
+  i18n: PrintTranslations
+  apprenticeYear: number
+  paper: PrintPaper
+  signatureDate: string
+}
+
 
 export const Template: React.FC<TemplateProps> = ({
   userData: { traineeSignature, trainerSignature, firstName, lastName, course },
@@ -126,6 +138,71 @@ export const Template: React.FC<TemplateProps> = ({
         <StyledPrintFooterTotalWrapper>
           <Total label={i18n.totalWeek} time={totalTime} />
         </StyledPrintFooterTotalWrapper>
+        <StyledPrintSignatureContainer>
+          <Signature
+            i18n={i18n}
+            signatureDate={signatureDate}
+            signature={traineeSignature}
+            label={i18n.signatureTrainee}
+          />
+          <Signature
+            i18n={i18n}
+            signatureDate={signatureDate}
+            signature={trainerSignature}
+            label={i18n.signatureTrainer}
+          />
+        </StyledPrintSignatureContainer>
+      </StyledPrintFooter>
+    </ThemeProvider>
+  )
+}
+export const PaperTemplate: React.FC<PaperTemplateProps> = ({
+  userData: { traineeSignature, trainerSignature, firstName, lastName, course },
+  apprenticeYear,
+  paper,
+  i18n,
+  signatureDate,
+}) => {
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyle />
+      <StyledPrintHeader>
+        <LaraLogo />
+      </StyledPrintHeader>
+      <StyledPrintUserInfo>
+        <StyledPrintUserInfoRow fullsize>
+          <StyledPrintUserInfoRowHeadline> {i18n.name}: </StyledPrintUserInfoRowHeadline>
+          {firstName} {lastName}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.apprenticeCourse}: </StyledPrintUserInfoRowHeadline>
+          {course}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.apprenticeYear}: </StyledPrintUserInfoRowHeadline>
+          {apprenticeYear}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
+          {paper.periodStart + ' -' + paper.periodEnd}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.department}: </StyledPrintUserInfoRowHeadline>
+          {paper.department}
+        </StyledPrintUserInfoRow>
+      </StyledPrintUserInfo>
+      <div>
+        {paper.briefing.map((briefing: PrintBriefing, briefingIndex :number) => {
+          return (
+            <StyledPrintDay key={briefingIndex}>
+              <StyledPrintDayHeadline>{briefing.question}</StyledPrintDayHeadline>
+              <StyledPrintDaySubHeadline>{briefing.hint}</StyledPrintDaySubHeadline>
+              <StyledPrintEntryText>{briefing.answer}</StyledPrintEntryText>
+            </StyledPrintDay>
+          )
+        })}
+      </div>
+      <StyledPrintFooter>
         <StyledPrintSignatureContainer>
           <Signature
             i18n={i18n}

@@ -96,6 +96,14 @@ const englishTranslation: Translation = {
         question: "Sonstige Anmerkungen",
         hint: "string"
       }
+    },
+    modal: {
+      title: "Bist du sicher, dass du das Briefing beenden möchtest?",
+      description: "" +
+        "Wenn du auf “Briefing erstellen” drückst, kannst du das Briefing nicht mehr bearbeiten. Das Briefing wird daraufhin als PDF an deinen Azubi und den Ausbildungsbeauftragten per E-Mail gesendet.\n" +
+        "\n" +
+        "Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.",
+      createBriefing: "Briefing erstellen"
     }
   },
   archivePage: {

@@ -2,24 +2,30 @@ import {
   Admin,
   EmailPayload,
   EmailTranslations,
-  Mentor,
+  Mentor, Paper,
   Report,
   Trainee,
   Trainer,
   User
 } from '@lara/api'
-import { invokeLambda } from '../aws/lambda'
+import {invokeLambda} from '../aws/lambda'
 
-import { t } from '../i18n'
-import { isTrainee, isTrainer } from '../permissions'
-import { allAdmins } from '../repositories/admin.repo'
-import { traineeById } from '../repositories/trainee.repo'
-import { trainerById } from '../repositories/trainer.repo'
+import {t} from '../i18n'
+import {isTrainee, isTrainer} from '../permissions'
+import {allAdmins} from '../repositories/admin.repo'
+import {traineeById} from '../repositories/trainee.repo'
+import {trainerById} from '../repositories/trainer.repo'
+import {mentorById} from "../repositories/mentor.repo";
 
-const { STAGE, URL_ORIGIN } = process.env
+const {STAGE, URL_ORIGIN} = process.env
 
 const translations = (user: User): EmailTranslations =>
-  t('email', user.language, { interpolation: { prefix: 'turnOff', suffix: 'turnOff' } })
+  t('email', user.language, {
+    interpolation: {
+      prefix: 'turnOff',
+      suffix: 'turnOff'
+    }
+  })
 
 const envLink = (path: string) => {
   const envDomain = STAGE === 'staging' ? 'staging.' : ''
@@ -50,6 +56,17 @@ const traineeNoficationMailPayload = (receiver: Trainee, sender: Trainer, report
   translations: translations(receiver),
 })
 
+const paperNoficationMailPayload = (receiver: Trainee | Mentor, sender: Trainer, _paper: Paper): EmailPayload => ({
+  emailType: 'paperBriefing',
+  userData: {
+    receiverEmail: receiver.email,
+    receiverName: receiver.firstName,
+    trainer: sender.firstName,
+    buttonLink: envLink(`/paper/`),
+  },
+  translations: translations(receiver),
+})
+
 /**
  * Sends notification by email depending on the status of a report
  * @param report
@@ -61,14 +78,20 @@ export const sendNotificationMail = async (report: Report, sender: User): Promis
     const receiver = sender.trainerId && (await trainerById(sender.trainerId))
     if (!receiver || !receiver.notification) return
 
-    await invokeLambda({ payload: trainerNotificationMailPayload(receiver, sender, report), functionName: 'email' })
+    await invokeLambda({
+      payload: trainerNotificationMailPayload(receiver, sender, report),
+      functionName: 'email'
+    })
   }
 
   if (isTrainer(sender) && (report.status === 'reopened' || report.status === 'archived')) {
     const receiver = await traineeById(report.traineeId)
     if (!receiver || !receiver.notification) return
 
-    await invokeLambda({ payload: traineeNoficationMailPayload(receiver, sender, report), functionName: 'email' })
+    await invokeLambda({
+      payload: traineeNoficationMailPayload(receiver, sender, report),
+      functionName: 'email'
+    })
   }
 }
 
@@ -125,7 +148,10 @@ export const sendDeletionMail = async (userToDelete: Trainee | Mentor | Trainer)
   // notify admins
   await Promise.all(
     admins.map((admin) => {
-      return invokeLambda({ payload: adminDeletionMailPayload(admin, userToDelete), functionName: 'email' })
+      return invokeLambda({
+        payload: adminDeletionMailPayload(admin, userToDelete),
+        functionName: 'email'
+      })
     })
   )
 
@@ -136,11 +162,17 @@ export const sendDeletionMail = async (userToDelete: Trainee | Mentor | Trainer)
       return
     }
 
-    await invokeLambda({ payload: trainerDeletionMailPayload(trainer, userToDelete), functionName: 'email' })
+    await invokeLambda({
+      payload: trainerDeletionMailPayload(trainer, userToDelete),
+      functionName: 'email'
+    })
   }
 
   // notify user that will be deleted
-  await invokeLambda({ payload: userToDeleteDeletionMailPayload(userToDelete), functionName: 'email' })
+  await invokeLambda({
+    payload: userToDeleteDeletionMailPayload(userToDelete),
+    functionName: 'email'
+  })
 }
 
 /**
@@ -157,7 +189,27 @@ export const sendAlexaNotificationMail = async (user: User): Promise<void> => {
     payload: {
       emailType: 'alexa',
       translations: translations(user),
-      userData: { buttonLink: envLink('/settings'), receiverEmail: user.email, receiverName: user.firstName },
+      userData: {
+        buttonLink: envLink('/settings'),
+        receiverEmail: user.email,
+        receiverName: user.firstName
+      },
     },
   })
+}
+export const sendPaperBriefingMail = async (paper: Paper, sender: Trainer): Promise<void> => {
+  if (sender) {
+    const traineeReceiver = await traineeById(paper.traineeId)
+    const mentorReceiver = await mentorById(paper.mentorId)
+    if (traineeReceiver && mentorReceiver) {
+      await invokeLambda({
+        payload: paperNoficationMailPayload(traineeReceiver, sender, paper),
+        functionName: 'email'
+      })
+      await invokeLambda({
+        payload: paperNoficationMailPayload(mentorReceiver, sender, paper),
+        functionName: 'email'
+      })
+    }
+  }
 }

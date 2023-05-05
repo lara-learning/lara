@@ -1,48 +1,21 @@
 import {
-  BaseContext, GqlPaperEntryInput,
+  AuthenticatedContext,
+  GqlPaperEntryInput,
   GqlResolvers,
 } from '@lara/api'
 import {generatePaper, generatePaperEntry} from "../services/paper.service";
 import {savePaper, updatePaper} from "../repositories/paper.repo";
+import {sendPaperBriefingMail} from "../services/email.service";
 
-export const paperResolver: GqlResolvers<BaseContext> = {
+export const paperResolver: GqlResolvers<AuthenticatedContext> = {
   Mutation: {
     createPaper: async (_parent, { input}) => {
       return savePaper(generatePaper(input))
     },
-    updatePaper: async (_parent, {input}) => {
+    updatePaper: async (_parent, {input}, { currentUser }) => {
       const briefing = input.briefing.map((entry: GqlPaperEntryInput) => generatePaperEntry(entry))
+      if(currentUser.__typename == 'Trainer') await sendPaperBriefingMail(input, currentUser)
       return await updatePaper({...input, briefing}, {updateKeys: ['briefing']})
     },
-   /* deletePaperEntry: async (_parent, { paperId, input }, { currentUser }) => {
-      const paper = await paperByTrainer(currentUser.id)
-
-      if (!paper) {
-        throw new GraphQLError('current Trainee has no timetable')
-      }
-
-      const paperById = paper.find((paper) => paper.id === paperId)
-
-      if (!paperById) {
-        throw new GraphQLError('timetable does not exist')
-      }
-
-      const entryToDelete = paperById?.entries.find(
-        (entry) => entry.day === input.day && entry.timeStart === input.timeStart
-      )
-
-      if (!entryToDelete) {
-        throw new GraphQLError('entry does not exist')
-      }
-
-      const updatedPaper = {
-        ...paperById,
-        entries: paperById?.entries.filter((entry) => entry !== entryToDelete),
-      }
-
-      await updatePaper(updatedPaper, { updateKeys: ['briefing'] })
-
-      return traineeById(currentUser.id)
-    },*/
   },
 }
