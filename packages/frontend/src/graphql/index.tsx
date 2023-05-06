@@ -216,7 +216,7 @@ export type Mutation = {
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: MutateEntryPayload;
   /** Delete Paper */
-  deletePaper: Trainer;
+  deletePaper: Array<Maybe<Paper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: PaperFormData;
   /** Link Alexa account */
@@ -839,6 +839,13 @@ export type DeleteEntryMutationVariables = Exact<{
 
 export type DeleteEntryMutation = { __typename?: 'Mutation', deleteEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string }> } } };
 
+export type DeletePaperMutationVariables = Exact<{
+  paperId: Scalars['ID'];
+}>;
+
+
+export type DeletePaperMutation = { __typename?: 'Mutation', deletePaper: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> };
+
 export type LinkAlexaMutationVariables = Exact<{
   code: Scalars['String'];
   state: Scalars['String'];
@@ -1441,6 +1448,32 @@ export function useDeleteEntryMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<DeleteEntryMutation, DeleteEntryMutationVariables>(DeleteEntryDocument, options);
       }
 export type DeleteEntryMutationHookResult = ReturnType<typeof useDeleteEntryMutation>;
+export const DeletePaperDocument = gql`
+    mutation deletePaper($paperId: ID!) {
+  deletePaper(paperId: $paperId) {
+    id
+    traineeId
+    trainerId
+    client
+    mentorId
+    periodStart
+    periodEnd
+    subject
+    status
+    briefing {
+      id
+      question
+      answer
+      hint
+    }
+  }
+}
+    `;
+export function useDeletePaperMutation(baseOptions?: Apollo.MutationHookOptions<DeletePaperMutation, DeletePaperMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePaperMutation, DeletePaperMutationVariables>(DeletePaperDocument, options);
+      }
+export type DeletePaperMutationHookResult = ReturnType<typeof useDeletePaperMutation>;
 export const LinkAlexaDocument = gql`
     mutation linkAlexa($code: String!, $state: String!) {
   linkAlexa(code: $code, state: $state) {

@@ -217,7 +217,7 @@ export type GqlMutation = {
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
   /** Delete Paper */
-  deletePaper: GqlTrainer;
+  deletePaper: Array<Maybe<GqlPaper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: GqlPaperFormData;
   /** Link Alexa account */
@@ -1010,7 +1010,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   createTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTraineeArgs, 'input'>>;
   createTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationCreateTrainerArgs, 'input'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
-  deletePaper?: Resolver<GqlResolversTypes['Trainer'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
+  deletePaper?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
   deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'googleToken'>>;

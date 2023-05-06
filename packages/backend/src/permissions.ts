@@ -107,6 +107,7 @@ export const permissions = shield<unknown, Context>(
       unclaimTrainee: and(authenticated, trainer),
       createPaper: and(authenticated, or(trainee, trainer)),
       updatePaper: and(authenticated, or(trainee, trainer)),
+      deletePaper: and(authenticated, or(trainee, trainer)),
 
       //Admin mutations
       createTrainee: and(authenticated, admin),

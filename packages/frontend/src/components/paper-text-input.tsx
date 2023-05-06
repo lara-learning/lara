@@ -23,18 +23,15 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
     if (!textInput.current) {
       return
     }
-    else if (event.key === 'Enter' && !event.shiftKey) {
-      textInput.current.blur()
+    if (event.key === 'Enter') {
+      textInput.current?.blur()
     }
     else if(event.key === 'Backspace' &&
       onDelete &&
-      textInput.current?.value === '') {
+      textInput.current?.value === ''
+    ) {
         onDelete()
     }
-    else if (event.key === 'Backspace' && textInput.current?.value === '') {
-        textInput.current?.focus()
-        setCursorToEnd(textInput.current)
-      }
   }
 
   const handleBlur = () => {
@@ -54,7 +51,7 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
         }
 
         if (textInput.current) {
-          resizeInput()
+          textInput.current.focus()
         }
       }
     })

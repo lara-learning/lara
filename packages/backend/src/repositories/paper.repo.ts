@@ -16,8 +16,8 @@ export const savePaper = (paper: GqlPaper): Promise<GqlPaper> => {
   return putItem(paperTableName, paper)
 }
 
-export const deletePaper = async (paper: Paper): Promise<boolean> => {
-  return deleteItem(paperTableName, { id: paper.id })
+export const deletePaper = async (paperId: string): Promise<boolean> => {
+  return deleteItem(paperTableName, { id: paperId})
 }
 
 export const papersById = (id: string): Promise<Paper | undefined> => {

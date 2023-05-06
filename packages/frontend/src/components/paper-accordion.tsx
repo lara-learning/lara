@@ -15,16 +15,18 @@ import {
   Trainer,
   useTrainerPaperPageDataQuery,
 } from "../graphql";
+import PaperTextBox from "./paper-text-box";
 
 interface PaperAccordionProps {
   paperInput: PaperFormData;
+  completedInput: PaperFormData[];
   setPaperBriefing: (value: PaperFormData) => void;
   title: string
   children?: React.ReactNode
   forceActive?: boolean
 }
 
-const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput,setPaperBriefing, title, forceActive
+const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput,setPaperBriefing, completedInput, title, forceActive
 }) => {
   const [activeState, setActiveState] = React.useState(false)
   const trainerPaperPageData = useTrainerPaperPageDataQuery()
@@ -67,8 +69,9 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
         </StyledPaperAccordionText>
 
         <Spacer top="s" right="xxl" bottom="xs">
-          <PaperTextInput entry={paperInput} clearOnSave={false}
+          <PaperTextInput autoFocus entry={paperInput} clearOnSave={true}
                           onSave={setPaperBriefing}/>
+          {completedInput.length ? <PaperTextBox entry={completedInput}/> : null }
         </Spacer>
       </motion.div>
     </StyledPaperAccordionContainer>
