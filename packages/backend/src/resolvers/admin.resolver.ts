@@ -94,14 +94,6 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
       return user
     },
-    getUserByEmail: async (_parent, { email }, { currentUser }) => {
-      const user = await userByEmail(email)
-
-      if (!user || isAdmin(user)) {
-        throw new GraphQLError(t('errors.missingUser', currentUser.language))
-      }
-      return user
-    },
   },
   Mutation: {
     markUserForDeletion: async (_parent, { id }, { currentUser }) => {
@@ -163,6 +155,10 @@ export const trainerAdminResolver: GqlResolvers<AdminContext> = {
       // if we use update DDB would throw an error
       return saveUser(updatedTrainer)
     },
+    getUserByEmail: async (_parent, { email }) => {
+      return userByEmail(email);
+
+    }
   },
 }
 export const mentorAdminResolver: GqlResolvers<AdminContext> = {

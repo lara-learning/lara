@@ -220,6 +220,8 @@ export type GqlMutation = {
   deletePaper: Array<Maybe<GqlPaper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: GqlPaperFormData;
+  /** Get a User by Email */
+  getUserByEmail?: Maybe<GqlUserInterface>;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
   /** Login via google. */
@@ -334,6 +336,11 @@ export type GqlMutationDeletePaperArgs = {
 
 export type GqlMutationDeletePaperEntryArgs = {
   id: Scalars['ID'];
+};
+
+
+export type GqlMutationGetUserByEmailArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -515,8 +522,6 @@ export type GqlQuery = {
   currentUser?: Maybe<GqlUserInterface>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
-  /** Get a User by Email */
-  getUserByEmail?: Maybe<GqlUserInterface>;
   /** Get all Trainers */
   mentors: Array<GqlMentor>;
   /** Print single report or report batch */
@@ -538,11 +543,6 @@ export type GqlQuery = {
 
 export type GqlQueryGetUserArgs = {
   id: Scalars['ID'];
-};
-
-
-export type GqlQueryGetUserByEmailArgs = {
-  email: Scalars['String'];
 };
 
 
@@ -1012,6 +1012,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
   deletePaper?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
   deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
+  getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationGetUserByEmailArgs, 'email'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'googleToken'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;
@@ -1075,7 +1076,6 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   config?: Resolver<GqlResolversTypes['LaraConfig'], ParentType, ContextType>;
   currentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
-  getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserByEmailArgs, 'email'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;

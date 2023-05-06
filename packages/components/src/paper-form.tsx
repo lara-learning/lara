@@ -90,7 +90,7 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
           <div>{endDateSchoolInput}</div>
         </StyledFormGridDateItem>
       </StyledFormGrid>
-      <StyledButtonControls>{buttonControls}</StyledButtonControls>
+      {buttonControls && <StyledButtonControls> {buttonControls} </StyledButtonControls>}
     </StyledFormContainer>
   )
 }

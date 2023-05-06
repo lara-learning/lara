@@ -36,8 +36,8 @@ export const TraineePaperPage: React.FC = () => {
         <div key={trainee?.id}>
           {trainee?.papers && trainee?.papers?.length >= 1 ? (
             trainee?.papers.map(paper => (
-              <Spacer bottom='xl'>
-                <Container overflow={'visible'} padding={'l'} key={paper?.id}>
+              <Spacer bottom='xl' key={paper?.id}>
+                <Container overflow={'visible'} padding={'l'} >
                   <Flex alignItems={'flex-start'} flexDirection={'row'}>
                     <Box width={[3, 5 / 5]}>
                       <Flex alignItems={'center'} flexDirection={'column'}>

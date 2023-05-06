@@ -20,13 +20,14 @@ import PaperTextBox from "./paper-text-box";
 interface PaperAccordionProps {
   paperInput: PaperFormData;
   completedInput: PaperFormData[];
-  setPaperBriefing: (value: PaperFormData) => void;
+  setPaperBriefing: (value: PaperFormData[]) => void;
+  setPaperBriefingInput: (value: PaperFormData) => void;
   title: string
   children?: React.ReactNode
   forceActive?: boolean
 }
 
-const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput,setPaperBriefing, completedInput, title, forceActive
+const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInput,setPaperBriefing, completedInput, setPaperBriefingInput, title, forceActive
 }) => {
   const [activeState, setActiveState] = React.useState(false)
   const trainerPaperPageData = useTrainerPaperPageDataQuery()
@@ -44,6 +45,12 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
   }
 
   const active = forceActive || activeState
+  const handleDelete = (entry: PaperFormData) => {
+    const filteredInputs = completedInput.filter((input) =>
+      input.answer !== entry.answer || input.id !== entry.id)
+    console.log(filteredInputs)
+      setPaperBriefing(filteredInputs)
+  }
 
   return (
     <StyledPaperAccordionContainer>
@@ -70,8 +77,8 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
 
         <Spacer top="s" right="xxl" bottom="xs">
           <PaperTextInput autoFocus entry={paperInput} clearOnSave={true}
-                          onSave={setPaperBriefing}/>
-          {completedInput.length ? <PaperTextBox entry={completedInput}/> : null }
+                          onSave={setPaperBriefingInput}/>
+            {completedInput.length ? <PaperTextBox paperEntries={completedInput} handleDelete={handleDelete}/> : null }
         </Spacer>
       </motion.div>
     </StyledPaperAccordionContainer>

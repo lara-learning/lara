@@ -237,6 +237,11 @@ type Mutation {
   createMentor(input: CreateMentorInput!): Mentor
 
   """
+  Get a User by Email
+  """
+  getUserByEmail(email: String!): UserInterface
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -376,11 +381,6 @@ type Query {
   Get a User by ID
   """
   getUser(id: ID!): UserInterface
-
-  """
-  Get a User by Email
-  """
-  getUserByEmail(email: String!): UserInterface
 
   """
   Will look for Users to delete

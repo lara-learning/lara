@@ -1,4 +1,4 @@
-query UserEmailPage($email: String!) {
+mutation UserEmailPage($email: String!) {
   getUserByEmail(email: $email) {
     id
     avatar
@@ -38,9 +38,5 @@ query UserEmailPage($email: String!) {
       startDate
       endDate
     }
-  }
-  companies {
-    id
-    name
   }
 }

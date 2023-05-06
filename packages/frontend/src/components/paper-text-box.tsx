@@ -4,21 +4,29 @@ import {
   PaperFormData,
 } from '../graphql'
 import PaperCommentBubble from "./paper-comment-bubble";
+import {StyledAction, StyledIcon} from "@lara/components";
+import {Box} from "@rebass/grid";
 
 interface TextBoxProps {
-  entry: PaperFormData[]
+  paperEntries: PaperFormData[]
+  handleDelete: (value: PaperFormData) => void
 }
 
-const PaperTextBox: React.FunctionComponent<TextBoxProps> = ({ entry }) => {
+const PaperTextBox: React.FunctionComponent<TextBoxProps> = ({paperEntries, handleDelete}) => {
   return (
     <>
-      {entry
-        ? entry.map((entry, index) => (
+      {paperEntries
+        ? paperEntries.map((entry, index) => (
+          <Box key={index}>
             <PaperCommentBubble
               key={index}
               message={entry.answer}
             />
-          ))
+            <StyledAction onClick={() => handleDelete(entry)} danger>
+              <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'}/>
+            </StyledAction>
+          </Box>
+        ))
         : null}
     </>
   )

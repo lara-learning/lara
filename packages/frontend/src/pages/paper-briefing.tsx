@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 
 import {
   H2,
-  PaperLayout, Paragraph,
+  PaperLayout, Paragraph, Spacer,
 } from '@lara/components'
 
 import strings from '../locales/localization'
@@ -66,11 +66,14 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
   if (!currentUser) {
     return null
   }
-
+  const handleAbort = () => {
+    history.push('/paper')
+  }
   const updatePaper = async (paperBriefing: PaperFormData[]) => {
     paperBriefing.sort(function(a, b) {
       return parseInt(a.id) - parseInt(b.id);
     });
+    console.log(paperBriefing)
     await updatePaperMutation({
       variables: {
         input: {
@@ -96,14 +99,21 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
       <PaperLayout>
         <div>
           {filteredQAs.map(({ question: q, hint: h }, index) => (
-            <PaperAccordion setPaperBriefing={setPaperBriefingInput} completedInput={paperBriefing} paperInput={{id: index.toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
+            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing.filter(briefing => briefing.id === index.toString())} paperInput={{id: index.toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
               {h}
             </PaperAccordion>
           ))}
         </div>
-        <PrimaryButton type="submit" onClick={toggleHandoverModal}>
-          {strings.continue}
-        </PrimaryButton>
+        <Flex flexDirection={"row"} justifyContent={'space-between'}>
+          <SecondaryButton type="reset" onClick={() => handleAbort}>
+            {strings.back}
+          </SecondaryButton>
+          <Spacer left="xxxl">
+            <PrimaryButton type="submit" onClick={toggleHandoverModal}>
+              {strings.continue}
+            </PrimaryButton>
+          </Spacer>
+        </Flex>
         <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
           <Flex flexDirection={"column"}>
             <PaperModal/>

@@ -95,7 +95,7 @@ const germanTranslation: Translation = {
       },
       otherRemarks: {
         question: "Sonstige Anmerkungen",
-        hint: "string"
+        hint: "Falls du noch zusätzliche Punkte hast, welche ins Breifing aufgenommen werden sollen, kannst du diese hier festhalten."
       }
     },
     modal: {
