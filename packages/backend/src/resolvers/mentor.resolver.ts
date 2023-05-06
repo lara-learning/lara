@@ -10,7 +10,7 @@ export const mentorResolver: GqlResolvers<MentorContext> = {
     avatar,
     username,
     alexaSkillLinked,
-    deleteAt: (model) => endOfToolUsage(model).toISOString(),
+    deleteAt: (model) => model.endDate,
     papers: async (model) => {
       return papersByMentor(model.id)
     }
@@ -18,7 +18,7 @@ export const mentorResolver: GqlResolvers<MentorContext> = {
 }
 //TODO endDate wird nicht gesetzt
 export const endOfToolUsage = (mentor: Mentor): Date => {
-  const endDate = mentor.endDate ? parseISODateString(mentor.endDate) : new Date()
+  const endDate = mentor.endDate ? parseISODateString(mentor.endDate) : ''
   console.log(endDate)
 
   return <Date>endDate;

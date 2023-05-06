@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CommentBubbleLayout } from '@lara/components'
+import { PaperCommentBubbleLayout } from '@lara/components'
 
 interface CommentBubbleProps {
   message?: string
@@ -8,9 +8,9 @@ interface CommentBubbleProps {
 
 const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({ message }) => {
   return (
-    <CommentBubbleLayout
+    <PaperCommentBubbleLayout
       message={message}
-    ></CommentBubbleLayout>
+    ></PaperCommentBubbleLayout>
   )
 }
 

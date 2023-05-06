@@ -9,7 +9,7 @@ import {
   Trainer,
   useAdminMentorPageQuery,
   useCreateMentorMutation, useCreatePaperMutation,
-  useTrainerPaperPageDataQuery,
+  useTrainerPaperPageDataQuery, useUserEmailPageMutation,
 } from "../graphql";
 import {useToastContext} from "../hooks/use-toast-context";
 import Loader from "../components/loader";
@@ -25,6 +25,7 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
   const {loading} = useAdminMentorPageQuery()
   const [createMentorMutation] = useCreateMentorMutation()
   const [createPaperMutation] = useCreatePaperMutation()
+  const [getUserByEmail] = useUserEmailPageMutation()
   const traineePaperPageData = useTrainerPaperPageDataQuery()
 
   const {addToast} = useToastContext()
@@ -39,6 +40,17 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
     return null
   }
 
+  const getUserEmail = async (email: string) => {
+    await getUserByEmail({
+      variables: {
+          email: email
+      },
+    }).then((response)=> {
+      mentorId = response?.data?.getUserByEmail?.id ?? ''
+      }
+    )
+  }
+
   const createPaper = async (data: CreateBriefingFormData) => {
     await createPaperMutation({
       variables: {
@@ -48,9 +60,8 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           mentorId: mentorId,
           traineeId: data.trainee,
           trainerId: currentUser.id,
-          //TODO
-          periodStart: data.startDateProjectInput,
-          periodEnd: data.endDateProjectInput,
+          periodStart: data.startDateProject,
+          periodEnd: data.endDateProject,
           status: PaperStatus.InProgress,
           subject: data.department
 
@@ -62,44 +73,49 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
       }
     )
   }
+
   const createMentor = async (data: CreateBriefingFormData) => {
-    await createMentorMutation({
-      variables: {
-        input: {
-          email: data.emailMentor,
-          endDate: data.endDateProjectInput,
-          firstName: data.firstNameMentor,
-          lastName: data.lastNameMentor,
-          startDate: data.startDateProjectInput,
-        }
-      },
-      updateQueries: {
-        AdminMentorPage: (prevData, {mutationResult}) => {
-          return {
-            ...prevData,
-            Mentors: [...prevData.mentors, mutationResult.data?.createMentor],
+    await getUserEmail(data.emailMentor)
+    if(!mentorId) {
+      await createMentorMutation({
+        variables: {
+          input: {
+            email: data.emailMentor,
+            endDate: data.endDateProject,
+            firstName: data.firstNameMentor,
+            lastName: data.lastNameMentor,
+            startDate: data.startDateProject,
           }
         },
-      },
-    })
-      .then((result) => {
-        mentorId = result?.data?.createMentor?.id ? result?.data?.createMentor?.id : ""
-        addToast({
-          icon: 'PersonNew',
-          title: strings.createMentor.title,
-          text: strings.formatString(strings.createMentor.success, `${data?.firstNameMentor} ${data?.lastNameMentor}`).toString(),
-          type: 'success',
-        })
-        createPaper(data)
-
+        updateQueries: {
+          AdminMentorPage: (prevData, {mutationResult}) => {
+            return {
+              ...prevData,
+              Mentors: [...prevData.mentors, mutationResult.data?.createMentor],
+            }
+          },
+        },
       })
-      .catch((exception: GraphQLError) => {
-        addToast({
-          title: strings.errors.error,
-          text: exception.message,
-          type: 'error',
+        .then((result) => {
+          createPaper(data)
+          mentorId = result?.data?.createMentor?.id ? result?.data?.createMentor?.id : ""
+          addToast({
+            icon: 'PersonNew',
+            title: strings.createMentor.title,
+            text: strings.formatString(strings.createMentor.success, `${data?.firstNameMentor} ${data?.lastNameMentor}`).toString(),
+            type: 'success',
+          })
         })
-      })
+        .catch((exception: GraphQLError) => {
+          addToast({
+            title: strings.errors.error,
+            text: exception.message,
+            type: 'error',
+          })
+        })
+    }else{
+      await createPaper(data)
+    }
   }
 
   return (

@@ -219,6 +219,8 @@ export type Mutation = {
   deletePaper: Array<Maybe<Paper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: PaperFormData;
+  /** Get a User by Email */
+  getUserByEmail?: Maybe<UserInterface>;
   /** Link Alexa account */
   linkAlexa?: Maybe<UserInterface>;
   /** Login via google. */
@@ -333,6 +335,11 @@ export type MutationDeletePaperArgs = {
 
 export type MutationDeletePaperEntryArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationGetUserByEmailArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -515,8 +522,6 @@ export type Query = {
   currentUser?: Maybe<UserInterface>;
   /** Get a User by ID */
   getUser?: Maybe<UserInterface>;
-  /** Get a User by Email */
-  getUserByEmail?: Maybe<UserInterface>;
   /** Get all Trainers */
   mentors: Array<Mentor>;
   /** Print single report or report batch */
@@ -538,11 +543,6 @@ export type Query = {
 
 export type QueryGetUserArgs = {
   id: Scalars['ID'];
-};
-
-
-export type QueryGetUserByEmailArgs = {
-  email: Scalars['String'];
 };
 
 
@@ -846,6 +846,13 @@ export type DeletePaperMutationVariables = Exact<{
 
 export type DeletePaperMutation = { __typename?: 'Mutation', deletePaper: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> };
 
+export type UserEmailPageMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type UserEmailPageMutation = { __typename?: 'Mutation', getUserByEmail?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined };
+
 export type LinkAlexaMutationVariables = Exact<{
   code: Scalars['String'];
   state: Scalars['String'];
@@ -1026,13 +1033,6 @@ export type EntryInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Mentor', id: string, type: UserTypeEnum, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string, avatar: string, username: string } | undefined };
-
-export type UserEmailPageQueryVariables = Exact<{
-  email: Scalars['String'];
-}>;
-
-
-export type UserEmailPageQuery = { __typename?: 'Query', getUserByEmail?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type UserPageQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1474,6 +1474,53 @@ export function useDeletePaperMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<DeletePaperMutation, DeletePaperMutationVariables>(DeletePaperDocument, options);
       }
 export type DeletePaperMutationHookResult = ReturnType<typeof useDeletePaperMutation>;
+export const UserEmailPageDocument = gql`
+    mutation UserEmailPage($email: String!) {
+  getUserByEmail(email: $email) {
+    id
+    avatar
+    firstName
+    lastName
+    email
+    type
+    ... on Trainee {
+      startDate
+      startOfToolUsage
+      endDate
+      deleteAt
+      course
+      company {
+        id
+      }
+      trainer {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+    ... on Trainer {
+      deleteAt
+      trainees {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+    ... on Mentor {
+      deleteAt
+      startDate
+      endDate
+    }
+  }
+}
+    `;
+export function useUserEmailPageMutation(baseOptions?: Apollo.MutationHookOptions<UserEmailPageMutation, UserEmailPageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEmailPageMutation, UserEmailPageMutationVariables>(UserEmailPageDocument, options);
+      }
+export type UserEmailPageMutationHookResult = ReturnType<typeof useUserEmailPageMutation>;
 export const LinkAlexaDocument = gql`
     mutation linkAlexa($code: String!, $state: String!) {
   linkAlexa(code: $code, state: $state) {
@@ -2084,62 +2131,6 @@ export function useEntryInputDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
         }
 export type EntryInputDataQueryHookResult = ReturnType<typeof useEntryInputDataQuery>;
 export type EntryInputDataLazyQueryHookResult = ReturnType<typeof useEntryInputDataLazyQuery>;
-export const UserEmailPageDocument = gql`
-    query UserEmailPage($email: String!) {
-  getUserByEmail(email: $email) {
-    id
-    avatar
-    firstName
-    lastName
-    email
-    type
-    ... on Trainee {
-      startDate
-      startOfToolUsage
-      endDate
-      deleteAt
-      course
-      company {
-        id
-      }
-      trainer {
-        id
-        firstName
-        lastName
-        avatar
-      }
-    }
-    ... on Trainer {
-      deleteAt
-      trainees {
-        id
-        firstName
-        lastName
-        avatar
-      }
-    }
-    ... on Mentor {
-      deleteAt
-      startDate
-      endDate
-    }
-  }
-  companies {
-    id
-    name
-  }
-}
-    `;
-export function useUserEmailPageQuery(baseOptions: Apollo.QueryHookOptions<UserEmailPageQuery, UserEmailPageQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserEmailPageQuery, UserEmailPageQueryVariables>(UserEmailPageDocument, options);
-      }
-export function useUserEmailPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserEmailPageQuery, UserEmailPageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserEmailPageQuery, UserEmailPageQueryVariables>(UserEmailPageDocument, options);
-        }
-export type UserEmailPageQueryHookResult = ReturnType<typeof useUserEmailPageQuery>;
-export type UserEmailPageLazyQueryHookResult = ReturnType<typeof useUserEmailPageLazyQuery>;
 export const UserPageDocument = gql`
     query UserPage($id: ID!) {
   getUser(id: $id) {

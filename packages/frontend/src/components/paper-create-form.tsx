@@ -17,7 +17,6 @@ import {CreateBriefingLayout} from "@lara/components/lib/paper-form";
 interface CreateBriefingFormProps {
   trainer?: Trainer,
   submit: (data: CreateBriefingFormData) => Promise<void>
-  cancel?: () => void
   blurSubmit: boolean
 }
 
@@ -27,8 +26,8 @@ export interface CreateBriefingFormData {
   lastNameMentor: string
   emailMentor: string
   customer: string
-  startDateProjectInput: string
-  endDateProjectInput: string
+  startDateProject: string
+  endDateProject: string
   startDateSchool: string
   endDateSchool: string
   department: string
@@ -41,10 +40,11 @@ const inputLabelProps: TextProps = {
   uppercase: true,
 }
 
-export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
-                                                                     submit,
-                                                                     blurSubmit
-                                                                   }) => {
+export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
+ trainer,
+ submit,
+ blurSubmit
+}) => {
 
   const {validateEmail} = useValidationHelper()
 
@@ -157,14 +157,16 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
         startDateProjectInput={
           <>
             <Text
-              color={getFontColor(errors.startDateProjectInput || errors.startDateProjectInput)} {...inputLabelProps}>
+              color={getFontColor(errors.startDateProject || errors.startDateProject)} {...inputLabelProps}>
               {strings.paper.createBriefing.projectPeriod}
             </Text>
             <Input
               type="date"
+              {...register('startDateProject', {
+              })}
               block
               disabled={updating}
-              error={Boolean(errors.startDateProjectInput)}
+              error={Boolean(errors.startDateProject)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
           </>
@@ -178,9 +180,11 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
           <>
             <Input
               type="date"
+              {...register('endDateProject', {
+              })}
               block
               disabled={updating}
-              error={Boolean(errors.endDateProjectInput)}
+              error={Boolean(errors.endDateProject)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
           </>
@@ -193,6 +197,8 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
             </Text>
             <Input
               type="date"
+              {...register('startDateSchool', {
+              })}
               block
               disabled={updating}
               error={Boolean(errors.startDateSchool)}
@@ -209,6 +215,8 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
           <>
             <Input
               type="date"
+              {...register('endDateSchool', {
+              })}
               block
               disabled={updating}
               error={Boolean(errors.endDateSchool)}
