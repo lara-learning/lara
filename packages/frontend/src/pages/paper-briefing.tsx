@@ -58,6 +58,7 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
 
   const paper = currentUser?.papers?.find(paper => paper?.id == paperId)
   useEffect(() => {
+    console.log(paperBriefing)
     if(paperBriefingInput) {
       setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
     }
@@ -70,10 +71,6 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
     history.push('/paper')
   }
   const updatePaper = async (paperBriefing: PaperFormData[]) => {
-    paperBriefing.sort(function(a, b) {
-      return parseInt(a.id) - parseInt(b.id);
-    });
-    console.log(paperBriefing)
     await updatePaperMutation({
       variables: {
         input: {
@@ -98,8 +95,8 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
     <Template type="Main">
       <PaperLayout>
         <div>
-          {filteredQAs.map(({ question: q, hint: h }, index) => (
-            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing.filter(briefing => briefing.id === index.toString())} paperInput={{id: index.toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
+          {filteredQAs.map(({ question: q, hint: h }) => (
+            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing} paperInput={{id: Date.now().toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={q} title={q}>
               {h}
             </PaperAccordion>
           ))}

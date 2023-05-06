@@ -46,10 +46,17 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
 
   const active = forceActive || activeState
   const handleDelete = (entry: PaperFormData) => {
-    const filteredInputs = completedInput.filter((input) =>
-      input.answer !== entry.answer || input.id !== entry.id)
-    console.log(filteredInputs)
-      setPaperBriefing(filteredInputs)
+    const filteredInputs: PaperFormData[] = []
+    completedInput.forEach((input) => {
+      console.log(input)
+      console.log(entry)
+      console.log("---------")
+      if (input.id !== entry.id){
+        console.log("entered")
+        filteredInputs.push(input)
+      }
+    })
+    setPaperBriefing(filteredInputs)
   }
 
   return (
@@ -78,7 +85,7 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
         <Spacer top="s" right="xxl" bottom="xs">
           <PaperTextInput autoFocus entry={paperInput} clearOnSave={true}
                           onSave={setPaperBriefingInput}/>
-            {completedInput.length ? <PaperTextBox paperEntries={completedInput} handleDelete={handleDelete}/> : null }
+            {completedInput.length ? <PaperTextBox paperInput={paperInput} paperEntries={completedInput} handleDelete={handleDelete}/> : null }
         </Spacer>
       </motion.div>
     </StyledPaperAccordionContainer>
