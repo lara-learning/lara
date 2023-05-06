@@ -115,22 +115,26 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
           </Spacer>
         </Flex>
         <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
-          <Flex flexDirection={"column"}>
+          <Flex flexDirection={"row"} alignItems={"center"}>
+            <Box width={1 / 3}>
             <PaperModal/>
-            <H2>{strings.paper.modal.title}</H2>
-            <Paragraph>{strings.paper.modal.description}</Paragraph>
-            <Flex my={'2'}>
-              <Box pr={'2'} width={1 / 2}>
-                <SecondaryButton fullsize onClick={toggleHandoverModal}>
-                  {strings.cancel}
-                </SecondaryButton>
-              </Box>
-              <Box pl={'2'} width={1 / 2}>
-                <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
-                  {strings.paper.modal.createBriefing}
-                </PrimaryButton>
-              </Box>
-            </Flex>
+            </Box>
+            <Box width={2 / 3}>
+              <H2>{strings.paper.modal.title}</H2>
+              <Paragraph>{strings.paper.modal.description}</Paragraph>
+              <Flex my={'2'}>
+                <Box pr={'2'} width={1 / 2}>
+                  <SecondaryButton fullsize onClick={toggleHandoverModal}>
+                    {strings.cancel}
+                  </SecondaryButton>
+                </Box>
+                <Box pl={'2'} width={1 / 2}>
+                  <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
+                    {strings.paper.modal.createBriefing}
+                  </PrimaryButton>
+                </Box>
+              </Flex>
+            </Box>
           </Flex>
         </Modal>
       </PaperLayout>

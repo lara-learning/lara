@@ -4,12 +4,8 @@ import {
   GqlPaper, GqlPaperEntryInput,
   GqlPaperFormData,
   GqlPaperInput,
-  Paper
 } from '@lara/api'
-import {PaperFormData} from "@lara/frontend/lib/graphql";
 
-
-export const briefingEntries = (paper: Paper): PaperFormData[] => paper.briefing
 export const generatePaperEntry = (entryInput: GqlPaperEntryInput): GqlPaperFormData => {
   return {
     ...entryInput,
