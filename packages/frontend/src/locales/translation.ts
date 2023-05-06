@@ -50,9 +50,7 @@ export default interface Translation {
       firstnameMentor: string
       lastnameMentor: string
       emailMentor: string
-      firstnameTrainee: string
-      lastnameTrainee: string
-      emailTrainee: string
+      trainee: string
       department: string
       customer: string
       projectPeriod: string
@@ -100,6 +98,24 @@ export default interface Translation {
       title: string,
       description: string
       createBriefing: string
+    },
+    dashboard: {
+      title: string,
+      description: string,
+      briefing: string,
+      feedback: string,
+      conclusion: string,
+      pdfFeedback: string,
+      trainee: string,
+      trainer: string,
+    },
+    createPaper: {
+      title: string,
+      text: string,
+    },
+    deletePaper: {
+      title: string,
+      text: string,
     }
   }
   archivePage: {

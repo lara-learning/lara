@@ -289,7 +289,7 @@ type Mutation {
   """
   Delete Paper
   """
-  deletePaper(paperId: ID!): Trainer!
+  deletePaper(paperId: ID!): [Paper]!
 
   """
   Updates Entry for Lara Paper

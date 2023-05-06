@@ -1,10 +1,19 @@
-import {Text, Title} from '@lara/components'
+import {
+  Container,
+  H1,
+  Paragraph,
+  Spacer,
+  StyledIcon,
+  Text,
+} from '@lara/components'
 import React from 'react'
-import Accordion from '../components/accordion'
 import Loader from '../components/loader'
 import {Template} from '../templates/template'
 import {useMentorPaperPageDataQuery} from "../graphql";
 import {Mentor} from "@lara/api";
+import {Box, Flex} from "@rebass/grid";
+import strings from "../locales/localization";
+import ProgressBar from "../components/progress-bar";
 
 export const MentorPaperPage: React.FC = () => {
   const {loading, data} = useMentorPaperPageDataQuery()
@@ -26,14 +35,60 @@ export const MentorPaperPage: React.FC = () => {
         <div key={currentUser?.id}>
           {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
             currentUser?.papers.map(paper => (
-              <Accordion key={paper?.id} title={paper?.client + ' ' + paper?.subject}>
-                <div key={paper?.periodEnd}>
-                  <Title>{paper?.subject}</Title>
-                  <Text size="copy">
-                    {paper?.periodStart + ' - ' + paper?.periodEnd}
-                  </Text>
-                </div>
-              </Accordion>
+              <Spacer bottom='xl' key={paper?.id}>
+                <Container overflow={'visible'} padding={'l'} key={paper?.id}>
+                  <Flex alignItems={'flex-start'} flexDirection={'row'}>
+                    <Box width={[3, 5 / 5]}>
+                      <Flex alignItems={'center'} flexDirection={'column'}>
+                        <H1 center>
+                          {strings.paper.dashboard.title + " " + paper?.client}
+                        </H1>
+                        <Spacer bottom='xl'>
+                          <Paragraph center>
+                            {strings.paper.dashboard.description}
+                          </Paragraph>
+                        </Spacer>
+                        <Box width={[0, 3 / 5]}>
+                          <Flex alignItems={'center'} flexDirection={'row'}
+                                justifyContent={'space-between'}>
+                            <Flex alignItems={'center'}>
+                              {paper?.briefing.length ? (
+                                <StyledIcon name={'CheckMark'} size="24px"
+                                            color={'successGreen'}/>
+                              ) : (
+                                <StyledIcon name={'X'} size="24px"
+                                            color={'errorRed'}/>
+                              )}
+                              {strings.paper.dashboard.briefing}
+                            </Flex>
+                            <Flex alignItems={'center'}>
+                              <StyledIcon name={'X'} size="24px"
+                                          color={'errorRed'}/>
+                              {strings.paper.dashboard.feedback}
+                            </Flex>
+                          </Flex>
+                          <Flex alignItems={'center'} flexDirection={'row'}
+                                justifyContent={'space-between'}>
+                            <Flex alignItems={'center'}>
+                              <StyledIcon name={'X'} size="24px"
+                                          color={'errorRed'}/>
+                              {strings.paper.dashboard.conclusion}
+                            </Flex>
+                            <Flex alignItems={'center'}>
+                              <StyledIcon name={'X'} size="24px"
+                                          color={'errorRed'}/>
+                              {strings.paper.dashboard.pdfFeedback}
+                            </Flex>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                  <Spacer y='xl'>
+                    <ProgressBar progress={0.3} color={'primaryDefault'}/>
+                  </Spacer>
+                </Container>
+              </Spacer>
             ))
           ) : (
             <Text size="copy">{"Kein Paper"}</Text>

@@ -50,10 +50,8 @@ const englishTranslation: Translation = {
       title: "Briefing",
       firstnameMentor: "Vorname des Ausbildungsbeauftragten",
       lastnameMentor: "Nachname des Ausbildungsbeauftragten",
-      emailMentor: "Email des Mentors",
-      firstnameTrainee: "Vorname des Auszubildenden",
-      lastnameTrainee: "Nachname des Auszubildenden",
-      emailTrainee: "Email des Auszubildenden",
+      emailMentor: "Email des Ausbildungsbeauftragten",
+      trainee: "Auszubildender",
       department: "Abteilung",
       customer: "Kunde",
       projectPeriod: "Stations Zeitraum",
@@ -104,6 +102,24 @@ const englishTranslation: Translation = {
         "\n" +
         "Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.",
       createBriefing: "Briefing erstellen"
+    },
+    dashboard: {
+      title: "Station",
+      description: "Für die Station auf dem Jungheinrich Profishop Projekt von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.",
+      briefing: "Briefing",
+      feedback: "Stationsfeedback",
+      conclusion: "Fazit",
+      pdfFeedback: "PDF Stationsfeedback",
+      trainee: "Auszubildender",
+      trainer: "Ausbilder",
+    },
+    createPaper: {
+      title: "Briefing erstellt",
+      text: "Das Briefing wurde erstellt",
+    },
+    deletePaper: {
+      title: "Paper gelöscht",
+      text: "Das Lara Paper wurde gelöscht",
     }
   },
   archivePage: {

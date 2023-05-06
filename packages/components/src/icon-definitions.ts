@@ -48,6 +48,7 @@ import { IconVaccation } from './icons/vacation'
 import { IconWork } from './icons/work'
 import { IconX } from './icons/x'
 import { IconOptions } from './icons/options'
+import { IconCheckMark } from "./icons/checkMark";
 
 export const Icons = {
   Arrow: IconArrow,
@@ -62,6 +63,7 @@ export const Icons = {
   ChevronLeft: IconChevronLeft,
   ChevronRight: IconChevronRight,
   CircleLoader: IconCircleLoader,
+  CheckMark: IconCheckMark,
   Claim: IconClaim,
   CloudUpload: IconCloudUpload,
   Comment: IconMessageDetails,

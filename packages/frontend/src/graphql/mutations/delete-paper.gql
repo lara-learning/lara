@@ -1,0 +1,19 @@
+mutation deletePaper($paperId: ID!) {
+deletePaper(paperId: $paperId) {
+    id
+    traineeId
+    trainerId
+    client
+    mentorId
+    periodStart
+    periodEnd
+    subject
+    status
+    briefing {
+      id
+      question
+      answer
+      hint
+    }
+  }
+}

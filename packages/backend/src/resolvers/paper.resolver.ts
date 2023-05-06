@@ -4,8 +4,14 @@ import {
   GqlResolvers,
 } from '@lara/api'
 import {generatePaper, generatePaperEntry} from "../services/paper.service";
-import {savePaper, updatePaper} from "../repositories/paper.repo";
+import {
+  deletePaper,
+  papersByTrainer,
+  savePaper,
+  updatePaper
+} from "../repositories/paper.repo";
 import {sendPaperBriefingMail} from "../services/email.service";
+import {GraphQLError} from "graphql";
 
 export const paperResolver: GqlResolvers<AuthenticatedContext> = {
   Mutation: {
@@ -16,6 +22,25 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
       const briefing = input.briefing.map((entry: GqlPaperEntryInput) => generatePaperEntry(entry))
       if(currentUser.__typename == 'Trainer') await sendPaperBriefingMail(input, currentUser)
       return await updatePaper({...input, briefing}, {updateKeys: ['briefing']})
+    },
+    deletePaper: async (_parent, { paperId }, { currentUser }) => {
+      const papers = await papersByTrainer(currentUser.id)
+
+      if (!papers) {
+        throw new GraphQLError('current Trainer has no papers')
+      }
+
+      const paperById = papers.find((paper) => paper.id === paperId)
+
+      if (!paperById) {
+        throw new GraphQLError('PaperId belongs not to current Trainer')
+      }
+      const success = await deletePaper(paperById.id)
+      if (!success) {
+        throw new GraphQLError('current Trainer has no papers')
+      }
+
+      return papers.filter((paper) => paper.id !== paperId)
     },
   },
 }

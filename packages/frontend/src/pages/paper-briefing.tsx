@@ -96,7 +96,7 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
       <PaperLayout>
         <div>
           {filteredQAs.map(({ question: q, hint: h }, index) => (
-            <PaperAccordion setPaperBriefing={setPaperBriefingInput} paperInput={{id: index.toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
+            <PaperAccordion setPaperBriefing={setPaperBriefingInput} completedInput={paperBriefing} paperInput={{id: index.toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={index} title={q}>
               {h}
             </PaperAccordion>
           ))}

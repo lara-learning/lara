@@ -71,7 +71,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer,
           <>
             <Text
               color={getFontColor(errors.trainee)} {...inputLabelProps}>
-              {strings.paper.createBriefing.firstnameTrainee}
+              {strings.paper.createBriefing.trainee}
             </Text>
             <StyledSelect
               {...register('trainee', { required: strings.validation.required })}
