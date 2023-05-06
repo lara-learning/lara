@@ -46,7 +46,7 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           email: email
       },
     }).then((response)=> {
-      mentorId = response?.data?.getUserByEmail?.id ?? ''
+      mentorId = response?.data?.getUserByEmail?.id ?? ""
       }
     )
   }
@@ -97,7 +97,6 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
         },
       })
         .then((result) => {
-          createPaper(data)
           mentorId = result?.data?.createMentor?.id ? result?.data?.createMentor?.id : ""
           addToast({
             icon: 'PersonNew',
@@ -105,8 +104,8 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
             text: strings.formatString(strings.createMentor.success, `${data?.firstNameMentor} ${data?.lastNameMentor}`).toString(),
             type: 'success',
           })
-        })
-        .catch((exception: GraphQLError) => {
+          createPaper(data)
+        }).catch((exception: GraphQLError) => {
           addToast({
             title: strings.errors.error,
             text: exception.message,

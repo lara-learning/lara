@@ -27,7 +27,7 @@ import {useToastContext} from "../hooks/use-toast-context";
 export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
   const {loading, data} = useTrainerPaperPageDataQuery()
   const [deletePaper] = useDeletePaperMutation()
-  const { addToast } = useToastContext()
+  const {addToast} = useToastContext()
 
   if (loading) {
     return <Loader size="xl" padding="xl"/>
@@ -166,28 +166,31 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
             </Box>
           </Flex>
         )}
-        <Container overflow={'visible'} padding={'l'}>
-          <Flex alignItems={'center'} flexDirection={'row'}>
-            <EmptyPaper/>
-            <Box width={[3, 5 / 5]}>
-              <Flex alignItems={'center'} flexDirection={'column'}>
-                <H1 center>
-                  {strings.paper.empty.headline}
-                </H1>
-                <Paragraph center>
-                  {strings.paper.empty.description}
-                </Paragraph>
-                <Spacer y="l">
-                  <Flex alignItems={'flex'} flexDirection={'column'}>
-                    <PrimaryButton
-                      onClick={() => history.push('/paper/createBriefing')}>{strings.paper.empty.createBriefing}
-                    </PrimaryButton>
-                  </Flex>
-                </Spacer>
-              </Flex>
-            </Box>
-          </Flex>
-        </Container>
+        {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
+          <Container overflow={'visible'} padding={'l'}>
+            <Flex alignItems={'center'} flexDirection={'row'}>
+              <EmptyPaper/>
+              <Box width={[3, 5 / 5]}>
+                <Flex alignItems={'center'} flexDirection={'column'}>
+                  <H1 center>
+                    {strings.paper.empty.headline}
+                  </H1>
+                  <Paragraph center>
+                    {strings.paper.empty.description}
+                  </Paragraph>
+                  <Spacer y="l">
+                    <Flex alignItems={'flex'} flexDirection={'column'}>
+                      <PrimaryButton
+                        onClick={() => history.push('/paper/createBriefing')}>{strings.paper.empty.createBriefing}
+                      </PrimaryButton>
+                    </Flex>
+                  </Spacer>
+                </Flex>
+              </Box>
+            </Flex>
+          </Container>
+        ):null
+        }
       </div>
     </Template>
   )
