@@ -25,7 +25,8 @@ export const DUMMY_DATA: EmailPayload = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       reportInReview: 'Ein Bericht wurde abgegeben',
       alexa: 'Deine Accounts wurden verknüpft',
-      paperBriefing:'Dein Paper Briefing'
+      paperBriefing:'Dein Paper Briefing',
+      paperBriefingMail: 'Dein Paper Briefing'
     },
     headline: {
       export: 'Dein Lara-Export!',

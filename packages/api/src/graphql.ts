@@ -39,6 +39,7 @@ export type GqlAnswerPaperInput = {
   hint: Scalars['String'];
   id: Scalars['ID'];
   question: Scalars['String'];
+  questionId: Scalars['ID'];
 };
 
 export type GqlComment = {
@@ -452,6 +453,8 @@ export type GqlPaper = {
   mentorId: Scalars['ID'];
   periodEnd?: Maybe<Scalars['String']>;
   periodStart?: Maybe<Scalars['String']>;
+  schoolPeriodEnd?: Maybe<Scalars['String']>;
+  schoolPeriodStart?: Maybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -463,6 +466,7 @@ export type GqlPaperEntryInput = {
   hint?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   question: Scalars['String'];
+  questionId: Scalars['ID'];
 };
 
 export type GqlPaperFormData = {
@@ -471,6 +475,7 @@ export type GqlPaperFormData = {
   hint?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   question: Scalars['String'];
+  questionId: Scalars['ID'];
 };
 
 export type GqlPaperInput = {
@@ -479,6 +484,8 @@ export type GqlPaperInput = {
   mentorId: Scalars['ID'];
   periodEnd?: InputMaybe<Scalars['String']>;
   periodStart?: InputMaybe<Scalars['String']>;
+  schoolPeriodEnd?: InputMaybe<Scalars['String']>;
+  schoolPeriodStart?: InputMaybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -499,6 +506,8 @@ export type GqlPaperUpdateInput = {
   mentorId: Scalars['ID'];
   periodEnd?: InputMaybe<Scalars['String']>;
   periodStart?: InputMaybe<Scalars['String']>;
+  schoolPeriodEnd?: InputMaybe<Scalars['String']>;
+  schoolPeriodStart?: InputMaybe<Scalars['String']>;
   status: GqlPaperStatus;
   subject: Scalars['String'];
   traineeId: Scalars['ID'];
@@ -526,6 +535,8 @@ export type GqlQuery = {
   mentors: Array<GqlMentor>;
   /** Print single report or report batch */
   print: GqlPrintPayload;
+  /** Print single paper */
+  printPaper: GqlPrintPayload;
   /** Finds the report for a specifig trainee on the requested year and week. */
   reportForTrainee?: Maybe<GqlReport>;
   /** Finds the report for the requested year and week. */
@@ -548,6 +559,11 @@ export type GqlQueryGetUserArgs = {
 
 export type GqlQueryPrintArgs = {
   ids: Array<Scalars['ID']>;
+};
+
+
+export type GqlQueryPrintPaperArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -1049,6 +1065,8 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   mentorId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   periodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   periodStart?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  schoolPeriodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  schoolPeriodStart?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<GqlResolversTypes['PaperStatus'], ParentType, ContextType>;
   subject?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
@@ -1061,6 +1079,7 @@ export type GqlPaperFormDataResolvers<ContextType = Context, ParentType extends 
   hint?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   question?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  questionId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1078,6 +1097,7 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
+  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'id'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;

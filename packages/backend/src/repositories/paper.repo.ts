@@ -20,7 +20,7 @@ export const deletePaper = async (paperId: string): Promise<boolean> => {
   return deleteItem(paperTableName, { id: paperId})
 }
 
-export const papersById = (id: string): Promise<Paper | undefined> => {
+export const paperById = (id: string): Promise<Paper | undefined> => {
   return getItem(paperTableName, { id })
 }
 

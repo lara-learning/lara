@@ -12,6 +12,7 @@
     "briefing": [
       {
         "id": "1",
+        "questionId": "1",
         "answer": "dasdasd",
         "question": "sadasdasd",
         "hint": "DSAdasd"
@@ -31,6 +32,7 @@
     "briefing": [
       {
         "id": "1",
+        "questionId": "1",
         "answer": "dasdasd",
         "question": "sadasdasd",
         "hint": "DSAdasd"

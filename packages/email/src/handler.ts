@@ -29,7 +29,7 @@ const transporter = createTransport({
 type Response = 'success' | 'error'
 
 const handleGettingAttachements = async (payload: EmailPayload): Promise<Attachment[]> => {
-  if (payload.emailType !== 'reportExport') {
+  if (payload.emailType !== 'reportExport' && payload.emailType !== 'paperBriefing') {
     return []
   }
 

@@ -1,7 +1,11 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import { lightTheme, ThemeProvider } from '@lara/components'
+import {
+  lightTheme, StyledPrintPaperEntry,
+  StyledPrintPaperSubHeadline,
+  ThemeProvider
+} from '@lara/components'
 
 import {
   PrintUserData,
@@ -56,9 +60,7 @@ type TemplateProps = {
 type PaperTemplateProps = {
   userData: PrintUserData
   i18n: PrintTranslations
-  apprenticeYear: number
   paper: PrintPaper
-  signatureDate: string
 }
 
 
@@ -157,11 +159,9 @@ export const Template: React.FC<TemplateProps> = ({
   )
 }
 export const PaperTemplate: React.FC<PaperTemplateProps> = ({
-  userData: { traineeSignature, trainerSignature, firstName, lastName, course },
-  apprenticeYear,
+  userData: { firstName, lastName, course },
   paper,
   i18n,
-  signatureDate,
 }) => {
   return (
     <ThemeProvider theme={lightTheme}>
@@ -171,53 +171,57 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
       </StyledPrintHeader>
       <StyledPrintUserInfo>
         <StyledPrintUserInfoRow fullsize>
-          <StyledPrintUserInfoRowHeadline> {i18n.name}: </StyledPrintUserInfoRowHeadline>
+          <StyledPrintUserInfoRowHeadline> {i18n.trainee}: </StyledPrintUserInfoRowHeadline>
           {firstName} {lastName}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.trainer}: </StyledPrintUserInfoRowHeadline>
+          {"trainerfirstName"} {"trainerlastName"}
         </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.apprenticeCourse}: </StyledPrintUserInfoRowHeadline>
           {course}
         </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
-          <StyledPrintUserInfoRowHeadline> {i18n.apprenticeYear}: </StyledPrintUserInfoRowHeadline>
-          {apprenticeYear}
-        </StyledPrintUserInfoRow>
-        <StyledPrintUserInfoRow>
-          <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
-          {paper.periodStart + ' -' + paper.periodEnd}
-        </StyledPrintUserInfoRow>
-        <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.department}: </StyledPrintUserInfoRowHeadline>
-          {paper.department}
+          {paper.subject}
         </StyledPrintUserInfoRow>
+        {paper.periodStart ?
+          <StyledPrintUserInfoRow>
+            <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
+            {paper.periodStart + ' -' + paper.periodEnd}
+          </StyledPrintUserInfoRow>
+        : null}
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.mentor}: </StyledPrintUserInfoRowHeadline>
+          {"mentor"}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.client}: </StyledPrintUserInfoRowHeadline>
+          {paper.client}
+        </StyledPrintUserInfoRow>
+        {paper.schoolPeriodStart ?
+          <StyledPrintUserInfoRow>
+            <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
+            {paper.schoolPeriodStart + ' -' + paper.schoolPeriodEnd}
+          </StyledPrintUserInfoRow>
+          : null}
       </StyledPrintUserInfo>
       <div>
-        {paper.briefing.map((briefing: PrintBriefing, briefingIndex :number) => {
+        {paper.briefing.map((briefing: PrintBriefing, index, array) => {
           return (
-            <StyledPrintDay key={briefingIndex}>
-              <StyledPrintDayHeadline>{briefing.question}</StyledPrintDayHeadline>
-              <StyledPrintDaySubHeadline>{briefing.hint}</StyledPrintDaySubHeadline>
-              <StyledPrintEntryText>{briefing.answer}</StyledPrintEntryText>
+            <StyledPrintDay key={briefing.questionId}>
+              {index == 0 || array[index].questionId !== array[index-1].questionId ?
+                <>
+                  <StyledPrintDayHeadline>{briefing.question}</StyledPrintDayHeadline>
+                  <StyledPrintPaperSubHeadline>{briefing.hint}</StyledPrintPaperSubHeadline>
+                </>
+                : null}
+              <StyledPrintPaperEntry>{briefing.answer}</StyledPrintPaperEntry>
             </StyledPrintDay>
           )
         })}
       </div>
-      <StyledPrintFooter>
-        <StyledPrintSignatureContainer>
-          <Signature
-            i18n={i18n}
-            signatureDate={signatureDate}
-            signature={traineeSignature}
-            label={i18n.signatureTrainee}
-          />
-          <Signature
-            i18n={i18n}
-            signatureDate={signatureDate}
-            signature={trainerSignature}
-            label={i18n.signatureTrainer}
-          />
-        </StyledPrintSignatureContainer>
-      </StyledPrintFooter>
     </ThemeProvider>
   )
 }

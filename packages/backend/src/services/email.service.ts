@@ -2,7 +2,7 @@ import {
   Admin,
   EmailPayload,
   EmailTranslations,
-  Mentor, Paper,
+  Mentor,
   Report,
   Trainee,
   Trainer,
@@ -15,7 +15,6 @@ import {isTrainee, isTrainer} from '../permissions'
 import {allAdmins} from '../repositories/admin.repo'
 import {traineeById} from '../repositories/trainee.repo'
 import {trainerById} from '../repositories/trainer.repo'
-import {mentorById} from "../repositories/mentor.repo";
 
 const {STAGE, URL_ORIGIN} = process.env
 
@@ -55,18 +54,6 @@ const traineeNoficationMailPayload = (receiver: Trainee, sender: Trainer, report
   },
   translations: translations(receiver),
 })
-
-const paperNoficationMailPayload = (receiver: Trainee | Mentor, sender: Trainer, _paper: Paper): EmailPayload => ({
-  emailType: 'paperBriefing',
-  userData: {
-    receiverEmail: receiver.email,
-    receiverName: receiver.firstName,
-    trainer: sender.firstName,
-    buttonLink: envLink(`/paper/`),
-  },
-  translations: translations(receiver),
-})
-
 /**
  * Sends notification by email depending on the status of a report
  * @param report
@@ -196,20 +183,4 @@ export const sendAlexaNotificationMail = async (user: User): Promise<void> => {
       },
     },
   })
-}
-export const sendPaperBriefingMail = async (paper: Paper, sender: Trainer): Promise<void> => {
-  if (sender) {
-    const traineeReceiver = await traineeById(paper.traineeId)
-    const mentorReceiver = await mentorById(paper.mentorId)
-    if (traineeReceiver && mentorReceiver) {
-      await invokeLambda({
-        payload: paperNoficationMailPayload(traineeReceiver, sender, paper),
-        functionName: 'email'
-      })
-      await invokeLambda({
-        payload: paperNoficationMailPayload(mentorReceiver, sender, paper),
-        functionName: 'email'
-      })
-    }
-  }
 }

@@ -10,7 +10,6 @@ import {
   savePaper,
   updatePaper
 } from "../repositories/paper.repo";
-import {sendPaperBriefingMail} from "../services/email.service";
 import {GraphQLError} from "graphql";
 
 export const paperResolver: GqlResolvers<AuthenticatedContext> = {
@@ -18,9 +17,8 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
     createPaper: async (_parent, { input}) => {
       return savePaper(generatePaper(input))
     },
-    updatePaper: async (_parent, {input}, { currentUser }) => {
+    updatePaper: async (_parent, {input}) => {
       const briefing = input.briefing.map((entry: GqlPaperEntryInput) => generatePaperEntry(entry))
-      if(currentUser.__typename == 'Trainer') await sendPaperBriefingMail(input, currentUser)
       return await updatePaper({...input, briefing}, {updateKeys: ['briefing']})
     },
     deletePaper: async (_parent, { paperId }, { currentUser }) => {

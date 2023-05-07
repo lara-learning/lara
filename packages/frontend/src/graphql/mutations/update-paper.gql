@@ -7,11 +7,13 @@ mutation updatePaper($input: PaperUpdateInput!) {
      mentorId
      periodStart
      periodEnd
+     schoolPeriodStart
+     schoolPeriodEnd
      subject
      status
      briefing {
        id
-       question
+       questionId
        answer
        hint
      }

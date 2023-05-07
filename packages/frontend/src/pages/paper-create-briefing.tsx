@@ -62,6 +62,8 @@ export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  
           trainerId: currentUser.id,
           periodStart: data.startDateProject,
           periodEnd: data.endDateProject,
+          schoolPeriodStart: data.startDateSchool,
+          schoolPeriodEnd: data.endDateSchool,
           status: PaperStatus.InProgress,
           subject: data.department
 

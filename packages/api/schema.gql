@@ -107,6 +107,7 @@ input MentorInput {
 
 input PaperEntryInput {
   id: ID!
+  questionId: ID!
   question: String!
   answer: String
   hint: String
@@ -123,6 +124,8 @@ input PaperInput {
   mentorId: ID!
   periodStart: String
   periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
@@ -136,6 +139,8 @@ input PaperUpdateInput {
   mentorId: ID!
   periodStart: String
   periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
@@ -143,6 +148,7 @@ input PaperUpdateInput {
 
 input AnswerPaperInput {
   id: ID!
+  questionId: ID!
   question: String!
   answer: String!
   hint: String!
@@ -376,6 +382,11 @@ type Query {
   Print single report or report batch
   """
   print(ids: [ID!]!): PrintPayload!
+
+  """
+  Print single paper
+  """
+  printPaper(id: ID!): PrintPayload!
 
   """
   Get a User by ID
@@ -635,6 +646,7 @@ enum PaperStatus {
 
 type PaperFormData {
   id: ID!
+  questionId: ID!
   question: String!
   answer: String
   hint: String
@@ -653,5 +665,7 @@ type Paper {
   mentorId: ID!
   periodStart: String
   periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
   subject: String!
 }

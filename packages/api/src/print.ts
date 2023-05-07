@@ -25,12 +25,15 @@ export type PrintPaper = {
   client: string
   periodStart: string
   periodEnd: string
+  schoolPeriodStart: string
+  schoolPeriodEnd: string
   subject: string
-  department: string
+  //department: string
 }
 
 export type PrintBriefing = {
   question: string
+  questionId: string
   hint: string
   answer: string
   id: string
@@ -55,9 +58,7 @@ export type PrintReportData = {
 
 export type PrintPaperData = {
   filename: string
-  apprenticeYear: number
   paper: PrintPaper
-  signatureDate: string
 }
 
 export type PrintTranslations = {
@@ -82,6 +83,10 @@ export type PrintTranslations = {
   signatureTrainee: string
   signatureTrainer: string
   hello: string
+  client: string
+  mentor: string
+  trainer: string
+  trainee: string
 }
 
 export type PrintPayload = {
@@ -90,7 +95,8 @@ export type PrintPayload = {
 
 export type PrintData = {
   userData: PrintUserData
-  reportsData: PrintReportData[]
+  data: PrintReportData[] | PrintPaperData[]
   printTranslations: PrintTranslations
   emailTranslations: EmailTranslations
 }
+
