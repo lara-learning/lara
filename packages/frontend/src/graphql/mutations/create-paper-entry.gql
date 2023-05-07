@@ -1,8 +1,0 @@
-mutation createPaperEntry($input: AnswerPaperInput!) {
-  createPaperEntry(input: $input) {
-    id
-    question
-    answer
-    hint
-  }
-}

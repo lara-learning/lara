@@ -62,7 +62,7 @@ const germanTranslation: Translation = {
     },
     briefingQuestions: {
       objectOfTheWork: {
-        question: "Gegenstand der Arbeit:",
+        question: "Gegenstand der Arbeit",
         hint: "Nenne hier bitte die allgemeine Tätigkeit/Aufgabe, die Inhalt der Projektstation ist."
       },
       procedure: {

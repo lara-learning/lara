@@ -20,10 +20,13 @@ query TraineePageData {
       mentorId
       periodStart
       periodEnd
+      schoolPeriodStart
+      schoolPeriodEnd
       subject
       status
       briefing {
         id
+        questionId
         question
         answer
         hint

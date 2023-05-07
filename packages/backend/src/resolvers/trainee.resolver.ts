@@ -81,14 +81,14 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
         throw new GraphQLError(t('errors.missingReport', currentUser.language))
       }
 
-      const reportsData = filteredReports.map((report) => createPrintReportData(report, currentUser))
+      const data = filteredReports.map((report) => createPrintReportData(report, currentUser))
 
       const userData = await createPrintUserData(currentUser)
       const printTranslations: PrintTranslations = t('print', currentUser.language)
       const emailTranslations: EmailTranslations = t('email', currentUser.language)
 
       const hash = await savePrintData({
-        reportsData,
+        data,
         userData,
         printTranslations,
         emailTranslations,

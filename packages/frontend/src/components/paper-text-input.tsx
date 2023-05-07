@@ -2,12 +2,12 @@ import React from 'react'
 
 import { StyledEntryContainer, StyledInputTextArea, StyledTextTimeInputWrapper } from '@lara/components'
 
-import {AnswerPaperInput, PaperFormData} from '../graphql'
+import {PaperFormData} from '../graphql'
 import strings from '../locales/localization'
 import {useFocusState} from "../hooks/use-focus-state";
 
 interface PaperTextInputProps {
-  onSave: (paperInput: AnswerPaperInput) => any
+  onSave: (paperInput: PaperFormData) => any
   onDelete?: () => any
   clearOnSave?: boolean
   entry: PaperFormData
@@ -70,6 +70,7 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
     }
     onSave({
       answer: textInput.current.value,
+      questionId: entry.questionId,
       question: entry.question,
       id: entry.id,
       hint: entry.hint ? entry.hint : '',

@@ -58,7 +58,7 @@ export type PaperBriefingMailPayload = BaseEmailPayload & {
 }
 
 export type SimpleMailPayload = BaseEmailPayload & {
-  emailType: 'deleteAccount' | 'error' | 'alexa' | 'paperBriefing'
+  emailType: 'deleteAccount' | 'error' | 'alexa' | 'paperBriefingMail'
   userData: BaseMailUserData
 }
 
@@ -88,6 +88,7 @@ export type EmailTranslations = {
     reportInReview: string
     alexa: string
     paperBriefing: string
+    paperBriefingMail: string
   }
   headline: {
     export: string

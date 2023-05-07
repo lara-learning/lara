@@ -18,6 +18,7 @@ import {
 import Modal from "../components/modal";
 import {Box, Flex} from "@rebass/grid";
 import PaperModal from "../assets/illustrations/paper-modal-illustraion";
+import {useFetchPaperPdf} from "../hooks/use-fetch-pdf";
 interface PaperBriefingParams {
   paperId: string
 }
@@ -44,6 +45,7 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
   const { paperId} = useParams<PaperBriefingParams>()
   const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
+  const [fetchPdf] = useFetchPaperPdf()
 
   const QAs = briefingQuestions()
   const [filteredQAs] = useState(QAs)
@@ -58,7 +60,6 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
 
   const paper = currentUser?.papers?.find(paper => paper?.id == paperId)
   useEffect(() => {
-    console.log(paperBriefing)
     if(paperBriefingInput) {
       setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
     }
@@ -80,13 +81,19 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
           mentorId: paper?.mentorId ?? '',
           periodEnd: paper?.periodEnd,
           periodStart: paper?.periodStart,
+          schoolPeriodEnd: paper?.schoolPeriodEnd,
+          schoolPeriodStart: paper?.schoolPeriodStart,
           status: PaperStatus.InProgress,
           subject: paper?.subject ?? '',
           traineeId: paper?.traineeId ?? '',
           trainerId: currentUser.id
         }
       },
-    }).then(() => {
+    }).then((result) => {
+      const updatedPaper = result?.data?.updatePaper
+      if(updatedPaper) {
+        fetchPdf(updatedPaper)
+      }
       history.push('/paper/')
     })
 }
@@ -95,8 +102,8 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
     <Template type="Main">
       <PaperLayout>
         <div>
-          {filteredQAs.map(({ question: q, hint: h }) => (
-            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing} paperInput={{id: Date.now().toString(), question: q, hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={q} title={q}>
+          {filteredQAs.map(({ question: q, hint: h}, index) => (
+            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing} paperInput={{id: Date.now().toString(), question: q, questionId: index.toString(), hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={q} title={q}>
               {h}
             </PaperAccordion>
           ))}

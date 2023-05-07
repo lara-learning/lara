@@ -1,14 +1,23 @@
 import { GraphQLError } from 'graphql'
 
-import { GqlResolvers, TrainerContext } from '@lara/api'
+import {
+  EmailTranslations,
+  GqlResolvers,
+  PrintTranslations, Trainee,
+  TrainerContext
+} from '@lara/api'
 
 import { reportByYearAndWeek } from '../repositories/report.repo'
 import { allTrainees, traineeById, traineesByTrainerId } from '../repositories/trainee.repo'
 import { updateUser } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { avatar, username } from '../services/user.service'
-import { createT } from '../i18n'
-import { papersByTrainer } from "../repositories/paper.repo";
+import {createT, t} from '../i18n'
+import {paperById, papersByTrainer} from "../repositories/paper.repo";
+import {
+  createPrintPaperData,
+  createPrintUserData, invokePrintLambda, savePrintData
+} from "../services/print.service";
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
   Trainer: {
@@ -43,6 +52,35 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       }
 
       return report
+    },
+    printPaper: async (_parent, { id }, { currentUser }) => {
+      const paper = await paperById(id)
+      const data = []
+      let trainee: Trainee | undefined;
+      if(paper){
+        data.push(createPrintPaperData(paper))
+        trainee = await traineeById(paper?.traineeId)
+      }
+      console.log("testerrr")
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const userData = await createPrintUserData(trainee!)
+      const printTranslations: PrintTranslations = t('print', currentUser.language)
+      const emailTranslations: EmailTranslations = t('email', currentUser.language)
+
+      const hash = await savePrintData({
+        data,
+        userData,
+        printTranslations,
+        emailTranslations,
+      })
+
+      await invokePrintLambda({
+        printDataHash: hash,
+      })
+
+      return {
+        estimatedWaitingTime: Math.round(1.5 + 5),
+      }
     },
   },
   Mutation: {

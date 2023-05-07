@@ -39,7 +39,8 @@ export const EnglishTranslations: Translations = {
       deleteUser: 'A User will be deleted soon',
       reportInReview: 'A new report was handed in',
       alexa: 'Your Account have been linked',
-      paperBriefing:'Your Paper Briefing'
+      paperBriefing:'Your Paper Briefing',
+      paperBriefingMail:'Your Paper Briefing'
     },
     headline: {
       export: 'Your Lara export!',
@@ -98,5 +99,9 @@ export const EnglishTranslations: Translations = {
     thursday: 'Thursday',
     friday: 'Friday',
     hello: 'Hello',
+    client: 'Client',
+    mentor: 'Mentor',
+    trainer: 'Trainer',
+    trainee: 'Trainee'
   },
 }

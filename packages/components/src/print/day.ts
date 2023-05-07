@@ -33,6 +33,14 @@ export const StyledPrintDaySubHeadline = styled.h3`
   letter-spacing: 1.2px;
 `
 
+export const StyledPrintPaperSubHeadline = styled.h3`
+  font-size: ${FontSizes.copy};
+  margin-bottom: ${Spacings.m};
+  color: ${(props) => props.theme.darkFont};
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+`
+
 export const StyledPrintDayStatus = styled.span`
   font-size: ${FontSizes.copy};
   font-weight: 700;

@@ -48,11 +48,7 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({paperInpu
   const handleDelete = (entry: PaperFormData) => {
     const filteredInputs: PaperFormData[] = []
     completedInput.forEach((input) => {
-      console.log(input)
-      console.log(entry)
-      console.log("---------")
       if (input.id !== entry.id){
-        console.log("entered")
         filteredInputs.push(input)
       }
     })
