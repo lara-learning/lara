@@ -77,19 +77,20 @@ export const TraineePaperPage: React.FC = () => {
                             </Text>
                           </Flex>
                         </StyledDashboardPaperStatus>
-                    </Box>
-                  <Spacer y='xl'>
-                    <ProgressBar progress={0.3} color={'primaryDefault'}/>
+                      </Box>
+                      <Spacer y='xl'>
+                        <ProgressBar progress={0.3} color={'primaryDefault'}/>
+                      </Spacer>
+                    </Container>
                   </Spacer>
-                </Container>
-              </Spacer>
-                : null
-            ))
-          ) : (
-            <Text size="copy">{"Kein Paper"}</Text>
-          )}
-        </div>
-      ))}
+                  : null
+              ))
+            ) : (
+              <Text size="copy">{"Kein Paper"}</Text>
+            )}
+          </div>
+        ))
+      }
     </Template>
   )
 }

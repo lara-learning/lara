@@ -41,7 +41,7 @@ const briefingQuestions = (): Question[] => {
 }
 
 
-export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBriefingParams>> = ({ history }) => {
+export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<PaperBriefingParams>> = ({ history }) => {
   const { paperId} = useParams<PaperBriefingParams>()
   const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])

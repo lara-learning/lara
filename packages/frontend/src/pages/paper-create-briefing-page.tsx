@@ -20,7 +20,7 @@ import {
 import NavigationButtonLink from "../components/navigation-button-link";
 import {RouteComponentProps} from "react-router";
 
-export const PaperCreateBriefing: React.FunctionComponent<RouteComponentProps>  = ({history}) => {
+export const PaperCreateBriefingPage: React.FunctionComponent<RouteComponentProps>  = ({history}) => {
 
   const {loading} = useAdminMentorPageQuery()
   const [createMentorMutation] = useCreateMentorMutation()
