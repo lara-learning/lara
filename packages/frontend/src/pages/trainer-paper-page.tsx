@@ -74,94 +74,97 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
   }
 
   return (
-    <Template>
+    <Template type="Main">
       <div key={currentUser.id}>
         {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
           currentUser?.papers?.map((paper) => (
             paper?.trainerId == currentUser.id ?
               <Spacer bottom='xl' key={paper?.id}>
-              <Container overflow={'visible'} padding={'l'} key={paper?.id}>
-                <Flex alignItems={'flex-start'} flexDirection={'row'}>
-                  <Box width={[3, 5 / 5]}>
-                    <Flex justifyContent={"space-between"} alignItems={'center'}>
-                      <H1 center>
-                        {strings.paper.dashboard.title + " " + paper?.client}
-                      </H1>
-                      <StyledAction onClick={() => handleDelete(paper?.id)}
-                                    danger
-                                    noMargin={true}>
-                        <StyledIcon name={'Trash'} size={'30px'}
-                                    color={'errorRed'}/>
-                      </StyledAction>
-                    </Flex>
-                    <Flex alignItems={'center'} flexDirection={'column'}>
-                      {currentUser?.trainees?.map((trainee) => (
-                        trainee.id == paper?.traineeId ?
+                <Container overflow={'visible'} padding={'l'} key={paper?.id}>
+                  <Flex alignItems={'flex-start'} flexDirection={'row'}>
+                    <Box width={[3, 5 / 5]}>
+                      <Flex justifyContent={"space-between"}
+                            alignItems={'center'}>
+                        <H1 center>
+                          {strings.paper.dashboard.title + " " + paper?.client}
+                        </H1>
+                        <StyledAction onClick={() => handleDelete(paper?.id)}
+                                      danger
+                                      noMargin={true}>
+                          <StyledIcon name={'Trash'} size={'30px'}
+                                      color={'errorRed'}/>
+                        </StyledAction>
+                      </Flex>
+                      <Flex alignItems={'center'} flexDirection={'column'}>
+                        {currentUser?.trainees?.map((trainee) => (
+                          trainee.id == paper?.traineeId ?
 
-                          <Flex alignItems={'center'} justifyContent={"flex-start"} key={trainee.id}>
-                            <Text size={"copy"}>
-                              {strings.paper.dashboard.trainee}:
-                            </Text>
-                            <StyledName>
-                              {trainee.firstName} {trainee.lastName}
-                            </StyledName>
-                            <Avatar size={44} image={trainee.avatar}/>
-                          </Flex> : <></>
-                      ))}
-                      <Spacer bottom='xl'>
-                        <Paragraph center>
-                          {strings.paper.dashboard.description}
-                        </Paragraph>
-                      </Spacer>
-                      <Box width={[0, 3 / 5]}>
-                        <Flex alignItems={'center'} flexDirection={'row'}
-                              justifyContent={'space-between'}>
-                          <Flex alignItems={'center'}>
-                            {paper?.briefing.length ? (
-                              <StyledIcon name={'CheckMark'} size="24px"
-                                          color={'successGreen'}/>
-                            ) : (
+                            <Flex alignItems={'center'}
+                                  justifyContent={"flex-start"}
+                                  key={trainee.id}>
+                              <Text size={"copy"}>
+                                {strings.paper.dashboard.trainee}:
+                              </Text>
+                              <StyledName>
+                                {trainee.firstName} {trainee.lastName}
+                              </StyledName>
+                              <Avatar size={44} image={trainee.avatar}/>
+                            </Flex> : <></>
+                        ))}
+                        <Spacer bottom='xl'>
+                          <Paragraph center>
+                            {strings.paper.dashboard.description}
+                          </Paragraph>
+                        </Spacer>
+                        <Box width={[0, 3 / 5]}>
+                          <Flex alignItems={'center'} flexDirection={'row'}
+                                justifyContent={'space-between'}>
+                            <Flex alignItems={'center'}>
+                              {paper?.briefing.length ? (
+                                <StyledIcon name={'CheckMark'} size="24px"
+                                            color={'successGreen'}/>
+                              ) : (
+                                <StyledIcon name={'X'} size="24px"
+                                            color={'errorRed'}/>
+                              )}
+                              <Text>
+                                {strings.paper.dashboard.briefing}
+                              </Text>
+                            </Flex>
+                            <Flex alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px"
                                           color={'errorRed'}/>
-                            )}
-                            <Text>
-                              {strings.paper.dashboard.briefing}
-                            </Text>
+                              <Text>
+                                {strings.paper.dashboard.feedback}
+                              </Text>
+                            </Flex>
                           </Flex>
-                          <Flex alignItems={'center'}>
-                            <StyledIcon name={'X'} size="24px"
-                                        color={'errorRed'}/>
-                            <Text>
-                              {strings.paper.dashboard.feedback}
-                            </Text>
+                          <Flex alignItems={'center'} flexDirection={'row'}
+                                justifyContent={'space-between'}>
+                            <Flex alignItems={'center'}>
+                              <StyledIcon name={'X'} size="24px"
+                                          color={'errorRed'}/>
+                              <Text>
+                                {strings.paper.dashboard.conclusion}
+                              </Text>
+                            </Flex>
+                            <Flex alignItems={'center'}>
+                              <StyledIcon name={'X'} size="24px"
+                                          color={'errorRed'}/>
+                              <Text>
+                                {strings.paper.dashboard.pdfFeedback}
+                              </Text>
+                            </Flex>
                           </Flex>
-                        </Flex>
-                        <Flex alignItems={'center'} flexDirection={'row'}
-                              justifyContent={'space-between'}>
-                          <Flex alignItems={'center'}>
-                            <StyledIcon name={'X'} size="24px"
-                                        color={'errorRed'}/>
-                            <Text>
-                              {strings.paper.dashboard.conclusion}
-                            </Text>
-                          </Flex>
-                          <Flex alignItems={'center'}>
-                            <StyledIcon name={'X'} size="24px"
-                                        color={'errorRed'}/>
-                            <Text>
-                              {strings.paper.dashboard.pdfFeedback}
-                            </Text>
-                          </Flex>
-                        </Flex>
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Flex>
-                <Spacer y='xl'>
-                  <ProgressBar progress={0.3} color={'primaryDefault'}/>
-                </Spacer>
-              </Container>
-            </Spacer>
+                        </Box>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                  <Spacer y='xl'>
+                    <ProgressBar progress={0.3} color={'primaryDefault'}/>
+                  </Spacer>
+                </Container>
+              </Spacer>
               : null
           ))
         ) : (

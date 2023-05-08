@@ -25,8 +25,8 @@ import SupportPage from './pages/support-page'
 import {TrainerPaperPage} from "./pages/trainer-paper-page";
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
-import {PaperCreateBriefing} from "./pages/paper-create-briefing";
-import {PaperBriefing} from "./pages/paper-briefing";
+import {PaperCreateBriefingPage} from "./pages/paper-create-briefing-page";
+import {PaperBriefingPage} from "./pages/paper-briefing-page";
 import {TraineePaperPage} from "./pages/trainee-paper-page";
 import {MentorPaperPage} from "./pages/mentor-paper-page";
 
@@ -79,8 +79,8 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
         routes.push({ path: '/', exact: true, render: () => <Redirect to={redirectRoute} /> })
 
         routes.push({ path: '/paper', exact: true, component: TrainerPaperPage })
-        routes.push({ path: '/paper/createBriefing', exact: true, component: PaperCreateBriefing })
-        routes.push({ path: '/paper/briefing/:paperId', exact: true, component: PaperBriefing })
+        routes.push({ path: '/paper/createBriefing', exact: true, component: PaperCreateBriefingPage })
+        routes.push({ path: '/paper/briefing/:paperId', exact: true, component: PaperBriefingPage })
 
         routes.push({ path: '/reports/:trainee?', exact: true, component: TrainerReportsPage })
         routes.push({ path: '/reports/:trainee/:year/:week', component: ReportReviewPage })
