@@ -1,8 +1,7 @@
 import {
   Container,
   H1,
-  Paragraph,
-  Spacer,
+  Spacer, StyledDashboardPaperStatus,
   StyledIcon,
   Text,
 } from '@lara/components'
@@ -36,60 +35,55 @@ export const TraineePaperPage: React.FC = () => {
         <div key={trainee?.id}>
           {trainee?.papers && trainee?.papers?.length >= 1 ? (
             trainee?.papers.map(paper => (
+              paper?.traineeId == currentUser.id ?
               <Spacer bottom='xl' key={paper?.id}>
-                <Container overflow={'visible'} padding={'l'} >
-                  <Flex alignItems={'flex-start'} flexDirection={'row'}>
+                <Container overflow={'visible'} padding={'l'}>
                     <Box width={[3, 5 / 5]}>
-                      <Flex alignItems={'center'} flexDirection={'column'}>
                         <H1 center>
                           {strings.paper.dashboard.title + " " + paper?.client}
                         </H1>
                         <Spacer bottom='xl'>
-                          <Paragraph center>
+                          <Text size={"copy"}>
                             {strings.paper.dashboard.description}
-                          </Paragraph>
+                          </Text>
                         </Spacer>
-                        <Box width={[0, 3 / 5]}>
-                          <Flex alignItems={'center'} flexDirection={'row'}
-                                justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
-                              {paper?.briefing.length ? (
-                                <StyledIcon name={'CheckMark'} size="24px"
-                                            color={'successGreen'}/>
-                              ) : (
-                                <StyledIcon name={'X'} size="24px"
-                                            color={'errorRed'}/>
-                              )}
+                        <StyledDashboardPaperStatus>
+                          <Flex alignItems={"center"}>
+                            <StyledIcon name={'CheckMark'} size="24px"
+                                        color={'successGreen'}/>
+                            <Text>
                               {strings.paper.dashboard.briefing}
-                            </Flex>
-                            <Flex alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px"
-                                          color={'errorRed'}/>
+                            </Text>
+                          </Flex>
+                          <Flex alignItems={"center"}>
+                            <StyledIcon name={'X'} size="24px"
+                                        color={'errorRed'}/>
+                            <Text>
                               {strings.paper.dashboard.feedback}
-                            </Flex>
+                            </Text>
                           </Flex>
-                          <Flex alignItems={'center'} flexDirection={'row'}
-                                justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px"
-                                          color={'errorRed'}/>
+                          <Flex alignItems={"center"}>
+                            <StyledIcon name={'X'} size="24px"
+                                        color={'errorRed'}/>
+                            <Text>
                               {strings.paper.dashboard.conclusion}
-                            </Flex>
-                            <Flex alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px"
-                                          color={'errorRed'}/>
-                              {strings.paper.dashboard.pdfFeedback}
-                            </Flex>
+                            </Text>
                           </Flex>
-                        </Box>
-                      </Flex>
+                          <Flex alignItems={"center"}>
+                            <StyledIcon name={'X'} size="24px"
+                                        color={'errorRed'}/>
+                            <Text>
+                              {strings.paper.dashboard.pdfFeedback}
+                            </Text>
+                          </Flex>
+                        </StyledDashboardPaperStatus>
                     </Box>
-                  </Flex>
                   <Spacer y='xl'>
                     <ProgressBar progress={0.3} color={'primaryDefault'}/>
                   </Spacer>
                 </Container>
               </Spacer>
+                : null
             ))
           ) : (
             <Text size="copy">{"Kein Paper"}</Text>

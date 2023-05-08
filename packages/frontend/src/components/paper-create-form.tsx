@@ -75,7 +75,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
             </Text>
             <StyledSelect
               {...register('trainee', { required: strings.validation.required })}
-              defaultValue={currentUser?.trainees[0].id}
+              defaultValue={currentUser?.trainees.length ? currentUser?.trainees[0].id : ''}
               disabled={updating}
               onChange={onSubmit}
             >

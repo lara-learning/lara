@@ -53,15 +53,14 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       return report
     },
-    printPaper: async (_parent, { id }, { currentUser }) => {
-      const paper = await paperById(id)
+    printPaper: async (_parent, { ids }, { currentUser }) => {
+      const paper = await paperById(ids[0])
       const data = []
       let trainee: Trainee | undefined;
       if(paper){
         data.push(createPrintPaperData(paper))
         trainee = await traineeById(paper?.traineeId)
       }
-      console.log("testerrr")
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const userData = await createPrintUserData(trainee!)
       const printTranslations: PrintTranslations = t('print', currentUser.language)

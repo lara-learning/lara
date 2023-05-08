@@ -386,7 +386,7 @@ type Query {
   """
   Print single paper
   """
-  printPaper(id: ID!): PrintPayload!
+  printPaper(ids: [ID!]!): PrintPayload!
 
   """
   Get a User by ID

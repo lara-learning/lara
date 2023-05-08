@@ -87,7 +87,7 @@ export const PaperBriefing: React.FunctionComponent<RouteComponentProps<PaperBri
           subject: paper?.subject ?? '',
           traineeId: paper?.traineeId ?? '',
           trainerId: currentUser.id
-        }
+        },
       },
     }).then((result) => {
       const updatedPaper = result?.data?.updatePaper

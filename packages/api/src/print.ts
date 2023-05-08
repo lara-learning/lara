@@ -99,4 +99,3 @@ export type PrintData = {
   printTranslations: PrintTranslations
   emailTranslations: EmailTranslations
 }
-

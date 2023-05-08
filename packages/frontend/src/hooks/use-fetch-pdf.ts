@@ -51,7 +51,7 @@ export const useFetchPaperPdf = (): UseFetchPaperPdfPayload => {
   return [
     (paper) => {
       setLoading(true)
-      fetchPrintPaperData({ variables: {id: paper.id} }).catch((error) => {
+      fetchPrintPaperData({ variables: { ids: [paper.id]} }).catch((error) => {
         console.log(error)
         }
       )
