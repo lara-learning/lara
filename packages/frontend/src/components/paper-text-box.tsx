@@ -5,7 +5,7 @@ import {
 } from '../graphql'
 import PaperCommentBubble from "./paper-comment-bubble";
 import {StyledAction, StyledIcon} from "@lara/components";
-import {Box} from "@rebass/grid";
+import {Flex} from "@rebass/grid";
 
 interface TextBoxProps {
   paperInput: PaperFormData
@@ -19,15 +19,15 @@ const PaperTextBox: React.FunctionComponent<TextBoxProps> = ({paperEntries, pape
       {paperEntries
         ? paperEntries.map((entry) => (
           entry.question == paperInput.question ?
-          <Box key={entry.id}>
+          <Flex key={entry.id} justifyContent={"space-between"} alignItems={"center"}>
             <PaperCommentBubble
               key={entry.id}
               message={entry.answer}
             />
-            <StyledAction onClick={() => handleDelete(entry)} danger>
+            <StyledAction onClick={() => handleDelete(entry)}>
               <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'}/>
             </StyledAction>
-          </Box>
+          </Flex>
             :  null
         ))
         : null}

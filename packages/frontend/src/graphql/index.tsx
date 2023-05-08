@@ -563,7 +563,7 @@ export type QueryPrintArgs = {
 
 
 export type QueryPrintPaperArgs = {
-  id: Scalars['ID'];
+  ids: Array<Scalars['ID']>;
 };
 
 
@@ -1078,7 +1078,7 @@ export type PrintDataQueryVariables = Exact<{
 export type PrintDataQuery = { __typename?: 'Query', print: { __typename?: 'PrintPayload', estimatedWaitingTime: number } };
 
 export type PrintPaperDataQueryVariables = Exact<{
-  id: Scalars['ID'];
+  ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
@@ -2315,8 +2315,8 @@ export function usePrintDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type PrintDataQueryHookResult = ReturnType<typeof usePrintDataQuery>;
 export type PrintDataLazyQueryHookResult = ReturnType<typeof usePrintDataLazyQuery>;
 export const PrintPaperDataDocument = gql`
-    query PrintPaperData($id: ID!) {
-  printPaper(id: $id) {
+    query PrintPaperData($ids: [ID!]!) {
+  printPaper(ids: $ids) {
     estimatedWaitingTime
   }
 }

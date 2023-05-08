@@ -5,7 +5,7 @@ import {
   Container,
   H1,
   Paragraph,
-  Spacer, StyledAction, StyledIcon, StyledName,
+  Spacer, StyledAction, StyledIcon, StyledName, Text,
 } from '@lara/components'
 import {Box, Flex} from '@rebass/grid'
 
@@ -78,25 +78,34 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
       <div key={currentUser.id}>
         {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
           currentUser?.papers?.map((paper) => (
-            <Spacer bottom='xl' key={paper?.id}>
+            paper?.trainerId == currentUser.id ?
+              <Spacer bottom='xl' key={paper?.id}>
               <Container overflow={'visible'} padding={'l'} key={paper?.id}>
-                <StyledAction onClick={() => handleDelete(paper?.id)} danger
-                              noMargin={true}>
-                  <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'}/>
-                </StyledAction>
                 <Flex alignItems={'flex-start'} flexDirection={'row'}>
                   <Box width={[3, 5 / 5]}>
-                    <Flex alignItems={'center'} flexDirection={'column'}>
+                    <Flex justifyContent={"space-between"} alignItems={'center'}>
                       <H1 center>
                         {strings.paper.dashboard.title + " " + paper?.client}
                       </H1>
+                      <StyledAction onClick={() => handleDelete(paper?.id)}
+                                    danger
+                                    noMargin={true}>
+                        <StyledIcon name={'Trash'} size={'30px'}
+                                    color={'errorRed'}/>
+                      </StyledAction>
+                    </Flex>
+                    <Flex alignItems={'center'} flexDirection={'column'}>
                       {currentUser?.trainees?.map((trainee) => (
                         trainee.id == paper?.traineeId ?
-                          <Flex alignItems={'center'} key={trainee.id}>
-                            <Avatar size={44} image={trainee.avatar}/>
+
+                          <Flex alignItems={'center'} justifyContent={"flex-start"} key={trainee.id}>
+                            <Text size={"copy"}>
+                              {strings.paper.dashboard.trainee}:
+                            </Text>
                             <StyledName>
                               {trainee.firstName} {trainee.lastName}
                             </StyledName>
+                            <Avatar size={44} image={trainee.avatar}/>
                           </Flex> : <></>
                       ))}
                       <Spacer bottom='xl'>
@@ -115,12 +124,16 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
                               <StyledIcon name={'X'} size="24px"
                                           color={'errorRed'}/>
                             )}
-                            {strings.paper.dashboard.briefing}
+                            <Text>
+                              {strings.paper.dashboard.briefing}
+                            </Text>
                           </Flex>
                           <Flex alignItems={'center'}>
                             <StyledIcon name={'X'} size="24px"
                                         color={'errorRed'}/>
-                            {strings.paper.dashboard.feedback}
+                            <Text>
+                              {strings.paper.dashboard.feedback}
+                            </Text>
                           </Flex>
                         </Flex>
                         <Flex alignItems={'center'} flexDirection={'row'}
@@ -128,12 +141,16 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
                           <Flex alignItems={'center'}>
                             <StyledIcon name={'X'} size="24px"
                                         color={'errorRed'}/>
-                            {strings.paper.dashboard.conclusion}
+                            <Text>
+                              {strings.paper.dashboard.conclusion}
+                            </Text>
                           </Flex>
                           <Flex alignItems={'center'}>
                             <StyledIcon name={'X'} size="24px"
                                         color={'errorRed'}/>
-                            {strings.paper.dashboard.pdfFeedback}
+                            <Text>
+                              {strings.paper.dashboard.pdfFeedback}
+                            </Text>
                           </Flex>
                         </Flex>
                       </Box>
@@ -145,6 +162,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
                 </Spacer>
               </Container>
             </Spacer>
+              : null
           ))
         ) : (
           <Flex alignItems={'center'} flexDirection={'column'}>
@@ -189,7 +207,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({history}) => {
               </Box>
             </Flex>
           </Container>
-        ):null
+        ) : null
         }
       </div>
     </Template>

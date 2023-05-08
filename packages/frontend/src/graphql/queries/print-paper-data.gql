@@ -1,5 +1,5 @@
-query PrintPaperData($id: ID!) {
-  printPaper(id: $id) {
+query PrintPaperData($ids: [ID!]!) {
+  printPaper(ids: $ids) {
     estimatedWaitingTime
   }
 }

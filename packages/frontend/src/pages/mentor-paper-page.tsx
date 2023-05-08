@@ -32,9 +32,10 @@ export const MentorPaperPage: React.FC = () => {
   }
   return (
     <Template type="Main">
-        <div key={currentUser?.id}>
-          {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
-            currentUser?.papers.map(paper => (
+      <div key={currentUser?.id}>
+        {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
+          currentUser?.papers.map(paper => (
+            paper?.mentorId == currentUser.id ?
               <Spacer bottom='xl' key={paper?.id}>
                 <Container overflow={'visible'} padding={'l'} key={paper?.id}>
                   <Flex alignItems={'flex-start'} flexDirection={'row'}>
@@ -59,12 +60,16 @@ export const MentorPaperPage: React.FC = () => {
                                 <StyledIcon name={'X'} size="24px"
                                             color={'errorRed'}/>
                               )}
-                              {strings.paper.dashboard.briefing}
+                              <Text>
+                                {strings.paper.dashboard.briefing}
+                              </Text>
                             </Flex>
                             <Flex alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px"
                                           color={'errorRed'}/>
-                              {strings.paper.dashboard.feedback}
+                              <Text>
+                                {strings.paper.dashboard.feedback}
+                              </Text>
                             </Flex>
                           </Flex>
                           <Flex alignItems={'center'} flexDirection={'row'}
@@ -72,12 +77,16 @@ export const MentorPaperPage: React.FC = () => {
                             <Flex alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px"
                                           color={'errorRed'}/>
-                              {strings.paper.dashboard.conclusion}
+                              <Text>
+                                {strings.paper.dashboard.conclusion}
+                              </Text>
                             </Flex>
                             <Flex alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px"
                                           color={'errorRed'}/>
-                              {strings.paper.dashboard.pdfFeedback}
+                              <Text>
+                                {strings.paper.dashboard.pdfFeedback}
+                              </Text>
                             </Flex>
                           </Flex>
                         </Box>
@@ -89,11 +98,12 @@ export const MentorPaperPage: React.FC = () => {
                   </Spacer>
                 </Container>
               </Spacer>
-            ))
-          ) : (
-            <Text size="copy">{"Kein Paper"}</Text>
-          )}
-        </div>
+              : null
+          ))
+        ) : (
+          <Text size="copy">{"Kein Paper"}</Text>
+        )}
+      </div>
     </Template>
   )
 }

@@ -166,21 +166,6 @@ export const MentorForm: React.FC<EditMentorFormProps> = ({ mentor, submit, blur
             />
           </>
         }
-        deleteDateInput={
-          <>
-            <Text color={getFontColor(errors.deleteAt)} {...inputLabelProps}>
-              {strings.deleteAt}
-            </Text>
-            <Input
-              type="date"
-              block
-              disabled={updating}
-              defaultValue={mentor?.deleteAt && format(parseISO(mentor.deleteAt), 'yyyy-MM-dd')}
-              error={Boolean(errors.deleteAt)}
-              onBlur={blurSubmit ? onSubmit : undefined}
-            />
-          </>
-        }
         buttonControls={
           !blurSubmit ? (
             <>

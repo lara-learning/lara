@@ -563,7 +563,7 @@ export type GqlQueryPrintArgs = {
 
 
 export type GqlQueryPrintPaperArgs = {
-  id: Scalars['ID'];
+  ids: Array<Scalars['ID']>;
 };
 
 
@@ -1097,7 +1097,7 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
-  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'id'>>;
+  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'ids'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;
