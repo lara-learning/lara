@@ -19,6 +19,7 @@ import Modal from "../components/modal";
 import {Box, Flex} from "@rebass/grid";
 import PaperModal from "../assets/illustrations/paper-modal-illustraion";
 import {useFetchPaperPdf} from "../hooks/use-fetch-pdf";
+import {useToastContext} from "../hooks/use-toast-context";
 interface PaperBriefingParams {
   paperId: string
 }
@@ -45,7 +46,7 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
   const { paperId} = useParams<PaperBriefingParams>()
   const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
-  const [fetchPdf] = useFetchPaperPdf()
+  const [fetchPdf, loading] = useFetchPaperPdf()
 
   const QAs = briefingQuestions()
   const [filteredQAs] = useState(QAs)
@@ -54,6 +55,7 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const trainerPaperPageData = useTrainerPaperPageDataQuery()
   const [updatePaperMutation] = useUpdatePaperMutation()
+  const {addToast} = useToastContext()
 
 
   const currentUser = trainerPaperPageData?.data?.currentUser as Trainer
@@ -94,7 +96,15 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
       if(updatedPaper) {
         fetchPdf(updatedPaper)
       }
-      history.push('/paper/')
+    }).finally(() => {
+      addToast({
+        icon: 'Export',
+        title: strings.paper.briefing.toastTitle,
+        text: strings.paper.briefing.toastDescription,
+        type: 'success',
+      })
+      //TODO
+        //history.push("/paper")
     })
 }
 
@@ -128,12 +138,13 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
               <Paragraph>{strings.paper.modal.description}</Paragraph>
               <Flex my={'2'}>
                 <Box pr={'2'} width={1 / 2}>
-                  <SecondaryButton fullsize onClick={toggleHandoverModal}>
+                  <SecondaryButton fullsize onClick={toggleHandoverModal} disabled={loading}>
                     {strings.cancel}
                   </SecondaryButton>
                 </Box>
                 <Box pl={'2'} width={1 / 2}>
-                  <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
+                  <PrimaryButton icon={loading ? 'Loader' : 'ChevronRight'} disabled={loading}
+                                 fullsize onClick={() => updatePaper(paperBriefing)}>
                     {strings.paper.modal.createBriefing}
                   </PrimaryButton>
                 </Box>

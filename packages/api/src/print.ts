@@ -44,6 +44,7 @@ export type PrintUserData = {
   lastName: string
   receiverEmail: string
   course: string
+  type?: string
   traineeSignature?: string
   trainerSignature?: string
 }
@@ -87,6 +88,7 @@ export type PrintTranslations = {
   mentor: string
   trainer: string
   trainee: string
+  briefing: string
 }
 
 export type PrintPayload = {

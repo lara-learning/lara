@@ -116,6 +116,10 @@ export default interface Translation {
     deletePaper: {
       title: string,
       text: string,
+    },
+    briefing: {
+      toastTitle: string,
+      toastDescription: string
     }
   }
   archivePage: {

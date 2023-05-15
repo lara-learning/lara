@@ -2,7 +2,7 @@ import { GraphQLError } from 'graphql'
 
 import {
   EmailTranslations,
-  GqlResolvers,
+  GqlResolvers, Mentor,
   PrintTranslations, Trainee,
   TrainerContext
 } from '@lara/api'
@@ -18,6 +18,7 @@ import {
   createPrintPaperData,
   createPrintUserData, invokePrintLambda, savePrintData
 } from "../services/print.service";
+import {mentorById} from "../repositories/mentor.repo";
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
   Trainer: {
@@ -57,16 +58,18 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       const paper = await paperById(ids[0])
       const data = []
       let trainee: Trainee | undefined;
+      let mentor: Mentor | undefined;
       if(paper){
         data.push(createPrintPaperData(paper))
         trainee = await traineeById(paper?.traineeId)
+        mentor = await mentorById(paper?.mentorId)
       }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const userData = await createPrintUserData(trainee!)
+      let userData = await createPrintUserData(trainee!)
       const printTranslations: PrintTranslations = t('print', currentUser.language)
       const emailTranslations: EmailTranslations = t('email', currentUser.language)
 
-      const hash = await savePrintData({
+      const traineeHash = await savePrintData({
         data,
         userData,
         printTranslations,
@@ -74,7 +77,20 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       })
 
       await invokePrintLambda({
-        printDataHash: hash,
+        printDataHash: traineeHash,
+      })
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+       userData = await createPrintUserData(mentor!)
+
+      const mentorHash = await savePrintData({
+        data,
+        userData,
+        printTranslations,
+        emailTranslations,
+      })
+
+      await invokePrintLambda({
+        printDataHash: mentorHash,
       })
 
       return {

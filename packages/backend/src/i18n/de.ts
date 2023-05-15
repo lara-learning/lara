@@ -103,6 +103,7 @@ export const GermanTranslations: Translations = {
     client: 'Kunde',
     mentor: 'Ausbildungsbeauftragter',
     trainer: 'Ausbilder',
-    trainee: 'Auszubildender'
+    trainee: 'Auszubildender',
+    briefing: 'Briefing'
   },
 }

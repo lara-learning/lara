@@ -123,7 +123,8 @@ export const DUMMY_DATA: PrintData = {
     client: 'Kunde',
     mentor: 'Ausbildungsbeauftragter',
     trainer: 'Ausbilder',
-    trainee: 'Auszubildender'
+    trainee: 'Auszubildender',
+    briefing: 'Briefing'
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',
@@ -191,60 +192,60 @@ export const DUMMY_PAPER_DATA: PrintData = {
               id: '1',
               questionId: '1',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Gegenstand der Arbeit',
+              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
             },
             {
-              id: '1',
+              id: '2',
               questionId: '1',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Gegenstand der Arbeit',
+              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
             },
             {
-              id: '1',
+              id: '3',
               questionId: '1',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Gegenstand der Arbeit',
+              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
             },
             {
               id: '1',
               questionId: '2',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Vorgehen',
+              hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.'
             },
             {
-              id: '1',
+              id: '2',
               questionId: '2',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Vorgehen',
+              hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.'
             },
             {
               id: '1',
               questionId: '3',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Lerninhalte Station',
+              hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.'
             },
             {
               id: '1',
               questionId: '4',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Rahmenplan Lerninhalte',
+              hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.'
             },
             {
-              id: '1',
+              id: '2',
               questionId: '4',
               answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
+              question: 'Rahmenplan Lerninhalte',
+              hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.'
             },
             {
-              id: '1',
+              id: '3',
               questionId: '4',
               answer: 'Test Antwort',
               question: 'Test Frage',
@@ -293,7 +294,8 @@ export const DUMMY_PAPER_DATA: PrintData = {
     client: 'Kunde',
     mentor: 'Ausbildungsbeauftragter',
     trainer: 'Ausbilder',
-    trainee: 'Auszubildender'
+    trainee: 'Auszubildender',
+    briefing: 'Briefing'
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',

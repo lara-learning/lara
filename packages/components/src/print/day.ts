@@ -13,7 +13,7 @@ export const StyledPrintDay = styled.div`
   }
 `
 
-export const StyledPrintDayHeadline = styled.h2`
+export const StyledPrintHeadline = styled.h2`
   margin: 0 0 ${Spacings.m};
   font-size: ${FontSizes.h2};
   color: ${(props) => props.theme.darkFont};
