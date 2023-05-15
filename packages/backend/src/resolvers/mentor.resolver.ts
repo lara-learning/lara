@@ -16,10 +16,7 @@ export const mentorResolver: GqlResolvers<MentorContext> = {
     }
   },
 }
-//TODO endDate wird nicht gesetzt
 export const endOfToolUsage = (mentor: Mentor): Date => {
   const endDate = mentor.endDate ? parseISODateString(mentor.endDate) : ''
-  console.log(endDate)
-
   return <Date>endDate;
 }

@@ -41,6 +41,7 @@ describe('createPaperData', () => {
         briefing: [
         {
           id: "1",
+          questionId: "1",
           answer: "TestAnswer",
           question: "TestQuestion",
           hint: "TestHint"
@@ -53,6 +54,10 @@ describe('createPaperData', () => {
 
   it('returns correct paper status', () => {
     expect(paperInput.status).toBe(paper.status)
+  })
+
+  it('returns correct paper status', () => {
+    expect(paper.id).toBeTruthy()
   })
 
   it('check if mentor has been assigned correctly', () => {

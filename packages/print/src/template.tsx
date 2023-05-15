@@ -16,7 +16,7 @@ import {
   Spacings,
   StyledPrintDay,
   StyledPrintDayHeader,
-  StyledPrintDayHeadline,
+  StyledPrintHeadline,
   StyledPrintDayStatus,
   StyledPrintDaySubHeadline,
   StyledPrintEntry,
@@ -109,7 +109,7 @@ export const Template: React.FC<TemplateProps> = ({
           const displayStatus = day.status === 'vacation' || day.status === 'sick' || day.status === 'holiday'
           return (
             <StyledPrintDay key={dayIndex}>
-              <StyledPrintDayHeadline>{weekdayMapping(i18n)[dayIndex]}</StyledPrintDayHeadline>
+              <StyledPrintHeadline>{weekdayMapping(i18n)[dayIndex]}</StyledPrintHeadline>
               <StyledPrintDayHeader>
                 <StyledPrintDaySubHeadline>{i18n.description}</StyledPrintDaySubHeadline>
                 <StyledPrintDaySubHeadline>{i18n.duration}</StyledPrintDaySubHeadline>
@@ -175,10 +175,6 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
           {firstName} {lastName}
         </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
-          <StyledPrintUserInfoRowHeadline> {i18n.trainer}: </StyledPrintUserInfoRowHeadline>
-          {"trainerfirstName"} {"trainerlastName"}
-        </StyledPrintUserInfoRow>
-        <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.apprenticeCourse}: </StyledPrintUserInfoRowHeadline>
           {course}
         </StyledPrintUserInfoRow>
@@ -192,10 +188,6 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
             {paper.periodStart + ' -' + paper.periodEnd}
           </StyledPrintUserInfoRow>
         : null}
-        <StyledPrintUserInfoRow>
-          <StyledPrintUserInfoRowHeadline> {i18n.mentor}: </StyledPrintUserInfoRowHeadline>
-          {"mentor"}
-        </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.client}: </StyledPrintUserInfoRowHeadline>
           {paper.client}
@@ -213,7 +205,7 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
             <StyledPrintDay key={briefing.questionId}>
               {index == 0 || array[index].questionId !== array[index-1].questionId ?
                 <>
-                  <StyledPrintDayHeadline>{briefing.question}</StyledPrintDayHeadline>
+                  <StyledPrintHeadline>{briefing.question}</StyledPrintHeadline>
                   <StyledPrintPaperSubHeadline>{briefing.hint}</StyledPrintPaperSubHeadline>
                 </>
                 : null}

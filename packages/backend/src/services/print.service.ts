@@ -4,7 +4,7 @@ import hash from 'object-hash'
 
 import {
   Day,
-  Entry, Paper, PaperFormData, PrintBriefing,
+  Entry, Mentor, Paper, PaperFormData, PrintBriefing,
   PrintData,
   PrintDay,
   PrintEntry, PrintPaper, PrintPaperData,
@@ -46,20 +46,21 @@ export const createPaperPDFName = (paper: Paper): string => {
 /**
  * Creates the user data that is needed by the print lambda
  * for generating the PDF
- * @param trainee Trainee for PDF
+ * @param user Trainee for PDF
  * @returns Userdata
  */
-export const createPrintUserData = async (trainee: Trainee): Promise<PrintUserData> => {
-  const trainerSignature =
-    trainee.trainerId && (await trainerById(trainee.trainerId).then((trainer) => trainer?.signature))
+export const createPrintUserData = async (user: Trainee | Mentor): Promise<PrintUserData> => {
+  const trainerSignature = user.__typename == "Trainee" &&
+    user.trainerId && (await trainerById(user.trainerId).then((trainer) => trainer?.signature))
 
   return {
-    receiverEmail: trainee.email,
-    firstName: trainee.firstName,
-    lastName: trainee.lastName,
-    course: trainee.course ?? '',
-    traineeSignature: trainee.signature && `data:image/svg+xml;base64,${trainee.signature}`,
-    trainerSignature: trainerSignature && `data:image/svg+xml;base64,${trainerSignature}`,
+    receiverEmail: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    type: user.__typename,
+    course: user.__typename == 'Trainee' && user.course ? user.course :  '',
+    traineeSignature: user.__typename == 'Trainee' ?  user.signature && `data:image/svg+xml;base64,${user.signature}` : '',
+    trainerSignature: user.__typename == 'Trainee' && trainerSignature ? `data:image/svg+xml;base64,${trainerSignature}` : '',
   }
 }
 

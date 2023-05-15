@@ -102,6 +102,7 @@ export const EnglishTranslations: Translations = {
     client: 'Client',
     mentor: 'Mentor',
     trainer: 'Trainer',
-    trainee: 'Trainee'
+    trainee: 'Trainee',
+    briefing: 'Briefing'
   },
 }

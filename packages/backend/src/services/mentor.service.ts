@@ -44,8 +44,8 @@ export const validateMentor = async (_mentor: Mentor): Promise<void> => {
 
 /**
  * Deletes a mentor and all it's references from the DB
- * @param trainer Mentor to delete
  * @returns Boolean indicating success
+ * @param mentor
  */
 export const deleteMentor = async (mentor: Mentor): Promise<boolean> => {
   return await deleteUser(mentor)

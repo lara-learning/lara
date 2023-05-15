@@ -120,6 +120,10 @@ const englishTranslation: Translation = {
     deletePaper: {
       title: "Paper gelöscht",
       text: "Das Lara Paper wurde gelöscht",
+    },
+    briefing: {
+      toastTitle: "Lara Paper Briefing wird erstellt",
+      toastDescription: "Das Briefing wird jetzt erstellt und wird den Teilnehmern per Mail als PDF verschickt"
     }
   },
   archivePage: {
