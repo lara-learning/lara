@@ -17,9 +17,5 @@ const StyledPaperLayout = styled.div`
 `
 
 export const PaperLayout: React.FC = ({ children }) => {
-  return (
-    <StyledPaperLayout>
-      {children}
-    </StyledPaperLayout>
-  )
+  return <StyledPaperLayout>{children}</StyledPaperLayout>
 }

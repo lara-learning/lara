@@ -100,7 +100,6 @@ export type EmailTranslations = {
     handOver: string
     alexa: string
     paperBriefing: string
-
   }
   message: {
     error: string

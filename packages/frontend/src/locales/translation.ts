@@ -46,7 +46,7 @@ export default interface Translation {
       createBriefing: string
     }
     createBriefing: {
-      title: string,
+      title: string
       firstnameMentor: string
       lastnameMentor: string
       emailMentor: string
@@ -93,32 +93,35 @@ export default interface Translation {
         question: string
         hint: string
       }
-    },
+    }
     modal: {
-      title: string,
+      title: string
       description: string
       createBriefing: string
-    },
+      backToPaperTitle: string
+      backToPaperDescription: string
+      backToPaperButton: string
+    }
     dashboard: {
-      title: string,
-      description: string,
-      briefing: string,
-      feedback: string,
-      conclusion: string,
-      pdfFeedback: string,
-      trainee: string,
-      trainer: string,
-    },
+      title: string
+      description: string
+      briefing: string
+      feedback: string
+      conclusion: string
+      pdfFeedback: string
+      trainee: string
+      trainer: string
+    }
     createPaper: {
-      title: string,
-      text: string,
-    },
+      title: string
+      text: string
+    }
     deletePaper: {
-      title: string,
-      text: string,
-    },
+      title: string
+      text: string
+    }
     briefing: {
-      toastTitle: string,
+      toastTitle: string
       toastDescription: string
     }
   }

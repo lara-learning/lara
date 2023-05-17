@@ -425,7 +425,7 @@ resources:
           IPV6Enabled: true
           Enabled: true
           Comment: Frontend
-          CustomErrorResponses: 
+          CustomErrorResponses:
             - ErrorCachingMinTTL: 0
               ErrorCode: 403
               ResponseCode: 200

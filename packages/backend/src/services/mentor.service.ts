@@ -1,8 +1,8 @@
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
-import {Mentor} from '@lara/api'
+import { Mentor } from '@lara/api'
 
-import {deleteUser} from '../repositories/user.repo'
+import { deleteUser } from '../repositories/user.repo'
 
 type GenerateMentorOptions = {
   firstName: string
@@ -19,13 +19,13 @@ type GenerateMentorOptions = {
  * @returns New Mentor
  */
 export const generateMentor = async (options: GenerateMentorOptions): Promise<Mentor> => {
-  const date = new Date();
+  const date = new Date()
 
   const mentor: Mentor = {
     id: v4(),
     createdAt: date.toISOString(),
     type: 'Mentor',
-    ...options
+    ...options,
   }
 
   await validateMentor(mentor)

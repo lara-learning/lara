@@ -1,21 +1,15 @@
 import React from 'react'
-import {useForm} from 'react-hook-form'
-import {
-  Input,
-  Text,
-  TextProps,
-  DefaultTheme,
-  Spacer, StyledSelect
-} from '@lara/components'
+import { useForm } from 'react-hook-form'
+import { Input, Text, TextProps, DefaultTheme, Spacer, StyledSelect } from '@lara/components'
 
 import strings from '../locales/localization'
-import {PrimaryButton} from './button'
-import {useValidationHelper} from '../helper/validation-helper'
-import {Trainer} from "../graphql";
-import {CreateBriefingLayout} from "@lara/components/lib/paper-form";
+import { PrimaryButton } from './button'
+import { useValidationHelper } from '../helper/validation-helper'
+import { Trainer } from '../graphql'
+import { CreateBriefingLayout } from '@lara/components/lib/paper-form'
 
 interface CreateBriefingFormProps {
-  trainer?: Trainer,
+  trainer?: Trainer
   submit: (data: CreateBriefingFormData) => Promise<void>
   blurSubmit: boolean
 }
@@ -40,18 +34,13 @@ const inputLabelProps: TextProps = {
   uppercase: true,
 }
 
-export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
- trainer,
- submit,
- blurSubmit
-}) => {
-
-  const {validateEmail} = useValidationHelper()
+export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, submit, blurSubmit }) => {
+  const { validateEmail } = useValidationHelper()
 
   const {
     register,
     handleSubmit,
-    formState: {errors}
+    formState: { errors },
   } = useForm<CreateBriefingFormData>()
 
   const onSubmit = handleSubmit((formdata) => {
@@ -69,8 +58,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
       <CreateBriefingLayout
         traineeInput={
           <>
-            <Text
-              color={getFontColor(errors.trainee)} {...inputLabelProps}>
+            <Text color={getFontColor(errors.trainee)} {...inputLabelProps}>
               {strings.paper.createBriefing.trainee}
             </Text>
             <StyledSelect
@@ -156,14 +144,12 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
         }
         startDateProjectInput={
           <>
-            <Text
-              color={getFontColor(errors.startDateProject || errors.startDateProject)} {...inputLabelProps}>
+            <Text color={getFontColor(errors.startDateProject || errors.startDateProject)} {...inputLabelProps}>
               {strings.paper.createBriefing.projectPeriod}
             </Text>
             <Input
               type="date"
-              {...register('startDateProject', {
-              })}
+              {...register('startDateProject', {})}
               block
               disabled={updating}
               error={Boolean(errors.startDateProject)}
@@ -180,8 +166,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
           <>
             <Input
               type="date"
-              {...register('endDateProject', {
-              })}
+              {...register('endDateProject', {})}
               block
               disabled={updating}
               error={Boolean(errors.endDateProject)}
@@ -191,14 +176,12 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
         }
         startDateSchoolInput={
           <>
-            <Text
-              color={getFontColor(errors.startDateSchool || errors.endDateSchool)} {...inputLabelProps}>
+            <Text color={getFontColor(errors.startDateSchool || errors.endDateSchool)} {...inputLabelProps}>
               {strings.paper.createBriefing.schoolPeriod}
             </Text>
             <Input
               type="date"
-              {...register('startDateSchool', {
-              })}
+              {...register('startDateSchool', {})}
               block
               disabled={updating}
               error={Boolean(errors.startDateSchool)}
@@ -215,8 +198,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
           <>
             <Input
               type="date"
-              {...register('endDateSchool', {
-              })}
+              {...register('endDateSchool', {})}
               block
               disabled={updating}
               error={Boolean(errors.endDateSchool)}

@@ -113,7 +113,6 @@ export const TrainerFormLayout: React.FC<TrainerFormLayoutProps> = ({
   )
 }
 
-
 type MentorFormLayoutProps = {
   firstNameInput: JSX.Element
   lastNameInput: JSX.Element

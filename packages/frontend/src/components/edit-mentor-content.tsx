@@ -1,26 +1,21 @@
-import {GraphQLError} from 'graphql'
+import { GraphQLError } from 'graphql'
 import React from 'react'
 
-import {
-  EditUserContentLayout,
-} from '@lara/components'
+import { EditUserContentLayout } from '@lara/components'
 
-import {useToastContext} from '../hooks/use-toast-context'
+import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
-import {
-  MentorForm,
-  EditMentorFormData
-} from './mentor-form'
-import {UserInfo} from './user-info'
-import {Mentor, useUpdateMentorMutation} from "../graphql";
+import { MentorForm, EditMentorFormData } from './mentor-form'
+import { UserInfo } from './user-info'
+import { Mentor, useUpdateMentorMutation } from '../graphql'
 
 interface EditMentorProps {
   mentor: Pick<Mentor, 'id' | 'firstName' | 'lastName' | 'avatar' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
 }
 
-export const EditMentor: React.FC<EditMentorProps> = ({mentor}) => {
+export const EditMentor: React.FC<EditMentorProps> = ({ mentor }) => {
   const [mutate] = useUpdateMentorMutation()
-  const {addToast} = useToastContext()
+  const { addToast } = useToastContext()
 
   const updateMentor = async (data: EditMentorFormData) => {
     await mutate({
@@ -56,7 +51,7 @@ export const EditMentor: React.FC<EditMentorProps> = ({mentor}) => {
           deleteAt={mentor.deleteAt}
         />
       }
-      form={<MentorForm blurSubmit mentor={mentor} submit={updateMentor}/>}
+      form={<MentorForm blurSubmit mentor={mentor} submit={updateMentor} />}
       relatedUsers={<></>}
     />
   )

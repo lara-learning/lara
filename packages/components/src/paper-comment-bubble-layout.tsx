@@ -33,9 +33,7 @@ interface PaperCommentBubbleLayoutProps {
 export const PaperCommentBubbleLayout: React.FC<PaperCommentBubbleLayoutProps> = ({ message }) => {
   return (
     <MessageContainer>
-      <Bubble>
-        {message}
-      </Bubble>
+      <Bubble>{message}</Bubble>
     </MessageContainer>
   )
 }

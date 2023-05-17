@@ -4,10 +4,9 @@ import { Handler } from 'aws-lambda'
 import chromium from '@sparticuz/chromium'
 import { launch, Browser, Page } from 'puppeteer-core'
 
-import {EmailPayload,
-  EmailType, PrintData, PrintPaperData, PrintPayload, PrintReportData} from '@lara/api'
+import { EmailPayload, EmailType, PrintData, PrintPaperData, PrintPayload, PrintReportData } from '@lara/api'
 
-import {createPaperPDF, createPDF} from './create-pdf'
+import { createPaperPDF, createPDF } from './create-pdf'
 import { getExport, saveAttachments } from './s3'
 
 const { IS_OFFLINE, EMAIL_FUNCTION, FRONTEND_URL } = process.env
@@ -68,15 +67,15 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
     let outputFile: Buffer | undefined
     let filename = ''
     let emailType: EmailType = 'reportExport'
-    let isPaper = false;
+    let isPaper = false
     if (isSingleExport) {
-      isPaper = data[0].filename.includes("Paper")
-      if(isPaper){
+      isPaper = data[0].filename.includes('Paper')
+      if (isPaper) {
         const [paperData] = data as PrintPaperData[]
         emailType = 'paperBriefing'
         outputFile = await createPaperPDF(paperData, userData, printTranslations, page)
         filename = paperData.filename
-      }else {
+      } else {
         const [reportData] = data as PrintReportData[]
         outputFile = await createPDF(reportData, userData, printTranslations, page)
         filename = reportData.filename
@@ -91,11 +90,11 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
     }
 
     await saveAttachments(filename, outputFile)
-    if(isPaper){
-      if(userData.type == "Trainee") {
+    if (isPaper) {
+      if (userData.type == 'Trainee') {
         const emailTraineePayload: EmailPayload = {
           emailType: emailType,
-          attachments: [{filename}],
+          attachments: [{ filename }],
           userData: {
             receiverEmail: userData.receiverEmail,
             receiverName: userData.firstName,
@@ -110,11 +109,10 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
             Payload: JSON.stringify(emailTraineePayload),
           })
           .promise()
-      }
-      if(userData.type == "Mentor") {
+      } else {
         const emailMentorPayload: EmailPayload = {
           emailType: emailType,
-          attachments: [{filename}],
+          attachments: [{ filename }],
           userData: {
             receiverEmail: userData.receiverEmail,
             receiverName: userData.firstName,

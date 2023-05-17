@@ -48,11 +48,13 @@ import { IconVaccation } from './icons/vacation'
 import { IconWork } from './icons/work'
 import { IconX } from './icons/x'
 import { IconOptions } from './icons/options'
-import { IconCheckMark } from "./icons/checkMark";
+import { IconCheckMark } from './icons/checkMark'
+import {IconBlank} from "./icons/blank";
 
 export const Icons = {
   Arrow: IconArrow,
   Archive: IconArchive,
+  Blank: IconBlank,
   Bulb: IconBulb,
   BurgerMenu: IconMenu,
   Camera: IconCamera,

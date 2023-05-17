@@ -1,18 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  Input,
-  Text,
-  TextProps,
-  DefaultTheme,
-  MentorFormLayout
-} from '@lara/components'
+import { Input, Text, TextProps, DefaultTheme, MentorFormLayout } from '@lara/components'
 
 import strings from '../locales/localization'
 import { PrimaryButton, SecondaryButton } from './button'
 import { useValidationHelper } from '../helper/validation-helper'
-import {format, parseISO} from "date-fns";
-import {Mentor} from "../graphql";
+import { format, parseISO } from 'date-fns'
+import { Mentor } from '../graphql'
 
 interface EditMentorFormProps {
   mentor?: Pick<Mentor, 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
@@ -132,10 +126,10 @@ export const MentorForm: React.FC<EditMentorFormProps> = ({ mentor, submit, blur
               defaultValue={mentor?.startDate && format(parseISO(mentor.startDate), 'yyyy-MM-dd')}
               {...(mentor?.endDate
                 ? register('startDate', {
-                  required: strings.validation.required,
-                  max: { value: mentor.endDate, message: strings.validation.dateBefore },
-                  validate: validateStartDate,
-                })
+                    required: strings.validation.required,
+                    max: { value: mentor.endDate, message: strings.validation.dateBefore },
+                    validate: validateStartDate,
+                  })
                 : register('startDate', { required: strings.validation.required, validate: validateStartDate }))}
               error={Boolean(errors.startDate)}
               onBlur={blurSubmit ? onSubmit : undefined}
@@ -156,10 +150,10 @@ export const MentorForm: React.FC<EditMentorFormProps> = ({ mentor, submit, blur
               defaultValue={mentor?.endDate && format(parseISO(mentor.endDate), 'yyyy-MM-dd')}
               {...(mentor?.startDate
                 ? register('endDate', {
-                  required: strings.validation.required,
-                  min: { value: mentor.startDate, message: strings.validation.dateAfter },
-                  validate: validateEndDate,
-                })
+                    required: strings.validation.required,
+                    min: { value: mentor.startDate, message: strings.validation.dateAfter },
+                    validate: validateEndDate,
+                  })
                 : register('endDate', { required: strings.validation.required, validate: validateEndDate }))}
               error={Boolean(errors.endDate)}
               onBlur={blurSubmit ? onSubmit : undefined}

@@ -1,10 +1,6 @@
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
-import {
-  GqlPaper, GqlPaperEntryInput,
-  GqlPaperFormData,
-  GqlPaperInput,
-} from '@lara/api'
+import { GqlPaper, GqlPaperEntryInput, GqlPaperFormData, GqlPaperInput } from '@lara/api'
 
 export const generatePaperEntry = (entryInput: GqlPaperEntryInput): GqlPaperFormData => {
   return {

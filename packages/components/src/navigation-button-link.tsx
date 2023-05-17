@@ -36,7 +36,13 @@ interface NavigationButtonLinkLayoutProps {
   to: string
 }
 
-export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({ icon, isLeft, alignLeft, label, to }) => {
+export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({
+  icon,
+  isLeft,
+  alignLeft,
+  label,
+  to,
+}) => {
   return (
     <StyledLink isLeft={isLeft} alignLeft={alignLeft} to={to}>
       {icon}

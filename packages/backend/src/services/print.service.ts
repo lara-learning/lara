@@ -4,16 +4,22 @@ import hash from 'object-hash'
 
 import {
   Day,
-  Entry, Mentor, Paper, PaperFormData, PrintBriefing,
+  Entry,
+  Paper,
+  PaperFormData,
+  PrintBriefing,
   PrintData,
   PrintDay,
-  PrintEntry, PrintPaper, PrintPaperData,
+  PrintEntry,
+  PrintPaper,
+  PrintPaperData,
   PrintPayload,
   PrintReport,
   PrintReportData,
   PrintUserData,
   Report,
   Trainee,
+  User,
 } from '@lara/api'
 
 import { invokeLambda } from '../aws/lambda'
@@ -49,18 +55,22 @@ export const createPaperPDFName = (paper: Paper): string => {
  * @param user Trainee for PDF
  * @returns Userdata
  */
-export const createPrintUserData = async (user: Trainee | Mentor): Promise<PrintUserData> => {
-  const trainerSignature = user.__typename == "Trainee" &&
-    user.trainerId && (await trainerById(user.trainerId).then((trainer) => trainer?.signature))
+export const createPrintUserData = async (user: User): Promise<PrintUserData> => {
+  const trainerSignature =
+    user.__typename == 'Trainee' &&
+    user.trainerId &&
+    (await trainerById(user.trainerId).then((trainer) => trainer?.signature))
 
   return {
     receiverEmail: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
     type: user.__typename,
-    course: user.__typename == 'Trainee' && user.course ? user.course :  '',
-    traineeSignature: user.__typename == 'Trainee' ?  user.signature && `data:image/svg+xml;base64,${user.signature}` : '',
-    trainerSignature: user.__typename == 'Trainee' && trainerSignature ? `data:image/svg+xml;base64,${trainerSignature}` : '',
+    course: user.__typename == 'Trainee' && user.course ? user.course : '',
+    traineeSignature:
+      user.__typename == 'Trainee' ? user.signature && `data:image/svg+xml;base64,${user.signature}` : '',
+    trainerSignature:
+      user.__typename == 'Trainee' && trainerSignature ? `data:image/svg+xml;base64,${trainerSignature}` : '',
   }
 }
 
@@ -111,7 +121,7 @@ const transformPaperBriefing = (paperBriefing: PaperFormData[]): PrintBriefing[]
       questionId: briefing.questionId,
       hint: briefing.hint ?? '',
       answer: briefing.answer ?? '',
-      id: briefing.id
+      id: briefing.id,
     })
   })
   return printBriefing

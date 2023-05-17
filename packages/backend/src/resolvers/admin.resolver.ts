@@ -1,46 +1,20 @@
-import {addMonths, isFuture, isToday, subWeeks} from 'date-fns'
-import {GraphQLError} from 'graphql'
+import { addMonths, isFuture, isToday, subWeeks } from 'date-fns'
+import { GraphQLError } from 'graphql'
 
-import {
-  AdminContext,
-  GqlResolvers,
-  Mentor,
-  Trainee,
-  Trainer,
-  User
-} from '@lara/api'
+import { AdminContext, GqlResolvers, Mentor, Trainee, Trainer, User } from '@lara/api'
 
-import {isAdmin, isMentor, isTrainee, isTrainer} from '../permissions'
-import {allTrainees, traineeById} from '../repositories/trainee.repo'
-import {allTrainers, trainerById} from '../repositories/trainer.repo'
-import {
-  allUsers,
-  saveUser,
-  updateUser,
-  userByEmail,
-  userById
-} from '../repositories/user.repo'
-import {sendDeletionMail} from '../services/email.service'
-import {
-  deleteTrainee,
-  generateReports,
-  generateTrainee,
-  validateTrainee
-} from '../services/trainee.service'
-import {
-  deleteTrainer,
-  generateTrainer,
-  validateTrainer
-} from '../services/trainer.service'
-import {avatar, username} from '../services/user.service'
-import {parseISODateString} from '../utils/date'
-import {t} from '../i18n'
-import {
-  deleteMentor,
-  generateMentor,
-  validateMentor
-} from "../services/mentor.service";
-import {allMentors, mentorById} from "../repositories/mentor.repo";
+import { isAdmin, isMentor, isTrainee, isTrainer } from '../permissions'
+import { allTrainees, traineeById } from '../repositories/trainee.repo'
+import { allTrainers, trainerById } from '../repositories/trainer.repo'
+import { allUsers, saveUser, updateUser, userByEmail, userById } from '../repositories/user.repo'
+import { sendDeletionMail } from '../services/email.service'
+import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
+import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
+import { avatar, username } from '../services/user.service'
+import { parseISODateString } from '../utils/date'
+import { t } from '../i18n'
+import { deleteMentor, generateMentor, validateMentor } from '../services/mentor.service'
+import { allMentors, mentorById } from '../repositories/mentor.repo'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {
@@ -156,9 +130,8 @@ export const trainerAdminResolver: GqlResolvers<AdminContext> = {
       return saveUser(updatedTrainer)
     },
     getUserByEmail: async (_parent, { email }) => {
-      return userByEmail(email);
-
-    }
+      return userByEmail(email)
+    },
   },
 }
 export const mentorAdminResolver: GqlResolvers<AdminContext> = {

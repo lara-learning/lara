@@ -1,13 +1,9 @@
 import { useState } from 'react'
 
-import {
-  Report,
-  usePrintDataLazyQuery,
-  usePrintPaperDataLazyQuery
-} from '../graphql'
+import { Report, usePrintDataLazyQuery, usePrintPaperDataLazyQuery } from '../graphql'
 import strings from '../locales/localization'
 import { useToastContext } from './use-toast-context'
-import {Paper} from "@lara/api";
+import { Paper } from '@lara/api'
 
 type UseFetchPdfPayload = [(reports: Pick<Report, 'id'>[]) => void, boolean]
 type UseFetchPaperPdfPayload = [(paper: Pick<Paper, 'id'>) => void, boolean]
@@ -51,10 +47,9 @@ export const useFetchPaperPdf = (): UseFetchPaperPdfPayload => {
   return [
     (paper) => {
       setLoading(true)
-      fetchPrintPaperData({ variables: { ids: [paper.id]} }).catch((error) => {
+      fetchPrintPaperData({ variables: { ids: [paper.id] } }).catch((error) => {
         console.log(error)
-        }
-      )
+      })
     },
     loading,
   ]

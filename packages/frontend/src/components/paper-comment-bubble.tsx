@@ -7,11 +7,7 @@ interface CommentBubbleProps {
 }
 
 const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({ message }) => {
-  return (
-    <PaperCommentBubbleLayout
-      message={message}
-    ></PaperCommentBubbleLayout>
-  )
+  return <PaperCommentBubbleLayout message={message}></PaperCommentBubbleLayout>
 }
 
 export default CommentBubble
