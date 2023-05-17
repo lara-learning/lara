@@ -2,9 +2,9 @@ import React from 'react'
 
 import { StyledEntryContainer, StyledInputTextArea, StyledTextTimeInputWrapper } from '@lara/components'
 
-import {PaperFormData} from '../graphql'
+import { PaperFormData } from '../graphql'
 import strings from '../locales/localization'
-import {useFocusState} from "../hooks/use-focus-state";
+import { useFocusState } from '../hooks/use-focus-state'
 
 interface PaperTextInputProps {
   onSave: (paperInput: PaperFormData) => any
@@ -15,7 +15,14 @@ interface PaperTextInputProps {
   autoFocus?: boolean
 }
 
-const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDelete, onSave, clearOnSave, autoFocus }) => {
+const PaperTextInput: React.FC<PaperTextInputProps> = ({
+  entry,
+  disabled,
+  onDelete,
+  onSave,
+  clearOnSave,
+  autoFocus,
+}) => {
   const textInput = React.useRef<HTMLTextAreaElement>(null)
   const textInputFocus = useFocusState(textInput)
 
@@ -25,12 +32,8 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
     }
     if (event.key === 'Enter') {
       textInput.current?.blur()
-    }
-    else if(event.key === 'Backspace' &&
-      onDelete &&
-      textInput.current?.value === ''
-    ) {
-        onDelete()
+    } else if (event.key === 'Backspace' && onDelete && textInput.current?.value === '') {
+      onDelete()
     }
   }
 
@@ -40,10 +43,7 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({ entry, disabled, onDele
         return
       }
 
-      if (
-        textInput.current.value !== '' &&
-        document.activeElement !== textInput.current
-      ) {
+      if (textInput.current.value !== '' && document.activeElement !== textInput.current) {
         submit()
 
         if (clearOnSave) {

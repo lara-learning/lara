@@ -21,7 +21,7 @@ import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
 import { avatar, username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
-import {papersByTrainee} from "../repositories/paper.repo";
+import { papersByTrainee } from '../repositories/paper.repo'
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
   Trainee: {

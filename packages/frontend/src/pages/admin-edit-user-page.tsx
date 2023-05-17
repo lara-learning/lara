@@ -14,7 +14,7 @@ import { Template } from '../templates/template'
 import { Box, Flex } from '@rebass/grid'
 import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
-import {EditMentor} from "../components/edit-mentor-content";
+import { EditMentor } from '../components/edit-mentor-content'
 
 type AdminEditUserPageParams = {
   id: string

@@ -8,14 +8,11 @@ import { Fab } from '../components/fab'
 import Loader from '../components/loader'
 import Modal from '../components/modal'
 
-import {
-  useAdminMentorPageQuery,
-  useCreateMentorMutation
-} from '../graphql'
+import { useAdminMentorPageQuery, useCreateMentorMutation } from '../graphql'
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
-import {EditMentorFormData, MentorForm} from "../components/mentor-form";
+import { EditMentorFormData, MentorForm } from '../components/mentor-form'
 
 export const AdminMentorPage: React.FC = () => {
   const { loading, data } = useAdminMentorPageQuery()

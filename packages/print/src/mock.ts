@@ -1,8 +1,8 @@
 import http, { RequestListener } from 'http'
 
-import {PrintData, PrintPaperData} from '@lara/api'
+import { PrintData, PrintPaperData } from '@lara/api'
 
-import {createPaperPage} from './create-pdf'
+import { createPaperPage } from './create-pdf'
 
 export const DUMMY_DATA: PrintData = {
   data: [
@@ -124,7 +124,7 @@ export const DUMMY_DATA: PrintData = {
     mentor: 'Ausbildungsbeauftragter',
     trainer: 'Ausbilder',
     trainee: 'Auszubildender',
-    briefing: 'Briefing'
+    briefing: 'Briefing',
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',
@@ -152,7 +152,7 @@ export const DUMMY_DATA: PrintData = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       handOver: 'Ein Bericht wurde übergeben',
       alexa: 'Lara wurde mit Amazon Alexa verknüpft!',
-      paperBriefing: 'Paper Briefing'
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
@@ -169,7 +169,8 @@ export const DUMMY_DATA: PrintData = {
       handOver: 'dein Azubi {{ trainee }} hat KW {{ week }} seines Berichtsheft zur Überprüfung abgegeben.',
       alexa:
         'Dein Lara Account wurde mit deinem Amazon Alexa Account verknüpft. Sollte dies ein Fehler sein bitte öffne deine Lara Einstellungen und löse die Verknüpfung wieder auf. Außerdem solltest du dein Passwort ändern.',
-      paperBriefing: 'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation von Anna. Wir wünschen dir ganz viel Spaß damit.'
+      paperBriefing:
+        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation von Anna. Wir wünschen dir ganz viel Spaß damit.',
     },
     link: {
       archive: 'Zum Archive',
@@ -186,79 +187,79 @@ export const DUMMY_PAPER_DATA: PrintData = {
     {
       filename: 'paperBriefingFile.pdf',
       paper: {
-          status: 'InProgress',
-          briefing: [
-            {
-              id: '1',
-              questionId: '1',
-              answer: 'Test Antwort',
-              question: 'Gegenstand der Arbeit',
-              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
-            },
-            {
-              id: '2',
-              questionId: '1',
-              answer: 'Test Antwort',
-              question: 'Gegenstand der Arbeit',
-              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
-            },
-            {
-              id: '3',
-              questionId: '1',
-              answer: 'Test Antwort',
-              question: 'Gegenstand der Arbeit',
-              hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.'
-            },
-            {
-              id: '1',
-              questionId: '2',
-              answer: 'Test Antwort',
-              question: 'Vorgehen',
-              hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.'
-            },
-            {
-              id: '2',
-              questionId: '2',
-              answer: 'Test Antwort',
-              question: 'Vorgehen',
-              hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.'
-            },
-            {
-              id: '1',
-              questionId: '3',
-              answer: 'Test Antwort',
-              question: 'Lerninhalte Station',
-              hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.'
-            },
-            {
-              id: '1',
-              questionId: '4',
-              answer: 'Test Antwort',
-              question: 'Rahmenplan Lerninhalte',
-              hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.'
-            },
-            {
-              id: '2',
-              questionId: '4',
-              answer: 'Test Antwort',
-              question: 'Rahmenplan Lerninhalte',
-              hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.'
-            },
-            {
-              id: '3',
-              questionId: '4',
-              answer: 'Test Antwort',
-              question: 'Test Frage',
-              hint: 'Test Hinweis'
-            },
-          ],
-          client: 'Kunde',
-          periodStart: '2022-08-07T05:14:28.000Z',
-          periodEnd: '2025-08-07T05:14:28.000Z',
-          schoolPeriodStart: '2022-08-07T05:14:28.000Z',
-          schoolPeriodEnd: '2025-08-07T05:14:28.000Z',
-          subject: 'Entwicklung',
-        },
+        status: 'InProgress',
+        briefing: [
+          {
+            id: '1',
+            questionId: '1',
+            answer: 'Test Antwort',
+            question: 'Gegenstand der Arbeit',
+            hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.',
+          },
+          {
+            id: '2',
+            questionId: '1',
+            answer: 'Test Antwort',
+            question: 'Gegenstand der Arbeit',
+            hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.',
+          },
+          {
+            id: '3',
+            questionId: '1',
+            answer: 'Test Antwort',
+            question: 'Gegenstand der Arbeit',
+            hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.',
+          },
+          {
+            id: '1',
+            questionId: '2',
+            answer: 'Test Antwort',
+            question: 'Vorgehen',
+            hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
+          },
+          {
+            id: '2',
+            questionId: '2',
+            answer: 'Test Antwort',
+            question: 'Vorgehen',
+            hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
+          },
+          {
+            id: '1',
+            questionId: '3',
+            answer: 'Test Antwort',
+            question: 'Lerninhalte Station',
+            hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.',
+          },
+          {
+            id: '1',
+            questionId: '4',
+            answer: 'Test Antwort',
+            question: 'Rahmenplan Lerninhalte',
+            hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
+          },
+          {
+            id: '2',
+            questionId: '4',
+            answer: 'Test Antwort',
+            question: 'Rahmenplan Lerninhalte',
+            hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
+          },
+          {
+            id: '3',
+            questionId: '4',
+            answer: 'Test Antwort',
+            question: 'Test Frage',
+            hint: 'Test Hinweis',
+          },
+        ],
+        client: 'Kunde',
+        periodStart: '2022-08-07T05:14:28.000Z',
+        periodEnd: '2025-08-07T05:14:28.000Z',
+        schoolPeriodStart: '2022-08-07T05:14:28.000Z',
+        schoolPeriodEnd: '2025-08-07T05:14:28.000Z',
+        subject: 'Entwicklung',
+      },
     },
   ],
   userData: {
@@ -295,7 +296,7 @@ export const DUMMY_PAPER_DATA: PrintData = {
     mentor: 'Ausbildungsbeauftragter',
     trainer: 'Ausbilder',
     trainee: 'Auszubildender',
-    briefing: 'Briefing'
+    briefing: 'Briefing',
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',
@@ -312,7 +313,7 @@ export const DUMMY_PAPER_DATA: PrintData = {
       reportInReview: 'Ein Bericht wurde abgegeben',
       alexa: 'Deine Accounts wurden verknüpft',
       paperBriefing: 'Dein Paper Briefing',
-      paperBriefingMail: 'Dein Paper Briefing'
+      paperBriefingMail: 'Dein Paper Briefing',
     },
     headline: {
       export: 'Dein Lara-Export!',
@@ -323,7 +324,7 @@ export const DUMMY_PAPER_DATA: PrintData = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       handOver: 'Ein Bericht wurde übergeben',
       alexa: 'Lara wurde mit Amazon Alexa verknüpft!',
-      paperBriefing: 'Paper Briefing'
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
@@ -340,7 +341,8 @@ export const DUMMY_PAPER_DATA: PrintData = {
       handOver: 'dein Azubi {{ trainee }} hat KW {{ week }} seines Berichtsheft zur Überprüfung abgegeben.',
       alexa:
         'Dein Lara Account wurde mit deinem Amazon Alexa Account verknüpft. Sollte dies ein Fehler sein bitte öffne deine Lara Einstellungen und löse die Verknüpfung wieder auf. Außerdem solltest du dein Passwort ändern.',
-      paperBriefing: 'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation von Anna. Wir wünschen dir ganz viel Spaß damit.'
+      paperBriefing:
+        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation von Anna. Wir wünschen dir ganz viel Spaß damit.',
     },
     link: {
       archive: 'Zum Archive',

@@ -1,17 +1,9 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import {
-  lightTheme, StyledPrintPaperEntry,
-  StyledPrintPaperSubHeadline,
-  ThemeProvider
-} from '@lara/components'
+import { lightTheme, StyledPrintPaperEntry, StyledPrintPaperSubHeadline, ThemeProvider } from '@lara/components'
 
-import {
-  PrintUserData,
-  PrintReport,
-  PrintTranslations, PrintBriefing, PrintPaper,
-} from '@lara/api'
+import { PrintUserData, PrintReport, PrintTranslations, PrintBriefing, PrintPaper } from '@lara/api'
 import {
   Spacings,
   StyledPrintDay,
@@ -62,7 +54,6 @@ type PaperTemplateProps = {
   i18n: PrintTranslations
   paper: PrintPaper
 }
-
 
 export const Template: React.FC<TemplateProps> = ({
   userData: { traineeSignature, trainerSignature, firstName, lastName, course },
@@ -182,33 +173,33 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
           <StyledPrintUserInfoRowHeadline> {i18n.department}: </StyledPrintUserInfoRowHeadline>
           {paper.subject}
         </StyledPrintUserInfoRow>
-        {paper.periodStart ?
+        {paper.periodStart ? (
           <StyledPrintUserInfoRow>
             <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
             {paper.periodStart + ' -' + paper.periodEnd}
           </StyledPrintUserInfoRow>
-        : null}
+        ) : null}
         <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.client}: </StyledPrintUserInfoRowHeadline>
           {paper.client}
         </StyledPrintUserInfoRow>
-        {paper.schoolPeriodStart ?
+        {paper.schoolPeriodStart ? (
           <StyledPrintUserInfoRow>
             <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
             {paper.schoolPeriodStart + ' -' + paper.schoolPeriodEnd}
           </StyledPrintUserInfoRow>
-          : null}
+        ) : null}
       </StyledPrintUserInfo>
       <div>
         {paper.briefing.map((briefing: PrintBriefing, index, array) => {
           return (
             <StyledPrintDay key={briefing.questionId}>
-              {index == 0 || array[index].questionId !== array[index-1].questionId ?
+              {index == 0 || array[index].questionId !== array[index - 1].questionId ? (
                 <>
                   <StyledPrintHeadline>{briefing.question}</StyledPrintHeadline>
                   <StyledPrintPaperSubHeadline>{briefing.hint}</StyledPrintPaperSubHeadline>
                 </>
-                : null}
+              ) : null}
               <StyledPrintPaperEntry>{briefing.answer}</StyledPrintPaperEntry>
             </StyledPrintDay>
           )

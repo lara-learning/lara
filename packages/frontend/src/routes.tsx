@@ -22,13 +22,13 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
-import {TrainerPaperPage} from "./pages/trainer-paper-page";
+import { TrainerPaperPage } from './pages/trainer-paper-page'
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
-import {PaperCreateBriefingPage} from "./pages/paper-create-briefing-page";
-import {PaperBriefingPage} from "./pages/paper-briefing-page";
-import {TraineePaperPage} from "./pages/trainee-paper-page";
-import {MentorPaperPage} from "./pages/mentor-paper-page";
+import { PaperCreateBriefingPage } from './pages/paper-create-briefing-page'
+import { PaperBriefingPage } from './pages/paper-briefing-page'
+import { TraineePaperPage } from './pages/trainee-paper-page'
+import { MentorPaperPage } from './pages/mentor-paper-page'
 
 type RoutesProps = {
   currentUser?:

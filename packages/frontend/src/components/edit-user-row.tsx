@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import { EditUserRowLayout } from '@lara/components'
 
-import {Mentor, Trainee, Trainer} from '../graphql'
+import { Mentor, Trainee, Trainer } from '../graphql'
 import strings from '../locales/localization'
 import { SecondaryButton } from './button'
 import { UserInfo } from './user-info'

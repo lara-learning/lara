@@ -1,4 +1,4 @@
-import {Mentor} from '@lara/api'
+import { Mentor } from '@lara/api'
 
 import { queryObjects, userTableName, userTypeIndex } from '../db'
 import { userById } from './user.repo'

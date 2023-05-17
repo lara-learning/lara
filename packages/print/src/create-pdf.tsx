@@ -3,14 +3,9 @@ import React from 'react'
 import ReactServerDOM from 'react-dom/server'
 import { ServerStyleSheet } from 'styled-components'
 
-import {
-  PrintPaperData,
-  PrintReportData,
-  PrintTranslations,
-  PrintUserData
-} from '@lara/api'
+import { PrintPaperData, PrintReportData, PrintTranslations, PrintUserData } from '@lara/api'
 
-import {PaperTemplate, Template} from './template'
+import { PaperTemplate, Template } from './template'
 
 export const renderComponent = (component: JSX.Element, styleSheet?: ServerStyleSheet): string => {
   let element = component

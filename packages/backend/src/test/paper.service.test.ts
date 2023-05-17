@@ -1,8 +1,8 @@
-import {GqlPaper, GqlPaperInput} from '@lara/api'
+import { GqlPaper, GqlPaperInput } from '@lara/api'
 import { generateTrainee } from '../services/trainee.service'
-import {generatePaper} from "../services/paper.service";
-import {generateMentor} from "../services/mentor.service";
-import {generateTrainer} from "../services/trainer.service";
+import { generatePaper } from '../services/paper.service'
+import { generateMentor } from '../services/mentor.service'
+import { generateTrainer } from '../services/trainer.service'
 
 describe('createPaperData', () => {
   let paperInput: GqlPaperInput
@@ -29,24 +29,24 @@ describe('createPaperData', () => {
       endDate: '2023-07-31T22:00:00.000Z',
     })
 
-     paperInput = {
-        traineeId: trainee.id,
-        trainerId: trainer.id,
-        client: "TestClient",
-        mentorId: mentor.id,
-        periodStart: "2022-08-07T05:14:28.000Z",
-        periodEnd: "2025-08-07T05:14:28.000Z",
-        subject: "Test Subject",
-        status: "InProgress",
-        briefing: [
+    paperInput = {
+      traineeId: trainee.id,
+      trainerId: trainer.id,
+      client: 'TestClient',
+      mentorId: mentor.id,
+      periodStart: '2022-08-07T05:14:28.000Z',
+      periodEnd: '2025-08-07T05:14:28.000Z',
+      subject: 'Test Subject',
+      status: 'InProgress',
+      briefing: [
         {
-          id: "1",
-          questionId: "1",
-          answer: "TestAnswer",
-          question: "TestQuestion",
-          hint: "TestHint"
-        }
-      ]
+          id: '1',
+          questionId: '1',
+          answer: 'TestAnswer',
+          question: 'TestQuestion',
+          hint: 'TestHint',
+        },
+      ],
     }
 
     paper = generatePaper(paperInput)

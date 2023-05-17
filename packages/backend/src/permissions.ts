@@ -1,14 +1,6 @@
 import { and, or, rule, shield } from 'graphql-shield'
 
-import {
-  Admin,
-  AuthenticatedContext,
-  Context,
-  Mentor,
-  Trainee,
-  Trainer,
-  User
-} from '@lara/api'
+import { Admin, AuthenticatedContext, Context, Mentor, Trainee, Trainer, User } from '@lara/api'
 
 const { DEBUG } = process.env
 

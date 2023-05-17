@@ -23,7 +23,7 @@ export const generateTrainer = async (options: GenerateTrainerOptions): Promise<
     id: v4(),
     createdAt: new Date().toISOString(),
     type: 'Trainer',
-    ...options
+    ...options,
   }
 
   await validateTrainer(trainer)

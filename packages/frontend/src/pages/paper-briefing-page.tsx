@@ -1,32 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
-import {
-  H2,
-  PaperLayout, Paragraph, Spacer,
-} from '@lara/components'
+import { H2, PaperLayout, Paragraph, Spacer } from '@lara/components'
 
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
-import PaperAccordion from "../components/paper-accordion";
-import {PrimaryButton, SecondaryButton} from "../components/button";
-import {RouteComponentProps, useParams} from "react-router";
-import {
-  PaperFormData,
-  PaperStatus, Trainer,
-  useTrainerPaperPageDataQuery, useUpdatePaperMutation
-} from "../graphql";
-import Modal from "../components/modal";
-import {Box, Flex} from "@rebass/grid";
-import PaperModal from "../assets/illustrations/paper-modal-illustraion";
-import {useFetchPaperPdf} from "../hooks/use-fetch-pdf";
-import {useToastContext} from "../hooks/use-toast-context";
+import PaperAccordion from '../components/paper-accordion'
+import { PrimaryButton, SecondaryButton } from '../components/button'
+import { RouteComponentProps, useParams } from 'react-router'
+import { PaperFormData, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
+import Modal from '../components/modal'
+import { Box, Flex } from '@rebass/grid'
+import PaperModal from '../assets/illustrations/paper-modal-illustraion'
+import { useFetchPaperPdf } from '../hooks/use-fetch-pdf'
+import { useToastContext } from '../hooks/use-toast-context'
 interface PaperBriefingParams {
   paperId: string
 }
 type Question = { question: string; hint: string }
 
 const briefingQuestions = (): Question[] => {
-  const questions  = strings.paper.briefingQuestions
+  const questions = strings.paper.briefingQuestions
 
   return [
     questions.objectOfTheWork,
@@ -41,9 +34,8 @@ const briefingQuestions = (): Question[] => {
   ]
 }
 
-
 export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<PaperBriefingParams>> = ({ history }) => {
-  const { paperId} = useParams<PaperBriefingParams>()
+  const { paperId } = useParams<PaperBriefingParams>()
   const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
   const [fetchPdf, loading] = useFetchPaperPdf()
@@ -51,27 +43,25 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
   const QAs = briefingQuestions()
   const [filteredQAs] = useState(QAs)
   const [showHandoverModal, setShowHandoverModal] = React.useState(false)
+  const [showBackToPaperModal, setShowBackToPaperModal] = React.useState(false)
 
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
+  const toggleBackToPaperModal = () => setShowBackToPaperModal(!showBackToPaperModal)
   const trainerPaperPageData = useTrainerPaperPageDataQuery()
   const [updatePaperMutation] = useUpdatePaperMutation()
-  const {addToast} = useToastContext()
-
+  const { addToast } = useToastContext()
 
   const currentUser = trainerPaperPageData?.data?.currentUser as Trainer
 
-  const paper = currentUser?.papers?.find(paper => paper?.id == paperId)
+  const paper = currentUser?.papers?.find((paper) => paper?.id == paperId)
   useEffect(() => {
-    if(paperBriefingInput) {
+    if (paperBriefingInput) {
       setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
     }
-  },[paperBriefingInput])
+  }, [paperBriefingInput])
 
   if (!currentUser) {
     return null
-  }
-  const handleAbort = () => {
-    history.push('/paper')
   }
   const updatePaper = async (paperBriefing: PaperFormData[]) => {
     await updatePaperMutation({
@@ -88,40 +78,46 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
           status: PaperStatus.InProgress,
           subject: paper?.subject ?? '',
           traineeId: paper?.traineeId ?? '',
-          trainerId: currentUser.id
+          trainerId: currentUser.id,
         },
       },
-    }).then((result) => {
-      const updatedPaper = result?.data?.updatePaper
-      if(updatedPaper) {
-        fetchPdf(updatedPaper)
-      }
-    }).finally(() => {
-      addToast({
-        icon: 'Export',
-        title: strings.paper.briefing.toastTitle,
-        text: strings.paper.briefing.toastDescription,
-        type: 'success',
-      })
-      //TODO
-        //history.push("/paper")
     })
-}
+      .then((result) => {
+        const updatedPaper = result?.data?.updatePaper
+        if (updatedPaper) {
+          fetchPdf(updatedPaper)
+        }
+      })
+      .finally(() => {
+        addToast({
+          icon: 'Export',
+          title: strings.paper.briefing.toastTitle,
+          text: strings.paper.briefing.toastDescription,
+          type: 'success',
+        })
+        toggleBackToPaperModal()
+      })
+  }
 
   return (
     <Template type="Main">
       <PaperLayout>
         <div>
-          {filteredQAs.map(({ question: q, hint: h}, index) => (
-            <PaperAccordion setPaperBriefingInput={setPaperBriefingInput} setPaperBriefing={setPaperBriefing} completedInput={paperBriefing} paperInput={{id: Date.now().toString(), question: q, questionId: index.toString(), hint: h, answer:''}} forceActive={filteredQAs.length === 1} key={q} title={q}>
+          {filteredQAs.map(({ question: q, hint: h }, index) => (
+            <PaperAccordion
+              setPaperBriefingInput={setPaperBriefingInput}
+              setPaperBriefing={setPaperBriefing}
+              completedInput={paperBriefing}
+              paperInput={{ id: Date.now().toString(), question: q, questionId: index.toString(), hint: h, answer: '' }}
+              forceActive={filteredQAs.length === 1}
+              key={q}
+              title={q}
+            >
               {h}
             </PaperAccordion>
           ))}
         </div>
-        <Flex flexDirection={"row"} justifyContent={'space-between'}>
-          <SecondaryButton type="reset" onClick={() => handleAbort}>
-            {strings.back}
-          </SecondaryButton>
+        <Flex flexDirection={'row'} justifyContent={'space-between'}>
           <Spacer left="xxxl">
             <PrimaryButton type="submit" onClick={toggleHandoverModal}>
               {strings.continue}
@@ -129,9 +125,9 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
           </Spacer>
         </Flex>
         <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
-          <Flex flexDirection={"row"} alignItems={"center"}>
+          <Flex flexDirection={'row'} alignItems={'center'}>
             <Box width={1 / 3}>
-            <PaperModal/>
+              <PaperModal />
             </Box>
             <Box width={2 / 3}>
               <H2>{strings.paper.modal.title}</H2>
@@ -143,9 +139,34 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
                   </SecondaryButton>
                 </Box>
                 <Box pl={'2'} width={1 / 2}>
-                  <PrimaryButton icon={loading ? 'Loader' : 'ChevronRight'} disabled={loading}
-                                 fullsize onClick={() => updatePaper(paperBriefing)}>
+                  <PrimaryButton
+                    fullsize
+                    onClick={() => updatePaper(paperBriefing)}
+                  >
                     {strings.paper.modal.createBriefing}
+                  </PrimaryButton>
+                </Box>
+              </Flex>
+            </Box>
+          </Flex>
+        </Modal>
+        <Modal show={showBackToPaperModal} customClose handleClose={toggleBackToPaperModal}>
+          <Flex flexDirection={'row'} alignItems={'center'}>
+            <Box width={1 / 3}>
+              <PaperModal />
+            </Box>
+            <Box width={2 / 3}>
+              <H2>{strings.paper.modal.backToPaperTitle}</H2>
+              <Paragraph>{strings.paper.modal.backToPaperDescription}</Paragraph>
+              <Flex my={'2'} justifyContent={"end"}>
+                <Box pl={'2'}>
+                  <PrimaryButton
+                    icon={loading ? 'Loader' : 'Blank'}
+                    fullsize
+                    disabled={loading}
+                    onClick={() => history.push("/paper")}
+                  >
+                    {strings.paper.modal.backToPaperButton}
                   </PrimaryButton>
                 </Box>
               </Flex>
