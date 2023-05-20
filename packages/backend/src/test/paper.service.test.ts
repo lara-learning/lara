@@ -56,7 +56,7 @@ describe('createPaperData', () => {
     expect(paperInput.status).toBe(paper.status)
   })
 
-  it('returns correct paper status', () => {
+  it('returns true when the paper has been created by checking if paperId has been created', () => {
     expect(paper.id).toBeTruthy()
   })
 

@@ -101,6 +101,10 @@ export default interface Translation {
       backToPaperTitle: string
       backToPaperDescription: string
       backToPaperButton: string
+      deletePaperTitle: string
+      deletePaperDescription: string
+      deletePaperButtonAgree: string
+      deletePaperButtonDisagree: string
     }
     dashboard: {
       title: string
@@ -111,6 +115,7 @@ export default interface Translation {
       pdfFeedback: string
       trainee: string
       trainer: string
+      editPaper: string
     }
     createPaper: {
       title: string

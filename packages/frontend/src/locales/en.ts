@@ -42,97 +42,100 @@ const englishTranslation: Translation = {
   },
   paper: {
     empty: {
-      headline: 'Briefing/Kick-Off Gespräch',
+      headline: 'Briefing/Kick-Off Meeting',
       description:
-        'Dein Azubi kommt auf eine neue Station und es steht das Kick-Off Gespräch an? Hier kannst du das Briefing für die Station ausfüllen und vorbereiten. Damit kannst du einene Rahmen über den Umfang und die Themen der Ausbildungssation deines Azubis festlegen.',
-      createBriefing: 'Briefing erstellen',
+        "Your apprentice is coming to a new station, and it iss time for the kick-off meeting? Here you can fill out and prepare the briefing for the station. This way, you can set a framework for the scope and topics of your apprentice's training station.",
+      createBriefing: 'Create briefing',
     },
     createBriefing: {
       title: 'Briefing',
-      firstnameMentor: 'Vorname des Ausbildungsbeauftragten',
-      lastnameMentor: 'Nachname des Ausbildungsbeauftragten',
-      emailMentor: 'Email des Ausbildungsbeauftragten',
-      trainee: 'Auszubildender',
-      department: 'Abteilung',
-      customer: 'Kunde',
-      projectPeriod: 'Stations Zeitraum',
-      schoolPeriod: 'Schulzeitraum',
+      firstnameMentor: "Mentor's First Name",
+      lastnameMentor: "Mentor's Last Name",
+      emailMentor: "Mentor's Email",
+      trainee: 'Trainee',
+      department: 'Department',
+      customer: 'Customer',
+      projectPeriod: 'Station Period',
+      schoolPeriod: 'School Period',
     },
     briefingQuestions: {
       objectOfTheWork: {
-        question: 'Gegenstand der Arbeit',
-        hint: 'Nenne hier bitte die allgemeine Tätigkeit/Aufgabe, die Inhalt der Projektstation ist.',
+        question: 'Object of the Work',
+        hint: 'Please specify the general activity/task that is the subject of the project station.',
       },
       procedure: {
-        question: 'Vorgehen',
-        hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
+        question: 'Procedure',
+        hint: 'Please specify the framework conditions under which the project station should be set up for the apprentice.',
       },
       learningContent: {
-        question: 'Lerninhalte Station',
-        hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.',
+        question: 'Learning Content Station',
+        hint: 'Please specify the general content that the apprentice should be taught during the project period.',
       },
       frameworkPlan: {
-        question: 'Rahmenplan Lerninhalte',
-        hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
+        question: 'Framework Plan Learning Content',
+        hint: 'Add additional points from the framework plan here (if desired) that you consider particularly important to mention in the briefing.',
       },
       tasksAndDutiesTrainee: {
-        question: 'Aufgaben und Pflichten des Azubis',
-        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten dein Azubi zu erfüllen hat. ',
+        question: 'Tasks and Duties of the Trainee',
+        hint: 'Please specify (if desired) the tasks and duties that your apprentice has to fulfill.',
       },
       tasksAndDutiesMentor: {
-        question: 'Aufgaben und Pflichten des Ausbildungsbeauftragten',
-        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten der Ausbildungsbeauftragte zu erfüllen hat.',
+        question: 'Tasks and Duties of the Mentor',
+        hint: 'Please specify (if desired) the tasks and duties that the mentor has to fulfill.',
       },
       primeBlueAntMyTe: {
         question: 'Prime / BlueAnt',
-        hint: 'Fasse hier kurz zusammen auf welchen Posten der Azubi seine Stunden/Aufwände buchen kann/soll.',
+        hint: 'Briefly summarize the positions where the apprentice can/should book hours/efforts.',
       },
       feedback: {
         question: 'Feedback',
-        hint: 'Hier ist im Briefing einmal kurz zusammenefasst, was unter Feedback zu verstehen ist. Du kannst den Vorlagen Text bei Bedarf natürlich noch ergänzen.',
+        hint: 'Here is a brief summary of what is understood by feedback in the briefing. You can supplement the template text as needed.',
       },
       otherRemarks: {
-        question: 'Sonstige Anmerkungen',
-        hint: 'Falls du noch zusätzliche Punkte hast, welche ins Breifing aufgenommen werden sollen, kannst du diese hier festhalten.',
+        question: 'Other Remarks',
+        hint: 'If you have any additional points to be included in the briefing, you can note them here.',
       },
     },
     modal: {
-      title: 'Bist du sicher, dass du das Briefing beenden möchtest?',
+      title: 'Are you sure you want to finish the briefing?',
       description:
-        '' +
-        'Wenn du auf “Briefing erstellen” drückst, kannst du das Briefing nicht mehr bearbeiten. Das Briefing wird daraufhin als PDF an deinen Azubi und den Ausbildungsbeauftragten per E-Mail gesendet.\n' +
-        '\n' +
-        'Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.',
-      createBriefing: 'Briefing erstellen',
-      backToPaperTitle: "Briefing wird exportiert",
-      backToPaperDescription: "Das Lara Paper Briefing wird exportiert und anschließend als E-Mail an alle Teilnehmer verschickt. Es kann sein, dass du später Lara neuladen musst, um das neue rstellte Paper sehen zu können. \n" +
-        "Hab jetzt etwas Geduld während das Briefing exportiert wird.",
-      backToPaperButton: "Züruck zur Paper Übersicht"
+        'Once you click "Create briefing," you won\'t be able to edit the briefing anymore. The briefing will be sent as a PDF to your apprentice and the training officer via email.\n\nYou can choose to save the briefing instead, so you can edit it later.',
+      createBriefing: 'Create briefing',
+      backToPaperTitle: 'Briefing is being exported',
+      backToPaperDescription:
+        'The Lara Paper briefing is being exported and will be sent as an email to all participants. You may need to reload Lara later to see the newly created paper.\n' +
+        'Please be patient while the briefing is being exported.',
+      backToPaperButton: 'Back to Paper Overview',
+      deletePaperTitle: 'Paper löschen für {0}',
+      deletePaperDescription: 'Bist du sicher, dass du das Paper für den Kunden {1} löschen willst?',
+      deletePaperButtonAgree: 'bestätigen',
+      deletePaperButtonDisagree: 'abbrechen',
     },
     dashboard: {
       title: 'Station',
-      description:
-        'Für die Station auf dem Jungheinrich Profishop Projekt von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
+      description: "It's time for the feedback meeting for your apprentice's station. You can start it here.",
       briefing: 'Briefing',
-      feedback: 'Stationsfeedback',
-      conclusion: 'Fazit',
-      pdfFeedback: 'PDF Stationsfeedback',
-      trainee: 'Auszubildender',
-      trainer: 'Ausbilder',
+      feedback: 'Station Feedback',
+      conclusion: 'Conclusion',
+      pdfFeedback: 'PDF Station Feedback',
+      trainee: 'Trainee',
+      trainer: 'Trainer',
+      editPaper: 'Edit Paper',
     },
     createPaper: {
-      title: 'Briefing erstellt',
-      text: 'Das Briefing wurde erstellt',
+      title: 'Briefing Created',
+      text: 'The briefing has been created',
     },
     deletePaper: {
-      title: 'Paper gelöscht',
-      text: 'Das Lara Paper wurde gelöscht',
+      title: 'Paper Deleted',
+      text: 'The Lara Paper has been deleted',
     },
     briefing: {
-      toastTitle: 'Lara Paper Briefing wird erstellt',
-      toastDescription: 'Das Briefing wird jetzt erstellt und wird den Teilnehmern per Mail als PDF verschickt',
+      toastTitle: 'Creating Lara Paper briefing',
+      toastDescription: 'The briefing is being created now and will be sent to the participants as a PDF via email',
     },
   },
+
   archivePage: {
     header: 'Archive',
     tableHead: {

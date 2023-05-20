@@ -34,36 +34,50 @@ export const MentorPaperPage: React.FC = () => {
                   <Flex alignItems={'flex-start'} flexDirection={'row'}>
                     <Box width={[3, 5 / 5]}>
                       <Flex alignItems={'center'} flexDirection={'column'}>
-                        <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client}</H1>
+                        <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                         <Spacer bottom="xl">
                           <Paragraph center>{strings.paper.dashboard.description}</Paragraph>
                         </Spacer>
-                        <Box width={[0, 3 / 5]}>
-                          <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
+                        <Flex alignItems={'center'} width={'100%'}>
+                          <Box width={2 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               {paper?.briefing.length ? (
                                 <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                               ) : (
                                 <StyledIcon name={'X'} size="24px" color={'errorRed'} />
                               )}
-                              <Text>{strings.paper.dashboard.briefing}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.briefing}</Text>
+                              </Spacer>
                             </Flex>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                          <Box width={3 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.feedback}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.feedback}</Text>
+                              </Spacer>
                             </Flex>
-                          </Flex>
-                          <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                        </Flex>
+                        <Flex alignItems={'center'} width={'100%'}>
+                          <Box width={2 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.conclusion}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.conclusion}</Text>
+                              </Spacer>
                             </Flex>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                          <Box width={3 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.pdfFeedback}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.pdfFeedback}</Text>
+                              </Spacer>
                             </Flex>
-                          </Flex>
-                        </Box>
+                          </Box>
+                        </Flex>
                       </Flex>
                     </Box>
                   </Flex>

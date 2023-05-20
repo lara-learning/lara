@@ -1134,7 +1134,7 @@ export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { _
 export type TrainerPaperPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TrainerPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', username: string, firstName: string, lastName: string, id: string, avatar: string }>, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | undefined };
+export type TrainerPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string, trainees: Array<{ __typename?: 'Trainee', username: string, firstName: string, lastName: string, id: string, avatar: string }>, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | undefined };
 
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2676,7 +2676,6 @@ export const TrainerPaperPageDataDocument = gql`
     query TrainerPaperPageData {
   currentUser {
     id
-    theme
     ... on Trainer {
       trainees {
         username

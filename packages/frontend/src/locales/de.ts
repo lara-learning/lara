@@ -107,21 +107,26 @@ const germanTranslation: Translation = {
         '\n' +
         'Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.',
       createBriefing: 'Briefing erstellen',
-      backToPaperTitle: "Briefing wird exportiert",
-      backToPaperDescription: "Das Lara Paper Briefing wird exportiert und anschließend als PDF an alle Teilnehmer verschickt. Es kann sein, dass du später Lara neuladen musst, um das neu erstellte Paper sehen zu. \n" +
-        "Hab jetzt etwas Geduld während das Briefing exportiert wird.",
-      backToPaperButton: "Züruck zur Paper Übersicht"
+      backToPaperTitle: 'Briefing wird exportiert',
+      backToPaperDescription:
+        'Das Lara Paper Briefing wird exportiert und anschließend als PDF an alle Teilnehmer verschickt. Es kann sein, dass du später Lara neuladen musst, um das neu erstellte Paper sehen zu. \n' +
+        'Hab jetzt etwas Geduld während das Briefing exportiert wird.',
+      backToPaperButton: 'Züruck zur Paper Übersicht',
+      deletePaperTitle: 'Paper löschen für {kunde}',
+      deletePaperDescription: 'Bist du sicher, dass du das Paper für den Kunden {kunde} löschen willst?',
+      deletePaperButtonAgree: 'bestätigen',
+      deletePaperButtonDisagree: 'abbrechen',
     },
     dashboard: {
       title: 'Station',
-      description:
-        'Für die Station auf dem Jungheinrich Profishop Projekt von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
+      description: 'Für die Station von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
       briefing: 'Briefing',
       feedback: 'Stationsfeedback',
       conclusion: 'Fazit',
       pdfFeedback: 'PDF Stationsfeedback',
       trainee: 'Auszubildender',
       trainer: 'Ausbilder',
+      editPaper: 'Paper bearbeiten',
     },
     createPaper: {
       title: 'Briefing erstellt',
