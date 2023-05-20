@@ -1,7 +1,6 @@
 query TrainerPaperPageData {
   currentUser {
     id
-    theme
     ... on Trainer {
       trainees {
         username

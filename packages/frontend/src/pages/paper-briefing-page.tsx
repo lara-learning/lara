@@ -81,6 +81,16 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
           trainerId: currentUser.id,
         },
       },
+      updateQueries: {
+        TrainerPaperPageData: (prevData, { mutationResult }) => {
+          return {
+            currentUser: {
+              ...prevData,
+              papers: mutationResult.data?.updatePaper,
+            },
+          }
+        },
+      },
     })
       .then((result) => {
         const updatedPaper = result?.data?.updatePaper
@@ -139,10 +149,7 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
                   </SecondaryButton>
                 </Box>
                 <Box pl={'2'} width={1 / 2}>
-                  <PrimaryButton
-                    fullsize
-                    onClick={() => updatePaper(paperBriefing)}
-                  >
+                  <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
                     {strings.paper.modal.createBriefing}
                   </PrimaryButton>
                 </Box>
@@ -158,13 +165,13 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
             <Box width={2 / 3}>
               <H2>{strings.paper.modal.backToPaperTitle}</H2>
               <Paragraph>{strings.paper.modal.backToPaperDescription}</Paragraph>
-              <Flex my={'2'} justifyContent={"end"}>
+              <Flex my={'2'} justifyContent={'end'}>
                 <Box pl={'2'}>
                   <PrimaryButton
                     icon={loading ? 'Loader' : 'Blank'}
                     fullsize
                     disabled={loading}
-                    onClick={() => history.push("/paper")}
+                    onClick={() => history.push('/paper')}
                   >
                     {strings.paper.modal.backToPaperButton}
                   </PrimaryButton>

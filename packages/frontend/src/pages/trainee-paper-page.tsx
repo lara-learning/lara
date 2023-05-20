@@ -1,4 +1,4 @@
-import { Container, H1, Spacer, StyledDashboardPaperStatus, StyledIcon, Text } from '@lara/components'
+import { Container, H1, Paragraph, Spacer, StyledIcon, Text } from '@lara/components'
 import React from 'react'
 import Loader from '../components/loader'
 import { Template } from '../templates/template'
@@ -6,6 +6,8 @@ import { useTraineePageDataQuery } from '../graphql'
 import { Box, Flex } from '@rebass/grid'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
+import { PrimaryButton } from '../components/button'
+import EmptyPaper from '../assets/illustrations/empty-paper'
 
 export const TraineePaperPage: React.FC = () => {
   const { loading, data } = useTraineePageDataQuery()
@@ -33,28 +35,50 @@ export const TraineePaperPage: React.FC = () => {
                 <Spacer bottom="xl" key={paper?.id}>
                   <Container overflow={'visible'} padding={'l'}>
                     <Box width={[3, 5 / 5]}>
-                      <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client}</H1>
+                      <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                       <Spacer bottom="xl">
                         <Text size={'copy'}>{strings.paper.dashboard.description}</Text>
                       </Spacer>
-                      <StyledDashboardPaperStatus>
-                        <Flex alignItems={'center'}>
-                          <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
-                          <Text>{strings.paper.dashboard.briefing}</Text>
-                        </Flex>
-                        <Flex alignItems={'center'}>
-                          <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                          <Text>{strings.paper.dashboard.feedback}</Text>
-                        </Flex>
-                        <Flex alignItems={'center'}>
-                          <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                          <Text>{strings.paper.dashboard.conclusion}</Text>
-                        </Flex>
-                        <Flex alignItems={'center'}>
-                          <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                          <Text>{strings.paper.dashboard.pdfFeedback}</Text>
-                        </Flex>
-                      </StyledDashboardPaperStatus>
+                      <Flex alignItems={'center'} width={'100%'}>
+                        <Box width={2 / 5}>
+                          <Flex flexDirection={'row'} alignItems={'center'}>
+                            {paper?.briefing.length ? (
+                              <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                            ) : (
+                              <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                            )}
+                            <Spacer left="xs">
+                              <Text>{strings.paper.dashboard.briefing}</Text>
+                            </Spacer>
+                          </Flex>
+                        </Box>
+                        <Box width={3 / 5}>
+                          <Flex flexDirection={'row'} alignItems={'center'}>
+                            <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                            <Spacer left="xs">
+                              <Text>{strings.paper.dashboard.feedback}</Text>
+                            </Spacer>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                      <Flex alignItems={'center'} width={'100%'}>
+                        <Box width={2 / 5}>
+                          <Flex flexDirection={'row'} alignItems={'center'}>
+                            <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                            <Spacer left="xs">
+                              <Text>{strings.paper.dashboard.conclusion}</Text>
+                            </Spacer>
+                          </Flex>
+                        </Box>
+                        <Box width={3 / 5}>
+                          <Flex flexDirection={'row'} alignItems={'center'}>
+                            <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                            <Spacer left="xs">
+                              <Text>{strings.paper.dashboard.pdfFeedback}</Text>
+                            </Spacer>
+                          </Flex>
+                        </Box>
+                      </Flex>
                     </Box>
                     <Spacer y="xl">
                       <ProgressBar progress={0.3} color={'primaryDefault'} />
@@ -64,7 +88,18 @@ export const TraineePaperPage: React.FC = () => {
               ) : null
             )
           ) : (
-            <Text size="copy">{'Kein Paper'}</Text>
+            <Flex alignItems={'center'} flexDirection={'column'}>
+              <Box width={[1, 3 / 5]}>
+                <H1 center>{strings.paper.empty.headline}</H1>
+                <Paragraph center>{strings.paper.empty.description}</Paragraph>
+                <Spacer y="l">
+                  <Flex alignItems={'center'} flexDirection={'column'}>
+                    <PrimaryButton disabled={true}>{strings.paper.empty.createBriefing}</PrimaryButton>
+                  </Flex>
+                </Spacer>
+                <EmptyPaper />
+              </Box>
+            </Flex>
           )}
         </div>
       ))}

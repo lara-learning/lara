@@ -1,10 +1,10 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
 
-import { Container, H1, Paragraph, Spacer, StyledAction, StyledIcon, StyledName, Text } from '@lara/components'
+import { Container, H1, H2, Paragraph, Spacer, StyledAction, StyledIcon, StyledName, Text } from '@lara/components'
 import { Box, Flex } from '@rebass/grid'
 
-import { PrimaryButton } from '../components/button'
+import { PrimaryButton, SecondaryButton } from '../components/button'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import EmptyPaper from '../assets/illustrations/empty-paper'
@@ -14,11 +14,20 @@ import ProgressBar from '../components/progress-bar'
 import Avatar from '../components/avatar'
 import { GraphQLError } from 'graphql/index'
 import { useToastContext } from '../hooks/use-toast-context'
+import PaperModal from '../assets/illustrations/paper-modal-illustraion'
+import Modal from '../components/modal'
 
 export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { loading, data } = useTrainerPaperPageDataQuery()
+  const [showDeletePaperModal, setShowDeletePaperModal] = React.useState(false)
+  const [toDeletePaper, setToDeletePaper] = React.useState('')
+
   const [deletePaper] = useDeletePaperMutation()
   const { addToast } = useToastContext()
+  const toggleDeletePaperModal = (paperId: string) => {
+    setShowDeletePaperModal(!showDeletePaperModal)
+    setToDeletePaper(paperId)
+  }
 
   if (loading) {
     return <Loader size="xl" padding="xl" />
@@ -37,13 +46,16 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
     if (!paperId) return
     await deletePaper({
       variables: {
-        paperId: paperId,
+        paperId,
       },
       updateQueries: {
         TrainerPaperPageData: (prevData, { mutationResult }) => {
+          console.log(mutationResult.data?.deletePaper)
           return {
-            ...prevData,
-            papers: mutationResult.data?.deletePaper,
+            currentUser: {
+              ...prevData,
+              papers: mutationResult.data?.deletePaper,
+            },
           }
         },
       },
@@ -55,6 +67,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
           text: strings.paper.deletePaper.text,
           type: 'success',
         })
+        toggleDeletePaperModal('')
       })
       .catch((exception: GraphQLError) => {
         addToast({
@@ -65,10 +78,16 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
       })
   }
 
+  const navigateToEditPaperPage = (paperId: string) => {
+    history.push('/paper/briefing/' + paperId)
+  }
+
   return (
     <Template type="Main">
       <div key={currentUser.id}>
-        {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
+        {loading && <Loader />}
+
+        {!loading && currentUser?.papers && currentUser?.papers?.length >= 1 ? (
           currentUser?.papers?.map((paper) =>
             paper?.trainerId == currentUser.id || paper?.mentorId == currentUser.id ? (
               <Spacer bottom="xl" key={paper?.id}>
@@ -76,9 +95,9 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                   <Flex alignItems={'flex-start'} flexDirection={'row'}>
                     <Box width={[3, 5 / 5]}>
                       <Flex justifyContent={'space-between'} alignItems={'center'}>
-                        <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client}</H1>
+                        <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                         {paper?.mentorId != currentUser.id ? (
-                          <StyledAction onClick={() => handleDelete(paper?.id)} danger noMargin={true}>
+                          <StyledAction onClick={() => toggleDeletePaperModal(paper?.id)} danger noMargin={true}>
                             <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'} />
                           </StyledAction>
                         ) : null}
@@ -93,45 +112,98 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                               </StyledName>
                               <Avatar size={44} image={trainee.avatar} />
                             </Flex>
-                          ) : (
-                            <></>
-                          )
+                          ) : null
                         )}
                         <Spacer bottom="xl">
                           <Paragraph center>{strings.paper.dashboard.description}</Paragraph>
                         </Spacer>
-                        <Box width={[0, 3 / 5]}>
-                          <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
+                        <Flex alignItems={'center'} width={'100%'}>
+                          <Box width={2 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               {paper?.briefing.length ? (
                                 <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                               ) : (
                                 <StyledIcon name={'X'} size="24px" color={'errorRed'} />
                               )}
-                              <Text>{strings.paper.dashboard.briefing}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.briefing}</Text>
+                              </Spacer>
                             </Flex>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                          <Box width={3 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.feedback}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.feedback}</Text>
+                              </Spacer>
                             </Flex>
-                          </Flex>
-                          <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'space-between'}>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                        </Flex>
+                        <Flex alignItems={'center'} width={'100%'}>
+                          <Box width={2 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.conclusion}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.conclusion}</Text>
+                              </Spacer>
                             </Flex>
-                            <Flex alignItems={'center'}>
+                          </Box>
+                          <Box width={3 / 5}>
+                            <Flex flexDirection={'row'} alignItems={'center'}>
                               <StyledIcon name={'X'} size="24px" color={'errorRed'} />
-                              <Text>{strings.paper.dashboard.pdfFeedback}</Text>
+                              <Spacer left="xs">
+                                <Text>{strings.paper.dashboard.pdfFeedback}</Text>
+                              </Spacer>
                             </Flex>
-                          </Flex>
-                        </Box>
+                          </Box>
+                        </Flex>
                       </Flex>
                     </Box>
                   </Flex>
                   <Spacer y="xl">
                     <ProgressBar progress={0.3} color={'primaryDefault'} />
                   </Spacer>
+                  {!paper.briefing.length ? (
+                    <Flex justifyContent={'flex-end'}>
+                      <Spacer y="xl">
+                        <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
+                          {strings.paper.dashboard.editPaper}
+                        </PrimaryButton>
+                      </Spacer>
+                    </Flex>
+                  ) : null}
+                  <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal('')}>
+                    <Flex flexDirection={'row'} alignItems={'center'}>
+                      <Box width={1 / 3}>
+                        <PaperModal />
+                      </Box>
+                      <Box width={2 / 3}>
+                        <H2>
+                          {
+                            strings.formatString(strings.paper.modal.deletePaperTitle, {
+                              kunde: paper?.client,
+                            }) as string
+                          }
+                        </H2>
+                        <Paragraph>
+                          {
+                            strings.formatString(strings.paper.modal.deletePaperDescription, {
+                              kunde: paper?.client,
+                            }) as string
+                          }
+                        </Paragraph>
+                        <Flex my={'2'} flexDirection={'row'} justifyContent={'space-between'}>
+                          <SecondaryButton onClick={() => toggleDeletePaperModal('')}>
+                            {strings.paper.modal.deletePaperButtonDisagree}
+                          </SecondaryButton>
+
+                          <PrimaryButton onClick={() => handleDelete(toDeletePaper)} danger>
+                            {strings.paper.modal.deletePaperButtonAgree}
+                          </PrimaryButton>
+                        </Flex>
+                      </Box>
+                    </Flex>
+                  </Modal>
                 </Container>
               </Spacer>
             ) : null
