@@ -47,6 +47,8 @@ type CreateBriefingLayoutProps = {
   periodProjectSpacer: JSX.Element
   periodSchoolSpacer: JSX.Element
   buttonControls?: JSX.Element
+  emptyFieldTrainee?: JSX.Element
+  emptyFieldMentor?: JSX.Element
 }
 export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
   traineeInput,
@@ -62,17 +64,23 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
   periodProjectSpacer,
   periodSchoolSpacer,
   buttonControls,
+  emptyFieldTrainee,
+  emptyFieldMentor
 }) => {
   return (
     <StyledFormContainer>
       <StyledFormGrid>
         <StyledFormGridItem>{traineeInput}</StyledFormGridItem>
 
+        <StyledFormGridItem>{emptyFieldTrainee}</StyledFormGridItem>
+
         <StyledFormGridItem>{firstNameMentorInput}</StyledFormGridItem>
 
         <StyledFormGridItem>{lastNameMentorInput}</StyledFormGridItem>
 
         <StyledFormGridItem>{emailMentorInput}</StyledFormGridItem>
+
+        <StyledFormGridItem>{emptyFieldMentor}</StyledFormGridItem>
 
         <StyledFormGridItem>{customerInput}</StyledFormGridItem>
 

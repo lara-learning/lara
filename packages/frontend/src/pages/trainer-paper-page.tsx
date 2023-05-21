@@ -16,30 +16,37 @@ import { GraphQLError } from 'graphql/index'
 import { useToastContext } from '../hooks/use-toast-context'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import Modal from '../components/modal'
+import {Paper} from "@lara/api";
 
 export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { loading, data } = useTrainerPaperPageDataQuery()
   const [showDeletePaperModal, setShowDeletePaperModal] = React.useState(false)
-  const [toDeletePaper, setToDeletePaper] = React.useState('')
+  const [toDeletePaper, setToDeletePaper] = React.useState<Paper | undefined>(undefined)
 
   const [deletePaper] = useDeletePaperMutation()
   const { addToast } = useToastContext()
-  const toggleDeletePaperModal = (paperId: string) => {
+  const toggleDeletePaperModal = (paper: Paper | undefined) => {
     setShowDeletePaperModal(!showDeletePaperModal)
-    setToDeletePaper(paperId)
-  }
-
-  if (loading) {
-    return <Loader size="xl" padding="xl" />
+    setToDeletePaper(paper)
   }
 
   if (!data) {
-    return null
+    return (
+      <Template type="Main">
+        <Loader/>
+      </Template>
+    )
   }
 
   const currentUser = data?.currentUser as Trainer
+
+
   if (!currentUser) {
-    return null
+    return (
+      <Template type="Main">
+        <Loader/>
+      </Template>
+    )
   }
 
   const handleDelete = async (paperId: string | undefined) => {
@@ -67,7 +74,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
           text: strings.paper.deletePaper.text,
           type: 'success',
         })
-        toggleDeletePaperModal('')
+        toggleDeletePaperModal(undefined)
       })
       .catch((exception: GraphQLError) => {
         addToast({
@@ -84,9 +91,8 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
 
   return (
     <Template type="Main">
+      {loading && <Loader />}
       <div key={currentUser.id}>
-        {loading && <Loader />}
-
         {!loading && currentUser?.papers && currentUser?.papers?.length >= 1 ? (
           currentUser?.papers?.map((paper) =>
             paper?.trainerId == currentUser.id || paper?.mentorId == currentUser.id ? (
@@ -97,7 +103,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                       <Flex justifyContent={'space-between'} alignItems={'center'}>
                         <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                         {paper?.mentorId != currentUser.id ? (
-                          <StyledAction onClick={() => toggleDeletePaperModal(paper?.id)} danger noMargin={true}>
+                          <StyledAction onClick={() => toggleDeletePaperModal(paper)} danger noMargin={true}>
                             <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'} />
                           </StyledAction>
                         ) : null}
@@ -172,7 +178,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                       </Spacer>
                     </Flex>
                   ) : null}
-                  <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal('')}>
+                  <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal(undefined)}>
                     <Flex flexDirection={'row'} alignItems={'center'}>
                       <Box width={1 / 3}>
                         <PaperModal />
@@ -181,23 +187,23 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                         <H2>
                           {
                             strings.formatString(strings.paper.modal.deletePaperTitle, {
-                              kunde: paper?.client,
+                              kunde: toDeletePaper?.client ?? '',
                             }) as string
                           }
                         </H2>
                         <Paragraph>
                           {
                             strings.formatString(strings.paper.modal.deletePaperDescription, {
-                              kunde: paper?.client,
+                              kunde: toDeletePaper?.client?? '',
                             }) as string
                           }
                         </Paragraph>
                         <Flex my={'2'} flexDirection={'row'} justifyContent={'space-between'}>
-                          <SecondaryButton onClick={() => toggleDeletePaperModal('')}>
+                          <SecondaryButton onClick={() => toggleDeletePaperModal(undefined)}>
                             {strings.paper.modal.deletePaperButtonDisagree}
                           </SecondaryButton>
 
-                          <PrimaryButton onClick={() => handleDelete(toDeletePaper)} danger>
+                          <PrimaryButton onClick={() => handleDelete(toDeletePaper?.id)} danger>
                             {strings.paper.modal.deletePaperButtonAgree}
                           </PrimaryButton>
                         </Flex>

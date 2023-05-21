@@ -1,32 +1,39 @@
 import { Container, H1, Paragraph, Spacer, StyledIcon, Text } from '@lara/components'
 import React from 'react'
-import Loader from '../components/loader'
 import { Template } from '../templates/template'
 import { useMentorPaperPageDataQuery } from '../graphql'
 import { Mentor } from '@lara/api'
 import { Box, Flex } from '@rebass/grid'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
+import Loader from "../components/loader";
 
 export const MentorPaperPage: React.FC = () => {
   const { loading, data } = useMentorPaperPageDataQuery()
 
-  if (loading) {
-    return <Loader size="xl" padding="xl" />
-  }
-
   if (!data) {
-    return null
+    return (
+      <Template type="Main">
+        <Loader/>
+      </Template>
+    )
   }
 
   const currentUser = data?.currentUser as Mentor
+
   if (!currentUser) {
-    return null
+    return (
+      <Template type="Main">
+        <Loader/>
+      </Template>
+    )
   }
+
   return (
     <Template type="Main">
+      {loading && <Loader />}
       <div key={currentUser?.id}>
-        {currentUser?.papers && currentUser?.papers?.length >= 1 ? (
+        {!loading && currentUser?.papers && currentUser?.papers?.length >= 1 ? (
           currentUser?.papers.map((paper) =>
             paper?.mentorId == currentUser.id ? (
               <Spacer bottom="xl" key={paper?.id}>
