@@ -57,7 +57,6 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
       },
       updateQueries: {
         TrainerPaperPageData: (prevData, { mutationResult }) => {
-          console.log(mutationResult.data?.deletePaper)
           return {
             currentUser: {
               ...prevData,
