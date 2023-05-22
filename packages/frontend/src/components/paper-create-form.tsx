@@ -92,9 +92,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             />
           </>
         }
-        emptyFieldTrainee={
-        <></>
-        }
+        emptyFieldTrainee={<></>}
         lastNameMentorInput={
           <>
             <Text color={getFontColor(errors.lastNameMentor)} {...inputLabelProps}>
@@ -127,9 +125,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             />
           </>
         }
-        emptyFieldMentor={
-          <></>
-        }
+        emptyFieldMentor={<></>}
         customerInput={
           <>
             <Spacer bottom="m">

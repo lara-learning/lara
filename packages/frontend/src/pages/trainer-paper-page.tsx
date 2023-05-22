@@ -16,7 +16,7 @@ import { GraphQLError } from 'graphql/index'
 import { useToastContext } from '../hooks/use-toast-context'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import Modal from '../components/modal'
-import {Paper} from "@lara/api";
+import { Paper } from '@lara/api'
 
 export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { loading, data } = useTrainerPaperPageDataQuery()
@@ -33,18 +33,17 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
   if (!data) {
     return (
       <Template type="Main">
-        <Loader/>
+        <Loader />
       </Template>
     )
   }
 
   const currentUser = data?.currentUser as Trainer
 
-
   if (!currentUser) {
     return (
       <Template type="Main">
-        <Loader/>
+        <Loader />
       </Template>
     )
   }
@@ -193,7 +192,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                         <Paragraph>
                           {
                             strings.formatString(strings.paper.modal.deletePaperDescription, {
-                              kunde: toDeletePaper?.client?? '',
+                              kunde: toDeletePaper?.client ?? '',
                             }) as string
                           }
                         </Paragraph>

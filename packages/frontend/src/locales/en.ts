@@ -107,7 +107,8 @@ const englishTranslation: Translation = {
         'Please be patient while the briefing is being exported.',
       backToPaperButton: 'Back to Paper Overview',
       deletePaperTitle: 'Delete Paper for {0}',
-      deletePaperDescription: 'Are you sure you want to delete the paper for customer {1}? This action cannot be undone.',
+      deletePaperDescription:
+        'Are you sure you want to delete the paper for customer {1}? This action cannot be undone.',
       deletePaperButtonAgree: 'Confirm',
       deletePaperButtonDisagree: 'Cancel',
     },

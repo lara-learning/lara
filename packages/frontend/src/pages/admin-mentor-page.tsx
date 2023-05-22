@@ -57,7 +57,9 @@ export const AdminMentorPage: React.FC = () => {
     <Template type="Main">
       <AdminOverviewLayout heading={<H1>{strings.navigation.mentor}</H1>}>
         {loading && <Loader />}
-        { data?.mentors.map((mentor) => <EditUserRow key={mentor.id} user={mentor} baseUrl="mentor" />)}
+        {data?.mentors.map((mentor) => (
+          <EditUserRow key={mentor.id} user={mentor} baseUrl="mentor" />
+        ))}
       </AdminOverviewLayout>
 
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />

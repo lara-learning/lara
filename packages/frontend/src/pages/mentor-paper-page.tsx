@@ -6,7 +6,7 @@ import { Mentor } from '@lara/api'
 import { Box, Flex } from '@rebass/grid'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
-import Loader from "../components/loader";
+import Loader from '../components/loader'
 
 export const MentorPaperPage: React.FC = () => {
   const { loading, data } = useMentorPaperPageDataQuery()
@@ -14,7 +14,7 @@ export const MentorPaperPage: React.FC = () => {
   if (!data) {
     return (
       <Template type="Main">
-        <Loader/>
+        <Loader />
       </Template>
     )
   }
@@ -24,7 +24,7 @@ export const MentorPaperPage: React.FC = () => {
   if (!currentUser) {
     return (
       <Template type="Main">
-        <Loader/>
+        <Loader />
       </Template>
     )
   }

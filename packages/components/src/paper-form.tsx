@@ -65,7 +65,7 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
   periodSchoolSpacer,
   buttonControls,
   emptyFieldTrainee,
-  emptyFieldMentor
+  emptyFieldMentor,
 }) => {
   return (
     <StyledFormContainer>
