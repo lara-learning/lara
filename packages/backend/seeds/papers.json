@@ -15,9 +15,9 @@
       {
         "id": "1",
         "questionId": "1",
-        "answer": "dasdasd",
-        "question": "sadasdasd",
-        "hint": "DSAdasd"
+        "answer": "Test Answer",
+        "question": "Test Question",
+        "hint": "Test Hint"
       }
     ]
   },
@@ -37,9 +37,9 @@
       {
         "id": "1",
         "questionId": "1",
-        "answer": "dasdasd",
-        "question": "sadasdasd",
-        "hint": "DSAdasd"
+        "answer": "Test Answer",
+        "question": "Test Question",
+        "hint": "Test Hint"
       }
     ]
   }

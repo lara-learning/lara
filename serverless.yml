@@ -84,7 +84,7 @@ custom:
       userTrainerId: userGSI6
       userOAuthCode: userOAuthCode
     s3:
-      export: lara-dev-lara-export-bucket
+      export: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-export-bucket
     ses:
       region: ${self:provider.environment.SES_REGION, self:provider.region}
 
