@@ -26,10 +26,6 @@ export const isMentor = (user: User): user is Mentor => {
   return user.type === 'Mentor'
 }
 
-/*const _mentor = rule({ cache: 'contextual' })(
-  (_parent, _args, ctx: AuthenticatedContext) => isMentor(ctx.currentUser) || 'Wrong Usertype'
-)*/
-
 export const isAdmin = (user: User): user is Admin => {
   return user.type === 'Admin'
 }
