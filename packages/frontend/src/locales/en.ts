@@ -106,10 +106,10 @@ const englishTranslation: Translation = {
         'The Lara Paper briefing is being exported and will be sent as an email to all participants. You may need to reload Lara later to see the newly created paper.\n' +
         'Please be patient while the briefing is being exported.',
       backToPaperButton: 'Back to Paper Overview',
-      deletePaperTitle: 'Paper löschen für {0}',
-      deletePaperDescription: 'Bist du sicher, dass du das Paper für den Kunden {1} löschen willst? Es kann nicht mehr rückgängig gemacht werden.',
-      deletePaperButtonAgree: 'bestätigen',
-      deletePaperButtonDisagree: 'abbrechen',
+      deletePaperTitle: 'Delete Paper for {0}',
+      deletePaperDescription: 'Are you sure you want to delete the paper for customer {1}? This action cannot be undone.',
+      deletePaperButtonAgree: 'Confirm',
+      deletePaperButtonDisagree: 'Cancel',
     },
     dashboard: {
       title: 'Station',
