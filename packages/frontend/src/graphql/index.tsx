@@ -255,7 +255,7 @@ export type MutationLinkAlexaArgs = {
 
 
 export type MutationLoginArgs = {
-  googleToken: Scalars['String'];
+  email: Scalars['String'];
 };
 
 
@@ -637,7 +637,7 @@ export type LinkAlexaMutationVariables = Exact<{
 export type LinkAlexaMutation = { __typename?: 'Mutation', linkAlexa?: { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined } | undefined };
 
 export type LoginPageLoginMutationVariables = Exact<{
-  token: Scalars['String'];
+  email: Scalars['String'];
 }>;
 
 
@@ -1136,8 +1136,8 @@ export function useLinkAlexaMutation(baseOptions?: Apollo.MutationHookOptions<Li
       }
 export type LinkAlexaMutationHookResult = ReturnType<typeof useLinkAlexaMutation>;
 export const LoginPageLoginDocument = gql`
-    mutation LoginPageLogin($token: String!) {
-  login(googleToken: $token) {
+    mutation LoginPageLogin($email: String!) {
+  login(email: $email) {
     accessToken
     refreshToken
     expiresIn

@@ -140,9 +140,9 @@ type Mutation {
   deleteEntry(id: ID!): MutateEntryPayload!
 
   """
-  Login via google.
+  Login via microsoft
   """
-  login(googleToken: String!): OAuthPayload
+  login(email: String!): OAuthPayload
 
   """
   Unclaims a Trainee by the current Trainer

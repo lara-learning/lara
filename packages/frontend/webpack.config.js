@@ -10,12 +10,23 @@ const dotenv = require('dotenv')
 /* eslint-enable @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, no-undef */
 
 // eslint-disable-next-line no-undef
-const { GOOGLE_CLIENT_ID, DEBUG, AUTH_HEADER, BACKEND_URL, MODE, ENVIRONMENT_NAME, SUPPORT_MAIL } = process.env
+const {
+  GOOGLE_CLIENT_ID,
+  MICROSOFT_CLIENT_ID,
+  MICROSOFT_TENANT_ID,
+  DEBUG,
+  AUTH_HEADER,
+  BACKEND_URL,
+  FRONTEND_URL,
+  MODE,
+  ENVIRONMENT_NAME,
+  SUPPORT_MAIL,
+} = process.env
 
 const DEFAULT_ENVIRONMENT = 'development'
 const DEFAULT_MODE = 'development'
 
-/** @returns { { name: string; mode: string; debug: boolean; googleClientID: string; authHeader: string; backendUrl: string; supportMail: string; } }} */
+/** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string, googleClientID: string}}} */
 const getEnvironmentConfig = () => {
   // eslint-disable-next-line no-undef
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
@@ -29,9 +40,12 @@ const getEnvironmentConfig = () => {
       name,
       mode: parsed.MODE,
       googleClientID: parsed.GOOGLE_CLIENT_ID,
+      microsoftClientID: parsed.MICROSOFT_CLIENT_ID,
+      microsoftTenantID: parsed.MICROSOFT_TENANT_ID,
       debug: parsed.DEBUG === 'true',
       authHeader: parsed.AUTH_HEADER,
       backendUrl: parsed.BACKEND_URL,
+      frontendUrl: parsed.FRONTEND_URL,
       supportMail: parsed.SUPPORT_MAIL,
     }
   }
@@ -42,9 +56,12 @@ const getEnvironmentConfig = () => {
     name,
     mode: MODE,
     googleClientID: GOOGLE_CLIENT_ID,
+    microsoftClientID: MICROSOFT_CLIENT_ID,
+    microsoftTenantID: MICROSOFT_TENANT_ID,
     debug: DEBUG === 'true',
     authHeader: AUTH_HEADER,
     backendUrl: BACKEND_URL,
+    frontendUrl: FRONTEND_URL,
     supportMail: SUPPORT_MAIL,
   }
 }

@@ -26,6 +26,8 @@ jobs:
       MODE: ${{ inputs.mode }}
       AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      MICROSOFT_CLIENT_ID = ${{ secrets.MICROSOFT_CLIENT_ID }}
+      MICROSOFT_TENANT_ID = ${{ secrets.MICROSOFT_TENANT_ID }}
       SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}
       URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
       COMPANY_ABBREVIATION: ${{ secrets.COMPANY_ABBREVIATION }}

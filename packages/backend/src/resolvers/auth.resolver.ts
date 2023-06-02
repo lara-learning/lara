@@ -4,7 +4,6 @@ import { GraphQLError } from 'graphql'
 
 import { GqlResolvers } from '@lara/api'
 
-import { validateToken } from '../google-auth'
 import { t } from '../i18n'
 import { isDebug } from '../permissions'
 import { saveUser, userByEmail, userById } from '../repositories/user.repo'
@@ -27,9 +26,7 @@ const createMockUser = async (email: string) => {
 
 export const authResolver: GqlResolvers = {
   Mutation: {
-    login: async (_parent, { googleToken }) => {
-      const email = await validateToken(googleToken)
-
+    login: async (_parent, { email }) => {
       if (!email) {
         return
       }

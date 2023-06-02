@@ -11,16 +11,23 @@ import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentic
 import { SplashPage } from './pages/splash-page'
 import Routes from './routes'
 import ThemeProvider from './theme-provider'
+import { MsalProvider } from '@azure/msal-react'
+import { msalConfig } from './hooks/ms-auth'
 
+import { PublicClientApplication } from '@azure/msal-browser'
+
+const msalInstance = new PublicClientApplication(msalConfig)
 export const App: React.FunctionComponent = () => {
   const [authenticated, setAuthenticated] = React.useState<AuthenticatedState>('loading')
 
   return (
-    <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
-      <ApolloProvider>
-        <InnerApp />
-      </ApolloProvider>
-    </AuthenticationContext.Provider>
+    <MsalProvider instance={msalInstance}>
+      <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
+        <ApolloProvider>
+          <InnerApp />
+        </ApolloProvider>
+      </AuthenticationContext.Provider>
+    </MsalProvider>
   )
 }
 

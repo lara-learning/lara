@@ -31,6 +31,8 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      MICROSOFT_CLIENT_ID = ${{ secrets.MICROSOFT_CLIENT_ID }}
+      MICROSOFT_TENANT_ID = ${{ secrets.MICROSOFT_TENANT_ID }}
       LARA_SECRET: ${{ secrets.LARA_SECRET }}
       SES_EMAIL: ${{ secrets.SES_EMAIL }}
       SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}

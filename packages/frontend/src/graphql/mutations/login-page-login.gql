@@ -1,5 +1,5 @@
-mutation LoginPageLogin($token: String!) {
-  login(googleToken: $token) {
+mutation LoginPageLogin($email: String!) {
+  login(email: $email) {
     accessToken
     refreshToken
     expiresIn

@@ -1,13 +1,8 @@
-const redirectDomain = 'http://localhost:8080'
-const redirectUrl = redirectDomain
-const { MICROSOFT_API_KEY } = process.env
-const { MICROSOFT_TENANT_ID } = process.env
-
 export const msalConfig = {
   auth: {
-    clientId: MICROSOFT_API_KEY,
-    authority: 'https://login.microsoftonline.com/' + MICROSOFT_TENANT_ID,
-    redirectUri: redirectUrl,
+    clientId: ENVIRONMENT.microsoftClientID ?? '',
+    authority: 'https://login.microsoftonline.com/' + ENVIRONMENT.microsoftTenantID,
+    redirectUri: ENVIRONMENT.frontendUrl,
   },
   cache: {
     cacheLocation: 'sessionStorage',
