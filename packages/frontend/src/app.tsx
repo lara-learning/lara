@@ -1,5 +1,6 @@
 import React from 'react'
 import { Router, Switch } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import ApolloProvider from './apollo-provider'
 import AppHistory from './app-history'
