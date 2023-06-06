@@ -16,7 +16,7 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
 
-  const handleLogin = (loginType: any) => {
+   const handleLogin  = async (loginType: any) => {
     if (loginType === 'redirect') {
       instance.loginRedirect(loginRequest).catch((e) => {
         console.log(e)
@@ -27,21 +27,19 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
         ...loginRequest,
         account: accounts[0],
       }
-      instance
-        .acquireTokenSilent(request)
-        .then((response) => {
-          console.log(response)
-          mutate({ variables: { email: response.account?.username ?? '' } }).then((response) => {
-            const { data } = response
-            if (!data?.login) {
-              return AppHistory.getInstance().push('/no-user-found')
-            }
-            login(data.login)
-          })
+      const authResult = await instance.acquireTokenSilent(request)
+      const email = authResult.account?.username
+      if (email) {
+        mutate({variables: { email } }).then((response) => {
+          const {data} = response
+          if (!data?.login) {
+            return AppHistory.getInstance().push('/no-user-found')
+          }
+          login(data.login)
+        }).catch(err => {
+          console.log(err)
         })
-        .catch((e) => {
-          console.log(e)
-        })
+      }
     }
   }
   return <PrimaryButton onClick={() => handleLogin('redirect')}>sign in with ACN</PrimaryButton>

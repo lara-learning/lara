@@ -164,7 +164,7 @@ export type Mutation = {
   deleteEntry: MutateEntryPayload;
   /** Link Alexa account */
   linkAlexa?: Maybe<UserInterface>;
-  /** Login via google. */
+  /** Login via microsoft */
   login?: Maybe<OAuthPayload>;
   /** Marks User to be deleted */
   markUserForDeletion?: Maybe<UserInterface>;

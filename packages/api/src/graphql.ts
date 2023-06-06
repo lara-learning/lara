@@ -165,7 +165,7 @@ export type GqlMutation = {
   deleteEntry: GqlMutateEntryPayload;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
-  /** Login via google. */
+  /** Login via microsoft */
   login?: Maybe<GqlOAuthPayload>;
   /** Marks User to be deleted */
   markUserForDeletion?: Maybe<GqlUserInterface>;
