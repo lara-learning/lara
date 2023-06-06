@@ -40,19 +40,20 @@ const InnerApp: React.FunctionComponent = () => {
    * the redundant api call
    */
   const { data, loading } = useCurrentUserQuery()
+  const currentUser = data?.currentUser
 
   return (
-    <ThemeProvider currentUser={data?.currentUser}>
+    <ThemeProvider currentUser={currentUser}>
       {loading && <SplashPage />}
 
       {!loading && (
         <ToastContextProvider>
           <Router history={AppHistory.getInstance()}>
             <Switch>
-              <Routes currentUser={data?.currentUser} />
+              <Routes currentUser={currentUser} />
             </Switch>
 
-            {ENVIRONMENT.debug && <StatusBar currentUser={data?.currentUser} />}
+            {ENVIRONMENT.debug && <StatusBar currentUser={currentUser} />}
           </Router>
         </ToastContextProvider>
       )}
