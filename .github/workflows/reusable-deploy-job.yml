@@ -81,11 +81,11 @@ jobs:
       - name: Set production MICROSOFT CLIENT_ID
         if: env.ENVIRONMENT_NAME == 'production'
         run: |
-          echo "MICROSOFT_CLIENT_ID: ${{ secrets.PROD_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "MICROSOFT_CLIENT_ID=${{ secrets.PROD_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
       - name: Set staging MICROSOFT CLIENT_ID
         if: env.ENVIRONMENT_NAME == 'staging'
         run: |
-          echo "MICROSOFT_CLIENT_ID: ${{ secrets.STAGING_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "MICROSOFT_CLIENT_ID=${{ secrets.STAGING_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
