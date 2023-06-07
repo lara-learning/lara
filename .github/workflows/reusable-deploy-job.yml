@@ -29,9 +29,6 @@ jobs:
       AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
       MICROSOFT_TENANT_ID: ${{ secrets.MICROSOFT_TENANT_ID }}
       LARA_SECRET: ${{ secrets.LARA_SECRET }}
       SES_EMAIL: ${{ secrets.SES_EMAIL }}
@@ -78,6 +75,17 @@ jobs:
         run: |
           echo "FRONTEND_URL=${{ secrets.STAGING_FE_URL }}" >> $GITHUB_ENV
           echo "BACKEND_URL=${{ secrets.STAGING_BE_URL }}" >> $GITHUB_ENV
+
+      ##############
+      # Set MICROSOFT CLIENT_ID env variable this way, so not all variables have to be passed to the reusable workflow
+      - name: Set production MICROSOFT CLIENT_ID
+        if: env.ENVIRONMENT_NAME == 'production'
+        run: |
+          echo "MICROSOFT_CLIENT_ID: ${{ secrets.PROD_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
+      - name: Set staging MICROSOFT CLIENT_ID
+        if: env.ENVIRONMENT_NAME == 'staging'
+        run: |
+          echo "MICROSOFT_CLIENT_ID: ${{ secrets.STAGING_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}

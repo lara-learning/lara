@@ -25,8 +25,6 @@ jobs:
       DEBUG: ${{ inputs.debug }}
       MODE: ${{ inputs.mode }}
       AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
       MICROSOFT_TENANT_ID: ${{ secrets.MICROSOFT_TENANT_ID }}
       SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}
       URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
@@ -57,6 +55,18 @@ jobs:
         if: env.ENVIRONMENT_NAME == 'staging'
         run: |
           echo "BACKEND_URL=${{ secrets.STAGING_BE_URL }}" >> $GITHUB_ENV
+
+      ##############
+      # Set MICROSOFT CLIENT_ID env variable this way, so not all variables have to be passed to the reusable workflow
+      - name: Set production MICROSOFT CLIENT_ID
+        if: env.ENVIRONMENT_NAME == 'production'
+        run: |
+          echo "MICROSOFT_CLIENT_ID: ${{ secrets.PROD_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
+      - name: Set staging MICROSOFT CLIENT_ID
+        if: env.ENVIRONMENT_NAME == 'staging'
+        run: |
+          echo "MICROSOFT_CLIENT_ID: ${{ secrets.STAGING_MICROSOFT_CLIENT_ID }}" >> $GITHUB_ENV
+
 ##############
       - name: Compile and build
         run: yarn clean && yarn compile && yarn build
