@@ -1,20 +1,19 @@
 import React from 'react'
 import { Router, Switch } from 'react-router-dom'
-
 import ApolloProvider from './apollo-provider'
 import AppHistory from './app-history'
-import { GlobalFonts } from './components/fonts'
 import StatusBar from './components/status-bar'
-import { ToastContextProvider } from './context/toast/toast-context-provider'
-import { useCurrentUserQuery } from './graphql'
-import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentication'
-import { SplashPage } from './pages/splash-page'
 import Routes from './routes'
 import ThemeProvider from './theme-provider'
+import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentication'
+import { GlobalFonts } from './components/fonts'
 import { MsalProvider } from '@azure/msal-react'
 import { msalConfig } from './hooks/ms-auth'
-
 import { PublicClientApplication } from '@azure/msal-browser'
+import { SplashPage } from './pages/splash-page'
+import { ToastContextProvider } from './context/toast/toast-context-provider'
+import { useCurrentUserQuery } from './graphql'
+
 
 const msalInstance = new PublicClientApplication(msalConfig)
 export const App: React.FunctionComponent = () => {

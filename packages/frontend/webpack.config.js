@@ -11,7 +11,6 @@ const dotenv = require('dotenv')
 
 // eslint-disable-next-line no-undef
 const {
-  GOOGLE_CLIENT_ID,
   MICROSOFT_CLIENT_ID,
   MICROSOFT_TENANT_ID,
   DEBUG,
@@ -26,7 +25,7 @@ const {
 const DEFAULT_ENVIRONMENT = 'development'
 const DEFAULT_MODE = 'development'
 
-/** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string, googleClientID: string}}} */
+/** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string}}} */
 const getEnvironmentConfig = () => {
   // eslint-disable-next-line no-undef
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
@@ -39,7 +38,6 @@ const getEnvironmentConfig = () => {
     return {
       name,
       mode: parsed.MODE,
-      googleClientID: parsed.GOOGLE_CLIENT_ID,
       microsoftClientID: parsed.MICROSOFT_CLIENT_ID,
       microsoftTenantID: parsed.MICROSOFT_TENANT_ID,
       debug: parsed.DEBUG === 'true',
@@ -55,7 +53,6 @@ const getEnvironmentConfig = () => {
   return {
     name,
     mode: MODE,
-    googleClientID: GOOGLE_CLIENT_ID,
     microsoftClientID: MICROSOFT_CLIENT_ID,
     microsoftTenantID: MICROSOFT_TENANT_ID,
     debug: DEBUG === 'true',

@@ -36,5 +36,5 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
       }
     }
   }
-  return <PrimaryButton onClick={() => handleLogin()}>sign in with ACN</PrimaryButton>
+  return <PrimaryButton onClick={() => handleLogin()}>Sign in with Microsoft</PrimaryButton>
 }
