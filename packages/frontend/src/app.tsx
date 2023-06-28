@@ -14,7 +14,6 @@ import { SplashPage } from './pages/splash-page'
 import { ToastContextProvider } from './context/toast/toast-context-provider'
 import { useCurrentUserQuery } from './graphql'
 
-
 const msalInstance = new PublicClientApplication(msalConfig)
 export const App: React.FunctionComponent = () => {
   const [authenticated, setAuthenticated] = React.useState<AuthenticatedState>('loading')
