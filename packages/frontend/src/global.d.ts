@@ -22,6 +22,7 @@ declare module '*.png'
 declare const ENVIRONMENT: {
   name: string
   debug: boolean
+  useGoogleLogin: boolean
   googleClientID: string
   authHeader: string
   backendUrl: string

@@ -15,13 +15,17 @@ import ThemeProvider from './theme-provider'
 
 export const App: React.FunctionComponent = () => {
   const [authenticated, setAuthenticated] = React.useState<AuthenticatedState>('loading')
-
+  const LaraApp: React.FunctionComponent = () => {
+    return (
+      <ApolloProvider>
+        <InnerApp />
+      </ApolloProvider>
+    )
+  }
   return (
     <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
       <GoogleOAuthProvider clientId={ENVIRONMENT.googleClientID}>
-        <ApolloProvider>
-          <InnerApp />
-        </ApolloProvider>
+        <LaraApp />
       </GoogleOAuthProvider>
     </AuthenticationContext.Provider>
   )
@@ -32,7 +36,7 @@ const InnerApp: React.FunctionComponent = () => {
    * This Query is fired twice at the start of the app. This is due to the fact
    * that the authenticationLink is updating the authenticated state which forces
    * this componente to remount and therefor reexecute the query. Workarounds
-   * for this problem only introduce unnecessary complexities and so we keep
+   * for this problem only introduce unnecessary complexities, and so we keep
    * the redundant api call
    */
   const { data, loading } = useCurrentUserQuery()

@@ -10,12 +10,12 @@ const dotenv = require('dotenv')
 /* eslint-enable @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, no-undef */
 
 // eslint-disable-next-line no-undef
-const { GOOGLE_CLIENT_ID, DEBUG, AUTH_HEADER, BACKEND_URL, MODE, ENVIRONMENT_NAME, SUPPORT_MAIL } = process.env
+const { GOOGLE_CLIENT_ID, USE_GOOGLE_LOGIN, DEBUG, AUTH_HEADER, BACKEND_URL, MODE, ENVIRONMENT_NAME, SUPPORT_MAIL } = process.env
 
 const DEFAULT_ENVIRONMENT = 'development'
 const DEFAULT_MODE = 'development'
 
-/** @returns { { name: string; mode: string; debug: boolean; googleClientID: string; authHeader: string; backendUrl: string; supportMail: string; } }} */
+/** @returns { { name: string; mode: string; debug: boolean; googleClientID: string; useGoogleLogin: boolean, authHeader: string; backendUrl: string; supportMail: string; } }} */
 const getEnvironmentConfig = () => {
   // eslint-disable-next-line no-undef
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
@@ -29,6 +29,7 @@ const getEnvironmentConfig = () => {
       name,
       mode: parsed.MODE,
       googleClientID: parsed.GOOGLE_CLIENT_ID,
+      useGoogleLogin: parsed.USE_GOOGLE_LOGIN === 'false',
       debug: parsed.DEBUG === 'true',
       authHeader: parsed.AUTH_HEADER,
       backendUrl: parsed.BACKEND_URL,
@@ -42,6 +43,7 @@ const getEnvironmentConfig = () => {
     name,
     mode: MODE,
     googleClientID: GOOGLE_CLIENT_ID,
+    useGoogleLogin: USE_GOOGLE_LOGIN === 'false',
     debug: DEBUG === 'true',
     authHeader: AUTH_HEADER,
     backendUrl: BACKEND_URL,

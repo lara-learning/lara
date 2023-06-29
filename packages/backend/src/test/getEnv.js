@@ -12,6 +12,7 @@ process.env = {
 
   GOOGLE_API_KEY: 'secret',
   GOOGLE_CLIENT_ID: 'secret',
+  USE_GOOGLE_LOGIN: false,
 
   AUTH_HEADER: 'secret',
   DEBUG: true,
