@@ -1048,6 +1048,23 @@
   dependencies:
     tslib "^2.3.1"
 
+"@azure/msal-browser@^2.37.0":
+  version "2.37.0"
+  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.37.0.tgz#32d7af74eef53f2692f8a9d6bd6818c78faf4c1b"
+  integrity sha512-YNGD/W/tw/5wDWlXOfmrVILaxVsorVLxYU2ovmL1PDvxkdudbQRyGk/76l4emqgDAl/kPQeqyivxjOU6w1YfvQ==
+  dependencies:
+    "@azure/msal-common" "13.0.0"
+
+"@azure/msal-common@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-13.0.0.tgz#9c39184903b5d0fd6e643ccc12193fae220e912b"
+  integrity sha512-GqCOg5H5bouvLij9NFXFkh+asRRxsPBRwnTDsfK7o0KcxYHJbuidKw8/VXpycahGXNxgtuhqtK/n5he+5NhyEA==
+
+"@azure/msal-react@^1.5.7":
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/@azure/msal-react/-/msal-react-1.5.7.tgz#89ae61a557a5b3359d5e6b7280c013e1d6a0e0fe"
+  integrity sha512-Ub9XPAZCWdBEpTyCGdA1RPdmIAOgLCt344pdL54eCQl3sNVAJQo8DWtRj9UM/qu4tW1dK6HESmznjoBPhuqGdg==
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -1547,6 +1564,13 @@
   integrity sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==
   dependencies:
     regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.12.5":
+  version "7.20.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.7.tgz#fcb41a5a70550e04a7b708037c7c32f7f356d8fd"
+  integrity sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==
+  dependencies:
+    regenerator-runtime "^0.13.11"
 
 "@babel/template@^7.18.10", "@babel/template@^7.3.3":
   version "7.18.10"
@@ -3476,6 +3500,14 @@
     npmlog "^6.0.2"
     write-file-atomic "^4.0.1"
 
+"@microsoft/microsoft-graph-client@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-client/-/microsoft-graph-client-3.0.4.tgz#6fc409336574521734379f033787af153828bf5d"
+  integrity sha512-K7GIg/inDukZC2iBhFEvOSoq5ShnlIl8JSRUv8Ksw1iXTtu6kxLmBwF6xY8RZN7CTSJh+5N91aMKu5KeF0/9fA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    tslib "^2.2.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -3880,11 +3912,6 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
-
-"@react-oauth/google@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@react-oauth/google/-/google-0.5.1.tgz#fc5cf33bff5d59583c5b0ed387431350216dd907"
-  integrity sha512-XCMMke24klAHIVnrZAMibodyjSUsxBOJ+vO5yvRptWC2Vnq02uLUnydjtIdCzCUIAxbvbFbQWZxG0xF0Y8GtHA==
 
 "@rebass/grid@^6.1.0":
   version "6.1.0"
@@ -4563,9 +4590,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17", "@types/react@^17.0.4", "@types/react@^17.0.9":
-  version "17.0.52"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.52.tgz#10d8b907b5c563ac014a541f289ae8eaa9bf2e9b"
-  integrity sha512-vwk8QqVODi0VaZZpDXQCmEmiOuyjEFPY7Ttaw5vjM112LOq37yz1CDJGrRJwA1fYEq4Iitd5rnjd1yWAc/bT+A==
+  version "17.0.53"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.53.tgz#10d4d5999b8af3d6bc6a9369d7eb953da82442ab"
+  integrity sha512-1yIpQR2zdYu1Z/dc1OxC+MA6GR240u3gcnP4l6mvj/PJiVaqHsQPmWttsvHsfnhfPbU2FuGmo0wSITPygjBmsw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -13427,7 +13454,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -13635,14 +13662,6 @@ react-focus-lock@^2.9.0:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-google-login@^5.1.21:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-5.2.2.tgz#a20b46440c6c1610175ef75baf427118ff0e9859"
-  integrity sha512-JUngfvaSMcOuV0lFff7+SzJ2qviuNMQdqlsDJkUM145xkGPVIfqWXq9Ui+2Dr6jdJWH5KYdynz9+4CzKjI5u6g==
-  dependencies:
-    "@types/react" "*"
-    prop-types "^15.6.0"
-
 react-hook-form@^7.28.1:
   version "7.37.0"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.37.0.tgz#4d1738f092d3d8a3ade34ee892d97350b1032b19"
@@ -13846,6 +13865,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+regenerator-runtime@^0.13.11:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regenerator-runtime@^0.13.4:
   version "0.13.10"
