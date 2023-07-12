@@ -8,12 +8,16 @@
     "firstName": "Trainee",
     "lastName": "Traineeson",
     "language": "de",
-    "startDate": "2019-08-01T22:00:00.000Z",
-    "endDate": "2023-07-31T22:00:00.000Z",
+    "startDate": "2022-06-01T22:00:00.000Z",
+    "endDate": "2024-07-31T22:00:00.000Z",
     "theme": "light",
     "token": "123",
     "type": "Trainee",
-    "trainerId": "456"
+    "trainerId": "456",
+    "timetableSettings": {
+      "onBoardingTimetable": true,
+      "preFillClass": true
+    }
   },
   {
     "id": "456",

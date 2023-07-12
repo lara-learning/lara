@@ -71,4 +71,8 @@ export * from './settings'
 export * from './alexa-settings'
 export * from './splash-page'
 export * from './faq'
+export * from './indicator'
+export * from './timetable-input'
+export * from './timetable-entry-form'
+
 export { DefaultTheme, ThemeProvider } from 'styled-components'

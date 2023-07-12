@@ -1,15 +1,19 @@
 import 'styled-components'
 
+// Color "surfaceSecondary" and "timetableFont" need to be added to Styleguide
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     // Basics
     header: string
     surface: string
+    surfaceSecondary: string
     background: string
     supportIcon: string
     progressBar: string
     overlay: string
     faq: string
+    separator: string
 
     // Fonts
     darkFont: string
@@ -18,6 +22,7 @@ declare module 'styled-components' {
     blueFont: string
     placeholder: string
     headerFont: string
+    timetableFont: string
 
     buttonPrimaryFont: string
 

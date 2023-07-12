@@ -139,12 +139,19 @@ export type GqlMutateEntryPayload = {
   report: GqlReport;
 };
 
+export type GqlMutateTimetablePayload = {
+  __typename?: 'MutateTimetablePayload';
+  timetables?: Maybe<Array<Maybe<GqlTimetable>>>;
+};
+
 export type GqlMutation = {
   __typename?: 'Mutation';
   /** [DEV] Login as a user. */
   _devloginuser?: Maybe<GqlOAuthPayload>;
   /** [DEV] Sets the users type. */
   _devsetusertype: GqlDevSetUserPayload;
+  /** Fills report with timetable content */
+  autoFillReport?: Maybe<GqlReport>;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<GqlTrainerTraineePayload>;
   /** Creates a new comment on a Day which is identified by the id argument. */
@@ -157,12 +164,18 @@ export type GqlMutation = {
   createEntry: GqlMutateEntryPayload;
   /** Create OAuth Code */
   createOAuthCode: Scalars['String'];
+  /** Create timetable */
+  createTimetable?: Maybe<GqlTrainee>;
   /** Creates Trainee. */
   createTrainee?: Maybe<GqlTrainee>;
   /** Creates Trainer. */
   createTrainer?: Maybe<GqlTrainer>;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
+  /** Delete timetable by id */
+  deleteTimetable?: Maybe<GqlTrainee>;
+  /** Delete entry in timetable */
+  deleteTimetableEntry?: Maybe<GqlTrainee>;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
   /** Login via microsoft */
@@ -185,8 +198,12 @@ export type GqlMutation = {
   updateEntryOrder: GqlMutateEntryPayload;
   /** Updates report which is identified by the id argument. */
   updateReport?: Maybe<GqlUpdateReportPayload>;
+  /** Update timetable */
+  updateTimetable?: Maybe<GqlTrainee>;
   /** Updates Trainee. */
   updateTrainee?: Maybe<GqlTrainee>;
+  /** Updates Timetable settings of Trainee. */
+  updateTraineeTimetableSettings?: Maybe<GqlTrainee>;
   /** Updates Trainer. */
   updateTrainer?: Maybe<GqlTrainer>;
 };
@@ -199,6 +216,11 @@ export type GqlMutation_DevloginuserArgs = {
 
 export type GqlMutation_DevsetusertypeArgs = {
   type: Scalars['String'];
+};
+
+
+export type GqlMutationAutoFillReportArgs = {
+  reportId: Scalars['ID'];
 };
 
 
@@ -234,6 +256,11 @@ export type GqlMutationCreateEntryArgs = {
 };
 
 
+export type GqlMutationCreateTimetableArgs = {
+  input: GqlTimetableInput;
+};
+
+
 export type GqlMutationCreateTraineeArgs = {
   input: GqlCreateTraineeInput;
 };
@@ -246,6 +273,17 @@ export type GqlMutationCreateTrainerArgs = {
 
 export type GqlMutationDeleteEntryArgs = {
   id: Scalars['ID'];
+};
+
+
+export type GqlMutationDeleteTimetableArgs = {
+  timetableId: Scalars['ID'];
+};
+
+
+export type GqlMutationDeleteTimetableEntryArgs = {
+  input: GqlTimetableEntryInput;
+  timetableId: Scalars['ID'];
 };
 
 
@@ -312,9 +350,19 @@ export type GqlMutationUpdateReportArgs = {
 };
 
 
+export type GqlMutationUpdateTimetableArgs = {
+  input: GqlTimetableUpdateInput;
+};
+
+
 export type GqlMutationUpdateTraineeArgs = {
   id: Scalars['ID'];
   input: GqlUpdateTraineeInput;
+};
+
+
+export type GqlMutationUpdateTraineeTimetableSettingsArgs = {
+  input?: InputMaybe<GqlTimetableUserSettingsInput>;
 };
 
 
@@ -357,6 +405,8 @@ export type GqlQuery = {
   reports: Array<Maybe<GqlReport>>;
   /** Get all Suggestions */
   suggestions: Array<Scalars['String']>;
+  /** Get all Timetables for Trainee */
+  timetables?: Maybe<Array<Maybe<GqlTimetable>>>;
   /** Get all Trainees */
   trainees: Array<GqlTrainee>;
   /** Get all Trainers */
@@ -391,6 +441,11 @@ export type GqlQueryReportsArgs = {
   statuses?: InputMaybe<Array<GqlReportStatus>>;
 };
 
+
+export type GqlQueryTimetablesArgs = {
+  traineeId: Scalars['ID'];
+};
+
 export type GqlReport = GqlCommentableInterface & {
   __typename?: 'Report';
   comments: Array<GqlComment>;
@@ -418,10 +473,73 @@ export type GqlReportStatus =
   /** Report is open */
   | 'todo';
 
+export type GqlTimetable = {
+  __typename?: 'Timetable';
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<GqlTimetableEntry>;
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type GqlTimetableEntry = {
+  __typename?: 'TimetableEntry';
+  day: GqlWeekday;
+  id: Scalars['ID'];
+  notes?: Maybe<Scalars['String']>;
+  room?: Maybe<Scalars['String']>;
+  subject: Scalars['String'];
+  teacher?: Maybe<Scalars['String']>;
+  timeEnd: Scalars['Int'];
+  timeStart: Scalars['Int'];
+};
+
+export type GqlTimetableEntryInput = {
+  day: GqlWeekday;
+  id?: InputMaybe<Scalars['ID']>;
+  notes?: InputMaybe<Scalars['String']>;
+  room?: InputMaybe<Scalars['String']>;
+  subject: Scalars['String'];
+  teacher?: InputMaybe<Scalars['String']>;
+  timeEnd: Scalars['Int'];
+  timeStart: Scalars['Int'];
+};
+
+export type GqlTimetableInput = {
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<GqlTimetableEntryInput>;
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type GqlTimetableUpdateInput = {
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<GqlTimetableEntryInput>;
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type GqlTimetableUserSettings = {
+  __typename?: 'TimetableUserSettings';
+  /** Settings for Trainee timetable */
+  onBoardingTimetable?: Maybe<Scalars['Boolean']>;
+  preFillClass?: Maybe<Scalars['Boolean']>;
+  weekendSchool?: Maybe<Scalars['Boolean']>;
+};
+
+export type GqlTimetableUserSettingsInput = {
+  onBoardingTimetable?: InputMaybe<Scalars['Boolean']>;
+  preFillClass?: InputMaybe<Scalars['Boolean']>;
+  weekendSchool?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type GqlTrainee = GqlUserInterface & {
   __typename?: 'Trainee';
   alexaSkillLinked?: Maybe<Scalars['Boolean']>;
-  /** The url for the users avatar image. */
   avatar: Scalars['String'];
   company: GqlCompany;
   course?: Maybe<Scalars['String']>;
@@ -441,6 +559,8 @@ export type GqlTrainee = GqlUserInterface & {
   startDate?: Maybe<Scalars['String']>;
   startOfToolUsage?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
+  timetableSettings?: Maybe<GqlTimetableUserSettings>;
+  timetables?: Maybe<Array<Maybe<GqlTimetable>>>;
   trainer?: Maybe<GqlTrainer>;
   type: GqlUserTypeEnum;
   username: Scalars['String'];
@@ -527,6 +647,15 @@ export type GqlUserTypeEnum =
   | 'Trainee'
   /** User is a Trainer */
   | 'Trainer';
+
+export type GqlWeekday =
+  | 'friday'
+  /** Days of the Week */
+  | 'monday'
+  | 'saturday'
+  | 'thursday'
+  | 'tuesday'
+  | 'wednesday';
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -615,6 +744,7 @@ export type GqlResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']>;
   LaraConfig: ResolverTypeWrapper<GqlLaraConfig>;
   MutateEntryPayload: ResolverTypeWrapper<Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversTypes['Day'], entry?: Maybe<GqlResolversTypes['Entry']>, report: GqlResolversTypes['Report'] }>;
+  MutateTimetablePayload: ResolverTypeWrapper<GqlMutateTimetablePayload>;
   Mutation: ResolverTypeWrapper<{}>;
   OAuthPayload: ResolverTypeWrapper<GqlOAuthPayload>;
   PrintPayload: ResolverTypeWrapper<GqlPrintPayload>;
@@ -622,6 +752,13 @@ export type GqlResolversTypes = ResolversObject<{
   Report: ResolverTypeWrapper<Report>;
   ReportStatus: GqlReportStatus;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Timetable: ResolverTypeWrapper<GqlTimetable>;
+  TimetableEntry: ResolverTypeWrapper<GqlTimetableEntry>;
+  TimetableEntryInput: GqlTimetableEntryInput;
+  TimetableInput: GqlTimetableInput;
+  TimetableUpdateInput: GqlTimetableUpdateInput;
+  TimetableUserSettings: ResolverTypeWrapper<GqlTimetableUserSettings>;
+  TimetableUserSettingsInput: GqlTimetableUserSettingsInput;
   Trainee: ResolverTypeWrapper<Trainee>;
   Trainer: ResolverTypeWrapper<Trainer>;
   TrainerTraineePayload: ResolverTypeWrapper<Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversTypes['Trainee'], trainer: GqlResolversTypes['Trainer'] }>;
@@ -632,6 +769,7 @@ export type GqlResolversTypes = ResolversObject<{
   UserInput: GqlUserInput;
   UserInterface: ResolverTypeWrapper<UserInterface>;
   UserTypeEnum: GqlUserTypeEnum;
+  Weekday: GqlWeekday;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -652,12 +790,20 @@ export type GqlResolversParentTypes = ResolversObject<{
   Int: Scalars['Int'];
   LaraConfig: GqlLaraConfig;
   MutateEntryPayload: Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversParentTypes['Day'], entry?: Maybe<GqlResolversParentTypes['Entry']>, report: GqlResolversParentTypes['Report'] };
+  MutateTimetablePayload: GqlMutateTimetablePayload;
   Mutation: {};
   OAuthPayload: GqlOAuthPayload;
   PrintPayload: GqlPrintPayload;
   Query: {};
   Report: Report;
   String: Scalars['String'];
+  Timetable: GqlTimetable;
+  TimetableEntry: GqlTimetableEntry;
+  TimetableEntryInput: GqlTimetableEntryInput;
+  TimetableInput: GqlTimetableInput;
+  TimetableUpdateInput: GqlTimetableUpdateInput;
+  TimetableUserSettings: GqlTimetableUserSettings;
+  TimetableUserSettingsInput: GqlTimetableUserSettingsInput;
   Trainee: Trainee;
   Trainer: Trainer;
   TrainerTraineePayload: Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversParentTypes['Trainee'], trainer: GqlResolversParentTypes['Trainer'] };
@@ -757,18 +903,27 @@ export type GqlMutateEntryPayloadResolvers<ContextType = Context, ParentType ext
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GqlMutateTimetablePayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['MutateTimetablePayload'] = GqlResolversParentTypes['MutateTimetablePayload']> = ResolversObject<{
+  timetables?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Timetable']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Mutation'] = GqlResolversParentTypes['Mutation']> = ResolversObject<{
   _devloginuser?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutation_DevloginuserArgs, 'id'>>;
   _devsetusertype?: Resolver<GqlResolversTypes['DevSetUserPayload'], ParentType, ContextType, RequireFields<GqlMutation_DevsetusertypeArgs, 'type'>>;
+  autoFillReport?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlMutationAutoFillReportArgs, 'reportId'>>;
   claimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationClaimTraineeArgs, 'id'>>;
   createCommentOnDay?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnDayArgs, 'id' | 'text' | 'traineeId'>>;
   createCommentOnEntry?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnEntryArgs, 'id' | 'text' | 'traineeId'>>;
   createCommentOnReport?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnReportArgs, 'id' | 'text' | 'traineeId'>>;
   createEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateEntryArgs, 'dayId' | 'input'>>;
   createOAuthCode?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  createTimetable?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTimetableArgs, 'input'>>;
   createTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTraineeArgs, 'input'>>;
   createTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationCreateTrainerArgs, 'input'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
+  deleteTimetable?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationDeleteTimetableArgs, 'timetableId'>>;
+  deleteTimetableEntry?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationDeleteTimetableEntryArgs, 'input' | 'timetableId'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;
@@ -781,7 +936,9 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   updateEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryArgs, 'id' | 'input'>>;
   updateEntryOrder?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryOrderArgs, 'dayId' | 'entryId' | 'orderId'>>;
   updateReport?: Resolver<Maybe<GqlResolversTypes['UpdateReportPayload']>, ParentType, ContextType, RequireFields<GqlMutationUpdateReportArgs, 'id'>>;
+  updateTimetable?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationUpdateTimetableArgs, 'input'>>;
   updateTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationUpdateTraineeArgs, 'id' | 'input'>>;
+  updateTraineeTimetableSettings?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, Partial<GqlMutationUpdateTraineeTimetableSettingsArgs>>;
   updateTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationUpdateTrainerArgs, 'id' | 'input'>>;
 }>;
 
@@ -809,6 +966,7 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;
   suggestions?: Resolver<Array<GqlResolversTypes['String']>, ParentType, ContextType>;
+  timetables?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Timetable']>>>, ParentType, ContextType, RequireFields<GqlQueryTimetablesArgs, 'traineeId'>>;
   trainees?: Resolver<Array<GqlResolversTypes['Trainee']>, ParentType, ContextType>;
   trainers?: Resolver<Array<GqlResolversTypes['Trainer']>, ParentType, ContextType>;
 }>;
@@ -826,6 +984,35 @@ export type GqlReportResolvers<ContextType = Context, ParentType extends GqlReso
   summary?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   week?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   year?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlTimetableResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Timetable'] = GqlResolversParentTypes['Timetable']> = ResolversObject<{
+  dateEnd?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  dateStart?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  entries?: Resolver<Array<GqlResolversTypes['TimetableEntry']>, ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlTimetableEntryResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['TimetableEntry'] = GqlResolversParentTypes['TimetableEntry']> = ResolversObject<{
+  day?: Resolver<GqlResolversTypes['Weekday'], ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  notes?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  room?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  subject?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  teacher?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  timeEnd?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  timeStart?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlTimetableUserSettingsResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['TimetableUserSettings'] = GqlResolversParentTypes['TimetableUserSettings']> = ResolversObject<{
+  onBoardingTimetable?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  preFillClass?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  weekendSchool?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -850,6 +1037,8 @@ export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlRes
   startDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   startOfToolUsage?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  timetableSettings?: Resolver<Maybe<GqlResolversTypes['TimetableUserSettings']>, ParentType, ContextType>;
+  timetables?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Timetable']>>>, ParentType, ContextType>;
   trainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
   username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -915,11 +1104,15 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   Entry?: GqlEntryResolvers<ContextType>;
   LaraConfig?: GqlLaraConfigResolvers<ContextType>;
   MutateEntryPayload?: GqlMutateEntryPayloadResolvers<ContextType>;
+  MutateTimetablePayload?: GqlMutateTimetablePayloadResolvers<ContextType>;
   Mutation?: GqlMutationResolvers<ContextType>;
   OAuthPayload?: GqlOAuthPayloadResolvers<ContextType>;
   PrintPayload?: GqlPrintPayloadResolvers<ContextType>;
   Query?: GqlQueryResolvers<ContextType>;
   Report?: GqlReportResolvers<ContextType>;
+  Timetable?: GqlTimetableResolvers<ContextType>;
+  TimetableEntry?: GqlTimetableEntryResolvers<ContextType>;
+  TimetableUserSettings?: GqlTimetableUserSettingsResolvers<ContextType>;
   Trainee?: GqlTraineeResolvers<ContextType>;
   Trainer?: GqlTrainerResolvers<ContextType>;
   TrainerTraineePayload?: GqlTrainerTraineePayloadResolvers<ContextType>;

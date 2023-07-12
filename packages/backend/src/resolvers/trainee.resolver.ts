@@ -21,6 +21,7 @@ import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
 import { avatar, username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
+import { timetablesByTrainee } from '../repositories/timetable.repo'
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
   Trainee: {
@@ -34,6 +35,9 @@ export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
     username,
     openReportsCount: async (model) => {
       return reportsWithinApprenticeship(model, ['reopened', 'todo']).then((reports) => reports.length)
+    },
+    timetables: async (model) => {
+      return timetablesByTrainee(model.id)
     },
   },
 }
@@ -108,6 +112,13 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
 
       await validateTrainee(updatedTrainee, currentUser.language)
 
+      return saveUser(updatedTrainee)
+    },
+    updateTraineeTimetableSettings: async (_parent, { input }, { currentUser }) => {
+      const updatedTrainee = {
+        ...currentUser,
+        timetableSettings: input,
+      }
       return saveUser(updatedTrainee)
     },
   },

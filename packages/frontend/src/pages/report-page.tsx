@@ -17,6 +17,7 @@ import {
   Report,
   ReportPageDataQueryVariables,
   ReportStatus,
+  useAutoFillReportMutation,
   useReportPageDataQuery,
   useUpdateReportMutation,
 } from '../graphql'
@@ -44,6 +45,8 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
   const currentUser = data?.currentUser
 
   const [updateReportMutation] = useUpdateReportMutation()
+  const [autofillMutation] = useAutoFillReportMutation()
+
   const { addToast } = useToastContext()
 
   const [fetchPdf, pdfLoading] = useFetchPdf()
@@ -54,9 +57,23 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const toggleUnarchiveModal = () => setShowUnarchiveModal(!showUnarchiveModal)
 
+  const handleAutoFill = () => {
+    if (!report) {
+      addToast({ text: strings.errors.error, type: 'error' })
+      return
+    }
+
+    autofillMutation({ variables: { reportId: report.id } })
+      .then(() => {
+        addToast({ text: strings.report.autoFillReport, type: 'success' })
+      })
+      .catch((error: GraphQLError) => {
+        addToast({ text: error.message, type: 'error' })
+      })
+  }
+
   const updateReport = async (values: Partial<Report>) => {
     if (!report) return
-
     return updateReportMutation({
       variables: {
         ...report,
@@ -125,7 +142,7 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
 
     return (
       <Container overflow="visible">
-        <ReportPageHeader report={report} currentUser={currentUser} updateReport={updateReport} />
+        <ReportPageHeader report={report} updateReport={updateReport} />
 
         <EntryOrderProvider>
           {report.days.map((day) => (
@@ -156,7 +173,12 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
 
     return (
       <Spacer y="l">
-        <Flex justifyContent={'flex-end'} alignItems={'center'}>
+        <Flex justifyContent="space-between" alignItems={'center'}>
+          {currentUser?.__typename === 'Trainee' && (
+            <PrimaryButton disabled={!currentUser?.timetableSettings?.preFillClass} onClick={handleAutoFill}>
+              {strings.report.autoFillReport}
+            </PrimaryButton>
+          )}
           {(reportTodo || reportReopened) && (
             <PrimaryButton disabled={finishedDays !== 5 || !report.department} onClick={toggleHandoverModal}>
               {strings.report.handover}

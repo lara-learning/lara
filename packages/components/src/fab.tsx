@@ -32,6 +32,16 @@ const StyledFab = styled.button<FabLayoutProps>`
 
   background: ${(props) => props.theme.secondaryDefault};
 
+  ${(props) =>
+    props.inline &&
+    css`
+      position: relative;
+      bottom: 0;
+      right: 0;
+      box-shadow: 0px 1px 2px rgb(0 0 0 / 25%);
+      margin: ${Spacings.xxs};
+    `}
+
   svg {
     fill: ${(props) => props.theme.iconBlue};
   }
@@ -94,6 +104,7 @@ const StyledFab = styled.button<FabLayoutProps>`
 export interface FabLayoutProps extends HTMLAttributes<HTMLButtonElement> {
   danger?: boolean
   large?: boolean
+  inline?: boolean
 }
 
 export const FabLayout: React.FC<FabLayoutProps> = ({ children, ...rest }) => {

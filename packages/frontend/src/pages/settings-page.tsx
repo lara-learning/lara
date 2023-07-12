@@ -10,6 +10,7 @@ import TraineeSettings from '../components/trainee-settings'
 import { UserTypeEnum, useSettingsPageDataQuery } from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
+import { TimetableSettings } from '../components/timetable-settings'
 
 const SettingsPage: React.FunctionComponent = () => {
   const { loading, data } = useSettingsPageDataQuery()
@@ -20,17 +21,29 @@ const SettingsPage: React.FunctionComponent = () => {
 
       {/* Trainee Settings */}
       {!loading && data?.currentUser && data.currentUser.type === UserTypeEnum.Trainee && (
-        <Spacer bottom="xl">
-          <Container>
-            <Spacer xy="l">
-              <Spacer bottom="l">
-                <H1 noMargin>{strings.settings.apprenticeship}</H1>
-              </Spacer>
+        <>
+          <Spacer bottom="xl">
+            <Container>
+              <Spacer xy="l">
+                <Spacer bottom="l">
+                  <H1 noMargin>{strings.settings.apprenticeship}</H1>
+                </Spacer>
 
-              <TraineeSettings />
-            </Spacer>
-          </Container>
-        </Spacer>
+                <TraineeSettings />
+              </Spacer>
+            </Container>
+          </Spacer>
+          <Spacer bottom="xl">
+            <Container>
+              <Spacer xy="l">
+                <Spacer bottom="l">
+                  <H1 noMargin>{strings.timetablePage.settings.title}</H1>
+                </Spacer>
+                <TimetableSettings />
+              </Spacer>
+            </Container>
+          </Spacer>
+        </>
       )}
 
       {/* Admin Settings */}

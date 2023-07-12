@@ -7,16 +7,19 @@ import {
   StyledAccordionContainer,
   StyledAccordionHeader,
   StyledAccordionIcon,
+  StyledAccordionSubTitle,
   StyledAccordionTitle,
 } from '@lara/components'
 
 interface AccordionProps {
   title: string
+  fullWidth?: boolean
+  subtitle?: string
   children?: React.ReactNode
   forceActive?: boolean
 }
 
-const Accordion: React.FunctionComponent<AccordionProps> = ({ children, title, forceActive }) => {
+const Accordion: React.FunctionComponent<AccordionProps> = ({ children, title, forceActive, subtitle, fullWidth }) => {
   const [activeState, setActiveState] = React.useState(false)
 
   const handleClick = () => {
@@ -43,8 +46,13 @@ const Accordion: React.FunctionComponent<AccordionProps> = ({ children, title, f
           overflow: 'hidden',
         }}
       >
-        <Spacer top="s" right="xxl" bottom="xs">
-          <Paragraph noMargin>{children}</Paragraph>
+        <Spacer right={!fullWidth ? 'xxl' : 'xxs'} top="s" bottom="xs">
+          {subtitle && (
+            <StyledAccordionSubTitle noMargin active={active}>
+              {subtitle}
+            </StyledAccordionSubTitle>
+          )}
+          {fullWidth ? <div>{children}</div> : <Paragraph noMargin>{children}</Paragraph>}
         </Spacer>
       </motion.div>
     </StyledAccordionContainer>

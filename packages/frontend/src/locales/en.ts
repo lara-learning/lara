@@ -39,6 +39,63 @@ const englishTranslation: Translation = {
     reportToArciveAddedSuccessTitle: 'New report in your archive',
     reportToArciveAddedSuccess: 'Your report about {0}{1} was approved by {name} and is now stored in your archive.',
   },
+  timetablePage: {
+    title: 'There is nothing here yet',
+    emptyState: 'You have no timetables in your account.',
+    add: 'Add your timetable',
+    noTimetable: 'No timetables available',
+    onBoarding: {
+      title: 'A couple of questions first',
+      questions: {
+        weekendSchool: 'Do you sometimes have classes on Saturdays?',
+        preFillClass: 'Would you like school subjects to be included directly in your report book?',
+      },
+      buttons: {
+        yes: 'Yes',
+        no: 'No',
+        create: 'Create timetable',
+        autofill: 'Transfer timetable to report',
+      },
+      toast: {
+        success: 'Successfully saved',
+        error: 'There was an error',
+        deleteSuccess: 'Timetable successfully deleted',
+        deleteError: 'There was an error deleting',
+      },
+    },
+    addTimetable: {
+      headline: 'Edit your timetable',
+      titles: {
+        headline: 'title',
+        validity: 'validity',
+      },
+      editEntry: {
+        title: 'Create new entry',
+        weekday: 'Workday',
+        timeperiod: 'period',
+        subject: 'subject',
+        teacher: 'teacher',
+        room: 'room',
+        notes: 'notes',
+        timeConflict: 'Unable to create entry, there is a time conflict',
+      },
+      buttons: {
+        done: 'done',
+        cancel: 'cancel',
+      },
+    },
+    weekdays: {
+      monday: 'Monday',
+      tuesday: 'Tuesday',
+      wednesday: 'Wednesday',
+      thursday: 'Thursday',
+      friday: 'Friday',
+      saturday: 'Saturday',
+    },
+    settings: {
+      title: 'Timetable',
+    },
+  },
   archivePage: {
     header: 'Archive',
     tableHead: {
@@ -67,6 +124,7 @@ const englishTranslation: Translation = {
     remarks: 'Additional Remarks',
     remarksPlaceholder: 'Add additional remarks here...',
     reportSaveSuccess: 'Report saved!',
+    autoFillReport: 'Enter timetable',
     textPlaceholder: 'Description',
     export: 'Export PDF',
     handover: 'Hand over this report',
@@ -292,6 +350,7 @@ const englishTranslation: Translation = {
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',
+    timetable: 'Timetable',
   },
   trainerReportOverview: {
     todo: '{count} report is still in progress',
@@ -349,6 +408,7 @@ const englishTranslation: Translation = {
     required: 'This field is required',
     dateBefore: 'This Date has to be before the end date',
     dateAfter: 'This Date has to be after the start date',
+    timeAfter: 'The end time has to be after the start time',
     startDateOutOfPeriod: 'Startdate has to be in the next 5 years',
     endDateOutOfPeriod: 'Enddate has to be in the next 5 years',
   },

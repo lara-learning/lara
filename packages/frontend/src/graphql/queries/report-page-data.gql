@@ -3,6 +3,9 @@ query ReportPageData($year: Int!, $week: Int!) {
     ... on Trainee {
       startOfToolUsage
       endOfToolUsage
+      timetableSettings {
+        preFillClass
+      }
     }
     id
     firstName

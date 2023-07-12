@@ -12,7 +12,6 @@ import {
   StyledSettingsTrainerGrid,
   StyledTextInputLabel,
 } from '@lara/components'
-
 import { useTraineeSettingsDataQuery, useTraineeSettingsUpdateTraineeMutation } from '../graphql'
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'

@@ -1,0 +1,22 @@
+mutation deleteTimetable($timetableId: ID!) {
+  deleteTimetable(timetableId: $timetableId) {
+    id
+    timetables {
+      id
+      traineeId
+      title
+      dateStart
+      dateEnd
+      entries {
+        id
+        day
+        timeStart
+        timeEnd
+        subject
+        teacher
+        room
+        notes
+      }
+    }
+  }
+}

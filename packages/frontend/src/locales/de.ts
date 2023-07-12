@@ -41,6 +41,64 @@ const germanTranslation: Translation = {
     reportToArciveAddedSuccess:
       'Dein Bericht über {0}{1} wurde von {name} genehmigt und befindet sich jetzt in deinem Archiv.',
   },
+  timetablePage: {
+    title: 'Hier gibt es noch nichts',
+    emptyState:
+      'Du musst erst deinen Stundenplan eintragen, dann wird er dir hier angezeigt und automatisch in dein Berichtsheft eingetragen.',
+    add: 'Stundenplan hinzufügen',
+    noTimetable: 'Keine Stundenpläne verfügbar',
+    onBoarding: {
+      title: 'Zuerst ein Paar Fragen..',
+      questions: {
+        weekendSchool: 'Hast du manchmal am Samstag Unterricht?',
+        preFillClass: 'Möchtest du, dass Schulfächer direkt in dein Berichtsheft übernommen werden?',
+      },
+      buttons: {
+        yes: 'Ja',
+        no: 'Nein',
+        create: 'Stundenplan erstellen',
+        autofill: 'Stundenplan in Bericht übertragen',
+      },
+      toast: {
+        success: 'Erfolgreich gespeichert',
+        error: 'Es ist ein Fehler aufgetreten',
+        deleteSuccess: 'Stundenplan erfolgreich gelöscht',
+        deleteError: 'Es ist ein Fehler beim Löschen ausgetreten',
+      },
+    },
+    addTimetable: {
+      headline: 'Bearbeite deinen Stundenplan',
+      titles: {
+        headline: 'Titel',
+        validity: 'Gültigkeit',
+      },
+      editEntry: {
+        title: 'Neuen Eintrag erstellen',
+        weekday: 'Wochentag',
+        timeperiod: 'Zeitraum',
+        subject: 'Fach',
+        teacher: 'Lehrer',
+        room: 'Raum',
+        notes: 'Notizen',
+        timeConflict: 'Eintrag kann nicht erstellt werden, es gibt einen Zeitkonflikt mit einem anderen Stundenplan',
+      },
+      buttons: {
+        done: 'fertig',
+        cancel: 'abbrechen',
+      },
+    },
+    weekdays: {
+      monday: 'Montag',
+      tuesday: 'Dienstag',
+      wednesday: 'Mittwoch',
+      thursday: 'Donnerstag',
+      friday: 'Freitag',
+      saturday: 'Samstag',
+    },
+    settings: {
+      title: 'Stundenplan',
+    },
+  },
   archivePage: {
     header: 'Archiv',
     tableHead: {
@@ -69,6 +127,7 @@ const germanTranslation: Translation = {
     remarks: 'Sonstige Anmerkungen',
     remarksPlaceholder: 'Trage hier sonstige Anmerkungen ein...',
     reportSaveSuccess: 'Das Berichtsheft wurde erfolgreich gespeichert!',
+    autoFillReport: 'Stundenplan eintragen',
     textPlaceholder: 'Beschreibung',
     export: 'PDF exportieren',
     handover: 'Bericht übergeben',
@@ -296,6 +355,7 @@ const germanTranslation: Translation = {
     dashhboard: 'Dashboard',
     archive: 'Archiv',
     settings: 'Einstellungen',
+    timetable: 'Stundenplan',
   },
   trainerReportOverview: {
     todo: 'Es ist noch {count} Berichtsheft in Arbeit',
@@ -353,6 +413,7 @@ const germanTranslation: Translation = {
     required: 'Dieses Feld muss ausgefüllt sein',
     dateBefore: 'Das Datum muss vor dem Enddatum liegen',
     dateAfter: 'Das Datum muss nach dem Startdatum liegen',
+    timeAfter: 'Die Endzeit muss nach der Startzeit liegen',
     startDateOutOfPeriod: 'Startdatum muss in den letzen 5 Jahren sein',
     endDateOutOfPeriod: 'Enddatum muss in den nächsten 5 Jahren sein',
   },

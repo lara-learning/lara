@@ -4,11 +4,13 @@ export const darkTheme: DefaultTheme = {
   // Basic
   header: '#1D243C',
   surface: '#1D243C',
+  surfaceSecondary: '#FFFFFF',
   background: '#111832',
   supportIcon: '#6A7398',
   progressBar: '#F5F5F5',
   overlay: '#41465B',
   faq: '#C6CDE7',
+  separator: '#F5F5F5',
 
   //Fonts
   darkFont: '#FFFFFF',
@@ -17,6 +19,7 @@ export const darkTheme: DefaultTheme = {
   blueFont: '#6986FC',
   placeholder: '#8A8A8A',
   headerFont: '#FFFFFF',
+  timetableFont: '#4065FA',
 
   buttonPrimaryFont: '#FFFFFF',
 

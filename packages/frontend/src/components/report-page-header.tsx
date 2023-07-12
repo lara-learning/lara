@@ -4,14 +4,13 @@ import { useForm } from 'react-hook-form'
 import { H1, Paragraph, Spacer, DepartmentInput, ErrorText } from '@lara/components'
 import { Flex } from '@rebass/grid'
 
-import { Report, ReportStatus, Trainee } from '../graphql'
+import { Report, ReportStatus } from '../graphql'
 import DateHelper from '../helper/date-helper'
 import strings from '../locales/localization'
 import NavigationButtonLink from './navigation-button-link'
 
 interface ReportPageHeaderProps {
   report: Pick<Report, 'week' | 'department' | 'year' | 'status' | 'id' | 'nextReportLink' | 'previousReportLink'>
-  currentUser: Pick<Trainee, 'endOfToolUsage' | 'startOfToolUsage'>
   updateReport: (report: Partial<Report>) => Promise<void>
 }
 
@@ -95,6 +94,7 @@ const ReportPageHeader: React.FunctionComponent<ReportPageHeaderProps> = ({ repo
               />
             )}
           </div>
+
           <div>
             {report.nextReportLink && (
               <NavigationButtonLink

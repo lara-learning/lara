@@ -1,5 +1,6 @@
-import { endOfDay, endOfISOWeek, format, setISOWeek, setYear, startOfDay, startOfISOWeek } from 'date-fns'
+import { endOfDay, endOfISOWeek, format, parseISO, setISOWeek, setYear, startOfDay, startOfISOWeek } from 'date-fns'
 import { de as germanDateLocale, enUS as englishDateLocale } from 'date-fns/locale'
+import { utcToZonedTime } from 'date-fns-tz'
 
 import strings from '../locales/localization'
 
@@ -26,3 +27,8 @@ class DateHelper {
 }
 
 export default DateHelper
+
+export const parseISODateString = (date: string): Date => {
+  const isoDate = parseISO(date)
+  return utcToZonedTime(isoDate, 'Europe/Berlin')
+}

@@ -37,6 +37,60 @@ export default interface Translation {
     reportToArciveAddedSuccessTitle: string
     reportToArciveAddedSuccess: string
   }
+  timetablePage: {
+    title: string
+    emptyState: string
+    add: string
+    noTimetable: string
+    onBoarding: {
+      title: string
+      questions: {
+        weekendSchool: string
+        preFillClass: string
+      }
+      buttons: {
+        yes: string
+        no: string
+        create: string
+        autofill: string
+      }
+      toast: {
+        success: string
+        error: string
+        deleteSuccess: string
+        deleteError: string
+      }
+    }
+    addTimetable: {
+      headline: string
+      titles: { headline: string; validity: string }
+      editEntry: {
+        title: string
+        weekday: string
+        timeperiod: string
+        subject: string
+        teacher: string
+        room: string
+        notes: string
+        timeConflict: string
+      }
+      buttons: {
+        done: string
+        cancel: string
+      }
+    }
+    weekdays: {
+      monday: string
+      tuesday: string
+      wednesday: string
+      thursday: string
+      friday: string
+      saturday: string
+    }
+    settings: {
+      title: string
+    }
+  }
   archivePage: {
     header: string
     tableHead: {
@@ -80,6 +134,7 @@ export default interface Translation {
       departmentMissingText: string
     }
     reportSaveSuccess: string
+    autoFillReport: string
     total: string
     headingContainer: {
       title: string
@@ -282,6 +337,7 @@ export default interface Translation {
     dashhboard: string
     archive: string
     settings: string
+    timetable: string
   }
   trainerReportOverview: {
     todo: string
@@ -330,6 +386,7 @@ export default interface Translation {
     required: string
     dateBefore: string
     dateAfter: string
+    timeAfter: string
     startDateOutOfPeriod: string
     endDateOutOfPeriod: string
   }

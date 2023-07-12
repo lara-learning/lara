@@ -28,7 +28,8 @@ const ApolloProvider: React.FunctionComponent = ({ children }) => {
     link: ApolloLink.from([refreshTokenLink, authenticationLink, api]),
     cache: new InMemoryCache({
       possibleTypes: {
-        ['User']: ['Trainee', 'Trainer'],
+        User: ['Trainee', 'Trainer'],
+        Timetable: ['TimetableEntry'],
       },
       typePolicies: {
         Day: {
@@ -40,6 +41,20 @@ const ApolloProvider: React.FunctionComponent = ({ children }) => {
               },
             },
           },
+        },
+        Timetable: {
+          keyFields: ['id'],
+          fields: {
+            entries: {
+              merge(_, incoming) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                return incoming
+              },
+            },
+          },
+        },
+        TimetableEntry: {
+          keyFields: ['day', 'timeStart'],
         },
       },
     }),

@@ -39,6 +39,34 @@ export const StyledSelect = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
 `
+
+export const StyledTimetableSelect = styled(StyledSelect)<{ error?: boolean }>`
+  height: 44px;
+  border-bottom: solid 2px ${(props) => props.theme.lightFont};
+  background: ${(props) => props.theme.inputBackground};
+  transition: border-color 0.25s;
+  border-radius: ${BorderRadii.xxs} ${BorderRadii.xxs} 0 0;
+  text-align: center;
+  padding: 0 ${Spacings.m} 0 ${Spacings.m};
+  margin-top: 4px;
+  height: 44px;
+  min-width: ${Spacings.xxxl};
+  border-color: ${(props) => props.error && props.theme.errorRed};
+  &:active {
+    color: ${(props) => props.theme.darkFont};
+  }
+
+  &:disabled {
+    color: ${(props) => props.theme.lightFont};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.inputBorderActive};
+    border-color: ${(props) => props.error && props.theme.errorRed};
+  }
+`
+
 export const StyledSelectWithIconContainer = styled.div<SelectWithIconContainerProps>`
   display: flex;
   align-items: center;

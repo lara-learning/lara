@@ -138,12 +138,19 @@ export type MutateEntryPayload = {
   report: Report;
 };
 
+export type MutateTimetablePayload = {
+  __typename?: 'MutateTimetablePayload';
+  timetables?: Maybe<Array<Maybe<Timetable>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** [DEV] Login as a user. */
   _devloginuser?: Maybe<OAuthPayload>;
   /** [DEV] Sets the users type. */
   _devsetusertype: DevSetUserPayload;
+  /** Fills report with timetable content */
+  autoFillReport?: Maybe<Report>;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<TrainerTraineePayload>;
   /** Creates a new comment on a Day which is identified by the id argument. */
@@ -156,12 +163,18 @@ export type Mutation = {
   createEntry: MutateEntryPayload;
   /** Create OAuth Code */
   createOAuthCode: Scalars['String'];
+  /** Create timetable */
+  createTimetable?: Maybe<Trainee>;
   /** Creates Trainee. */
   createTrainee?: Maybe<Trainee>;
   /** Creates Trainer. */
   createTrainer?: Maybe<Trainer>;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: MutateEntryPayload;
+  /** Delete timetable by id */
+  deleteTimetable?: Maybe<Trainee>;
+  /** Delete entry in timetable */
+  deleteTimetableEntry?: Maybe<Trainee>;
   /** Link Alexa account */
   linkAlexa?: Maybe<UserInterface>;
   /** Login via microsoft */
@@ -184,8 +197,12 @@ export type Mutation = {
   updateEntryOrder: MutateEntryPayload;
   /** Updates report which is identified by the id argument. */
   updateReport?: Maybe<UpdateReportPayload>;
+  /** Update timetable */
+  updateTimetable?: Maybe<Trainee>;
   /** Updates Trainee. */
   updateTrainee?: Maybe<Trainee>;
+  /** Updates Timetable settings of Trainee. */
+  updateTraineeTimetableSettings?: Maybe<Trainee>;
   /** Updates Trainer. */
   updateTrainer?: Maybe<Trainer>;
 };
@@ -198,6 +215,11 @@ export type Mutation_DevloginuserArgs = {
 
 export type Mutation_DevsetusertypeArgs = {
   type: Scalars['String'];
+};
+
+
+export type MutationAutoFillReportArgs = {
+  reportId: Scalars['ID'];
 };
 
 
@@ -233,6 +255,11 @@ export type MutationCreateEntryArgs = {
 };
 
 
+export type MutationCreateTimetableArgs = {
+  input: TimetableInput;
+};
+
+
 export type MutationCreateTraineeArgs = {
   input: CreateTraineeInput;
 };
@@ -245,6 +272,17 @@ export type MutationCreateTrainerArgs = {
 
 export type MutationDeleteEntryArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationDeleteTimetableArgs = {
+  timetableId: Scalars['ID'];
+};
+
+
+export type MutationDeleteTimetableEntryArgs = {
+  input: TimetableEntryInput;
+  timetableId: Scalars['ID'];
 };
 
 
@@ -311,9 +349,19 @@ export type MutationUpdateReportArgs = {
 };
 
 
+export type MutationUpdateTimetableArgs = {
+  input: TimetableUpdateInput;
+};
+
+
 export type MutationUpdateTraineeArgs = {
   id: Scalars['ID'];
   input: UpdateTraineeInput;
+};
+
+
+export type MutationUpdateTraineeTimetableSettingsArgs = {
+  input?: InputMaybe<TimetableUserSettingsInput>;
 };
 
 
@@ -356,6 +404,8 @@ export type Query = {
   reports: Array<Maybe<Report>>;
   /** Get all Suggestions */
   suggestions: Array<Scalars['String']>;
+  /** Get all Timetables for Trainee */
+  timetables?: Maybe<Array<Maybe<Timetable>>>;
   /** Get all Trainees */
   trainees: Array<Trainee>;
   /** Get all Trainers */
@@ -390,6 +440,11 @@ export type QueryReportsArgs = {
   statuses?: InputMaybe<Array<ReportStatus>>;
 };
 
+
+export type QueryTimetablesArgs = {
+  traineeId: Scalars['ID'];
+};
+
 export type Report = CommentableInterface & {
   __typename?: 'Report';
   comments: Array<Comment>;
@@ -418,10 +473,73 @@ export enum ReportStatus {
   Todo = 'todo'
 }
 
+export type Timetable = {
+  __typename?: 'Timetable';
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<TimetableEntry>;
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type TimetableEntry = {
+  __typename?: 'TimetableEntry';
+  day: Weekday;
+  id: Scalars['ID'];
+  notes?: Maybe<Scalars['String']>;
+  room?: Maybe<Scalars['String']>;
+  subject: Scalars['String'];
+  teacher?: Maybe<Scalars['String']>;
+  timeEnd: Scalars['Int'];
+  timeStart: Scalars['Int'];
+};
+
+export type TimetableEntryInput = {
+  day: Weekday;
+  id?: InputMaybe<Scalars['ID']>;
+  notes?: InputMaybe<Scalars['String']>;
+  room?: InputMaybe<Scalars['String']>;
+  subject: Scalars['String'];
+  teacher?: InputMaybe<Scalars['String']>;
+  timeEnd: Scalars['Int'];
+  timeStart: Scalars['Int'];
+};
+
+export type TimetableInput = {
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<TimetableEntryInput>;
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type TimetableUpdateInput = {
+  dateEnd: Scalars['String'];
+  dateStart: Scalars['String'];
+  entries: Array<TimetableEntryInput>;
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  traineeId: Scalars['ID'];
+};
+
+export type TimetableUserSettings = {
+  __typename?: 'TimetableUserSettings';
+  /** Settings for Trainee timetable */
+  onBoardingTimetable?: Maybe<Scalars['Boolean']>;
+  preFillClass?: Maybe<Scalars['Boolean']>;
+  weekendSchool?: Maybe<Scalars['Boolean']>;
+};
+
+export type TimetableUserSettingsInput = {
+  onBoardingTimetable?: InputMaybe<Scalars['Boolean']>;
+  preFillClass?: InputMaybe<Scalars['Boolean']>;
+  weekendSchool?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type Trainee = UserInterface & {
   __typename?: 'Trainee';
   alexaSkillLinked?: Maybe<Scalars['Boolean']>;
-  /** The url for the users avatar image. */
   avatar: Scalars['String'];
   company: Company;
   course?: Maybe<Scalars['String']>;
@@ -441,6 +559,8 @@ export type Trainee = UserInterface & {
   startDate?: Maybe<Scalars['String']>;
   startOfToolUsage?: Maybe<Scalars['String']>;
   theme?: Maybe<Scalars['String']>;
+  timetableSettings?: Maybe<TimetableUserSettings>;
+  timetables?: Maybe<Array<Maybe<Timetable>>>;
   trainer?: Maybe<Trainer>;
   type: UserTypeEnum;
   username: Scalars['String'];
@@ -529,6 +649,16 @@ export enum UserTypeEnum {
   Trainer = 'Trainer'
 }
 
+export enum Weekday {
+  Friday = 'friday',
+  /** Days of the Week */
+  Monday = 'monday',
+  Saturday = 'saturday',
+  Thursday = 'thursday',
+  Tuesday = 'tuesday',
+  Wednesday = 'wednesday'
+}
+
 export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
   language?: InputMaybe<Scalars['String']>;
   theme?: InputMaybe<Scalars['String']>;
@@ -537,6 +667,13 @@ export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
 
 
 export type ApplicationSettingsUpdateUserMutation = { __typename?: 'Mutation', updateCurrentUser?: { __typename: 'Admin', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainee', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainer', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | undefined };
+
+export type AutoFillReportMutationVariables = Exact<{
+  reportId: Scalars['ID'];
+}>;
+
+
+export type AutoFillReportMutation = { __typename?: 'Mutation', autoFillReport?: { __typename?: 'Report', id: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number }> }> } | undefined };
 
 export type ClaimTraineeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -585,6 +722,13 @@ export type CreateOAuthCodeMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type CreateOAuthCodeMutation = { __typename?: 'Mutation', createOAuthCode: string };
 
+export type CreateTimetableMutationVariables = Exact<{
+  input: TimetableInput;
+}>;
+
+
+export type CreateTimetableMutation = { __typename?: 'Mutation', createTimetable?: { __typename?: 'Trainee', id: string, timetables?: Array<{ __typename?: 'Timetable', id: string, traineeId: string, title: string, dateStart: string, dateEnd: string, entries: Array<{ __typename?: 'TimetableEntry', id: string, day: Weekday, timeStart: number, timeEnd: number, subject: string, teacher?: string | undefined, room?: string | undefined, notes?: string | undefined }> } | undefined> | undefined } | undefined };
+
 export type CreateTraineeMutationVariables = Exact<{
   input: CreateTraineeInput;
 }>;
@@ -627,6 +771,21 @@ export type DeleteEntryMutationVariables = Exact<{
 
 
 export type DeleteEntryMutation = { __typename?: 'Mutation', deleteEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string }> } } };
+
+export type DeleteTimetableEntryMutationVariables = Exact<{
+  input: TimetableEntryInput;
+  timetableId: Scalars['ID'];
+}>;
+
+
+export type DeleteTimetableEntryMutation = { __typename?: 'Mutation', deleteTimetableEntry?: { __typename?: 'Trainee', id: string, timetables?: Array<{ __typename?: 'Timetable', id: string, traineeId: string, title: string, dateStart: string, dateEnd: string, entries: Array<{ __typename?: 'TimetableEntry', id: string, day: Weekday, timeStart: number, timeEnd: number, subject: string, teacher?: string | undefined, room?: string | undefined, notes?: string | undefined }> } | undefined> | undefined } | undefined };
+
+export type DeleteTimetableMutationVariables = Exact<{
+  timetableId: Scalars['ID'];
+}>;
+
+
+export type DeleteTimetableMutation = { __typename?: 'Mutation', deleteTimetable?: { __typename?: 'Trainee', id: string, timetables?: Array<{ __typename?: 'Timetable', id: string, traineeId: string, title: string, dateStart: string, dateEnd: string, entries: Array<{ __typename?: 'TimetableEntry', id: string, day: Weekday, timeStart: number, timeEnd: number, subject: string, teacher?: string | undefined, room?: string | undefined, notes?: string | undefined }> } | undefined> | undefined } | undefined };
 
 export type LinkAlexaMutationVariables = Exact<{
   code: Scalars['String'];
@@ -719,6 +878,20 @@ export type UpdateReportMutationVariables = Exact<{
 
 
 export type UpdateReportMutation = { __typename?: 'Mutation', updateReport?: { __typename?: 'UpdateReportPayload', report: { __typename?: 'Report', id: string, summary?: string | undefined, department?: string | undefined, status: ReportStatus } } | undefined };
+
+export type UpdateTimetableMutationVariables = Exact<{
+  input: TimetableUpdateInput;
+}>;
+
+
+export type UpdateTimetableMutation = { __typename?: 'Mutation', updateTimetable?: { __typename?: 'Trainee', id: string, timetables?: Array<{ __typename?: 'Timetable', id: string, traineeId: string, title: string, dateStart: string, dateEnd: string, entries: Array<{ __typename?: 'TimetableEntry', id: string, day: Weekday, timeStart: number, timeEnd: number, subject: string, teacher?: string | undefined, room?: string | undefined, notes?: string | undefined }> } | undefined> | undefined } | undefined };
+
+export type UpdateTraineeTimetableSettingsMutationVariables = Exact<{
+  input: TimetableUserSettingsInput;
+}>;
+
+
+export type UpdateTraineeTimetableSettingsMutation = { __typename?: 'Mutation', updateTraineeTimetableSettings?: { __typename?: 'Trainee', id: string, timetableSettings?: { __typename?: 'TimetableUserSettings', onBoardingTimetable?: boolean | undefined, weekendSchool?: boolean | undefined, preFillClass?: boolean | undefined } | undefined } | undefined };
 
 export type UpdateTraineeMutationVariables = Exact<{
   input: UpdateTraineeInput;
@@ -819,7 +992,7 @@ export type ReportPageDataQueryVariables = Exact<{
 }>;
 
 
-export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string, username: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }> }> }> } | undefined };
+export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string, username: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string, avatar: string, username: string, timetableSettings?: { __typename?: 'TimetableUserSettings', preFillClass?: boolean | undefined } | undefined } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string, username: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } }> }> }> } | undefined };
 
 export type ReportReviewPageDataQueryVariables = Exact<{
   year: Scalars['Int'];
@@ -833,7 +1006,7 @@ export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { 
 export type SettingsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string } } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string }, timetableSettings?: { __typename?: 'TimetableUserSettings', onBoardingTimetable?: boolean | undefined, weekendSchool?: boolean | undefined, preFillClass?: boolean | undefined } | undefined } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type SignatureSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -848,12 +1021,17 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<st
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, avatar: string, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string }, timetables?: Array<{ __typename?: 'Timetable', id: string, title: string, dateStart: string, dateEnd: string } | undefined> | undefined }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename: 'Trainee', id: string, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, company: { __typename?: 'Company', id: string, name: string }, trainer?: { __typename?: 'Trainer', firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer' } | undefined };
+export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename: 'Trainee', id: string, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, company: { __typename?: 'Company', id: string, name: string }, trainer?: { __typename?: 'Trainer', firstName: string, lastName: string, avatar: string } | undefined, timetableSettings?: { __typename?: 'TimetableUserSettings', onBoardingTimetable?: boolean | undefined, weekendSchool?: boolean | undefined, preFillClass?: boolean | undefined } | undefined } | { __typename?: 'Trainer' } | undefined };
+
+export type TraineeTimetableDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TraineeTimetableDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Trainee', id: string, timetableSettings?: { __typename?: 'TimetableUserSettings', onBoardingTimetable?: boolean | undefined, weekendSchool?: boolean | undefined, preFillClass?: boolean | undefined } | undefined, timetables?: Array<{ __typename?: 'Timetable', id: string, traineeId: string, title: string, dateStart: string, dateEnd: string, entries: Array<{ __typename?: 'TimetableEntry', id: string, day: Weekday, timeStart: number, timeEnd: number, subject: string, teacher?: string | undefined, room?: string | undefined, notes?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainer' } | undefined };
 
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -884,6 +1062,28 @@ export function useApplicationSettingsUpdateUserMutation(baseOptions?: Apollo.Mu
         return Apollo.useMutation<ApplicationSettingsUpdateUserMutation, ApplicationSettingsUpdateUserMutationVariables>(ApplicationSettingsUpdateUserDocument, options);
       }
 export type ApplicationSettingsUpdateUserMutationHookResult = ReturnType<typeof useApplicationSettingsUpdateUserMutation>;
+export const AutoFillReportDocument = gql`
+    mutation AutoFillReport($reportId: ID!) {
+  autoFillReport(reportId: $reportId) {
+    id
+    days {
+      status
+      id
+      entries {
+        id
+        text
+        time
+        orderId
+      }
+    }
+  }
+}
+    `;
+export function useAutoFillReportMutation(baseOptions?: Apollo.MutationHookOptions<AutoFillReportMutation, AutoFillReportMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AutoFillReportMutation, AutoFillReportMutationVariables>(AutoFillReportDocument, options);
+      }
+export type AutoFillReportMutationHookResult = ReturnType<typeof useAutoFillReportMutation>;
 export const ClaimTraineeDocument = gql`
     mutation claimTrainee($id: ID!) {
   claimTrainee(id: $id) {
@@ -1019,6 +1219,35 @@ export function useCreateOAuthCodeMutation(baseOptions?: Apollo.MutationHookOpti
         return Apollo.useMutation<CreateOAuthCodeMutation, CreateOAuthCodeMutationVariables>(CreateOAuthCodeDocument, options);
       }
 export type CreateOAuthCodeMutationHookResult = ReturnType<typeof useCreateOAuthCodeMutation>;
+export const CreateTimetableDocument = gql`
+    mutation CreateTimetable($input: TimetableInput!) {
+  createTimetable(input: $input) {
+    id
+    timetables {
+      id
+      traineeId
+      title
+      dateStart
+      dateEnd
+      entries {
+        id
+        day
+        timeStart
+        timeEnd
+        subject
+        teacher
+        room
+        notes
+      }
+    }
+  }
+}
+    `;
+export function useCreateTimetableMutation(baseOptions?: Apollo.MutationHookOptions<CreateTimetableMutation, CreateTimetableMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTimetableMutation, CreateTimetableMutationVariables>(CreateTimetableDocument, options);
+      }
+export type CreateTimetableMutationHookResult = ReturnType<typeof useCreateTimetableMutation>;
 export const CreateTraineeDocument = gql`
     mutation CreateTrainee($input: CreateTraineeInput!) {
   createTrainee(input: $input) {
@@ -1122,6 +1351,64 @@ export function useDeleteEntryMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<DeleteEntryMutation, DeleteEntryMutationVariables>(DeleteEntryDocument, options);
       }
 export type DeleteEntryMutationHookResult = ReturnType<typeof useDeleteEntryMutation>;
+export const DeleteTimetableEntryDocument = gql`
+    mutation DeleteTimetableEntry($input: TimetableEntryInput!, $timetableId: ID!) {
+  deleteTimetableEntry(input: $input, timetableId: $timetableId) {
+    id
+    timetables {
+      id
+      traineeId
+      title
+      dateStart
+      dateEnd
+      entries {
+        id
+        day
+        timeStart
+        timeEnd
+        subject
+        teacher
+        room
+        notes
+      }
+    }
+  }
+}
+    `;
+export function useDeleteTimetableEntryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTimetableEntryMutation, DeleteTimetableEntryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTimetableEntryMutation, DeleteTimetableEntryMutationVariables>(DeleteTimetableEntryDocument, options);
+      }
+export type DeleteTimetableEntryMutationHookResult = ReturnType<typeof useDeleteTimetableEntryMutation>;
+export const DeleteTimetableDocument = gql`
+    mutation deleteTimetable($timetableId: ID!) {
+  deleteTimetable(timetableId: $timetableId) {
+    id
+    timetables {
+      id
+      traineeId
+      title
+      dateStart
+      dateEnd
+      entries {
+        id
+        day
+        timeStart
+        timeEnd
+        subject
+        teacher
+        room
+        notes
+      }
+    }
+  }
+}
+    `;
+export function useDeleteTimetableMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTimetableMutation, DeleteTimetableMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTimetableMutation, DeleteTimetableMutationVariables>(DeleteTimetableDocument, options);
+      }
+export type DeleteTimetableMutationHookResult = ReturnType<typeof useDeleteTimetableMutation>;
 export const LinkAlexaDocument = gql`
     mutation linkAlexa($code: String!, $state: String!) {
   linkAlexa(code: $code, state: $state) {
@@ -1343,6 +1630,52 @@ export function useUpdateReportMutation(baseOptions?: Apollo.MutationHookOptions
         return Apollo.useMutation<UpdateReportMutation, UpdateReportMutationVariables>(UpdateReportDocument, options);
       }
 export type UpdateReportMutationHookResult = ReturnType<typeof useUpdateReportMutation>;
+export const UpdateTimetableDocument = gql`
+    mutation updateTimetable($input: TimetableUpdateInput!) {
+  updateTimetable(input: $input) {
+    id
+    timetables {
+      id
+      traineeId
+      title
+      dateStart
+      dateEnd
+      entries {
+        id
+        day
+        timeStart
+        timeEnd
+        subject
+        teacher
+        room
+        notes
+      }
+    }
+  }
+}
+    `;
+export function useUpdateTimetableMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTimetableMutation, UpdateTimetableMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTimetableMutation, UpdateTimetableMutationVariables>(UpdateTimetableDocument, options);
+      }
+export type UpdateTimetableMutationHookResult = ReturnType<typeof useUpdateTimetableMutation>;
+export const UpdateTraineeTimetableSettingsDocument = gql`
+    mutation UpdateTraineeTimetableSettings($input: TimetableUserSettingsInput!) {
+  updateTraineeTimetableSettings(input: $input) {
+    id
+    timetableSettings {
+      onBoardingTimetable
+      weekendSchool
+      preFillClass
+    }
+  }
+}
+    `;
+export function useUpdateTraineeTimetableSettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTraineeTimetableSettingsMutation, UpdateTraineeTimetableSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTraineeTimetableSettingsMutation, UpdateTraineeTimetableSettingsMutationVariables>(UpdateTraineeTimetableSettingsDocument, options);
+      }
+export type UpdateTraineeTimetableSettingsMutationHookResult = ReturnType<typeof useUpdateTraineeTimetableSettingsMutation>;
 export const UpdateTraineeDocument = gql`
     mutation UpdateTrainee($input: UpdateTraineeInput!, $id: ID!) {
   updateTrainee(input: $input, id: $id) {
@@ -1778,6 +2111,9 @@ export const ReportPageDataDocument = gql`
     ... on Trainee {
       startOfToolUsage
       endOfToolUsage
+      timetableSettings {
+        preFillClass
+      }
     }
     id
     firstName
@@ -1935,6 +2271,11 @@ export const SettingsPageDataDocument = gql`
       endDate
       course
       alexaSkillLinked
+      timetableSettings {
+        onBoardingTimetable
+        weekendSchool
+        preFillClass
+      }
     }
   }
   companies {
@@ -2005,6 +2346,12 @@ export const TraineePageDataDocument = gql`
       id
       name
     }
+    timetables {
+      id
+      title
+      dateStart
+      dateEnd
+    }
   }
   currentUser {
     id
@@ -2040,6 +2387,11 @@ export const TraineeSettingsDataDocument = gql`
         lastName
         avatar
       }
+      timetableSettings {
+        onBoardingTimetable
+        weekendSchool
+        preFillClass
+      }
     }
   }
 }
@@ -2054,6 +2406,47 @@ export function useTraineeSettingsDataLazyQuery(baseOptions?: Apollo.LazyQueryHo
         }
 export type TraineeSettingsDataQueryHookResult = ReturnType<typeof useTraineeSettingsDataQuery>;
 export type TraineeSettingsDataLazyQueryHookResult = ReturnType<typeof useTraineeSettingsDataLazyQuery>;
+export const TraineeTimetableDataDocument = gql`
+    query TraineeTimetableData {
+  currentUser {
+    ... on Trainee {
+      id
+      timetableSettings {
+        onBoardingTimetable
+        weekendSchool
+        preFillClass
+      }
+      timetables {
+        id
+        traineeId
+        title
+        dateStart
+        dateEnd
+        entries {
+          id
+          day
+          timeStart
+          timeEnd
+          subject
+          teacher
+          room
+          notes
+        }
+      }
+    }
+  }
+}
+    `;
+export function useTraineeTimetableDataQuery(baseOptions?: Apollo.QueryHookOptions<TraineeTimetableDataQuery, TraineeTimetableDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TraineeTimetableDataQuery, TraineeTimetableDataQueryVariables>(TraineeTimetableDataDocument, options);
+      }
+export function useTraineeTimetableDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TraineeTimetableDataQuery, TraineeTimetableDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TraineeTimetableDataQuery, TraineeTimetableDataQueryVariables>(TraineeTimetableDataDocument, options);
+        }
+export type TraineeTimetableDataQueryHookResult = ReturnType<typeof useTraineeTimetableDataQuery>;
+export type TraineeTimetableDataLazyQueryHookResult = ReturnType<typeof useTraineeTimetableDataLazyQuery>;
 export const TrainerReportsPageDataDocument = gql`
     query TrainerReportsPageData {
   currentUser {

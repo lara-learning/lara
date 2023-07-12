@@ -1,0 +1,15 @@
+mutation AutoFillReport($reportId: ID!) {
+  autoFillReport(reportId: $reportId) {
+    id
+    days {
+      status
+      id
+      entries {
+        id
+        text
+        time
+        orderId
+      }
+    }
+  }
+}
