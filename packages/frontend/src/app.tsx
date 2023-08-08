@@ -1,29 +1,31 @@
 import React from 'react'
 import { Router, Switch } from 'react-router-dom'
-import { GoogleOAuthProvider } from '@react-oauth/google'
-
 import ApolloProvider from './apollo-provider'
 import AppHistory from './app-history'
-import { GlobalFonts } from './components/fonts'
 import StatusBar from './components/status-bar'
-import { ToastContextProvider } from './context/toast/toast-context-provider'
-import { useCurrentUserQuery } from './graphql'
-import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentication'
-import { SplashPage } from './pages/splash-page'
 import Routes from './routes'
 import ThemeProvider from './theme-provider'
+import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentication'
+import { GlobalFonts } from './components/fonts'
+import { MsalProvider } from '@azure/msal-react'
+import { msalConfig } from './hooks/ms-auth'
+import { PublicClientApplication } from '@azure/msal-browser'
+import { SplashPage } from './pages/splash-page'
+import { ToastContextProvider } from './context/toast/toast-context-provider'
+import { useCurrentUserQuery } from './graphql'
 
+const msalInstance = new PublicClientApplication(msalConfig)
 export const App: React.FunctionComponent = () => {
   const [authenticated, setAuthenticated] = React.useState<AuthenticatedState>('loading')
 
   return (
-    <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
-      <GoogleOAuthProvider clientId={ENVIRONMENT.googleClientID}>
+    <MsalProvider instance={msalInstance}>
+      <AuthenticationContext.Provider value={{ authenticated, setAuthenticated }}>
         <ApolloProvider>
           <InnerApp />
         </ApolloProvider>
-      </GoogleOAuthProvider>
-    </AuthenticationContext.Provider>
+      </AuthenticationContext.Provider>
+    </MsalProvider>
   )
 }
 
@@ -36,19 +38,20 @@ const InnerApp: React.FunctionComponent = () => {
    * the redundant api call
    */
   const { data, loading } = useCurrentUserQuery()
+  const currentUser = data?.currentUser
 
   return (
-    <ThemeProvider currentUser={data?.currentUser}>
+    <ThemeProvider currentUser={currentUser}>
       {loading && <SplashPage />}
 
       {!loading && (
         <ToastContextProvider>
           <Router history={AppHistory.getInstance()}>
             <Switch>
-              <Routes currentUser={data?.currentUser} />
+              <Routes currentUser={currentUser} />
             </Switch>
 
-            {ENVIRONMENT.debug && <StatusBar currentUser={data?.currentUser} />}
+            {ENVIRONMENT.debug && <StatusBar currentUser={currentUser} />}
           </Router>
         </ToastContextProvider>
       )}

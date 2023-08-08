@@ -225,7 +225,7 @@ export type GqlMutation = {
   getUserByEmail?: Maybe<GqlUserInterface>;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
-  /** Login via google. */
+  /** Login via microsoft */
   login?: Maybe<GqlOAuthPayload>;
   /** Marks User to be deleted */
   markUserForDeletion?: Maybe<GqlUserInterface>;
@@ -352,7 +352,7 @@ export type GqlMutationLinkAlexaArgs = {
 
 
 export type GqlMutationLoginArgs = {
-  googleToken: Scalars['String'];
+  email: Scalars['String'];
 };
 
 
@@ -1030,7 +1030,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
   getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationGetUserByEmailArgs, 'email'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
-  login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'googleToken'>>;
+  login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;
   unclaimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationUnclaimTraineeArgs, 'id'>>;
   unlinkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;

@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 
 import { App } from './app'
 
-ReactDOM.render(<App />, document.getElementById('app'))
+if (window.location.hash === '') {
+  ReactDOM.render(<App />, document.getElementById('app'))
+}
 
 if (module.hot && ENVIRONMENT.debug) {
   module.hot.accept()

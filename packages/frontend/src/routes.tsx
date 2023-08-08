@@ -50,7 +50,6 @@ const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
   } else {
     if (currentUser) {
       strings.setLanguage(currentUser.language || navigator.language)
-
       // Current user was found
       // eslint-disable-next-line no-underscore-dangle
       if (currentUser.type === UserTypeEnum.Trainee && currentUser.__typename === 'Trainee') {

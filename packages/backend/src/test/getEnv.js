@@ -16,7 +16,8 @@ process.env = {
 
   GOOGLE_API_KEY: 'secret',
   GOOGLE_CLIENT_ID: 'secret',
-
+  MICROSOFT_CLIENT_ID: 'secret',
+  MICROSOFT_TENANT_ID: 'secret',
   AUTH_HEADER: 'secret',
   DEBUG: true,
 

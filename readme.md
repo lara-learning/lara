@@ -99,9 +99,9 @@ The following variables should be added to your cloned version of Lara.
 - AWS_SECRET_ACCESS_KEY
 - COMPANY_ABBREVIATION
   - Shortform of your companies name to create s3-buckets
-- GOOGLE_API_KEY
-- GOOGLE_CLIENT_ID
-  - Google keys to use for login
+- MICROSOFT_CLIENT_ID
+- MICROSOFT_TENANT_ID
+  - Microsoft keys to use for login
 - LARA_SECRET
   - Secret used in creating oauth secrets
 - OLD_COMPANY_NAME
