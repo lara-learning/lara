@@ -12,11 +12,11 @@ describe('createPrintReportData', () => {
       firstName: 'Trainee',
       lastName: 'Traineeson',
       email: 'trainee@exampleCompany.com',
-      startDate: '2019-08-01T22:00:00.000Z',
-      endDate: '2023-07-31T22:00:00.000Z',
+      startDate: '2022-08-01T22:00:00.000Z',
+      endDate: '2027-07-31T22:00:00.000Z',
     })
 
-    const report = generateReport(2019, 32, trainee.id)
+    const report = generateReport(2022, 32, trainee.id)
     report.department = department
 
     printReportData = createPrintReportData(report, trainee)
