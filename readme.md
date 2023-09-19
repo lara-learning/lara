@@ -125,6 +125,16 @@ The following variables should be added to your cloned version of Lara.
 - URL_ORIGIN
   - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
 
+### NEW AWS SETUP
+
+#### IAM User
+
+- Create a IAM deployment user and give him admin rights and save the credentials!
+
+#### Deployment
+
+-
+
 ### AWS Setup
 
 #### Login
