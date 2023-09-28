@@ -84,19 +84,60 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
 
 ## 🚧 Project setup
 
-### Environment variables
+### Deployment Environment variables
+
+- MICROSOFT_TENANT_ID
+  - String containing ?
+- PROD_MICROSOFT_CLIENT_ID
+  - String containing ?
+- AWS_ACCESS_KEY_ID
+  - String containing AWS IAM User ID used for deployment
+- AWS_SECRET_ACCESS_KEY
+  - String containing AWS IAM User Secret Key used for deployment 
+
+- URL_ORIGIN
+  - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
+- COMPANY_ABBREVIATION
+  - Shortform of your companies name to create s3-buckets
+- OLD_COMPANY_NAME
+- NEW_COMPANY_NAME
+  - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
+- AVATAR_URL
+  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used. 
+- SES_EMAIL
+  - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
+- SES_REGION
+  - String of aws region (probably eu-west-1)
+- SUPPORT_MAIL
+  - String containing the email address users can contact in case of problems e.g.: lara@exampleCompany.com
+- PRODUCTION_FE_URL
+  - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/
+- PRODUCTION_BE_URL
+  - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/
+- LARA_SECRET
+  - Secret used in creating oauth secrets
+
+### All Environment variables
 
 The following variables should be added to your cloned version of Lara.
 
-- ALEXA_AMAZON_CLIENT_ID
-- ALEXA_AMAZON_CLIENT_SECRET
-- ALEXA_SKILL_ID
+- MICROSOFT_TENANT_ID
+  - String containing ?
+- PROD_MICROSOFT_CLIENT_ID
+  - String containing ?
+- STAGING_MICROSOFT_CLIENT_ID
+  - String containing
+
+- AWS_ACCESS_KEY_ID
+  - String containing AWS IAM User ID used for deployment
+- AWS_SECRET_ACCESS_KEY
+  - String containing AWS IAM User Secret Key used for deployment 
 - AUTH_HEADER
   - String containing the value for the authorization header
-- AVATAR_URL
-  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used.
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
+- URL_ORIGIN
+  - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
+- Debug
+  - ? 
 - COMPANY_ABBREVIATION
   - Shortform of your companies name to create s3-buckets
 - MICROSOFT_CLIENT_ID
@@ -107,6 +148,31 @@ The following variables should be added to your cloned version of Lara.
 - OLD_COMPANY_NAME
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
+- AVATAR_URL
+  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used. 
+- SES_EMAIL
+  - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
+- SES_REGION
+  - String of aws region (probably eu-west-1)
+- SUPPORT_MAIL
+  - String containing the email address users can contact in case of problems e.g.: lara@exampleCompany.com
+- FRONTEND_URL
+  - String containing frontend development url
+- BACKEND_URL
+  - String containing backend development url
+- ENABLE_FRONTEND_TUNNEL 
+  - Boolean
+- ENABLE_BACKEND_TUNNEL
+  - Boolean
+- ALEXA_SKILL_ID
+  - Not required
+- ALEXA_AMAZON_CLIENT_ID
+  - Not required
+- ALEXA_AMAZON_CLIENT_SECRET
+  - Not required
+
+
+
 - STAGING_BE_URL
   - String containing the URL to the staging backend e.g.: https://staging.api.lara.exampleCompany.com/
 - STAGING_FE_URL
@@ -115,15 +181,15 @@ The following variables should be added to your cloned version of Lara.
   - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/
 - PRODUCTION_FE_URL
   - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/
-- SES_EMAIL
-  - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
-- SUPPORT_MAIL
-- String containing the email address users can contact in case of problems e.g.: lara@exampleCompany.com
+
 - TEST_TRAINEE_ID
 - TEST_TRAINER_ID
   - ID of testusers on the staging environment for e2e tests. If not provided e2e tests are skipped.
-- URL_ORIGIN
-  - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
+
+- LARA_SECRET
+  - Secret used in creating oauth secrets
+- STAGE
+  - String containing stage (probably: dev/prod)
 
 ### NEW AWS SETUP
 
@@ -133,7 +199,16 @@ The following variables should be added to your cloned version of Lara.
 
 #### Deployment
 
--
+- Fill out the .env file partially 
+- (Install dependencies)
+- Run `yarn build`
+- Run `serverless deploy` command 
+- Copy Cloudfront distribution urls or custom domains into .env 
+
+
+
+
+
 
 ### AWS Setup
 

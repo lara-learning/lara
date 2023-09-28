@@ -12,6 +12,7 @@ provider:
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
 
+
 plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
@@ -385,6 +386,37 @@ resources:
               - POST
               - PUT
             TargetOriginId: S3Origin
+            ViewerProtocolPolicy: redirect-to-https
+            ForwardedValues:
+              QueryString: true
+
+    BackendDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          PriceClass: PriceClass_100
+          #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
+          IPV6Enabled: true
+          Enabled: true
+          Origins:
+            - DomainName: !Sub ${ApiGatewayRestApi}.execute-api.${aws:region}.amazonaws.com
+              Id: ApiGatewayOrigin
+              CustomOriginConfig:
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                OriginSSLProtocols:
+                  - TLSv1
+          HttpVersion: http2
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            TargetOriginId: ApiGatewayOrigin
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
