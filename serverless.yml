@@ -358,6 +358,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.config.s3.frontend}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
 
     FrontendDistribution:
       Type: AWS::CloudFront::Distribution
@@ -367,6 +372,7 @@ resources:
           #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
           IPV6Enabled: true
           Enabled: true
+          Comment: Frontend
           Origins:
             - DomainName: ${self:custom.config.s3.frontend}.s3.${self:provider.region}.amazonaws.com
               Id: S3Origin
@@ -398,6 +404,7 @@ resources:
           #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
           IPV6Enabled: true
           Enabled: true
+          Comment: Backend
           Origins:
             - DomainName: !Sub ${ApiGatewayRestApi}.execute-api.${aws:region}.amazonaws.com
               Id: ApiGatewayOrigin

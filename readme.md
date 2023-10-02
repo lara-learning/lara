@@ -110,23 +110,25 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
   - String of aws region (probably eu-west-1)
 - SUPPORT_MAIL
   - String containing the email address users can contact in case of problems e.g.: lara@exampleCompany.com
-- PRODUCTION_FE_URL
-  - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/
-- PRODUCTION_BE_URL
-  - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/
+- FRONTEND_URL
+  - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/ or Cloudfront URL
+- BACKEND_URL
+  - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/ or Cloudfront URL
 - LARA_SECRET
   - Secret used in creating oauth secrets
+- STAGE
+  - for deployment set this to something like: "production"
 
 ### All Environment variables
 
-The following variables should be added to your cloned version of Lara.
+The following variables can be added to your cloned version of Lara.
 
 - MICROSOFT_TENANT_ID
-  - String containing ?
+  - String containing tenant id
 - PROD_MICROSOFT_CLIENT_ID
-  - String containing ?
+  - String containing client id 
 - STAGING_MICROSOFT_CLIENT_ID
-  - String containing
+  - String containing staging client id used in CI/CD Pipelines.
 
 - AWS_ACCESS_KEY_ID
   - String containing AWS IAM User ID used for deployment
@@ -137,14 +139,9 @@ The following variables should be added to your cloned version of Lara.
 - URL_ORIGIN
   - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
 - Debug
-  - ? 
+  - More information is shown in the console. Not necessary for production.
 - COMPANY_ABBREVIATION
   - Shortform of your companies name to create s3-buckets
-- MICROSOFT_CLIENT_ID
-- MICROSOFT_TENANT_ID
-  - Microsoft keys to use for login
-- LARA_SECRET
-  - Secret used in creating oauth secrets
 - OLD_COMPANY_NAME
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
@@ -161,35 +158,35 @@ The following variables should be added to your cloned version of Lara.
 - BACKEND_URL
   - String containing backend development url
 - ENABLE_FRONTEND_TUNNEL 
-  - Boolean
+  - Boolean. Tunnel localhost to a publicly available url using ngrok.
 - ENABLE_BACKEND_TUNNEL
-  - Boolean
+  - Boolean. Tunnel localhost to a publicly available url using ngrok.
 - ALEXA_SKILL_ID
-  - Not required
+  - String. Not required
+- ALEXA_SKILL_STAGE
+  - String. Not required.
 - ALEXA_AMAZON_CLIENT_ID
-  - Not required
+  - String. Not required
 - ALEXA_AMAZON_CLIENT_SECRET
-  - Not required
-
-
-
-- STAGING_BE_URL
-  - String containing the URL to the staging backend e.g.: https://staging.api.lara.exampleCompany.com/
-- STAGING_FE_URL
-  - String containing the URL to the staging frontend e.g.: https://staging.lara.exampleCompany.com/
-- PRODUCTION_BE_URL
-  - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/
-- PRODUCTION_FE_URL
-  - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/
-
-- TEST_TRAINEE_ID
-- TEST_TRAINER_ID
-  - ID of testusers on the staging environment for e2e tests. If not provided e2e tests are skipped.
-
+  - String. Not required
 - LARA_SECRET
   - Secret used in creating oauth secrets
 - STAGE
-  - String containing stage (probably: dev/prod)
+  - String containing stage (probably: dev/production/staging)
+
+- STAGING_BE_URL
+  - String containing the URL to the staging backend e.g.: https://staging.api.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
+- STAGING_FE_URL
+  - String containing the URL to the staging frontend e.g.: https://staging.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
+- PRODUCTION_BE_URL
+  - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
+- PRODUCTION_FE_URL
+  - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
+
+- TEST_TRAINEE_ID
+  - ID of test trainee on the stating environment for e2e tests. If not provided e2e tests are skipped.
+- TEST_TRAINER_ID
+  - ID of test trainer on the staging environment for e2e tests. If not provided e2e tests are skipped.
 
 ### NEW AWS SETUP
 
@@ -199,59 +196,13 @@ The following variables should be added to your cloned version of Lara.
 
 #### Deployment
 
-- Fill out the .env file partially 
-- (Install dependencies)
+- Fill out the .env file. Everything but FRONTEND_URL and BACKEND_URL (Take a look at "Deployment Environment Variables" for a more detailed description) 
+- Run `yarn install`
+- Run `yarn compile`
 - Run `yarn build`
 - Run `serverless deploy` command 
-- Copy Cloudfront distribution urls or custom domains into .env 
-
-
-
-
-
-
-### AWS Setup
-
-#### Login
-
-- Create a login with [Google Application](https://developers.google.com/identity/sign-in/web/sign-in)
-  - After the deployment the frontend URL must be added there
-- `GOOGLE_API_KEY` and `GOOGLE_CLIENT_ID` should be entered (in .env for local deployment)
-
-#### Bucket creation
-
-- Create a public s3 bucket with the name `[COMPANY_ABBREVIATION]-lara-frontend-[stage]`
-  - `[COMPANY_ABBREVIATION]` is the shortform of your companies name and `[stage]` is either `staging` or `production`
-- Enable the hosting of static websites on this bucket
-  - The `indexdocument` AND the `errordocument` are both the `index.html`
-- Configure the bucket further like described in this [AWS guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html)
-
-#### IAM user
-
-- Create a IAM deployment user and give him admin rights
-
-#### Deployment
-
-- If the URL's aren't know yet:
-  - For the first deployment set dummy-values for `FRONTEND_URL` and `BACKEND_URL`
-- For the local deployment:
-  - fill out the .env
-  - run `yarn build`
-  - run `serverless s3sync —bucket [COMPANY_ABBREVIATION]-lara-frontend-[stage]`
-  - run `serverless deploy —stage [stage]`
-- For remote deployment:
-  - set all GitHub Actions environment variables
-  - for a staging deployment create a push on main
-  - for a production deployment create a tag
-
-#### Set the correct url's
-
-- Backend and frontend url:
-  - for the frontend the bucket url can be used
-    - for HTTPs a cloudfront distribution or a CNAME record can be created, which point to the bucket url
-  - for the backend the API gateway url can be used
-    - a cloudfront distribution or a CNAME record can be created here too, which point to the API gateway url
-- Redeploy if necessary with the correct url's
+- Copy Cloudfront distribution urls or custom domains  and paste them into .env at FRONTEND_URL and BACKEND_URL and append a `/dev` behind the BACKEND_URL value
+- Run `serverless deploy` again.
 
 #### DB setup
 
