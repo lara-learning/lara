@@ -373,6 +373,11 @@ resources:
           IPV6Enabled: true
           Enabled: true
           Comment: Frontend
+          CustomErrorResponses: 
+            - ErrorCachingMinTTL: 300
+              ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /
           Origins:
             - DomainName: ${self:custom.config.s3.frontend}.s3.${self:provider.region}.amazonaws.com
               Id: S3Origin
