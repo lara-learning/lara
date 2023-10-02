@@ -46,27 +46,27 @@ const queryItems = async <T>(
  * @param filterOptions Keys and values to filter after the query
  * @returns Items from the DDB
  */
-export const queryObjects = <O>(
-  tablename: string,
+export const queryObjects = <T>(
+  tableName: string,
   index: string,
-  keyOptions: Partial<O>,
-  filterOptions: Partial<O> = {}
-): Promise<O[]> => {
-  const keyConditionKeys = Object.keys(keyOptions) as Keys<Partial<O>>
+  keyOptions: Partial<T>,
+  filterOptions: Partial<T> = {}
+): Promise<T[]> => {
+  const keyConditionKeys = Object.keys(keyOptions) as Keys<Partial<T>>
 
   // DDB key/index condition structs
-  const keyConditionValues = createExpressionAttributeValues(keyOptions, keyConditionKeys)
+  const keyConditionValues = createExpressionAttributeValues(keyOptions as T, keyConditionKeys)
   const keyConditionNames = createExpressionAttributeNames(keyConditionKeys)
   const keyConditionExpression = createKeyConditionExpression(keyConditionKeys)
 
-  const filterConditionKeys = Object.keys(filterOptions) as Keys<Partial<O>>
+  const filterConditionKeys = Object.keys(filterOptions) as Keys<Partial<T>>
 
   // DDB filter structs that run after the key condition
-  const filterConditionValues = createExpressionAttributeValues(filterOptions, filterConditionKeys)
+  const filterConditionValues = createExpressionAttributeValues(filterOptions as T, filterConditionKeys)
   const filterConditionNames = createExpressionAttributeNames(filterConditionKeys)
   const filterConditionExpression = createKeyConditionExpression(filterConditionKeys) || undefined
 
-  return queryItems(tablename, {
+  return queryItems(tableName, {
     IndexName: index,
     ExpressionAttributeValues: { ...keyConditionValues, ...filterConditionValues },
     ExpressionAttributeNames: { ...keyConditionNames, ...filterConditionNames },
