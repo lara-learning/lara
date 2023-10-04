@@ -374,8 +374,8 @@ resources:
           Enabled: true
           Comment: Frontend
           CustomErrorResponses: 
-            - ErrorCachingMinTTL: 300
-              ErrorCode: 404
+            - ErrorCachingMinTTL: 0
+              ErrorCode: 403
               ResponseCode: 200
               ResponsePagePath: /
           Origins:
