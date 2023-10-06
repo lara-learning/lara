@@ -1048,22 +1048,22 @@
   dependencies:
     tslib "^2.3.1"
 
-"@azure/msal-browser@^2.37.0":
-  version "2.37.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.37.0.tgz#32d7af74eef53f2692f8a9d6bd6818c78faf4c1b"
-  integrity sha512-YNGD/W/tw/5wDWlXOfmrVILaxVsorVLxYU2ovmL1PDvxkdudbQRyGk/76l4emqgDAl/kPQeqyivxjOU6w1YfvQ==
+"@azure/msal-browser@^2.37.1":
+  version "2.38.2"
+  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.38.2.tgz#707725c892258fe6b3af4dd410e1daff608521b5"
+  integrity sha512-71BeIn2we6LIgMplwCSaMq5zAwmalyJR3jFcVOZxNVfQ1saBRwOD+P77nLs5vrRCedVKTq8RMFhIOdpMLNno0A==
   dependencies:
-    "@azure/msal-common" "13.0.0"
+    "@azure/msal-common" "13.3.0"
 
-"@azure/msal-common@13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-13.0.0.tgz#9c39184903b5d0fd6e643ccc12193fae220e912b"
-  integrity sha512-GqCOg5H5bouvLij9NFXFkh+asRRxsPBRwnTDsfK7o0KcxYHJbuidKw8/VXpycahGXNxgtuhqtK/n5he+5NhyEA==
+"@azure/msal-common@13.3.0":
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-13.3.0.tgz#dfa39810e0fbce6e07ca85a2cf305da58d30b7c9"
+  integrity sha512-/VFWTicjcJbrGp3yQP7A24xU95NiDMe23vxIU1U6qdRPFsprMDNUohMudclnd+WSHE4/McqkZs/nUU3sAKkVjg==
 
-"@azure/msal-react@^1.5.7":
-  version "1.5.7"
-  resolved "https://registry.yarnpkg.com/@azure/msal-react/-/msal-react-1.5.7.tgz#89ae61a557a5b3359d5e6b7280c013e1d6a0e0fe"
-  integrity sha512-Ub9XPAZCWdBEpTyCGdA1RPdmIAOgLCt344pdL54eCQl3sNVAJQo8DWtRj9UM/qu4tW1dK6HESmznjoBPhuqGdg==
+"@azure/msal-react@^1.5.8":
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/@azure/msal-react/-/msal-react-1.5.11.tgz#d67882f28820bb0dbcae6d3988f4903d58adfcc7"
+  integrity sha512-ZZnbCDbSHQXA25AF0lNYVv+AdTcFFLx6jnIZdiVHUvXrrH5WJuTfl7GV337ZEAOx8x/aZa9yZfeEaQq0ZB5acg==
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
@@ -3500,10 +3500,10 @@
     npmlog "^6.0.2"
     write-file-atomic "^4.0.1"
 
-"@microsoft/microsoft-graph-client@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-client/-/microsoft-graph-client-3.0.4.tgz#6fc409336574521734379f033787af153828bf5d"
-  integrity sha512-K7GIg/inDukZC2iBhFEvOSoq5ShnlIl8JSRUv8Ksw1iXTtu6kxLmBwF6xY8RZN7CTSJh+5N91aMKu5KeF0/9fA==
+"@microsoft/microsoft-graph-client@^3.0.5":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-client/-/microsoft-graph-client-3.0.7.tgz#535507df2db40bd7ed24a670dc68c87c628177a4"
+  integrity sha512-/AazAV/F+HK4LIywF9C+NYHcJo038zEnWkteilcxC1FM/uK/4NVGDKGrxx7nNq1ybspAroRKT4I1FHfxQzxkUw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     tslib "^2.2.0"
@@ -4590,9 +4590,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17", "@types/react@^17.0.4", "@types/react@^17.0.9":
-  version "17.0.53"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.53.tgz#10d4d5999b8af3d6bc6a9369d7eb953da82442ab"
-  integrity sha512-1yIpQR2zdYu1Z/dc1OxC+MA6GR240u3gcnP4l6mvj/PJiVaqHsQPmWttsvHsfnhfPbU2FuGmo0wSITPygjBmsw==
+  version "17.0.67"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.67.tgz#1c224738f203829a4692aa48e33a732c34fd014a"
+  integrity sha512-zE76EIJ0Y58Oy9yDX/9csb/NuKjt0Eq2YgWb/8Wxo91YmuLzzbyiRoaqJE9h8iDlsT7n35GdpoLomHlaB1kFbg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -5571,9 +5571,9 @@ available-typed-arrays@^1.0.5:
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
 aws-sdk@^2.1136.0, aws-sdk@^2.1225.0, aws-sdk@^2.1231.0, aws-sdk@^2.346.0, aws-sdk@^2.7.0, aws-sdk@^2.938.0, aws-sdk@^2.950.0:
-  version "2.1233.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1233.0.tgz#3386515966ca8a5baac048d986ad0977119c0765"
-  integrity sha512-e1GbVltsoQpWvx0gxQlEtKOdOrNWyjhD8bjFIMx/3Nwwzw4ac2KOy7CyC5I+lBj8el4AB0399umLHJZmL5WcVg==
+  version "2.1471.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1471.0.tgz#22a228fe7399437b70f932bb878941efca9801f4"
+  integrity sha512-jB6KuDEEzgSoP3uSAdGeE4UY9BZ1NER4D4ZwTWlrXD4U1epU0m40DrwOVYPXtrfUXtS/ZlF5KPcSdEXFfJUVSw==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -5584,7 +5584,7 @@ aws-sdk@^2.1136.0, aws-sdk@^2.1225.0, aws-sdk@^2.1231.0, aws-sdk@^2.346.0, aws-s
     url "0.10.3"
     util "^0.12.4"
     uuid "8.0.0"
-    xml2js "0.4.19"
+    xml2js "0.5.0"
 
 axios@^0.21.1:
   version "0.21.4"
@@ -16471,18 +16471,18 @@ ws@^8.3.0, ws@^8.4.2:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.9.0.tgz#2a994bb67144be1b53fe2d23c53c028adeb7f45e"
   integrity sha512-Ja7nszREasGaYUYCI2k4lCKIRTt+y7XuqVoHR44YpI49TtryyqbqvDMn5eqfW7e6HzTukDRIsXqzVHScqRcafg==
 
-xml2js@0.4.19:
-  version "0.4.19"
-  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
-  integrity sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==
+xml2js@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.5.0.tgz#d9440631fbb2ed800203fad106f2724f62c493b7"
+  integrity sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==
   dependencies:
     sax ">=0.6.0"
-    xmlbuilder "~9.0.1"
+    xmlbuilder "~11.0.0"
 
-xmlbuilder@~9.0.1:
-  version "9.0.7"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
-  integrity sha512-7YXTQc3P2l9+0rjaUbLwMKRhtmwg1M1eDf6nag7urC7pIPYLD9W/jmzQ4ptRSUbodw5S0jfoGTflLemQibSpeQ==
+xmlbuilder@~11.0.0:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
+  integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
 xss@^1.0.8:
   version "1.0.14"
