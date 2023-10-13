@@ -8,9 +8,10 @@ provider:
   region: eu-central-1
   stage: dev
   memorySize: 5120
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
+
 
 plugins:
   - serverless-jetpack
@@ -53,11 +54,8 @@ custom:
     directory: /tmp
     port: 8181
   s3Sync:
-    noSync: true
     buckets:
-      - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-staging
-        localDir: packages/frontend/dist
-      - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-production
+      - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}
         localDir: packages/frontend/dist
 
   config:
@@ -77,6 +75,7 @@ custom:
       userOAuthCode: userOAuthCode
     s3:
       export: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-export-bucket
+      frontend: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}
     ses:
       region: ${self:provider.environment.SES_REGION, self:provider.region}
 
@@ -354,3 +353,109 @@ resources:
           Rules:
             - Status: Enabled
               ExpirationInDays: 1
+
+    FrontendBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.config.s3.frontend}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+
+    FrontendDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          PriceClass: PriceClass_100
+          #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
+          IPV6Enabled: true
+          Enabled: true
+          Comment: Frontend
+          CustomErrorResponses: 
+            - ErrorCachingMinTTL: 0
+              ErrorCode: 403
+              ResponseCode: 200
+              ResponsePagePath: /
+          Origins:
+            - DomainName: ${self:custom.config.s3.frontend}.s3.${self:provider.region}.amazonaws.com
+              Id: S3Origin
+              OriginAccessControlId:
+                Ref: OAC
+              S3OriginConfig:
+                OriginAccessIdentity: ''
+          HttpVersion: http2
+          DefaultRootObject: index.html
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            TargetOriginId: S3Origin
+            ViewerProtocolPolicy: redirect-to-https
+            ForwardedValues:
+              QueryString: true
+
+    BackendDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          PriceClass: PriceClass_100
+          #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
+          IPV6Enabled: true
+          Enabled: true
+          Comment: Backend
+          Origins:
+            - DomainName: !Sub ${ApiGatewayRestApi}.execute-api.${aws:region}.amazonaws.com
+              Id: ApiGatewayOrigin
+              CustomOriginConfig:
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                OriginSSLProtocols:
+                  - TLSv1
+          HttpVersion: http2
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            TargetOriginId: ApiGatewayOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            ForwardedValues:
+              QueryString: true
+
+    OAC:
+      Type: AWS::CloudFront::OriginAccessControl
+      Properties:
+        OriginAccessControlConfig:
+          Name: FrontendOAC
+          OriginAccessControlOriginType: s3
+          SigningBehavior: no-override
+          SigningProtocol: sigv4
+
+    PolicyForCloudFrontPrivateContent:
+      Type: 'AWS::S3::BucketPolicy'
+      Properties:
+        Bucket:
+          Ref: FrontendBucket
+        PolicyDocument:
+          Version: '2008-10-17'
+          Statement:
+            - Sid: AllowCloudFrontServicePrincipal
+              Effect: Allow
+              Principal:
+                Service: cloudfront.amazonaws.com
+              Action: s3:GetObject
+              Resource: arn:aws:s3:::${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}/*
+              Condition:
+                StringEquals:
+                  AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendDistribution.Id}

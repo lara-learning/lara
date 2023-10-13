@@ -15,7 +15,7 @@ const translations = (user: User): EmailTranslations =>
 const envLink = (path: string) => {
   const envDomain = STAGE === 'staging' ? 'staging.' : ''
 
-  return `https://${envDomain}${URL_ORIGIN}.com${path}`
+  return `https://${envDomain}${URL_ORIGIN}${path}`
 }
 
 const trainerNotificationMailPayload = (receiver: Trainer, sender: Trainee, report: Report): EmailPayload => ({

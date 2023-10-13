@@ -1,8 +1,8 @@
 import { Lambda } from 'aws-sdk'
 import AdmZip from 'adm-zip'
 import { Handler } from 'aws-lambda'
-import chromium from 'chrome-aws-lambda'
-import { Browser, Page } from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
+import { launch, Browser, Page } from 'puppeteer-core'
 
 import { EmailPayload, PrintData, PrintPayload } from '@lara/api'
 
@@ -51,10 +51,10 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
   const { reportsData, userData, printTranslations, emailTranslations } = exportData
 
   try {
-    browser = await chromium.puppeteer.launch({
+    browser = await launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      executablePath: await chromium.executablePath(),
       headless: IS_OFFLINE ? true : chromium.headless,
       ignoreHTTPSErrors: true,
     })
@@ -78,7 +78,7 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
     }
 
     if (!outputFile) {
-      throw new Error('"generatedReport" is undefind')
+      throw new Error('"generatedReport" is undefined')
     }
 
     await saveAttachments(filename, outputFile)

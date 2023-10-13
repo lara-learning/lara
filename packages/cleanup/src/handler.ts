@@ -20,7 +20,5 @@ const query = gql`
 `
 
 export const handler: CloudWatchLogsHandler = async () => {
-  const res = await client.request(query)
-
-  return res
+  return await client.request(query)
 }
