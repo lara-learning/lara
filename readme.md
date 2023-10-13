@@ -8,7 +8,7 @@ Lara is a tool for writing your "Berichtsheft" digitally. In Germany all trainee
 
 ### Prerequisites
 
-In order to run the project we need `node=14` installed.
+In order to run the project we need `node=18` installed.
 
 ## 🛠 Under the hood
 
@@ -93,7 +93,8 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
 - AWS_ACCESS_KEY_ID
   - String containing AWS IAM User ID used for deployment
 - AWS_SECRET_ACCESS_KEY
-  - String containing AWS IAM User Secret Key used for deployment 
+
+  - String containing AWS IAM User Secret Key used for deployment
 
 - URL_ORIGIN
   - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
@@ -103,7 +104,7 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
 - AVATAR_URL
-  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used. 
+  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used.
 - SES_EMAIL
   - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
 - SES_REGION
@@ -126,14 +127,15 @@ The following variables can be added to your cloned version of Lara.
 - MICROSOFT_TENANT_ID
   - String containing tenant id
 - PROD_MICROSOFT_CLIENT_ID
-  - String containing client id 
+  - String containing client id
 - STAGING_MICROSOFT_CLIENT_ID
+
   - String containing staging client id used in CI/CD Pipelines.
 
 - AWS_ACCESS_KEY_ID
   - String containing AWS IAM User ID used for deployment
 - AWS_SECRET_ACCESS_KEY
-  - String containing AWS IAM User Secret Key used for deployment 
+  - String containing AWS IAM User Secret Key used for deployment
 - AUTH_HEADER
   - String containing the value for the authorization header
 - URL_ORIGIN
@@ -146,7 +148,7 @@ The following variables can be added to your cloned version of Lara.
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
 - AVATAR_URL
-  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used. 
+  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used.
 - SES_EMAIL
   - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
 - SES_REGION
@@ -157,7 +159,7 @@ The following variables can be added to your cloned version of Lara.
   - String containing frontend development url
 - BACKEND_URL
   - String containing backend development url
-- ENABLE_FRONTEND_TUNNEL 
+- ENABLE_FRONTEND_TUNNEL
   - Boolean. Tunnel localhost to a publicly available url using ngrok.
 - ENABLE_BACKEND_TUNNEL
   - Boolean. Tunnel localhost to a publicly available url using ngrok.
@@ -172,6 +174,7 @@ The following variables can be added to your cloned version of Lara.
 - LARA_SECRET
   - Secret used in creating oauth secrets
 - STAGE
+
   - String containing stage (probably: dev/production/staging)
 
 - STAGING_BE_URL
@@ -181,6 +184,7 @@ The following variables can be added to your cloned version of Lara.
 - PRODUCTION_BE_URL
   - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
 - PRODUCTION_FE_URL
+
   - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
 
 - TEST_TRAINEE_ID
@@ -196,12 +200,12 @@ The following variables can be added to your cloned version of Lara.
 
 #### Deployment
 
-- Fill out the .env file. Everything but FRONTEND_URL and BACKEND_URL (Take a look at "Deployment Environment Variables" for a more detailed description) 
+- Fill out the .env file. Everything but FRONTEND_URL and BACKEND_URL (Take a look at "Deployment Environment Variables" for a more detailed description)
 - Run `yarn install`
 - Run `yarn compile`
 - Run `yarn build`
-- Run `serverless deploy` command 
-- Copy Cloudfront distribution urls or custom domains  and paste them into .env at FRONTEND_URL and BACKEND_URL and append a `/dev` behind the BACKEND_URL value
+- Run `serverless deploy` command
+- Copy Cloudfront distribution urls or custom domains and paste them into .env at FRONTEND_URL and BACKEND_URL and append a `/dev` behind the BACKEND_URL value
 - Run `serverless deploy` again.
 
 #### DB setup
