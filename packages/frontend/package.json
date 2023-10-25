@@ -39,7 +39,7 @@
     "@graphql-codegen/cli": "^2.13.7",
     "@graphql-codegen/typescript": "^2.7.4",
     "@graphql-codegen/typescript-operations": "^2.5.4",
-    "@graphql-codegen/typescript-react-apollo": "^3.3.4",
+    "@graphql-codegen/typescript-react-apollo": "^4.1.0",
     "@types/date-fns": "^2.6.0",
     "@types/file-saver": "^2.0.1",
     "@types/graphql": "^14.5.0",
