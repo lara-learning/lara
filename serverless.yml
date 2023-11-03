@@ -441,6 +441,7 @@ resources:
           OriginAccessControlOriginType: s3
           SigningBehavior: no-override
           SigningProtocol: sigv4
+
     PolicyForCloudFrontPrivateContent:
       Type: 'AWS::S3::BucketPolicy'
       Properties:
@@ -464,33 +465,33 @@ resources:
       Properties:
         Bucket: !Ref FrontendBucket
         PolicyDocument:
-          Version: "2012-10-17"
+          Version: '2012-10-17'
           Statement:
-            - Sid: "AllowSSLRequestsOnly"
+            - Sid: 'AllowSSLRequestsOnly'
               Effect: Deny
-              Principal: "*"
-              Action: "s3:*"
+              Principal: '*'
+              Action: 's3:*'
               Resource:
-                - !Sub "arn:aws:s3:::${FrontendBucket}"
-                - !Sub "arn:aws:s3:::${FrontendBucket}/*"
+                - !Sub 'arn:aws:s3:::${FrontendBucket}'
+                - !Sub 'arn:aws:s3:::${FrontendBucket}/*'
               Condition:
                 Bool:
-                  "aws:SecureTransport": "false"
+                  'aws:SecureTransport': 'false'
 
     AttachmentsBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
         Bucket: !Ref AttachmentsBucket
         PolicyDocument:
-          Version: "2012-10-17"
+          Version: '2012-10-17'
           Statement:
-            - Sid: "AllowSSLRequestsOnly"
+            - Sid: 'AllowSSLRequestsOnly'
               Effect: Deny
-              Principal: "*"
-              Action: "s3:*"
+              Principal: '*'
+              Action: 's3:*'
               Resource:
-                - !Sub "arn:aws:s3:::${AttachmentsBucket}"
-                - !Sub "arn:aws:s3:::${AttachmentsBucket}/*"
+                - !Sub 'arn:aws:s3:::${AttachmentsBucket}'
+                - !Sub 'arn:aws:s3:::${AttachmentsBucket}/*'
               Condition:
                 Bool:
-                  "aws:SecureTransport": "false"
+                  'aws:SecureTransport': 'false'
