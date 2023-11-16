@@ -13,8 +13,8 @@ describe('createPaperData', () => {
       firstName: 'Trainee',
       lastName: 'Traineeson',
       email: 'trainee@sinnerschrader.com',
-      startDate: '2019-08-01T22:00:00.000Z',
-      endDate: '2023-07-31T22:00:00.000Z',
+      startDate: '2023-08-01T22:00:00.000Z',
+      endDate: '2028-07-31T22:00:00.000Z',
     })
     const trainer = await generateTrainer({
       firstName: 'Trainer',
@@ -25,8 +25,8 @@ describe('createPaperData', () => {
       firstName: 'Men',
       lastName: 'Tor',
       email: 'mentor@sinnerschrader.com',
-      startDate: '2019-08-01T22:00:00.000Z',
-      endDate: '2023-07-31T22:00:00.000Z',
+      startDate: '2023-08-01T22:00:00.000Z',
+      endDate: '2028-07-31T22:00:00.000Z',
     })
 
     paperInput = {
