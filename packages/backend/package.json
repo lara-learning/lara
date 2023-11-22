@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@graphql-tools/schema": "^8.2.0",
+    "@graphql-tools/schema": "^10.0.2",
     "@lara/api": "^1.0.0",
     "apollo-server-lambda": "^3.3.0",
     "aws-sdk": "^2.950.0",
