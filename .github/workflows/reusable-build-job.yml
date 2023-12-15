@@ -71,7 +71,7 @@ jobs:
       - name: Compile and build
         run: yarn clean && yarn compile && yarn build
       - name: Upload dist and lib
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-and-lib
           path: |
