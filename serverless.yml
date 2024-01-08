@@ -12,11 +12,10 @@ provider:
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
 
-
 plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
-  - serverless-dynamodb-local
+  - serverless-dynamodb
   - serverless-s3-sync
   - serverless-s3-local
   - serverless-offline
@@ -25,7 +24,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   serverless-offline:
     useChildProcesses: true
-  dynamodb:
+  serverless-dynamodb:
     stages:
       - dev
     inMemory: false
@@ -373,7 +372,7 @@ resources:
           IPV6Enabled: true
           Enabled: true
           Comment: Frontend
-          CustomErrorResponses: 
+          CustomErrorResponses:
             - ErrorCachingMinTTL: 0
               ErrorCode: 403
               ResponseCode: 200
