@@ -56,6 +56,7 @@ custom:
     buckets:
       - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}
         localDir: packages/frontend/dist
+    endpoint: http://localhost:8181
 
   config:
     table:

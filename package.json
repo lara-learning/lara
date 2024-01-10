@@ -60,7 +60,7 @@
     "serverless-dynamodb": "^0.2.47",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-jetpack": "^0.11.2",
-    "serverless-offline": "^8.0.0",
+    "serverless-offline": "^13.3.2",
     "serverless-s3-local": "^0.6.22",
     "serverless-s3-sync": "3.1.0",
     "sort-package-json": "^1.46.0",
