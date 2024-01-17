@@ -497,17 +497,53 @@ resources:
     PolicyForCloudFrontPrivateContent:
       Type: 'AWS::S3::BucketPolicy'
       Properties:
-        Bucket:
-          Ref: FrontendBucket
+        Bucket: !Ref FrontendBucket
         PolicyDocument:
-          Version: '2008-10-17'
+          Version: '2012-10-17'
           Statement:
             - Sid: AllowCloudFrontServicePrincipal
               Effect: Allow
               Principal:
-                Service: cloudfront.amazonaws.com
-              Action: s3:GetObject
-              Resource: arn:aws:s3:::${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}/*
+                AWS:Service: cloudfront.amazonaws.com
+              Action: 's3:GetObject'
+              Resource:
+                Fn::Sub: 'arn:aws:s3:::${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}/*'
               Condition:
                 StringEquals:
-                  AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendDistribution.Id}
+                  aws:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendDistribution.Id}'
+
+    FrontendBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref FrontendBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'AllowSSLRequestsOnly'
+              Effect: Deny
+              Principal: '*'
+              Action: 's3:*'
+              Resource:
+                - !Sub 'arn:aws:s3:::${FrontendBucket}'
+                - !Sub 'arn:aws:s3:::${FrontendBucket}/*'
+              Condition:
+                Bool:
+                  'aws:SecureTransport': 'false'
+
+    AttachmentsBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref AttachmentsBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'AllowSSLRequestsOnly'
+              Effect: Deny
+              Principal: '*'
+              Action: 's3:*'
+              Resource:
+                - !Sub 'arn:aws:s3:::${AttachmentsBucket}'
+                - !Sub 'arn:aws:s3:::${AttachmentsBucket}/*'
+              Condition:
+                Bool:
+                  'aws:SecureTransport': 'false'
