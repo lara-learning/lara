@@ -93,9 +93,7 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
 - AWS_ACCESS_KEY_ID
   - String containing AWS IAM User ID used for deployment
 - AWS_SECRET_ACCESS_KEY
-
   - String containing AWS IAM User Secret Key used for deployment
-
 - URL_ORIGIN
   - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
 - COMPANY_ABBREVIATION
@@ -129,9 +127,7 @@ The following variables can be added to your cloned version of Lara.
 - PROD_MICROSOFT_CLIENT_ID
   - String containing client id
 - STAGING_MICROSOFT_CLIENT_ID
-
   - String containing staging client id used in CI/CD Pipelines.
-
 - AWS_ACCESS_KEY_ID
   - String containing AWS IAM User ID used for deployment
 - AWS_SECRET_ACCESS_KEY
@@ -140,7 +136,7 @@ The following variables can be added to your cloned version of Lara.
   - String containing the value for the authorization header
 - URL_ORIGIN
   - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
-- Debug
+- DEBUG
   - More information is shown in the console. Not necessary for production.
 - COMPANY_ABBREVIATION
   - Shortform of your companies name to create s3-buckets
@@ -174,9 +170,7 @@ The following variables can be added to your cloned version of Lara.
 - LARA_SECRET
   - Secret used in creating oauth secrets
 - STAGE
-
   - String containing stage (probably: dev/production/staging)
-
 - STAGING_BE_URL
   - String containing the URL to the staging backend e.g.: https://staging.api.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
 - STAGING_FE_URL
@@ -184,9 +178,7 @@ The following variables can be added to your cloned version of Lara.
 - PRODUCTION_BE_URL
   - String containing the URL to the production backend e.g.: https://api.lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
 - PRODUCTION_FE_URL
-
   - String containing the URL to the production frontend e.g.: https://lara.exampleCompany.com/. Mainly used in CI/CD Pipelines
-
 - TEST_TRAINEE_ID
   - ID of test trainee on the stating environment for e2e tests. If not provided e2e tests are skipped.
 - TEST_TRAINER_ID

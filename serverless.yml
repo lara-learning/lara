@@ -11,12 +11,13 @@ provider:
   runtime: nodejs18.x
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
+  timeout: 30
 
 plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
   - serverless-dynamodb
-  - serverless-s3-sync
+  # - serverless-s3-sync
   - serverless-s3-local
   - serverless-offline
 
