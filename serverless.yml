@@ -11,13 +11,13 @@ provider:
   runtime: nodejs18.x
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
-
+  timeout: 30
 
 plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
-  - serverless-dynamodb-local
-  - serverless-s3-sync
+  - serverless-dynamodb
+  # - serverless-s3-sync
   - serverless-s3-local
   - serverless-offline
 
@@ -25,7 +25,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   serverless-offline:
     useChildProcesses: true
-  dynamodb:
+  serverless-dynamodb:
     stages:
       - dev
     inMemory: false
@@ -57,6 +57,7 @@ custom:
     buckets:
       - bucketName: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}
         localDir: packages/frontend/dist
+    endpoint: http://localhost:8181
 
   config:
     table:
@@ -373,7 +374,7 @@ resources:
           IPV6Enabled: true
           Enabled: true
           Comment: Frontend
-          CustomErrorResponses: 
+          CustomErrorResponses:
             - ErrorCachingMinTTL: 0
               ErrorCode: 403
               ResponseCode: 200
