@@ -17,7 +17,7 @@ plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
   - serverless-dynamodb
-  # - serverless-s3-sync
+  - serverless-s3-sync
   - serverless-s3-local
   - serverless-offline
 
@@ -453,7 +453,7 @@ resources:
             - Sid: AllowCloudFrontServicePrincipal
               Effect: Allow
               Principal:
-                AWS:Service: cloudfront.amazonaws.com
+                Service: cloudfront.amazonaws.com
               Action: 's3:GetObject'
               Resource:
                 Fn::Sub: 'arn:aws:s3:::${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}/*'
