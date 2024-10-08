@@ -17,7 +17,7 @@ To run the project, ensure the following are installed:
      ```
 3. Java
     - Install Java using Homebrew
-    ``bash 
+    ```bash 
     brew install --cask temurin
     ```
 
