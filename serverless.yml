@@ -17,7 +17,7 @@ plugins:
   - serverless-jetpack
   - serverless-iam-roles-per-function
   - serverless-dynamodb
-  - serverless-s3-sync
+  # - serverless-s3-sync
   - serverless-s3-local
   - serverless-offline
 
