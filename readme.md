@@ -8,7 +8,14 @@ Lara is a tool for writing your "Berichtsheft" digitally. In Germany all trainee
 
 ### Prerequisites
 
-In order to run the project we need `node=18` installed.
+To run the project, ensure the following are installed:
+1. Node.js (version 18)
+2. Yarn
+    - Install Yarn globally using
+     ```npm install --global yarn```
+3. Java
+    - Install Java using Homebrew
+    ```brew install --cask temurin```
 
 ## 🛠 Under the hood
 
