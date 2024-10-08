@@ -12,10 +12,14 @@ To run the project, ensure the following are installed:
 1. Node.js (version 18)
 2. Yarn
     - Install Yarn globally using
-     ```npm install --global yarn```
+     ```bash
+     npm install --global yarn
+     ```
 3. Java
     - Install Java using Homebrew
-    ```brew install --cask temurin```
+    ``bash 
+    brew install --cask temurin
+    ```
 
 ## 🛠 Under the hood
 
