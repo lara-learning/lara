@@ -195,6 +195,10 @@ The following variables can be added to your cloned version of Lara.
 - TEST_TRAINER_ID
   - ID of test trainer on the staging environment for e2e tests. If not provided e2e tests are skipped.
 
+### For local Environment variables (add these extra two lines)
+- AWS_ACCESS_KEY_ID=S3RVER
+- AWS_SECRET_ACCESS_KEY=S3RVER
+
 ### NEW AWS SETUP
 
 #### IAM User
