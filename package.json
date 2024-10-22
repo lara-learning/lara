@@ -1,5 +1,6 @@
 {
   "name": "lara",
+  "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "workspaces": {
@@ -65,6 +66,5 @@
     "serverless-s3-sync": "3.1.0",
     "sort-package-json": "^1.46.0",
     "typescript": "^5.2.2"
-  },
-  "version": "0.0.0"
+  }
 }

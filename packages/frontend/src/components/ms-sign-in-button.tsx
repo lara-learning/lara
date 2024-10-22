@@ -18,45 +18,43 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
 
-  const [popupWindow, setPopupWindow] = useState<Window | null>(null);
+  const [popupWindow, setPopupWindow] = useState<Window | null>(null)
 
   const handleLogin = async () => {
     if (isAuthenticated) {
-      AppHistory.getInstance().push('/');
+      AppHistory.getInstance().push('/')
     }
-    
+
     if (popupWindow) {
-      popupWindow.focus();
-      return;
+      popupWindow.focus()
+      return
     }
 
     instance.addEventCallback((message: EventMessage) => {
       if (message.eventType === EventType.POPUP_OPENED) {
         setPopupWindow((message.payload as PopupEvent).popupWindow)
       }
-    }
-    )
+    })
 
     try {
       const loginResponse = await instance.loginPopup(loginRequest)
-        const email = loginResponse.account?.username
-        if (email) {
-          mutate({ variables: { email } })
-            .then((response) => {
-              const { data } = response
-              if (!data?.login) {
-                return AppHistory.getInstance().push('/no-user-found')
-              }
-              login(data.login)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      } catch (error) {
-        console.log(error)
+      const email = loginResponse.account?.username
+      if (email) {
+        mutate({ variables: { email } })
+          .then((response) => {
+            const { data } = response
+            if (!data?.login) {
+              return AppHistory.getInstance().push('/no-user-found')
+            }
+            login(data.login)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
-    finally {
+    } catch (error) {
+      console.log(error)
+    } finally {
       setPopupWindow(null)
     }
   }
