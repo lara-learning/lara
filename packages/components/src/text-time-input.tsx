@@ -9,6 +9,7 @@ interface WrapperProps extends FlexProps {
   readonly focused: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const StyledTextTimeInputWrapper = styled(({ focused, ...rest }: WrapperProps) => (
   <StyledEntryValueWrapper {...rest} />
 ))<WrapperProps>`

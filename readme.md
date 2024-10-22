@@ -8,7 +8,19 @@ Lara is a tool for writing your "Berichtsheft" digitally. In Germany all trainee
 
 ### Prerequisites
 
-In order to run the project we need `node=18` installed.
+To run the project, ensure the following are installed:
+
+1. Node.js (version 18)
+2. Yarn
+   - Install Yarn globally using
+   ```bash
+   npm install --global yarn
+   ```
+3. Java
+   - Install Java using Homebrew
+   ```bash
+   brew install --cask temurin
+   ```
 
 ## 🛠 Under the hood
 
@@ -183,6 +195,11 @@ The following variables can be added to your cloned version of Lara.
   - ID of test trainee on the stating environment for e2e tests. If not provided e2e tests are skipped.
 - TEST_TRAINER_ID
   - ID of test trainer on the staging environment for e2e tests. If not provided e2e tests are skipped.
+
+### For local Environment variables (add these extra two lines)
+
+- AWS_ACCESS_KEY_ID=S3RVER
+- AWS_SECRET_ACCESS_KEY=S3RVER
 
 ### NEW AWS SETUP
 
