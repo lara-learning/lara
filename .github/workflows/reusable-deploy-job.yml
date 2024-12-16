@@ -21,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.target }}
     name: deploy-job
+    permissions:
+      id-token: write
+      contents: read
     env:
       ALEXA_SKILL_STAGE: ${{ inputs.alexaSkillStage }}
       DEBUG: ${{ inputs.debug }}
