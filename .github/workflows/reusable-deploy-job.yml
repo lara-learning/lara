@@ -71,12 +71,12 @@ jobs:
           name: dist-and-lib
           path: packages
 
-      - name: Configure AWS Credentials for China region audience
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          audience: sts.amazonaws.com.cn
           aws-region: eu-central-1
-          role-to-assume: arn:aws-cn:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-deploy-user
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-deploy-user
+          role-session-name: github-deployment
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
