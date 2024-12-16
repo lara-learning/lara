@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -29,10 +31,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -46,10 +50,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -63,18 +69,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             packages/*/node_modules
             .yarn
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
+
       - name: Download built dist and lib
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-and-lib
           path: packages
@@ -85,10 +94,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules

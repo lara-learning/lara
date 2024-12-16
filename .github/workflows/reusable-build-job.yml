@@ -38,10 +38,12 @@ jobs:
       BACKEND_URL: ${{ secrets.BACKEND_URL }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/cache@v3
+          node-version-file: '.nvmrc'
+
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -53,7 +55,7 @@ jobs:
       - name: Compile and build
         run: yarn clean && yarn compile && yarn build
       - name: Upload dist and lib
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-and-lib
           path: |

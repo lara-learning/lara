@@ -1,5 +1,5 @@
 ########################################################
-# Action to run on pullrequest merge to main         #
+# Action to run on pullrequest merge to main           #
 # Staging build and deployment                         #
 ########################################################
 name: Action on Pullrequest push to main
