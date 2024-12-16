@@ -10,10 +10,11 @@ jobs:
   e2e:
     name: e2e-job
     runs-on: ubuntu-latest
+    environment: staging
     container: mcr.microsoft.com/playwright:focal
     env:
       USER_ID: ${{ secrets.TEST_TRAINEE_ID }}
-      URL: ${{ secrets.STAGING_FE_URL }}
+      URL: ${{ secrets.FRONTEND_URL }}
       BASICAUTHENTICATION_USERNAME: ${{ secrets.BASICAUTHENTICATION_USERNAME }}
       BASICAUTHENTICATION_PASSWORD: ${{ secrets.BASICAUTHENTICATION_PASSWORD }}
       ENVIRONMENT_NAME: staging
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-            node_modules 
+            node_modules
             packages/*/node_modules
             .yarn
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-in-${{ github.ref_name }}
