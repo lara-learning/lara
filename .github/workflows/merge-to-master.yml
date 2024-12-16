@@ -1,11 +1,11 @@
 ########################################################
-# Action to run on pullrequest merge to main         #
+# Action to run on pullrequest merge to main           #
 # Staging build and deployment                         #
 ########################################################
 name: Action on Pullrequest push to main
-on: 
+on:
   push:
-    branches:    
+    branches:
       - 'main'
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
     with:
       environmentName: staging
       debug: 'true'
-      mode: ""
+      mode: ''
     secrets: inherit
 
   deploy:
