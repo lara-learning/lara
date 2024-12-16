@@ -1,6 +1,10 @@
-import { APIGatewayAuthorizerHandler, CustomAuthorizerResult } from 'aws-lambda'
+import { APIGatewayAuthorizerHandler, CustomAuthorizerResult, StatementEffect } from 'aws-lambda'
 
-const generatePolicy = (principalId: string, effect: string, resource: string): CustomAuthorizerResult | undefined => {
+const generatePolicy = (
+  principalId: string,
+  effect: StatementEffect,
+  resource: string
+): CustomAuthorizerResult | undefined => {
   if (!effect || !resource) {
     return
   }
