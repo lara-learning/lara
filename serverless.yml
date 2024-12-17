@@ -249,23 +249,6 @@ functions:
         - '.'
         - 'packages/alexa'
 
-  createACMInUSEast:
-    handler: packages/create-acm/lib/handler.handler
-    package:
-      include:
-        - 'packages/create-acm/**'
-    environment:
-      AWS_REGION: us-east-1
-
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - 'acm:RequestCertificate'
-          - 'acm:DescribeCertificate'
-          - 'route53:ListHostedZones'
-          - 'route53:ChangeResourceRecordSets'
-        Resource: '*'
-
 resources:
   Conditions:
     IsProductionOrStaging:
@@ -278,6 +261,32 @@ resources:
             - staging
 
   Resources:
+    FrontendDNSCertificate:
+      Type: AWS::CertificateManager::Certificate
+      Condition: IsProductionOrStaging
+      Properties:
+        DomainName: ${env:FRONTEND_URL_WITHOUT_HTTPS}
+        ValidationMethod: DNS
+        DomainValidationOptions:
+          - DomainName: ${env:FRONTEND_URL_WITHOUT_HTTPS}
+            HostedZoneId: ${env:HOSTED_ZONE_ID}
+        Tags:
+          - Key: Name
+            Value: FrontendDNSCertificate-${self:custom.stage}
+
+    BackendDNSCertificate:
+      Type: AWS::CertificateManager::Certificate
+      Condition: IsProductionOrStaging
+      Properties:
+        DomainName: ${env:BACKEND_URL_WITHOUT_HTTPS}
+        ValidationMethod: DNS
+        DomainValidationOptions:
+          - DomainName: ${env:BACKEND_URL_WITHOUT_HTTPS}
+            HostedZoneId: ${env:HOSTED_ZONE_ID}
+        Tags:
+          - Key: Name
+            Value: BackendDNSCertificate-${self:custom.stage}
+
     UserTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Delete
@@ -432,7 +441,7 @@ resources:
           ViewerCertificate:
             Fn::If:
               - IsProductionOrStaging
-              - AcmCertificateArn: !GetAtt FrontendDNSCertificateARN.CertificateArn
+              - AcmCertificateArn: !Ref FrontendDNSCertificate
                 SslSupportMethod: sni-only
                 MinimumProtocolVersion: TLSv1.2_2018
               - Ref: AWS::NoValue
@@ -472,7 +481,7 @@ resources:
           ViewerCertificate:
             Fn::If:
               - IsProductionOrStaging
-              - AcmCertificateArn: !GetAtt BackendDNSCertificateARN.CertificateArn
+              - AcmCertificateArn: !Ref BackendDNSCertificate
                 SslSupportMethod: sni-only
                 MinimumProtocolVersion: TLSv1.2_2018
               - Ref: AWS::NoValue
@@ -539,27 +548,3 @@ resources:
               Condition:
                 Bool:
                   'aws:SecureTransport': 'false'
-
-    createFrontendDNSCertificate:
-      Type: 'Custom::CreateACMCertificate'
-      Properties:
-        ServiceToken: !GetAtt createACMInUSEast.Arn
-        DomainName: !Sub '${env:FRONTEND_URL_WITHOUT_HTTPS}'
-        HostedZoneId: !Sub '${env:HOSTED_ZONE_ID}'
-        Region: us-east-1
-
-    createBackendDNSCertificate:
-      Type: 'Custom::CreateACMCertificate'
-      Properties:
-        ServiceToken: !GetAtt createACMInUSEast.Arn
-        DomainName: !Sub '${env:BACKEND_URL_WITHOUT_HTTPS}'
-        HostedZoneId: !Sub '${env:HOSTED_ZONE_ID}'
-        Region: us-east-1
-
-outputs:
-  FrontendDNSCertificateARN:
-    Description: 'ARN of the ACM certificate created in the us-east-1 region (Frontend)'
-    Value: !GetAtt createFrontendDNSCertificate:.CertificateArn
-  BackendDNSCertificateARN:
-    Description: 'ARN of the ACM certificate created in the us-east-1 region (Backend)'
-    Value: !GetAtt createBackendDNSCertificate.CertificateArn
