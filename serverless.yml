@@ -80,6 +80,9 @@ custom:
     ses:
       region: ${self:provider.environment.SES_REGION, self:provider.region}
 
+  frontendUrlWithoutHttps: ${self:provider.environment.FRONTEND_URL.replace("https://", "")}
+  backendUrlWithoutHttps: ${self:provider.environment.BACKEND_URL.replace("https://", "")}
+
 package:
   individually: true
   excludeDevDependencies: true
@@ -250,7 +253,39 @@ functions:
         - 'packages/alexa'
 
 resources:
+  Conditions:
+    IsProductionOrStaging:
+      Fn::Or:
+        - Fn::Equals: [${self:custom.stage}, production]
+        - Fn::Equals: [${self:custom.stage}, staging]
+
   Resources:
+    FrontendDNSCertificate:
+      Type: AWS::CertificateManager::Certificate
+      Condition: IsProductionOrStaging
+      Properties:
+        DomainName: ${self:custom.frontendUrlWithoutHttps}
+        ValidationMethod: DNS
+        DomainValidationOptions:
+          - DomainName: ${self:custom.frontendUrlWithoutHttps}
+            HostedZoneId: ${self:provider.environment.HOSTED_ZONE_ID}
+        Tags:
+          - Key: Name
+            Value: FrontendDNSCertificate-${self:custom.stage}
+
+    BackendDNSCertificate:
+      Type: AWS::CertificateManager::Certificate
+      Condition: IsProductionOrStaging
+      Properties:
+        DomainName: ${self:custom.backendUrlWithoutHttps}
+        ValidationMethod: DNS
+        DomainValidationOptions:
+          - DomainName: ${self:custom.backendUrlWithoutHttps}
+            HostedZoneId: ${self:provider.environment.HOSTED_ZONE_ID}
+        Tags:
+          - Key: Name
+            Value: BackendDNSCertificate-${self:custom.stage}
+
     UserTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Delete
@@ -370,7 +405,6 @@ resources:
       Properties:
         DistributionConfig:
           PriceClass: PriceClass_100
-          #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
           IPV6Enabled: true
           Enabled: true
           Comment: Frontend
@@ -401,6 +435,15 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
+          Aliases:
+            - ${self:provider.environment.FRONTEND_URL}
+          ViewerCertificate:
+            Fn::If:
+              - IsProductionOrStaging
+              - AcmCertificateArn: !Ref FrontendDNSCertificate
+                SslSupportMethod: sni-only
+                MinimumProtocolVersion: TLSv1.2_2018
+              - Ref: AWS::NoValue
 
     BackendDistribution:
       Type: AWS::CloudFront::Distribution
@@ -433,6 +476,15 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
+          Aliases:
+            - ${self:provider.environment.BACKEND_URL}
+          ViewerCertificate:
+            Fn::If:
+              - IsProductionOrStaging
+              - AcmCertificateArn: !Ref BackendDNSCertificate
+                SslSupportMethod: sni-only
+                MinimumProtocolVersion: TLSv1.2_2018
+              - Ref: AWS::NoValue
 
     OAC:
       Type: AWS::CloudFront::OriginAccessControl
