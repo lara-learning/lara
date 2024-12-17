@@ -450,7 +450,6 @@ resources:
       Properties:
         DistributionConfig:
           PriceClass: PriceClass_100
-          #CNAMEs: [ ${self:provider.environment.PRODUCTION_FE_URL} ]
           IPV6Enabled: true
           Enabled: true
           Comment: Backend
