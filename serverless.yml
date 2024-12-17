@@ -410,6 +410,7 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
+            ResponseHeadersPolicyId: e61eb60c-9c35-4d20-a928-2b84e02af89c
           Aliases:
             - ${env:FRONTEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
@@ -417,7 +418,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.FRONTEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2018
+                MinimumProtocolVersion: TLSv1.2_2021
               - Ref: AWS::NoValue
 
     BackendDistribution:
@@ -435,7 +436,7 @@ resources:
                 HTTPSPort: 443
                 OriginProtocolPolicy: https-only
                 OriginSSLProtocols:
-                  - TLSv1
+                  - TLSv1.2
           HttpVersion: http2
           DefaultCacheBehavior:
             AllowedMethods:
@@ -450,6 +451,7 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
+            ResponseHeadersPolicyId: e61eb60c-9c35-4d20-a928-2b84e02af89c
           Aliases:
             - ${env:BACKEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
@@ -457,7 +459,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.BACKEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2018
+                MinimumProtocolVersion: TLSv1.2_2021
               - Ref: AWS::NoValue
 
     FrontendAliasRecord:
