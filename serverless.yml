@@ -411,7 +411,7 @@ resources:
             ForwardedValues:
               QueryString: true
           Aliases:
-            - ${self:provider.environment.FRONTEND_URL}
+            - ${env:FRONTEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
             Fn::If:
               - IsProductionOrStaging
@@ -451,7 +451,7 @@ resources:
             ForwardedValues:
               QueryString: true
           Aliases:
-            - ${self:provider.environment.BACKEND_URL}
+            - ${env:BACKEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
             Fn::If:
               - IsProductionOrStaging
