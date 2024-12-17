@@ -256,8 +256,12 @@ resources:
   Conditions:
     IsProductionOrStaging:
       Fn::Or:
-        - Fn::Equals: [${self:custom.stage}, production]
-        - Fn::Equals: [${self:custom.stage}, staging]
+        - Fn::Equals:
+            - ${self:custom.stage}
+            - production
+        - Fn::Equals:
+            - ${self:custom.stage}
+            - staging
 
   Resources:
     FrontendDNSCertificate:
