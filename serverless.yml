@@ -437,6 +437,7 @@ resources:
                 OriginProtocolPolicy: https-only
                 OriginSSLProtocols:
                   - TLSv1.2
+              OriginPath: '/${self:custom.stage}'
           HttpVersion: http2
           DefaultCacheBehavior:
             AllowedMethods:
