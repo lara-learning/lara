@@ -265,10 +265,10 @@ resources:
       Type: AWS::CertificateManager::Certificate
       Condition: IsProductionOrStaging
       Properties:
-        DomainName: ${self:custom.FRONTEND_URL_WITHOUT_HTTPS}
+        DomainName: ${self:provider.environment.FRONTEND_URL_WITHOUT_HTTPS}
         ValidationMethod: DNS
         DomainValidationOptions:
-          - DomainName: ${self:custom.FRONTEND_URL_WITHOUT_HTTPS}
+          - DomainName: ${self:provider.environment.FRONTEND_URL_WITHOUT_HTTPS}
             HostedZoneId: ${self:provider.environment.HOSTED_ZONE_ID}
         Tags:
           - Key: Name
@@ -278,10 +278,10 @@ resources:
       Type: AWS::CertificateManager::Certificate
       Condition: IsProductionOrStaging
       Properties:
-        DomainName: ${self:custom.BACKEND_URL_WITHOUT_HTTPS}
+        DomainName: ${self:provider.environment.BACKEND_URL_WITHOUT_HTTPS}
         ValidationMethod: DNS
         DomainValidationOptions:
-          - DomainName: ${self:custom.BACKEND_URL_WITHOUT_HTTPS}
+          - DomainName: ${self:provider.environment.BACKEND_URL_WITHOUT_HTTPS}
             HostedZoneId: ${self:provider.environment.HOSTED_ZONE_ID}
         Tags:
           - Key: Name
