@@ -492,8 +492,8 @@ resources:
           SigningBehavior: no-override
           SigningProtocol: sigv4
 
-    PolicyForCloudFrontPrivateContent:
-      Type: 'AWS::S3::BucketPolicy'
+    FrontendBucketPolicy:
+      Type: AWS::S3::BucketPolicy
       Properties:
         Bucket: !Ref FrontendBucket
         PolicyDocument:
@@ -509,14 +509,6 @@ resources:
               Condition:
                 StringEquals:
                   aws:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${FrontendDistribution.Id}'
-
-    FrontendBucketPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket: !Ref FrontendBucket
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
             - Sid: 'AllowSSLRequestsOnly'
               Effect: Deny
               Principal: '*'
