@@ -55,8 +55,7 @@ export interface NavItemProps extends NavLinkProps {
   isMobile: boolean
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const StyledNavItem = styled(({ isMobile, ...rest }: NavItemProps) => <NavLink {...rest} />)`
+export const StyledNavItem = styled(({ isMobile: _isMobile, ...rest }: NavItemProps) => <NavLink {...rest} />)`
   height: 60px;
   display: flex;
   align-items: center;

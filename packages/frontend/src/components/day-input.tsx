@@ -152,7 +152,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabl
 
   const handleStatusChange = (newStatus: EntryStatusType) => {
     clearTimeout(statusTimeout)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     setStatus({ ...newStatus, icon: StatusIcons[newStatus.type] })
     setStatusVisible(true)
 

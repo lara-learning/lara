@@ -1,7 +1,5 @@
 import React from 'react'
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   ApolloClient,
   ApolloLink,
@@ -35,7 +33,6 @@ const ApolloProvider: React.FunctionComponent = ({ children }) => {
           fields: {
             entries: {
               merge(_, incoming) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return incoming
               },
             },

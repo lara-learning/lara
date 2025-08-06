@@ -58,7 +58,7 @@ const searchFilter =
     const weekMatch = !week || weekEnd || report.week === week
     const yearSpanMatch = !yearEnd || (year && report.year >= year && report.year <= yearEnd)
     const weekSpanMatch = !weekEnd || (week && report.week >= week && report.week <= weekEnd)
-    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
+
     const departmentMatch =
       !department || (report.department && report.department.trim().toLowerCase().match(department))
 

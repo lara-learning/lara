@@ -43,7 +43,7 @@ export type ExportMailPayload = BaseEmailPayload & {
   attachments: [
     {
       filename: string
-    }
+    },
   ]
 }
 
