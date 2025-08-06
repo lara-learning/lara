@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 const dotenv = require('dotenv')
-const { execSync } = require('child_process')
 
 const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env
 
 /**
  * Open a tunnel to backend and frontend
  * and inject the urls into the env variables.
- * Installs ngrok only when tunnels are requested.
  */
 const openTunnels = async () => {
   let tunnelUrls = {}
@@ -19,10 +17,9 @@ const openTunnels = async () => {
 
   let ngrok
   try {
-    execSync('yarn add ngrok --no-save', { stdio: 'inherit' })
     ngrok = require('ngrok')
   } catch (err) {
-    console.error('Failed to install or require ngrok:', err)
+    console.error('ngrok is not installed. Run "yarn add ngrok --no-save" in your project directory and try again.')
     return tunnelUrls
   }
 
