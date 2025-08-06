@@ -27,7 +27,7 @@
     "graphql-shield": "^7.6.3",
     "i18next": "^20.3.1",
     "jsonwebtoken": "^8.5.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.3.2",
     "object-hash": "^2.2.0",
     "uuid": "^8.3.2"
   },
