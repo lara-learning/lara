@@ -1,12 +1,10 @@
 // @ts-check
 
- 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default
 const path = require('path')
 const dotenv = require('dotenv')
- 
 
 const {
   MICROSOFT_CLIENT_ID,
@@ -120,7 +118,7 @@ const webpackConfig = () => {
     plugins: [
       new webpack.DefinePlugin({
         ENVIRONMENT: JSON.stringify(getEnvironmentConfig()),
-         
+
         REVISION: JSON.stringify(require(__dirname + '/scripts/get-revision')()),
 
         TAG: JSON.stringify(process.env.LARA_VERSION),
