@@ -169,9 +169,9 @@ The following variables can be added to your cloned version of Lara.
 - BACKEND_URL
   - String containing backend development url
 - ENABLE_FRONTEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok.
+  - Boolean. Tunnel localhost to a publicly available url using ngrok. Will install ngrok when set to true
 - ENABLE_BACKEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok.
+  - Boolean. Tunnel localhost to a publicly available url using ngrok. Will install ngrok when set to true
 - ALEXA_SKILL_ID
   - String. Not required
 - ALEXA_SKILL_STAGE

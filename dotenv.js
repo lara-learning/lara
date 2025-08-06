@@ -11,10 +11,10 @@ const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env
  * Installs ngrok only when tunnels are requested.
  */
 const openTunnels = async () => {
-  let tunneUrls = {}
+  let tunnelUrls = {}
 
   if (ENABLE_FRONTEND_TUNNEL !== 'true' && ENABLE_BACKEND_TUNNEL !== 'true') {
-    return tunneUrls
+    return tunnelUrls
   }
 
   let ngrok
@@ -27,16 +27,16 @@ const openTunnels = async () => {
   }
 
   if (ngrok && ENABLE_FRONTEND_TUNNEL === 'true') {
-    tunneUrls.FRONTEND_TUNNEL_URL = await ngrok.connect({ addr: 8080, host_header: 'localhost:8080' })
-    console.info(`Frontend tunnel on URL: ${tunneUrls.FRONTEND_TUNNEL_URL}`)
+    tunnelUrls.FRONTEND_TUNNEL_URL = await ngrok.connect({ addr: 8080, host_header: 'localhost:8080' })
+    console.info(`Frontend tunnel on URL: ${tunnelUrls.FRONTEND_TUNNEL_URL}`)
   }
 
   if (ngrok && ENABLE_BACKEND_TUNNEL === 'true') {
-    tunneUrls.BACKEND_TUNNEL_URL = (await ngrok.connect(3000)) + `/${STAGE ?? 'dev'}`
-    console.info(`Backend tunnel on URL: ${tunneUrls.BACKEND_TUNNEL_URL}`)
+    tunnelUrls.BACKEND_TUNNEL_URL = (await ngrok.connect(3000)) + `/${STAGE ?? 'dev'}`
+    console.info(`Backend tunnel on URL: ${tunnelUrls.BACKEND_TUNNEL_URL}`)
   }
 
-  return tunneUrls
+  return tunnelUrls
 }
 
 /**
