@@ -50,5 +50,7 @@ export const createPDF = async (
     timeout: 30000,
   })
 
-  return page.pdf({ format: 'a4', printBackground: true })
+  const pdfData = await page.pdf({ format: 'a4', printBackground: true })
+
+  return Buffer.from(pdfData)
 }
