@@ -13,7 +13,7 @@ declare module '*.woff2' {
 declare module 'imagetracerjs'
 
 declare module '*.json' {
-  const json: any
+  const json: unknown
   export default json
 }
 

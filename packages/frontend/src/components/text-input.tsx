@@ -91,7 +91,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
             type={type}
             placeholder={placeholder}
             floating={Boolean(floating)}
-            onBlur={(event: any) => this.onBlur(event)}
+            onBlur={(event: React.FocusEvent<HTMLInputElement>) => this.onBlur(event)}
             valid={valid}
             onChange={this.onChange}
             onKeyDown={onKeyDown}

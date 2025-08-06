@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
-import { FormState } from 'react-hook-form'
+import { FieldValues, FormState } from 'react-hook-form'
 
 import strings from '../locales/localization'
 import { useToastContext } from './use-toast-context'
 
-export const useFormToasts = <T extends Record<string, any>>(formState: FormState<T>): void => {
+export const useFormToasts = <T extends FieldValues>(formState: FormState<T>): void => {
   const { errors } = formState
 
   const errorKey = useRef('')
