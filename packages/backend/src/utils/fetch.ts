@@ -9,9 +9,9 @@ import { log } from './logging'
  */
 export const parseOkJson = async <T>(res: Response): Promise<T | undefined> => {
   if (!res.ok) {
-    log('Failed request: ', await res.json())
+    const errorData = await res.json()
+    log('Failed request: ', JSON.stringify(errorData))
     return
   }
-
-  return res.json()
+  return res.json() as T
 }
