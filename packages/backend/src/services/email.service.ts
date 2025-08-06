@@ -12,6 +12,7 @@ const { STAGE, URL_ORIGIN } = process.env
 const translations = (user: User): EmailTranslations =>
   t('email', user.language, { interpolation: { prefix: 'turnOff', suffix: 'turnOff' } })
 
+
 const envLink = (path: string) => {
   const envDomain = STAGE === 'staging' ? 'staging.' : ''
 
