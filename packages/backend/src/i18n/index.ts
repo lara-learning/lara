@@ -46,19 +46,13 @@ i18next.init({
   },
 })
 
-export type TFunction =  <TResult = string | object>(
-  key: string,
-  lng?: string,
-  params?: TOptions
-) => TResult
-
+export type TFunction = <TResult = string | object>(key: string, lng?: string, params?: TOptions) => TResult
 
 export const t = <TResult = string | object>(key: string, lng?: string, params?: TOptions): TResult => {
   return i18next.t(key, { lng: lng ?? 'de', ...params }) as unknown as TResult
 }
 
-
-type SimpleTFuntion = <TResult = string | object> (key: string, params?: TOptions) => TResult
+type SimpleTFuntion = <TResult = string | object>(key: string, params?: TOptions) => TResult
 
 export const createT = (lng?: string): SimpleTFuntion => {
   return (key, params) => t(key, lng, params)
