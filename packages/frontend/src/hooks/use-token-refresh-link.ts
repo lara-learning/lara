@@ -17,7 +17,7 @@ export const useTokenRefreshLink = (): TokenRefreshLink => {
   return new TokenRefreshLink({
     // Indicates the current state of access token expiration
     // If token not yet expired or user doesn't have a token (guest) true should be returned
-    isTokenValidOrUndefined: () => {
+    isTokenValidOrUndefined: async () => {
       const token = getAccessToken()
 
       // If there is no token, the user is not logged in

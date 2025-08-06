@@ -20,7 +20,7 @@
     "@lara/components": "^1.0.0",
     "@microsoft/microsoft-graph-client": "^3.0.5",
     "@rebass/grid": "^6.1.0",
-    "apollo-link-token-refresh": "^0.4.0",
+    "apollo-link-token-refresh": "0.7.0",
     "date-fns": "^2.16.1",
     "file-saver": "^2.0.2",
     "framer-motion": "^1.11.1",

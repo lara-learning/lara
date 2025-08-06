@@ -5798,10 +5798,12 @@ apollo-datasource@^3.3.2:
     "@apollo/utils.keyvaluecache" "^1.0.1"
     apollo-server-env "^4.2.1"
 
-apollo-link-token-refresh@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/apollo-link-token-refresh/-/apollo-link-token-refresh-0.4.0.tgz#5ba6c3f46509e64c95f20fb719b8abeddc09fad6"
-  integrity sha512-5P5nH//asgoz01r6tUYiBbHIuVwEEsBmA9WJ8LEiNtZcOq8AXdfR8aV4Pw/B86P3lRi1ykd8xyZLCHpLro9v+Q==
+apollo-link-token-refresh@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/apollo-link-token-refresh/-/apollo-link-token-refresh-0.7.0.tgz#8c95f853d6db244ecf9ca7b792222a25def998d9"
+  integrity sha512-AFPgBRK5zkWvNKOAQLYKJ7VhXSnKUOEwG8EMbZetJRvJCjsJiFVKRbv4/qpHrxyWY6cY4tooJbGL79c8oTZWpg==
+  dependencies:
+    ts-node "^10.9.1"
 
 apollo-reporting-protobuf@^3.4.0:
   version "3.4.0"
