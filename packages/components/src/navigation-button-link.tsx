@@ -10,8 +10,8 @@ export interface StyledLinkProps extends LinkProps {
 }
 
 // isLeft props needs to be removed from LinkProps
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledLink = styled(({ isLeft, ...rest }) => <Link {...rest} />)<StyledLinkProps>`
+
+const StyledLink = styled(({ isLeft: _isLeft, ...rest }) => <Link {...rest} />)<StyledLinkProps>`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -79,7 +79,6 @@ const SignatureSettings: React.FunctionComponent = () => {
       ],
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     ImageTracer.imageToSVG(imgSrc, finishedScan, options)
   }, [imgSrc, finishedScan])
 

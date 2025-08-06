@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 process.env = {
   USER_TABLE: 'foo',
   COMPANY_TABLE: 'foo',

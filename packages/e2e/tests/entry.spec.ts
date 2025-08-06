@@ -19,9 +19,9 @@ test.describe('entry', () => {
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext()
     page = await context.newPage()
-    await page.goto(URL)
+    await page.goto(URL ?? '')
     await page.locator(`text=${envName}`).hover()
-    await page.type('input', USER_ID)
+    await page.type('input', USER_ID ?? '')
     await page.locator('text=Dev Login').click()
   })
 
@@ -53,6 +53,6 @@ test.describe('entry', () => {
     await page.locator('button > i').click()
     await page.locator('text=Entry has been deleted').waitFor()
     const work = page.locator(updatedEntryText)
-    expect(work).toBeUndefined
+    expect(work).toBeUndefined()
   })
 })

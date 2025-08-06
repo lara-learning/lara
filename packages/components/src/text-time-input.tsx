@@ -9,8 +9,7 @@ interface WrapperProps extends FlexProps {
   readonly focused: boolean
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const StyledTextTimeInputWrapper = styled(({ focused, ...rest }: WrapperProps) => (
+export const StyledTextTimeInputWrapper = styled(({ focused: _focused, ...rest }: WrapperProps) => (
   <StyledEntryValueWrapper {...rest} />
 ))<WrapperProps>`
   border-bottom: 1px solid ${({ focused, theme }) => (focused ? theme.blueFont : theme.inputBorderEmpty)};

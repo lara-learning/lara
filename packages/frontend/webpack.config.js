@@ -1,15 +1,13 @@
 // @ts-check
 
-/* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, no-undef */
+ 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default
 const path = require('path')
-const fs = require('fs')
 const dotenv = require('dotenv')
-/* eslint-enable @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, no-undef */
+ 
 
-// eslint-disable-next-line no-undef
 const {
   MICROSOFT_CLIENT_ID,
   MICROSOFT_TENANT_ID,
@@ -27,11 +25,10 @@ const DEFAULT_MODE = 'development'
 
 /** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string}}} */
 const getEnvironmentConfig = () => {
-  // eslint-disable-next-line no-undef
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
 
   // For local development we load the variables from .env file
-  // eslint-disable-next-line no-undef
+
   const envVarsPath = path.resolve(__dirname, '../../.env')
   const { parsed } = dotenv.config({ path: envVarsPath })
   if (parsed) {
@@ -52,14 +49,14 @@ const getEnvironmentConfig = () => {
   // The values are injected by Gitlab
   return {
     name,
-    mode: MODE,
-    microsoftClientID: MICROSOFT_CLIENT_ID,
-    microsoftTenantID: MICROSOFT_TENANT_ID,
+    mode: MODE ?? '',
+    microsoftClientID: MICROSOFT_CLIENT_ID ?? '',
+    microsoftTenantID: MICROSOFT_TENANT_ID ?? '',
     debug: DEBUG === 'true',
-    authHeader: AUTH_HEADER,
-    backendUrl: BACKEND_URL,
-    frontendUrl: FRONTEND_URL,
-    supportMail: SUPPORT_MAIL,
+    authHeader: AUTH_HEADER ?? '',
+    backendUrl: BACKEND_URL ?? '',
+    frontendUrl: FRONTEND_URL ?? '',
+    supportMail: SUPPORT_MAIL ?? '',
   }
 }
 
@@ -123,9 +120,9 @@ const webpackConfig = () => {
     plugins: [
       new webpack.DefinePlugin({
         ENVIRONMENT: JSON.stringify(getEnvironmentConfig()),
-        // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+         
         REVISION: JSON.stringify(require(__dirname + '/scripts/get-revision')()),
-        // eslint-disable-next-line no-undef
+
         TAG: JSON.stringify(process.env.LARA_VERSION),
         BUILD_DATE: JSON.stringify(new Date()),
       }),
@@ -151,5 +148,4 @@ const webpackConfig = () => {
   }
 }
 
-// eslint-disable-next-line no-undef
 module.exports = webpackConfig
