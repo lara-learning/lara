@@ -42,7 +42,7 @@
     "minimatch": "^3.0.8"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
+    "@commitlint/cli": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^22.9.0",
     "@types/webpack-env": "^1.15.3",
@@ -58,13 +58,13 @@
     "husky": "9.1.7",
     "lerna": "^7.4.2",
     "prettier": "^3.6.2",
-    "serverless": "^3.23.0",
+    "serverless": "^3.40.0",
     "serverless-dynamodb": "^0.2.47",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-jetpack": "^0.11.2",
-    "serverless-offline": "^13.3.2",
-    "serverless-s3-local": "^0.6.22",
-    "serverless-s3-sync": "3.1.0",
+    "serverless-offline": "^14.4.0",
+    "serverless-s3-local": "^0.8.1",
+    "serverless-s3-sync": "^3.4.0",
     "sort-package-json": "^1.46.0",
     "typescript": "^5.2.2"
   }
