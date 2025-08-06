@@ -10,7 +10,7 @@ Lara is a tool for writing your "Berichtsheft" digitally. In Germany all trainee
 
 To run the project, ensure the following are installed:
 
-1. Node.js (version 18)
+1. Node.js (version 22)
 2. Yarn
    - Install Yarn globally using
    ```bash
@@ -42,12 +42,13 @@ In order to use the frontend, you need an instance of the backend running on por
 
 From the root of the project call:
 
-1. `yarn`
+1. `yarn install`
 2. `yarn db:install`
-3. `yarn compile:watch`
-4. `yarn start`
+3. `yarn compile`
+4. `yarn build`
+5. `yarn start`
 
-`compile:watch` starts a file watcher and `start` starts a dev server which serves the frontend on port `:8080`
+`start` starts a dev server which serves the frontend on port `:8080`
 
 ### Linting
 
@@ -168,9 +169,9 @@ The following variables can be added to your cloned version of Lara.
 - BACKEND_URL
   - String containing backend development url
 - ENABLE_FRONTEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok.
+  - Boolean. Tunnel localhost to a publicly available url using ngrok. You may need to temporarily install ngrok to your workspace first as it is not included in the package.json
 - ENABLE_BACKEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok.
+  - Boolean. Tunnel localhost to a publicly available url using ngrok. You may need to temporarily install ngrok to your workspace first as it is not included in the package.json
 - ALEXA_SKILL_ID
   - String. Not required
 - ALEXA_SKILL_STAGE
