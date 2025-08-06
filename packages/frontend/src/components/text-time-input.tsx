@@ -10,8 +10,8 @@ import Suggestions from './suggestions'
 import { useValidationHelper } from '../helper/validation-helper'
 
 interface TextTimeInputProps {
-  onSave: (entry: EntryInput) => any
-  onDelete?: () => any
+  onSave: (entry: EntryInput) => void
+  onDelete?: () => void
   clearOnSave?: boolean
   entry?: Pick<Entry, 'time' | 'text'>
   disabled?: boolean
