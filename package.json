@@ -23,18 +23,18 @@
     "lerna:start": "lerna run start --stream",
     "lint": "eslint packages --fix",
     "lint:verify": "eslint packages",
+    "prepare": "husky",
     "sls": "sls offline start",
     "sort-package-jsons": "sort-package-json package.json packages/*/package.json",
     "sort-package-jsons:verify": "yarn sort-package-jsons && git diff --exit-code package.json packages/*/package.json",
     "start": "concurrently -kn sls,frontend,admin -c blue,red,green yarn:sls yarn:lerna:start yarn:ddb:admin",
     "test": "lerna run --parallel test --stream"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:verify",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "yarn lint:verify"
-    }
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "resolutions": {
     "**/@types/node": "^22.9.0",
@@ -55,7 +55,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "husky": "^4.3.0",
+    "husky": "9.1.7",
     "lerna": "^7.4.2",
     "prettier": "^3.6.2",
     "serverless": "^3.23.0",
