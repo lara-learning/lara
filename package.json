@@ -43,6 +43,9 @@
     "body-parser": "2.2.0",
     "minimatch": "^3.0.8"
   },
+  "dependencies": {
+    "uuid": "11.1.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
