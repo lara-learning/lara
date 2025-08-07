@@ -33,7 +33,8 @@
     "react-localization": "^1.0.15",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-webcam": "^5.2.4"
+    "react-webcam": "^5.2.4",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.13.7",
