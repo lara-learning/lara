@@ -49,10 +49,10 @@ const handleGettingAttachements = async (payload: EmailPayload): Promise<Attachm
 
   const attachment = await getAttachments(filename)
 
-  if (!attachment || !(attachment instanceof Readable)) {
+  if (!attachment || !(attachment.Body instanceof Readable)) {
     return []
   }
-  return [{ filename, content: await streamToBuffer(attachment) }]
+  return [{ filename, content: await streamToBuffer(attachment.Body) }]
 }
 
 export const handler: Handler<EmailPayload, Response> = async (payload) => {
