@@ -16,13 +16,13 @@ const BaseHeader = styled.h1<HeaderProps>`
   user-select: none;
 `
 
-export const H1 = styled(BaseHeader.withComponent('h1'))`
+export const H1 = styled(BaseHeader)`
   font-size: ${FontSizes.h1};
   letter-spacing: 0.9px;
   ${(props) => props.noMargin && 'margin: 0;'};
 `
 
-export const H2 = styled(BaseHeader.withComponent('h2'))`
+export const H2 = styled.h2<HeaderProps>`
   font-size: ${FontSizes.h2};
   letter-spacing: 0.9px;
   ${(props) => props.noMargin && 'margin: 0;'};

@@ -25,9 +25,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
     adjustHeight(event.target as HTMLTextAreaElement)
-    if (onInput) {
-      onInput(event)
-    }
+    onInput?.(event)
   }
 
   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -35,6 +33,10 @@ export const TextArea: React.FC<TextAreaProps> = ({
     if (onFocus) {
       onFocus(event)
     }
+  }
+
+  const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    onBlur?.(event)
   }
 
   const adjustHeight = (target: HTMLTextAreaElement) => {
@@ -53,7 +55,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
       placeholder={placeholder}
       defaultValue={defaultValue}
       onFocus={handleFocus}
-      onBlur={(event) => onBlur && onBlur(event)}
+      onBlur={handleBlur}
       onInput={handleInput}
       className={className}
     />
