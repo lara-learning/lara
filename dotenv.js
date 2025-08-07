@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 const dotenv = require('dotenv')
-const ngrok = require('ngrok')
 
 const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env
 
@@ -10,19 +9,31 @@ const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env
  * and inject the urls into the env variables.
  */
 const openTunnels = async () => {
-  let tunneUrls = {}
+  let tunnelUrls = {}
 
-  if (ENABLE_FRONTEND_TUNNEL === 'true') {
-    tunneUrls.FRONTEND_TUNNEL_URL = await ngrok.connect({ addr: 8080, host_header: 'localhost:8080' })
-    console.info(`Frontend tunnel on URL: ${tunneUrls.FRONTEND_TUNNEL_URL}`)
+  if (ENABLE_FRONTEND_TUNNEL !== 'true' && ENABLE_BACKEND_TUNNEL !== 'true') {
+    return tunnelUrls
   }
 
-  if (ENABLE_BACKEND_TUNNEL === 'true') {
-    tunneUrls.BACKEND_TUNNEL_URL = (await ngrok.connect(3000)) + `/${STAGE ?? 'dev'}`
-    console.info(`Backend tunnel on URL: ${tunneUrls.BACKEND_TUNNEL_URL}`)
+  let ngrok
+  try {
+    ngrok = require('ngrok')
+  } catch (err) {
+    console.error('ngrok is not installed. Run "yarn add ngrok --no-save" in your project directory and try again.')
+    return tunnelUrls
   }
 
-  return tunneUrls
+  if (ngrok && ENABLE_FRONTEND_TUNNEL === 'true') {
+    tunnelUrls.FRONTEND_TUNNEL_URL = await ngrok.connect({ addr: 8080, host_header: 'localhost:8080' })
+    console.info(`Frontend tunnel on URL: ${tunnelUrls.FRONTEND_TUNNEL_URL}`)
+  }
+
+  if (ngrok && ENABLE_BACKEND_TUNNEL === 'true') {
+    tunnelUrls.BACKEND_TUNNEL_URL = (await ngrok.connect(3000)) + `/${STAGE ?? 'dev'}`
+    console.info(`Backend tunnel on URL: ${tunnelUrls.BACKEND_TUNNEL_URL}`)
+  }
+
+  return tunnelUrls
 }
 
 /**

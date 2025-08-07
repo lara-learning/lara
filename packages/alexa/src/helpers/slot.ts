@@ -5,15 +5,18 @@ export const getSlotValues = <T extends string>(
   requestEnvelope: RequestEnvelope,
   ...slotNames: T[]
 ): Record<T, string | undefined> => {
-  return slotNames.reduce((acc, name) => {
-    const value = getSlotValue(requestEnvelope, name)
+  return slotNames.reduce(
+    (acc, name) => {
+      const value = getSlotValue(requestEnvelope, name)
 
-    if (value === '?') {
-      return acc
-    }
+      if (value === '?') {
+        return acc
+      }
 
-    return { ...acc, [name]: value }
-  }, {} as Record<T, string | undefined>)
+      return { ...acc, [name]: value }
+    },
+    {} as Record<T, string | undefined>
+  )
 }
 
 export const getSlotId = (slot?: Slot): string | undefined =>

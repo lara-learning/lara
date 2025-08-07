@@ -80,8 +80,8 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
       const reportsData = filteredReports.map((report) => createPrintReportData(report, currentUser))
 
       const userData = await createPrintUserData(currentUser)
-      const printTranslations: PrintTranslations = t('print', currentUser.language)
-      const emailTranslations: EmailTranslations = t('email', currentUser.language)
+      const printTranslations = t<PrintTranslations>('print', currentUser.language)
+      const emailTranslations = t<EmailTranslations>('email', currentUser.language)
 
       const hash = await savePrintData({
         reportsData,

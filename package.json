@@ -21,49 +21,50 @@
     "generate:verify": "yarn generate && git diff --exit-code",
     "invoke:cleanup": "sls invoke local -f cleanup",
     "lerna:start": "lerna run start --stream",
-    "lint": "eslint packages --ext .ts,.tsx --fix",
-    "lint:verify": "eslint packages --ext .ts,.tsx",
+    "lint": "eslint packages --fix",
+    "lint:verify": "eslint packages",
+    "prepare": "husky",
     "sls": "sls offline start",
     "sort-package-jsons": "sort-package-json package.json packages/*/package.json",
     "sort-package-jsons:verify": "yarn sort-package-jsons && git diff --exit-code package.json packages/*/package.json",
     "start": "concurrently -kn sls,frontend,admin -c blue,red,green yarn:sls yarn:lerna:start yarn:ddb:admin",
     "test": "lerna run --parallel test --stream"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:verify",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "yarn lint:verify"
-    }
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "resolutions": {
-    "**/@types/node": "^18.8.0",
-    "@types/react": "^17.0.4"
+    "**/@types/node": "^22.9.0",
+    "@types/react": "^17.0.4",
+    "minimatch": "^3.0.8"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@types/node": "^18.8.1",
+    "@commitlint/cli": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/node": "^22.9.0",
     "@types/webpack-env": "^1.15.3",
-    "@typescript-eslint/eslint-plugin": "^5.40.0",
-    "@typescript-eslint/parser": "^5.40.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "dynamodb-admin": "^4.1.0",
-    "eslint": "^7.27.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.0",
-    "lerna": "^6.0.1",
-    "ngrok": "^4.3.0",
-    "prettier": "^2.1.2",
-    "serverless": "^3.23.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "9.1.7",
+    "lerna": "^7.4.2",
+    "prettier": "^3.6.2",
+    "serverless": "^3.40.0",
     "serverless-dynamodb": "^0.2.47",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-jetpack": "^0.11.2",
-    "serverless-offline": "^13.3.2",
-    "serverless-s3-local": "^0.6.22",
-    "serverless-s3-sync": "3.1.0",
+    "serverless-offline": "^14.4.0",
+    "serverless-s3-local": "^0.8.1",
+    "serverless-s3-sync": "^3.4.0",
     "sort-package-json": "^1.46.0",
     "typescript": "^5.2.2"
   }

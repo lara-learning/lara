@@ -5,6 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "@playwright/test": "^1.20.1",
-    "playwright": "^1.20.1"
+    "playwright": "^1.54.2"
   }
 }

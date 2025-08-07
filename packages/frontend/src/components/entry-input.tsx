@@ -223,9 +223,13 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   }
 
   const toggleContextMenu = () => {
-    setShowContextMenu && showContextMenu != entry.id
-      ? setShowContextMenu(entry.id)
-      : setShowContextMenu && setShowContextMenu('')
+    if (setShowContextMenu) {
+      if (showContextMenu !== entry.id) {
+        setShowContextMenu(entry.id)
+      } else {
+        setShowContextMenu('')
+      }
+    }
   }
 
   const onDragEnter = React.useCallback(() => {

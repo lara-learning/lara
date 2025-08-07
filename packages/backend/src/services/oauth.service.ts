@@ -80,8 +80,8 @@ export const createOAuthData = (user: User): OAuthData => {
 export const validateJWT = (jwt: string): JWTPayload | undefined => {
   try {
     const decoded = verify(jwt, LaraSecret)
-    return typeof decoded !== 'object' ? JSON.parse(decoded) : decoded
-  } catch (e) {
+    return typeof decoded !== 'object' ? JSON.parse(decoded) : (decoded as JWTPayload)
+  } catch (_) {
     return undefined
   }
 }

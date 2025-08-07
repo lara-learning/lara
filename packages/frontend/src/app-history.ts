@@ -1,7 +1,7 @@
 import { createBrowserHistory, History } from 'history'
 
 class AppHistory {
-  public static getInstance(): History<any> {
+  public static getInstance(): History {
     if (!AppHistory.history) {
       AppHistory.history = createBrowserHistory()
     }
