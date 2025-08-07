@@ -1,5 +1,11 @@
-import { S3, Endpoint, AWSError } from 'aws-sdk'
-import { PromiseResult } from 'aws-sdk/lib/request'
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  GetObjectCommandOutput,
+  PutObjectCommandOutput,
+} from '@aws-sdk/client-s3'
+import { Readable } from 'stream'
 
 import { PrintData } from '@lara/api'
 
@@ -9,36 +15,55 @@ if (!EXPORT_BUCKET) {
   throw new Error("Missing env Var: 'EXPORT_BUCKET'")
 }
 
-const s3Client = new S3(
+const s3Client = new S3Client(
   IS_OFFLINE
     ? {
-        s3ForcePathStyle: true,
-        accessKeyId: 'S3RVER', // This specific key is required when working offline
-        secretAccessKey: 'S3RVER',
-        endpoint: new Endpoint('http://localhost:8181'),
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: 'S3RVER', // This specific key is required when working offline
+          secretAccessKey: 'S3RVER',
+        },
+        endpoint: 'http://localhost:8181',
       }
     : { region: 'eu-central-1' }
 )
 
-export const getExport = (key: string): Promise<PrintData | undefined> => {
-  return s3Client
-    .getObject({
+const streamToString = async (stream: Readable): Promise<string> => {
+  const chunks: Uint8Array[] = []
+  for await (const chunk of stream) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+  return Buffer.concat(chunks).toString('utf-8')
+}
+
+export const getExport = async (key: string): Promise<PrintData | undefined> => {
+  try {
+    const command = new GetObjectCommand({
       Bucket: EXPORT_BUCKET,
       Key: key,
     })
-    .promise()
-    .then((res) => res.Body && JSON.parse(res.Body.toString('utf-8')))
-    .catch((e) => {
-      console.error('Error while trying to get Data from S3 Bucket: ', e)
-    })
+    const res: GetObjectCommandOutput = await s3Client.send(command)
+
+    if (res.Body && res.Body instanceof Readable) {
+      const bodyStr = await streamToString(res.Body)
+      return JSON.parse(bodyStr)
+    } else return undefined
+  } catch (e) {
+    console.error('Error while trying to get Data from S3 Bucket: ', e)
+    return undefined
+  }
 }
 
-export const saveAttachments = (key: string, body: Buffer): Promise<PromiseResult<S3.PutObjectOutput, AWSError>> => {
-  return s3Client
-    .putObject({
+export const saveAttachments = async (key: string, body: Buffer): Promise<PutObjectCommandOutput | undefined> => {
+  try {
+    const command = new PutObjectCommand({
       Bucket: EXPORT_BUCKET,
       Key: key,
       Body: body,
     })
-    .promise()
+    return await s3Client.send(command)
+  } catch (e) {
+    console.error('Error while saving attachment to S3: ', e)
+    return undefined
+  }
 }

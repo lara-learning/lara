@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { DeleteCommand, DeleteCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { dbClient } from './ddb'
 
@@ -9,12 +9,18 @@ import { dbClient } from './ddb'
  * @param key Key of DDB item
  * @returns true if success
  */
-export const deleteItem = async (tableName: string, key: DocumentClient.Key): Promise<boolean> => {
-  const res = await dbClient().delete({ TableName: tableName, Key: key }).promise()
-
-  if (res.$response.error) {
+export const deleteItem = async (tableName: string, key: DeleteCommandInput['Key']): Promise<boolean> => {
+  const client = dbClient()
+  try {
+    await client.send(
+      new DeleteCommand({
+        TableName: tableName,
+        Key: key,
+      })
+    )
+    return true
+  } catch (err) {
+    console.error('Error deleting item from DB:', err)
     throw new Error('Error deleting item from DB')
   }
-
-  return true
 }

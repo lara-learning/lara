@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { UpdateCommand, UpdateCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { Keys } from '../utils/object'
 import {
@@ -15,19 +15,22 @@ import {
  * @param input DDB input options
  * @returns Boolean if sucess
  */
-const updateItem = async (
-  tableName: string,
-  input: Omit<DocumentClient.UpdateItemInput, 'TableName'>
-): Promise<boolean> => {
-  const res = await dbClient()
-    .update({ TableName: tableName, ...input })
-    .promise()
+const updateItem = async (tableName: string, input: Omit<UpdateCommandInput, 'TableName'>): Promise<boolean> => {
+  const client = dbClient()
 
-  if (res.$response.error) {
+  try {
+    await client.send(
+      new UpdateCommand({
+        TableName: tableName,
+        ...input,
+      })
+    )
+
+    return true
+  } catch (error) {
+    console.error('Error updating into DB:', error)
     throw new Error('Error updating into DB')
   }
-
-  return true
 }
 
 /**
