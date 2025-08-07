@@ -1,5 +1,4 @@
 import { isFuture } from 'date-fns'
-import fetch from 'node-fetch'
 
 import { User } from '@lara/api'
 

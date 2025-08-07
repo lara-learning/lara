@@ -1,5 +1,3 @@
-import { Response } from 'node-fetch'
-
 import { log } from './logging'
 
 /**
