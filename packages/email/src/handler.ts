@@ -1,5 +1,5 @@
 import { Handler } from 'aws-lambda'
-import { SES } from 'aws-sdk'
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 import { mkdirSync, writeFileSync } from 'fs'
 import { compile } from 'handlebars'
 import { createTransport } from 'nodemailer'
@@ -10,7 +10,9 @@ import { resolve } from 'path'
 import { EmailPayload } from '@lara/api'
 
 import { generateEmailTemplate } from './mail-template'
-import { getAttachements } from './s3'
+import { getAttachments } from './s3'
+
+import { Readable } from 'stream'
 
 const { IS_OFFLINE, SES_EMAIL, SES_REGION } = process.env
 
@@ -22,11 +24,21 @@ if (!SES_REGION) {
   throw new Error("Missing Environment Variable: 'SES_REGION'")
 }
 
+const sesClient = new SESClient({ region: SES_REGION })
+
 const transporter = createTransport({
-  SES: new SES({ region: SES_REGION }),
+  SES: { ses: sesClient, aws: { SendEmailCommand } },
 })
 
 type Response = 'success' | 'error'
+
+const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
+  const chunks: Uint8Array[] = []
+  for await (const chunk of stream) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+  return Buffer.concat(chunks)
+}
 
 const handleGettingAttachements = async (payload: EmailPayload): Promise<Attachment[]> => {
   if (payload.emailType !== 'reportExport') {
@@ -35,12 +47,12 @@ const handleGettingAttachements = async (payload: EmailPayload): Promise<Attachm
 
   const filename = payload.attachments[0].filename
 
-  const attachement = await getAttachements(filename)
+  const attachment = await getAttachments(filename)
 
-  if (!attachement) {
+  if (!attachment || !(attachment instanceof Readable)) {
     return []
   }
-  return [{ filename, content: attachement }]
+  return [{ filename, content: await streamToBuffer(attachment) }]
 }
 
 export const handler: Handler<EmailPayload, Response> = async (payload) => {

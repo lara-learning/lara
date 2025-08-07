@@ -1,4 +1,5 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
+import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
 const { IS_OFFLINE } = process.env
 
@@ -11,19 +12,19 @@ const params = IS_OFFLINE
     }
   : {}
 
-let cacheClient: DocumentClient
+let cachedClient: DynamoDBDocumentClient
 
 /**
  * Creates a new DB client or returns the
  * already created client
  * @returns The DB client
  */
-export const dbClient = (): DocumentClient => {
-  if (!cacheClient) {
-    cacheClient = new DocumentClient(params)
+export const dbClient = (): DynamoDBDocumentClient => {
+  if (!cachedClient) {
+    cachedClient = DynamoDBDocumentClient.from(new DynamoDBClient(params))
   }
 
-  return cacheClient
+  return cachedClient
 }
 
 /**

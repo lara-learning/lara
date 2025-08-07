@@ -13,7 +13,6 @@
     "ask-sdk-core": "^2.11.0",
     "ask-sdk-express-adapter": "^2.14.0",
     "ask-sdk-model": "^1.36.1",
-    "aws-sdk": "^2.950.0",
     "date-fns": "4.1.0",
     "graphql": "^16.11.0",
     "graphql-request": "^7.2.0",

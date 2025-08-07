@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { QueryCommand, QueryCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { Keys } from '../utils/object'
 import {
@@ -15,15 +15,17 @@ import {
  * @param options DDB Query Options
  * @returns Queried items
  */
-const queryItems = async <T>(
-  tablename: string,
-  options: Omit<DocumentClient.QueryInput, 'TableName'>
-): Promise<T[]> => {
-  const res = await dbClient()
-    .query({ ...options, TableName: tablename })
-    .promise()
+const queryItems = async <T>(tablename: string, options: Omit<QueryCommandInput, 'TableName'>): Promise<T[]> => {
+  const client = dbClient()
 
-  if (res.$response.error || !res.Items) {
+  const res = await client.send(
+    new QueryCommand({
+      TableName: tablename,
+      ...options,
+    })
+  )
+
+  if (!res.Items) {
     return []
   }
 

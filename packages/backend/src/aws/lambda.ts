@@ -1,5 +1,5 @@
 import { EmailPayload, PrintPayload } from '@lara/api'
-import { Lambda } from 'aws-sdk'
+import { Lambda } from '@aws-sdk/client-lambda'
 
 const { IS_OFFLINE, PRINT_FUNCTION, EMAIL_FUNCTION } = process.env
 
@@ -31,11 +31,9 @@ type LambdaOptions = { functionName: 'email'; payload: EmailPayload } | { functi
  * @param functionName Defines between print and email Lambda
  */
 export const invokeLambda = async ({ functionName, payload }: LambdaOptions): Promise<void> => {
-  await lambda
-    .invoke({
-      FunctionName: functionNameMapping[functionName],
-      InvocationType: 'Event',
-      Payload: JSON.stringify(payload),
-    })
-    .promise()
+  await lambda.invoke({
+    FunctionName: functionNameMapping[functionName],
+    InvocationType: 'Event',
+    Payload: JSON.stringify(payload),
+  })
 }

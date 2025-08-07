@@ -15,13 +15,12 @@ import {
   userTableName,
 } from '../db'
 import { TokensResponse } from '../services/oauth.service'
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 
 export const allUsers = (): Promise<User[]> => {
   return scanItems(userTableName)
 }
 
-export const saveUser = <T extends DocumentClient.PutItemInputAttributeMap>(user: T): Promise<T> => {
+export const saveUser = <T extends User>(user: T): Promise<T> => {
   return putItem(userTableName, user)
 }
 
