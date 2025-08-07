@@ -50,14 +50,13 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
   let browser: Browser | undefined
   const { reportsData, userData, printTranslations, emailTranslations } = exportData
 
-  const headlessMode = chromium.headless === 'new' ? 'shell' : chromium.headless
+  const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
 
   try {
     browser = await launch({
       args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
-      headless: IS_OFFLINE ? true : headlessMode,
+      headless: headlessMode,
       acceptInsecureCerts: true,
     })
 

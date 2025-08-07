@@ -27,7 +27,7 @@
     "graphql-shield": "^7.6.3",
     "i18next": "^25.3.2",
     "jsonwebtoken": "^9.0.2",
-    "object-hash": "^2.2.0",
+    "object-hash": "3",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "@types/i18n": "^0.13.0",
     "@types/jest": "^29.1.2",
     "@types/jsonwebtoken": "^9.0.3",
-    "@types/object-hash": "^2.2.1",
+    "@types/object-hash": "^3.0.6",
     "@types/uuid": "^8.3.0",
     "jest": "^30.0.5",
     "ts-jest": "^29.0.3"
