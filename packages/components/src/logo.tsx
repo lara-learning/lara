@@ -76,5 +76,5 @@ export const StyledLogo: React.FunctionComponent<LogoProps> = (props) => {
   if (props.isInNav) {
     return navLogo(props)
   }
-  return themeContext.surface === '#FFFFFF' ? coloredLogo(props) : whiteLogo(props)
+  return themeContext?.surface === '#FFFFFF' ? coloredLogo(props) : whiteLogo(props)
 }

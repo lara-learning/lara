@@ -5,7 +5,7 @@ import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
 
 export interface ButtonLayoutProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  styling: 'primary' | 'secondary'
+  styling?: 'primary' | 'secondary'
   icon?: JSX.Element
   fullsize?: boolean
   danger?: boolean

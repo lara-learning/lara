@@ -1,4 +1,4 @@
-import { createGlobalStyle, DefaultTheme, GlobalStyleComponent } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export const Fonts = {
   primary:
@@ -6,7 +6,7 @@ export const Fonts = {
   secondary: '"Inter",sans-serif',
 }
 
-export const createGlobaleFonts = (inter: string): GlobalStyleComponent<Record<string, never>, DefaultTheme> => {
+export const createGlobaleFonts = (inter: string) => {
   return createGlobalStyle`
     @font-face {
       font-family: Inter;
