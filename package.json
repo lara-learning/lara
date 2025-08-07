@@ -39,8 +39,8 @@
   "resolutions": {
     "**/@types/node": "^22.9.0",
     "@types/react": "^17.0.4",
-    "minimatch": "^3.0.8",
-    "body-parser": "2.2.0"
+    "body-parser": "2.2.0",
+    "minimatch": "^3.0.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
