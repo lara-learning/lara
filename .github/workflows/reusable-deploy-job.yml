@@ -47,6 +47,9 @@ jobs:
       SES_REGION: ${{ secrets.SES_REGION }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       BACKEND_URL: ${{ secrets.BACKEND_URL }}
+      HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
+      FRONTEND_CERTIFICATE_ARN: ${{ secrets.FRONTEND_CERTIFICATE_ARN }}
+      BACKEND_CERTIFICATE_ARN: ${{ secrets.BACKEND_CERTIFICATE_ARN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -79,6 +82,11 @@ jobs:
           aws-region: eu-central-1
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-deploy-user
           role-session-name: github-deployment
+
+      - name: Set environment variables without https
+        run: |
+          echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
+          echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
