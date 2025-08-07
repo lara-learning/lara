@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'timbru31-patch-1'
 
 jobs:
   install:
