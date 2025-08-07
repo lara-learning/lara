@@ -14,7 +14,7 @@
   "dependencies": {
     "@graphql-tools/schema": "^8.2.0",
     "@lara/api": "^1.0.0",
-    "apollo-server-lambda": "^3.3.0",
+    "apollo-server-lambda": "^3.13.0",
     "aws-sdk": "^2.950.0",
     "casual": "^1.6.2",
     "cors": "^2.8.5",
