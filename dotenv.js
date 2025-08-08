@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
+ 
+ 
 const dotenv = require('dotenv')
 
 const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env
@@ -18,7 +18,7 @@ const openTunnels = async () => {
   let ngrok
   try {
     ngrok = require('ngrok')
-  } catch (err) {
+  } catch (_) {
     console.error('ngrok is not installed. Run "yarn add ngrok --no-save" in your project directory and try again.')
     return tunnelUrls
   }
