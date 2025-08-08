@@ -12,7 +12,7 @@
 	"dependencies": {
 		"aws-sdk": "^2.938.0",
 		"camelcase": "8.0.0",
-		"dotenv": "10.0.0",
+		"dotenv": "17.2.1",
 		"promise-mysql": "^5.0.3"
 	}
 }
