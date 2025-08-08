@@ -4,6 +4,7 @@ import { StyledStatusBar } from '@lara/components'
 
 import { useDebugLoginMutation, useDebugSetUsertypeMutation, UserInterface } from '../graphql'
 import { useAuthentication } from '../hooks/use-authentication'
+import { CustomDropdown } from './dev-role-dropdown'
 
 type StatusBarProps = {
   currentUser?: Pick<UserInterface, 'type'>
@@ -14,6 +15,7 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
 
   const [mutateUserType] = useDebugSetUsertypeMutation()
   const [mutateLogin] = useDebugLoginMutation()
+  const [visible, setVisible] = useState(false)
 
   const [id, setId] = useState('')
 
@@ -40,29 +42,58 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
     }).then(() => location.reload())
   }
 
+  const scrollToBottom = () => {
+    const nearBottom = Math.abs(window.innerHeight + window.scrollY - document.body.scrollHeight) < 2
+
+    if (nearBottom) {
+      window.scrollTo({ top: window.scrollY - 1, behavior: 'instant' })
+    }
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        })
+      })
+    }, 100)
+  }
+
+  const handleMouseEnter = () => {
+    scrollToBottom()
+    setVisible(true)
+  }
+
+  const handleMouseLeave = () => {
+    window.scrollTo({ top: window.scrollY - 1, behavior: 'instant' })
+    setVisible(false)
+  }
+
   return (
-    <StyledStatusBar>
+    <StyledStatusBar onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} open={visible} id="status-bar">
       {ENVIRONMENT.name} @ {TAG} {REVISION} ({BUILD_DATE})
       {currentUser && (
-        <div>
-          <label>
-            Select Usertype:
-            <select onChange={selectUsertype} value={currentUser && currentUser.type}>
-              <option value="Trainee">Trainee</option>
-              <option value="Trainer">Trainer</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </label>
+        <div className="status-bar-div">
+          <CustomDropdown
+            value={currentUser?.type}
+            onChange={(newType) =>
+              selectUsertype({ target: { value: newType } } as React.ChangeEvent<HTMLSelectElement>)
+            }
+          />
         </div>
       )}
-      <div>
+      <div className="status-bar-div">
         <input
+          id="dev-login-user-id"
           type="text"
           value={id}
           onChange={(e) => setId(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && devLogin()}
+          style={{ height: '18.5px' }}
         />
-        <button onClick={devLogin}>Dev Login</button>
+        <button id="dev-login-button" onClick={devLogin} style={{ height: '18.5px' }}>
+          Dev Login
+        </button>
       </div>
     </StyledStatusBar>
   )

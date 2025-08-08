@@ -69,7 +69,11 @@ const ApplicationSettings: React.FunctionComponent<ApplicationSettingsProps> = (
       languageSettings={
         <>
           <StyledTextInputLabel valid>{strings.settings.language.title}</StyledTextInputLabel>
-          <StyledSelect defaultValue={user.language || navigator.language} onChange={updateLanguage}>
+          <StyledSelect
+            id="settings-language-select"
+            defaultValue={user.language || navigator.language}
+            onChange={updateLanguage}
+          >
             <option value="en">{strings.settings.language.english}</option>
             <option value="de">{strings.settings.language.german}</option>
           </StyledSelect>
@@ -78,7 +82,7 @@ const ApplicationSettings: React.FunctionComponent<ApplicationSettingsProps> = (
       themeSettings={
         <>
           <StyledTextInputLabel valid>{strings.settings.theme.title}</StyledTextInputLabel>
-          <StyledSelect defaultValue={user.theme || 'system'} onChange={updateTheme}>
+          <StyledSelect id="settings-theme-select" defaultValue={user.theme || 'system'} onChange={updateTheme}>
             <option value="system">{strings.settings.theme.system}</option>
             <option value="light">{strings.settings.theme.light}</option>
             <option value="dark">{strings.settings.theme.dark}</option>
