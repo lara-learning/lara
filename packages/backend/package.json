@@ -12,10 +12,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.862.0",
+    "@aws-sdk/client-lambda": "3.862.0",
+    "@aws-sdk/lib-dynamodb": "3.862.0",
+    "@aws-sdk/util-dynamodb": "3.862.0",
     "@graphql-tools/schema": "^8.2.0",
     "@lara/api": "^1.0.0",
     "apollo-server-lambda": "^3.13.0",
-    "aws-sdk": "^2.950.0",
     "casual": "^1.6.2",
     "cors": "^2.8.5",
     "date-fns": "4.1.0",
@@ -32,7 +35,6 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.76",
-    "@types/cookie": "^0.4.1",
     "@types/i18n": "^0.13.0",
     "@types/jest": "^29.1.2",
     "@types/jsonwebtoken": "^9.0.3",

@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { BatchWriteCommand, BatchWriteCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { dbClient } from './ddb'
 
@@ -9,12 +9,22 @@ import { dbClient } from './ddb'
  * @param items max. 25 request items
  * @returns true if success
  */
-export const batchWriteItem = async (items: DocumentClient.BatchWriteItemInput['RequestItems']): Promise<boolean> => {
-  const res = await dbClient().batchWrite({ RequestItems: items }).promise()
+export const batchWriteItem = async (items: BatchWriteCommandInput['RequestItems']): Promise<boolean> => {
+  const client = dbClient()
+  try {
+    const res = await client.send(
+      new BatchWriteCommand({
+        RequestItems: items,
+      })
+    )
 
-  if (res.$response.error) {
+    if (res.UnprocessedItems && Object.keys(res.UnprocessedItems).length > 0) {
+      console.warn('Some items were unprocessed:', res.UnprocessedItems)
+    }
+
+    return true
+  } catch (err) {
+    console.error('Error batch writing to DB:', err)
     throw new Error('Error batch writing to DB')
   }
-
-  return true
 }

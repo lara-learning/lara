@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { PutCommand } from '@aws-sdk/lib-dynamodb'
 
 import { dbClient } from './ddb'
 
@@ -9,12 +9,18 @@ import { dbClient } from './ddb'
  * @param input DDB put options
  * @returns The input if successfull
  */
-export const putItem = async <T>(tableName: string, input: DocumentClient.PutItemInputAttributeMap): Promise<T> => {
-  const res = await dbClient().put({ TableName: tableName, Item: input }).promise()
-
-  if (res.$response.error) {
-    throw new Error('Error putting into DB')
+export const putItem = async <T extends Record<string, unknown>>(tableName: string, input: T): Promise<T> => {
+  const client = dbClient()
+  try {
+    await client.send(
+      new PutCommand({
+        TableName: tableName,
+        Item: input,
+      })
+    )
+    return input
+  } catch (error) {
+    console.error('Error putting Item into DB', error)
+    throw new Error('Error putting Item into DB')
   }
-
-  return input as T
 }

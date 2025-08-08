@@ -1,5 +1,4 @@
-import { S3, Endpoint, AWSError } from 'aws-sdk'
-import { PromiseResult } from 'aws-sdk/lib/request'
+import { S3Client, PutObjectCommand, PutObjectCommandOutput } from '@aws-sdk/client-s3'
 
 const { IS_OFFLINE, EXPORT_BUCKET } = process.env
 
@@ -7,23 +6,25 @@ if (!EXPORT_BUCKET) {
   throw new Error("Missing env Var: 'EXPORT_BUCKET'")
 }
 
-const s3Client = new S3(
+const s3Client = new S3Client(
   IS_OFFLINE
     ? {
-        s3ForcePathStyle: true,
-        accessKeyId: 'S3RVER', // This specific key is required when working offline
-        secretAccessKey: 'S3RVER',
-        endpoint: new Endpoint('http://localhost:8181'),
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: 'S3RVER', // This specific key is required when working offline
+          secretAccessKey: 'S3RVER',
+        },
+        endpoint: 'http://localhost:8181',
       }
     : { region: 'eu-central-1' }
 )
 
-export const saveExport = (key: string, body: string): Promise<PromiseResult<S3.PutObjectOutput, AWSError>> => {
-  return s3Client
-    .putObject({
-      Bucket: EXPORT_BUCKET,
-      Key: key,
-      Body: body,
-    })
-    .promise()
+export const saveExport = async (key: string, body: string): Promise<PutObjectCommandOutput> => {
+  const command = new PutObjectCommand({
+    Bucket: EXPORT_BUCKET,
+    Key: key,
+    Body: body,
+  })
+
+  return await s3Client.send(command)
 }

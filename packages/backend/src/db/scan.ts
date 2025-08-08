@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { dbClient } from './ddb'
 
@@ -12,23 +12,33 @@ import { dbClient } from './ddb'
  */
 export const scanItems = async <T>(
   tablename: string,
-  additionalInput?: Omit<DocumentClient.ScanInput, 'TableName'>
+  additionalInput?: Omit<ScanCommandInput, 'TableName'>
 ): Promise<T[]> => {
-  const res = await dbClient()
-    .scan({ TableName: tablename, ...additionalInput })
-    .promise()
+  const client = dbClient()
 
-  if (res.$response.error || !res.Items) {
-    return []
-  }
-
-  // scan the database until 'LastEvaluatedKey' is empty
-  const paginatedResults = res.LastEvaluatedKey
-    ? await scanItems<T>(tablename, {
+  try {
+    const res = await client.send(
+      new ScanCommand({
+        TableName: tablename,
         ...additionalInput,
-        ExclusiveStartKey: res.LastEvaluatedKey,
       })
-    : []
+    )
 
-  return [...paginatedResults, ...res.Items] as T[]
+    if (!res.Items) {
+      return []
+    }
+
+    // scan the database until 'LastEvaluatedKey' is empty
+    const paginatedResults = res.LastEvaluatedKey
+      ? await scanItems<T>(tablename, {
+          ...additionalInput,
+          ExclusiveStartKey: res.LastEvaluatedKey,
+        })
+      : []
+
+    return [...paginatedResults, ...res.Items] as T[]
+  } catch (error) {
+    console.error('Error while scanning the DB:', error)
+    throw new Error('Error while scanning the DB:')
+  }
 }
