@@ -9,7 +9,7 @@
   "types": "lib/index.d.ts",
   "scripts": {},
   "dependencies": {
-    "graphql": "^16.6.0",
+    "graphql": "^16.11.0",
     "graphql-request": "^7.2.0"
   },
   "devDependencies": {}

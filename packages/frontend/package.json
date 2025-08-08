@@ -24,7 +24,7 @@
     "date-fns": "4.1.0",
     "file-saver": "^2.0.2",
     "framer-motion": "^1.11.1",
-    "graphql": "^16.6.0",
+    "graphql": "^16.11.0",
     "imagetracerjs": "^1.2.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

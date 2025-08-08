@@ -15,7 +15,7 @@
     "ask-sdk-model": "^1.36.1",
     "aws-sdk": "^2.950.0",
     "date-fns": "4.1.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.11.0",
     "graphql-request": "^7.2.0",
     "iso8601-duration": "^1.3.0"
   },
