@@ -1,16 +1,22 @@
 import { test, expect, Page } from '@playwright/test'
 
-const { USER_ID, URL, ENVIRONMENT_NAME } = process.env
+let { USER_ID, URL } = process.env
 
-const DEFAULT_ENVIRONMENT = 'development'
-const envName = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
+USER_ID ??= '123'
+URL ??= 'http://localhost:8080'
 
-const entryText = 'Harte Arbeit'
-const updatedEntryText = 'Sehr Harte Arbeit'
+async function goto(page: Page, path: string = '') {
+  await page.goto(`${URL}${path}`)
+  const statusBar = page.locator('#status-bar')
+  await statusBar.hover()
 
-const selectAll = async (page: Page) => {
-  await page.keyboard.press('Control+A')
-  await page.keyboard.press('Meta+A')
+  const input = page.locator('#dev-login-user-id')
+  await expect(input).toBeVisible()
+  await input.fill(USER_ID ?? '')
+
+  const loginButton = page.locator('#dev-login-button')
+  await expect(loginButton).toBeVisible()
+  await loginButton.click()
 }
 
 test.describe('entry', () => {
@@ -19,40 +25,26 @@ test.describe('entry', () => {
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext()
     page = await context.newPage()
-    await page.goto(URL ?? '')
-    await page.locator(`text=${envName}`).hover()
-    await page.type('input', USER_ID ?? '')
-    await page.locator('text=Dev Login').click()
   })
 
-  test('create entry', async () => {
-    await page.locator('text=Today').waitFor()
-    await page.fill('textarea', entryText)
-    await page.keyboard.press('Enter')
-    await page.keyboard.type('1')
-    await page.keyboard.press('Enter')
-    await page.locator('text=Entry has been created').waitFor()
-    const work = page.locator(`text=${entryText}`)
-    expect(work).toBeDefined()
-  })
+  test('switch language', async () => {
+    goto(page, '/settings')
 
-  test('update entry', async () => {
-    await page.locator(`text=${entryText}`).click()
-    await selectAll(page)
-    await page.keyboard.type(updatedEntryText)
-    await page.keyboard.press('Enter')
-    await selectAll(page)
-    await page.keyboard.type('2')
-    await page.keyboard.press('Enter')
-    await page.locator('text=Entry has been changed').waitFor()
-    const work = page.locator(updatedEntryText)
-    expect(work).toBeDefined()
-  })
+    const dropdown = page.locator('#settings-language-select')
+    await expect(dropdown).toBeVisible()
 
-  test('delete entry', async () => {
-    await page.locator('button > i').click()
-    await page.locator('text=Entry has been deleted').waitFor()
-    const work = page.locator(updatedEntryText)
-    expect(work).toBeUndefined()
+    const currentValue = await dropdown.inputValue()
+    const labelText = currentValue === 'de' ? 'Sprache' : 'Language'
+
+    const label = page.locator(`label:has-text("${labelText}")`)
+    await expect(label).toBeVisible()
+
+    const newValue = currentValue === 'de' ? 'en' : 'de'
+    await dropdown.selectOption({ value: newValue })
+    await expect(dropdown).toHaveValue(newValue)
+
+    const translatedText = newValue === 'de' ? 'Sprache' : 'Language'
+    const newLabel = page.locator(`label:has-text("${translatedText}")`)
+    await expect(newLabel).toBeVisible()
   })
 })

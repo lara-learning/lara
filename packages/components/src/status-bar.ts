@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Spacings } from './spacing'
 
-export const StyledStatusBar = styled.div`
+export const StyledStatusBar = styled.div<{ open: boolean }>`
   width: 100%;
   background: ${(props) => props.theme.warningYellow};
   color: #fff;
@@ -9,11 +9,7 @@ export const StyledStatusBar = styled.div`
   text-align: center;
   font-weight: bold;
 
-  div {
-    display: none;
-  }
-
-  &:hover div {
-    display: block;
+  .status-bar-div {
+    display: ${({ open }) => (open ? 'block' : 'none')};
   }
 `
