@@ -6,53 +6,55 @@ export type InputMaybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type GqlAdmin = GqlUserInterface & {
   __typename?: 'Admin';
-  alexaSkillLinked?: Maybe<Scalars['Boolean']>;
-  avatar: Scalars['String'];
-  createdAt: Scalars['String'];
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  id: Scalars['ID'];
-  language?: Maybe<Scalars['String']>;
-  lastName: Scalars['String'];
-  notification?: Maybe<Scalars['Boolean']>;
-  signature?: Maybe<Scalars['String']>;
-  theme?: Maybe<Scalars['String']>;
+  alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
+  avatar: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  notification?: Maybe<Scalars['Boolean']['output']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
   type: GqlUserTypeEnum;
-  username: Scalars['String'];
+  username: Scalars['String']['output'];
 };
 
 export type GqlComment = {
   __typename?: 'Comment';
-  createdAt: Scalars['String'];
-  id: Scalars['ID'];
-  text?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  text?: Maybe<Scalars['String']['output']>;
   user: GqlUserInterface;
 };
 
 /** An object that can have comments */
 export type GqlCommentableInterface = {
   comments: Array<GqlComment>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 export type GqlCompany = {
   __typename?: 'Company';
-  id: Scalars['String'];
-  logo: Scalars['String'];
-  name: Scalars['String'];
+  id: Scalars['String']['output'];
+  logo: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type GqlCreateCommentPayload = {
@@ -62,28 +64,28 @@ export type GqlCreateCommentPayload = {
 };
 
 export type GqlCreateTraineeInput = {
-  companyId: Scalars['String'];
-  email: Scalars['String'];
-  endDate: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  startDate: Scalars['String'];
-  startOfToolUsage: Scalars['String'];
+  companyId: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  endDate: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  startDate: Scalars['String']['input'];
+  startOfToolUsage: Scalars['String']['input'];
 };
 
 export type GqlCreateTrainerInput = {
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
 };
 
 export type GqlDay = GqlCommentableInterface & {
   __typename?: 'Day';
   comments: Array<GqlComment>;
-  createdAt: Scalars['String'];
-  date: Scalars['String'];
+  createdAt: Scalars['String']['output'];
+  date: Scalars['String']['output'];
   entries: Array<GqlEntry>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   status?: Maybe<GqlDayStatusEnum>;
 };
 
@@ -108,28 +110,28 @@ export type GqlDevSetUserPayload = {
 export type GqlEntry = GqlCommentableInterface & {
   __typename?: 'Entry';
   comments: Array<GqlComment>;
-  createdAt: Scalars['String'];
-  id: Scalars['ID'];
-  orderId: Scalars['Int'];
-  text: Scalars['String'];
-  time: Scalars['Int'];
+  createdAt: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  orderId: Scalars['Int']['output'];
+  text: Scalars['String']['output'];
+  time: Scalars['Int']['output'];
 };
 
 export type GqlEntryInput = {
-  text: Scalars['String'];
-  time: Scalars['Int'];
+  text: Scalars['String']['input'];
+  time: Scalars['Int']['input'];
 };
 
 export type GqlLaraConfig = {
   __typename?: 'LaraConfig';
-  expectedWorkDayMinutes: Scalars['Int'];
-  finishedWeekDayCount: Scalars['Int'];
-  maxEducationDayMinutes: Scalars['Int'];
-  maxEntryMinutes: Scalars['Int'];
-  maxPeriodYearsCount: Scalars['Int'];
-  maxWorkDayMinutes: Scalars['Int'];
-  minEducationDayMinutes: Scalars['Int'];
-  minWorkDayMinutes: Scalars['Int'];
+  expectedWorkDayMinutes: Scalars['Int']['output'];
+  finishedWeekDayCount: Scalars['Int']['output'];
+  maxEducationDayMinutes: Scalars['Int']['output'];
+  maxEntryMinutes: Scalars['Int']['output'];
+  maxPeriodYearsCount: Scalars['Int']['output'];
+  maxWorkDayMinutes: Scalars['Int']['output'];
+  minEducationDayMinutes: Scalars['Int']['output'];
+  minWorkDayMinutes: Scalars['Int']['output'];
 };
 
 export type GqlMutateEntryPayload = {
@@ -156,7 +158,7 @@ export type GqlMutation = {
   /** Creates a new entry which is assigned to the matching report based on the day Id */
   createEntry: GqlMutateEntryPayload;
   /** Create OAuth Code */
-  createOAuthCode: Scalars['String'];
+  createOAuthCode: Scalars['String']['output'];
   /** Creates Trainee. */
   createTrainee?: Maybe<GqlTrainee>;
   /** Creates Trainer. */
@@ -193,43 +195,43 @@ export type GqlMutation = {
 
 
 export type GqlMutation_DevloginuserArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 
 export type GqlMutation_DevsetusertypeArgs = {
-  type: Scalars['String'];
+  type: Scalars['String']['input'];
 };
 
 
 export type GqlMutationClaimTraineeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationCreateCommentOnDayArgs = {
-  id: Scalars['ID'];
-  text: Scalars['String'];
-  traineeId: Scalars['ID'];
+  id: Scalars['ID']['input'];
+  text: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationCreateCommentOnEntryArgs = {
-  id: Scalars['ID'];
-  text: Scalars['String'];
-  traineeId: Scalars['ID'];
+  id: Scalars['ID']['input'];
+  text: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationCreateCommentOnReportArgs = {
-  id: Scalars['ID'];
-  text: Scalars['String'];
-  traineeId: Scalars['ID'];
+  id: Scalars['ID']['input'];
+  text: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationCreateEntryArgs = {
-  dayId: Scalars['String'];
+  dayId: Scalars['String']['input'];
   input: GqlEntryInput;
 };
 
@@ -245,33 +247,33 @@ export type GqlMutationCreateTrainerArgs = {
 
 
 export type GqlMutationDeleteEntryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationLinkAlexaArgs = {
-  code: Scalars['String'];
-  state: Scalars['String'];
+  code: Scalars['String']['input'];
+  state: Scalars['String']['input'];
 };
 
 
 export type GqlMutationLoginArgs = {
-  email: Scalars['String'];
+  email: Scalars['String']['input'];
 };
 
 
 export type GqlMutationMarkUserForDeletionArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationUnclaimTraineeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type GqlMutationUnmarkUserForDeletionArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -286,61 +288,61 @@ export type GqlMutationUpdateCurrentUserArgs = {
 
 
 export type GqlMutationUpdateDayArgs = {
-  id: Scalars['ID'];
-  status?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  status?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type GqlMutationUpdateEntryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: GqlEntryInput;
 };
 
 
 export type GqlMutationUpdateEntryOrderArgs = {
-  dayId: Scalars['ID'];
-  entryId: Scalars['ID'];
-  orderId: Scalars['Int'];
+  dayId: Scalars['ID']['input'];
+  entryId: Scalars['ID']['input'];
+  orderId: Scalars['Int']['input'];
 };
 
 
 export type GqlMutationUpdateReportArgs = {
-  department?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
-  status?: InputMaybe<Scalars['String']>;
-  summary?: InputMaybe<Scalars['String']>;
+  department?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  status?: InputMaybe<Scalars['String']['input']>;
+  summary?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type GqlMutationUpdateTraineeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: GqlUpdateTraineeInput;
 };
 
 
 export type GqlMutationUpdateTrainerArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: GqlUpdateTrainerInput;
 };
 
 export type GqlOAuthPayload = {
   __typename?: 'OAuthPayload';
-  accessToken: Scalars['String'];
-  expiresIn: Scalars['Int'];
-  refreshToken?: Maybe<Scalars['String']>;
+  accessToken: Scalars['String']['output'];
+  expiresIn: Scalars['Int']['output'];
+  refreshToken?: Maybe<Scalars['String']['output']>;
 };
 
 export type GqlPrintPayload = {
   __typename?: 'PrintPayload';
-  estimatedWaitingTime: Scalars['Int'];
+  estimatedWaitingTime: Scalars['Int']['output'];
 };
 
 export type GqlQuery = {
   __typename?: 'Query';
   /** Get the alexa account linking url */
-  alexaLinkingUrl?: Maybe<Scalars['String']>;
+  alexaLinkingUrl?: Maybe<Scalars['String']['output']>;
   /** Will look for Users to delete */
-  cleanup: Scalars['Boolean'];
+  cleanup: Scalars['Boolean']['output'];
   companies?: Maybe<Array<GqlCompany>>;
   config: GqlLaraConfig;
   /** Returns the logged in user. This user can be either a Trainee or a Trainer. */
@@ -356,7 +358,7 @@ export type GqlQuery = {
   /** Get all Reports for the current User. The result can be filtered by the 'statuses' attribut */
   reports: Array<Maybe<GqlReport>>;
   /** Get all Suggestions */
-  suggestions: Array<Scalars['String']>;
+  suggestions: Array<Scalars['String']['output']>;
   /** Get all Trainees */
   trainees: Array<GqlTrainee>;
   /** Get all Trainers */
@@ -365,25 +367,25 @@ export type GqlQuery = {
 
 
 export type GqlQueryGetUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type GqlQueryPrintArgs = {
-  ids: Array<Scalars['ID']>;
+  ids: Array<Scalars['ID']['input']>;
 };
 
 
 export type GqlQueryReportForTraineeArgs = {
-  id: Scalars['ID'];
-  week: Scalars['Int'];
-  year: Scalars['Int'];
+  id: Scalars['ID']['input'];
+  week: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
 };
 
 
 export type GqlQueryReportForYearAndWeekArgs = {
-  week: Scalars['Int'];
-  year: Scalars['Int'];
+  week: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
 };
 
 
@@ -394,17 +396,17 @@ export type GqlQueryReportsArgs = {
 export type GqlReport = GqlCommentableInterface & {
   __typename?: 'Report';
   comments: Array<GqlComment>;
-  createdAt: Scalars['String'];
+  createdAt: Scalars['String']['output'];
   days: Array<GqlDay>;
-  department?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  nextReportLink?: Maybe<Scalars['String']>;
-  previousReportLink?: Maybe<Scalars['String']>;
-  reportAccepted?: Maybe<Scalars['String']>;
+  department?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  nextReportLink?: Maybe<Scalars['String']['output']>;
+  previousReportLink?: Maybe<Scalars['String']['output']>;
+  reportAccepted?: Maybe<Scalars['String']['output']>;
   status: GqlReportStatus;
-  summary?: Maybe<Scalars['String']>;
-  week: Scalars['Int'];
-  year: Scalars['Int'];
+  summary?: Maybe<Scalars['String']['output']>;
+  week: Scalars['Int']['output'];
+  year: Scalars['Int']['output'];
 };
 
 /** Represents the current state of the report */
@@ -420,49 +422,49 @@ export type GqlReportStatus =
 
 export type GqlTrainee = GqlUserInterface & {
   __typename?: 'Trainee';
-  alexaSkillLinked?: Maybe<Scalars['Boolean']>;
+  alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
   /** The url for the users avatar image. */
-  avatar: Scalars['String'];
+  avatar: Scalars['String']['output'];
   company: GqlCompany;
-  course?: Maybe<Scalars['String']>;
-  createdAt: Scalars['String'];
-  deleteAt?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  endDate?: Maybe<Scalars['String']>;
-  endOfToolUsage?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
-  id: Scalars['ID'];
-  language?: Maybe<Scalars['String']>;
-  lastName: Scalars['String'];
-  notification?: Maybe<Scalars['Boolean']>;
-  openReportsCount: Scalars['Int'];
+  course?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['String']['output'];
+  deleteAt?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  endDate?: Maybe<Scalars['String']['output']>;
+  endOfToolUsage?: Maybe<Scalars['String']['output']>;
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  notification?: Maybe<Scalars['Boolean']['output']>;
+  openReportsCount: Scalars['Int']['output'];
   reports: Array<GqlReport>;
-  signature?: Maybe<Scalars['String']>;
-  startDate?: Maybe<Scalars['String']>;
-  startOfToolUsage?: Maybe<Scalars['String']>;
-  theme?: Maybe<Scalars['String']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  startDate?: Maybe<Scalars['String']['output']>;
+  startOfToolUsage?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
   trainer?: Maybe<GqlTrainer>;
   type: GqlUserTypeEnum;
-  username: Scalars['String'];
+  username: Scalars['String']['output'];
 };
 
 export type GqlTrainer = GqlUserInterface & {
   __typename?: 'Trainer';
-  alexaSkillLinked?: Maybe<Scalars['Boolean']>;
-  avatar: Scalars['String'];
-  createdAt: Scalars['String'];
-  deleteAt?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  id: Scalars['ID'];
-  language?: Maybe<Scalars['String']>;
-  lastName: Scalars['String'];
-  notification?: Maybe<Scalars['Boolean']>;
-  signature?: Maybe<Scalars['String']>;
-  theme?: Maybe<Scalars['String']>;
+  alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
+  avatar: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  deleteAt?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  notification?: Maybe<Scalars['Boolean']['output']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
   trainees: Array<GqlTrainee>;
   type: GqlUserTypeEnum;
-  username: Scalars['String'];
+  username: Scalars['String']['output'];
 };
 
 export type GqlTrainerTraineePayload = {
@@ -472,7 +474,7 @@ export type GqlTrainerTraineePayload = {
 };
 
 export type GqlUpdateCurrentTraineeInput = {
-  course?: InputMaybe<Scalars['String']>;
+  course?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUpdateReportPayload = {
@@ -482,42 +484,42 @@ export type GqlUpdateReportPayload = {
 };
 
 export type GqlUpdateTraineeInput = {
-  companyId?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  endDate?: InputMaybe<Scalars['String']>;
-  firstName?: InputMaybe<Scalars['String']>;
-  lastName?: InputMaybe<Scalars['String']>;
-  startDate?: InputMaybe<Scalars['String']>;
-  startOfToolUsage?: InputMaybe<Scalars['String']>;
+  companyId?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['String']['input']>;
+  startOfToolUsage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUpdateTrainerInput = {
-  email?: InputMaybe<Scalars['String']>;
-  firstName?: InputMaybe<Scalars['String']>;
-  lastName?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUserInput = {
-  language?: InputMaybe<Scalars['String']>;
-  notification?: InputMaybe<Scalars['Boolean']>;
-  signature?: InputMaybe<Scalars['String']>;
-  theme?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']['input']>;
+  notification?: InputMaybe<Scalars['Boolean']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+  theme?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUserInterface = {
-  alexaSkillLinked?: Maybe<Scalars['Boolean']>;
-  avatar: Scalars['String'];
-  createdAt: Scalars['String'];
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  id: Scalars['ID'];
-  language?: Maybe<Scalars['String']>;
-  lastName: Scalars['String'];
-  notification?: Maybe<Scalars['Boolean']>;
-  signature?: Maybe<Scalars['String']>;
-  theme?: Maybe<Scalars['String']>;
+  alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
+  avatar: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  notification?: Maybe<Scalars['Boolean']['output']>;
+  signature?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
   type: GqlUserTypeEnum;
-  username: Scalars['String'];
+  username: Scalars['String']['output'];
 };
 
 export type GqlUserTypeEnum =
@@ -596,10 +598,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+
+
 /** Mapping between all available schema types and the resolvers types */
 export type GqlResolversTypes = ResolversObject<{
   Admin: ResolverTypeWrapper<GqlAdmin>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
   CommentableInterface: ResolverTypeWrapper<CommentableInterface>;
   Company: ResolverTypeWrapper<GqlCompany>;
@@ -611,8 +615,8 @@ export type GqlResolversTypes = ResolversObject<{
   DevSetUserPayload: ResolverTypeWrapper<Omit<GqlDevSetUserPayload, 'user'> & { user?: Maybe<GqlResolversTypes['UserInterface']> }>;
   Entry: ResolverTypeWrapper<Entry>;
   EntryInput: GqlEntryInput;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   LaraConfig: ResolverTypeWrapper<GqlLaraConfig>;
   MutateEntryPayload: ResolverTypeWrapper<Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversTypes['Day'], entry?: Maybe<GqlResolversTypes['Entry']>, report: GqlResolversTypes['Report'] }>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -621,7 +625,7 @@ export type GqlResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   Report: ResolverTypeWrapper<Report>;
   ReportStatus: GqlReportStatus;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   Trainee: ResolverTypeWrapper<Trainee>;
   Trainer: ResolverTypeWrapper<Trainer>;
   TrainerTraineePayload: ResolverTypeWrapper<Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversTypes['Trainee'], trainer: GqlResolversTypes['Trainer'] }>;
@@ -637,7 +641,7 @@ export type GqlResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type GqlResolversParentTypes = ResolversObject<{
   Admin: GqlAdmin;
-  Boolean: Scalars['Boolean'];
+  Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
   CommentableInterface: CommentableInterface;
   Company: GqlCompany;
@@ -648,8 +652,8 @@ export type GqlResolversParentTypes = ResolversObject<{
   DevSetUserPayload: Omit<GqlDevSetUserPayload, 'user'> & { user?: Maybe<GqlResolversParentTypes['UserInterface']> };
   Entry: Entry;
   EntryInput: GqlEntryInput;
-  ID: Scalars['ID'];
-  Int: Scalars['Int'];
+  ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
   LaraConfig: GqlLaraConfig;
   MutateEntryPayload: Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversParentTypes['Day'], entry?: Maybe<GqlResolversParentTypes['Entry']>, report: GqlResolversParentTypes['Report'] };
   Mutation: {};
@@ -657,7 +661,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   PrintPayload: GqlPrintPayload;
   Query: {};
   Report: Report;
-  String: Scalars['String'];
+  String: Scalars['String']['output'];
   Trainee: Trainee;
   Trainer: Trainer;
   TrainerTraineePayload: Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversParentTypes['Trainee'], trainer: GqlResolversParentTypes['Trainer'] };
