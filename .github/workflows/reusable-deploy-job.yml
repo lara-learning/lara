@@ -98,5 +98,5 @@ jobs:
         continue-on-error: true
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.AWS_FRONTEND_DISTRIBUTION_ID }} \
+            --distribution-id ${{ inputs.target == 'production' && secrets.AWS_PRODUCTION_FRONTEND_DISTRIBUTION_ID || secrets.AWS_STAGING_FRONTEND_DISTRIBUTION_ID }} \
             --paths "/*"

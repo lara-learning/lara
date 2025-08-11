@@ -1,6 +1,5 @@
 // playwright.config.ts
 import { PlaywrightTestConfig, devices } from '@playwright/test'
-const { BASICAUTHENTICATION_USERNAME, BASICAUTHENTICATION_PASSWORD } = process.env
 
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
@@ -14,10 +13,6 @@ const config: PlaywrightTestConfig = {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        httpCredentials: {
-          username: BASICAUTHENTICATION_USERNAME ? BASICAUTHENTICATION_USERNAME : '',
-          password: BASICAUTHENTICATION_PASSWORD ? BASICAUTHENTICATION_PASSWORD : '',
-        },
       },
     },
     // {

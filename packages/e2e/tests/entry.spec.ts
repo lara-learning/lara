@@ -8,7 +8,6 @@ URL ??= 'http://localhost:8080'
 async function goto(page: Page, path: string = '') {
   await page.goto(`${URL}${path}`)
   const statusBar = page.locator('#status-bar')
-  await statusBar.waitFor({ timeout: 10000 })
   await statusBar.hover()
 
   const input = page.locator('#dev-login-user-id')
