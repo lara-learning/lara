@@ -88,8 +88,16 @@ jobs:
           echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
 
+      - name: Verify artifact contents before upload
+        run: |
+          echo "Listing dist files:"
+          ls -l packages/frontend/dist
+          echo "bundle.js hash:"
+          sha256sum packages/frontend/dist/bundle.js
+          head -n 20 packages/frontend/dist/bundle.js
+
       - name: Deploy Frontend
-        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
+        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }} --verbose
 
       - name: Deploy Backends
         run: serverless deploy --stage ${{ inputs.target }}
