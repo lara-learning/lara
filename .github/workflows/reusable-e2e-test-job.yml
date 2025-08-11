@@ -44,12 +44,12 @@ jobs:
 
       - if: failure()
         run: |
-          ls
-          npx playwright show-trace test-results/tests-entry-entry-switch-language-chromium-retry1/trace.zip
+          cd packages/e2e
+          npx playwright show-trace test-results/tests-entry-entry-switch-language-chromium/trace.zip
 
       - name: Upload Playwright test results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-logs
-          path: test-results
+          path: packages/e2e/test-results
