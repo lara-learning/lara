@@ -3,7 +3,7 @@ import { PlaywrightTestConfig, devices } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: process.env.CI ? 2 : 0,
   outputDir: 'test-results',
   use: {
     trace: 'on',
