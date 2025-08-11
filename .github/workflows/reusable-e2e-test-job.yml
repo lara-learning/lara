@@ -15,8 +15,6 @@ jobs:
     env:
       USER_ID: ${{ secrets.TEST_TRAINEE_ID }}
       URL: ${{ secrets.FRONTEND_URL }}
-      BASICAUTHENTICATION_USERNAME: ${{ secrets.BASICAUTHENTICATION_USERNAME }}
-      BASICAUTHENTICATION_PASSWORD: ${{ secrets.BASICAUTHENTICATION_PASSWORD }}
       ENVIRONMENT_NAME: staging
     steps:
       - uses: actions/checkout@v4
@@ -41,11 +39,6 @@ jobs:
           yarn
           npx playwright install
           npx playwright test --output test-results --config playwright.config.ts
-
-      - if: failure()
-        run: |
-          cd packages/e2e
-          npx playwright show-trace test-results/tests-entry-entry-switch-language-chromium/trace.zip
 
       - name: Upload Playwright test results
         if: failure()
