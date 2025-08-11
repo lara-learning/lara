@@ -88,32 +88,8 @@ jobs:
           echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
 
-      - name: (DEBUG) Verify artifact contents before serverless upload
-        run: |
-          echo "Listing dist files:"
-          ls -l packages/frontend/dist
-          echo "bundle.js hash:"
-          sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js
-
       - name: Deploy Frontend
-        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }} --dir packages/frontend/dist --verbose
-
-      - name: (DEBUG) Verify artifact contents after serverless upload
-        run: |
-          echo "Listing dist files:"
-          ls -l packages/frontend/dist
-          echo "bundle.js hash:"
-          sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js
+        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
 
       - name: Deploy Backends
         run: serverless deploy --stage ${{ inputs.target }}
-
-      - name: (DEBUG) Verify artifact contents after serverless deploy
-        run: |
-          echo "Listing dist files:"
-          ls -l packages/frontend/dist
-          echo "bundle.js hash:"
-          sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js
