@@ -40,7 +40,12 @@ jobs:
           unset NODE_OPTIONS
           yarn
           npx playwright install
-          npx playwright test
+          npx playwright test --output test-results --config playwright.config.ts
+
+      - if: failure()
+        run: |
+          ls
+          npx playwright show-trace test-results/tests-entry-entry-switch-language-chromium-retry1/trace.zip
 
       - name: Upload Playwright test results
         if: failure()
