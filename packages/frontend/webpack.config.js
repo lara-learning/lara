@@ -43,6 +43,10 @@ const getEnvironmentConfig = () => {
         frontendUrl: parsed.FRONTEND_URL,
         supportMail: parsed.SUPPORT_MAIL,
       }
+    } else {
+      throw new Error(
+        `Failed to load environment variables from ${envVarsPath}. Please ensure the file exists and is correctly formatted.`
+      )
     }
   }
 
