@@ -26,20 +26,23 @@ const getEnvironmentConfig = () => {
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
 
   // For local development we load the variables from .env file
-  const envVarsPath = path.resolve(__dirname, '../../.env')
-  const { parsed } = dotenv.config({ path: envVarsPath })
-  if (parsed) {
-    console.log(`Using environment variables from ${envVarsPath}`)
-    return {
-      name,
-      mode: parsed.MODE,
-      microsoftClientID: parsed.MICROSOFT_CLIENT_ID,
-      microsoftTenantID: parsed.MICROSOFT_TENANT_ID,
-      debug: parsed.DEBUG === 'true',
-      authHeader: parsed.AUTH_HEADER,
-      backendUrl: parsed.BACKEND_URL,
-      frontendUrl: parsed.FRONTEND_URL,
-      supportMail: parsed.SUPPORT_MAIL,
+  console.log('process.env.CI: ' + process.env.CI)
+  if (!process.env.CI) {
+    const envVarsPath = path.resolve(__dirname, '../../.env')
+    const { parsed } = dotenv.config({ path: envVarsPath })
+    if (parsed) {
+      console.log(`Using environment variables from ${envVarsPath}`)
+      return {
+        name,
+        mode: parsed.MODE,
+        microsoftClientID: parsed.MICROSOFT_CLIENT_ID,
+        microsoftTenantID: parsed.MICROSOFT_TENANT_ID,
+        debug: parsed.DEBUG === 'true',
+        authHeader: parsed.AUTH_HEADER,
+        backendUrl: parsed.BACKEND_URL,
+        frontendUrl: parsed.FRONTEND_URL,
+        supportMail: parsed.SUPPORT_MAIL,
+      }
     }
   }
 
