@@ -55,6 +55,7 @@ jobs:
       - name: Compile and build
         run: yarn clean && yarn compile && yarn build
 
+
       - name: (DEBUG) Verify artifact contents before upload
         run: |
           echo "Listing dist files:"
@@ -62,6 +63,7 @@ jobs:
           echo "bundle.js hash:"
           sha256sum packages/frontend/dist/bundle.js
           sed -n '122663p' packages/frontend/dist/bundle.js
+
 
       - name: Upload dist and lib
         uses: actions/upload-artifact@v4
