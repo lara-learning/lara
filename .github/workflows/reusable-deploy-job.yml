@@ -93,3 +93,18 @@ jobs:
 
       - name: Deploy Backends
         run: serverless deploy --stage ${{ inputs.target }}
+
+      - name: Get CloudFront Distribution ID
+        id: get_dist_id
+        run: |
+          BUCKET_NAME="${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}"
+          DIST_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Origins.Items[?DomainName=='${BUCKET_NAME}.s3.amazonaws.com']].Id" \
+            --output text)
+          echo "distribution_id=$DIST_ID" >> $GITHUB_OUTPUT
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.get_dist_id.outputs.distribution_id }} \
+            --paths "/*"
