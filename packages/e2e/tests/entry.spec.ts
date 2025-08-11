@@ -28,7 +28,7 @@ test.describe('entry', () => {
   })
 
   test('switch language', async () => {
-    goto(page, '/settings')
+    await goto(page, '/settings')
 
     const dropdown = page.locator('#settings-language-select')
     await expect(dropdown).toBeVisible()
@@ -46,5 +46,26 @@ test.describe('entry', () => {
     const translatedText = newValue === 'de' ? 'Sprache' : 'Language'
     const newLabel = page.locator(`label:has-text("${translatedText}")`)
     await expect(newLabel).toBeVisible()
+  })
+})
+
+test.describe('entry', () => {
+  let page: Page
+
+  test.beforeAll(async ({ browser }) => {
+    const context = await browser.newContext()
+    page = await context.newPage()
+  })
+
+  test('switch theme', async () => {
+    await goto(page, '/settings')
+
+    const dropdown = page.locator('#settings-theme-select')
+    await expect(dropdown).toBeVisible()
+
+    const currentValue = await dropdown.inputValue()
+    const newValue = currentValue === 'light' ? 'dark' : 'light'
+    await dropdown.selectOption({ value: newValue })
+    await expect(dropdown).toHaveValue(newValue)
   })
 })
