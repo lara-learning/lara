@@ -94,26 +94,11 @@ jobs:
           ls -l packages/frontend/dist
           echo "bundle.js hash:"
           sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js
+          echo "length of line 122663:"
+          sed -n '122663p' packages/frontend/dist/bundle.js | wc -c
 
       - name: Deploy Frontend
-        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }} --dir packages/frontend/dist --verbose
-
-      - name: (DEBUG) Verify artifact contents after serverless upload
-        run: |
-          echo "Listing dist files:"
-          ls -l packages/frontend/dist
-          echo "bundle.js hash:"
-          sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js
+        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
 
       - name: Deploy Backends
         run: serverless deploy --stage ${{ inputs.target }}
-
-      - name: (DEBUG) Verify artifact contents after serverless deploy
-        run: |
-          echo "Listing dist files:"
-          ls -l packages/frontend/dist
-          echo "bundle.js hash:"
-          sha256sum packages/frontend/dist/bundle.js
-          sed -n '122663p' packages/frontend/dist/bundle.js

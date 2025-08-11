@@ -26,10 +26,10 @@ const getEnvironmentConfig = () => {
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
 
   // For local development we load the variables from .env file
-
   const envVarsPath = path.resolve(__dirname, '../../.env')
   const { parsed } = dotenv.config({ path: envVarsPath })
   if (parsed) {
+    console.log(`Using environment variables from ${envVarsPath}`)
     return {
       name,
       mode: parsed.MODE,
@@ -44,7 +44,8 @@ const getEnvironmentConfig = () => {
   }
 
   // if running in CI/CD we load the variables from process.env.
-  // The values are injected by Gitlab
+  // The values are injected by GitHub
+  console.log(`Using injected environment variables from process.env`)
   return {
     name,
     mode: MODE ?? '',
