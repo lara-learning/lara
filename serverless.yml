@@ -579,5 +579,6 @@ resources:
               IncludeSubdomains: true
               Override: true
             XSSProtection:
+              Protection: true
               ModeBlock: true
               Override: false
