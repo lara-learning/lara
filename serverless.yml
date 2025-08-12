@@ -410,7 +410,8 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
-            ResponseHeadersPolicyId: e61eb60c-9c35-4d20-a928-2b84e02af89c
+            ResponseHeadersPolicyId:
+              Ref: CustomCorsAndSecurityHeadersPolicy
           Aliases:
             - ${env:FRONTEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
@@ -452,7 +453,8 @@ resources:
             ViewerProtocolPolicy: redirect-to-https
             ForwardedValues:
               QueryString: true
-            ResponseHeadersPolicyId: e61eb60c-9c35-4d20-a928-2b84e02af89c
+            ResponseHeadersPolicyId:
+              Ref: CustomCorsAndSecurityHeadersPolicy
           Aliases:
             - ${env:BACKEND_URL_WITHOUT_HTTPS}
           ViewerCertificate:
@@ -537,3 +539,41 @@ resources:
               Condition:
                 Bool:
                   'aws:SecureTransport': 'false'
+
+    CustomCorsAndSecurityHeadersPolicy:
+      Type: AWS::CloudFront::ResponseHeadersPolicy
+      Properties:
+        ResponseHeadersPolicyConfig:
+          Name: Custom-CORS-and-SecurityHeadersPolicy
+          CorsConfig:
+            AccessControlAllowCredentials: false
+            AccessControlAllowHeaders:
+              - '*'
+            AccessControlAllowMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+            AccessControlAllowOrigins:
+              - '*'
+            AccessControlExposeHeaders: []
+            OriginOverride: false
+          SecurityHeadersConfig:
+            ContentTypeOptions:
+              Override: true
+            FrameOptions:
+              FrameOption: SAMEORIGIN
+              Override: false
+            ReferrerPolicy:
+              ReferrerPolicy: strict-origin-when-cross-origin
+              Override: false
+            StrictTransportSecurity:
+              AccessControlMaxAgeSec: 31536000
+              IncludeSubdomains: true
+              Override: true
+            XSSProtection:
+              ModeBlock: true
+              Override: false
