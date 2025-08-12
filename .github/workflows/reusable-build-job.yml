@@ -37,7 +37,7 @@ jobs:
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       BACKEND_URL: ${{ secrets.BACKEND_URL }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v4
         with:
