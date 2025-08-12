@@ -1,4 +1,4 @@
-export * from './print'
+export * from './print.js'
 export * from './schema'
 export * from './models'
 export * from './graphql'

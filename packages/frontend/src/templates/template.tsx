@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import MainTemplate from './main-template'
 import SecondaryTemplate from './secondary-template'
 
 interface TemplateProps {
-  children: React.ReactNode
+  children: ReactNode
   type?: 'None' | 'Secondary' | 'Main'
 }
 
 export const Template: React.FC<TemplateProps> = ({ children, type }) => {
-  let TemplateComponent: React.FunctionComponent
+  let TemplateComponent: React.FunctionComponent<TemplateProps>
 
   switch (type) {
     case 'None':

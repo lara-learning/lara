@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 
 const DropdownWrapper = styled.div`
@@ -79,23 +79,35 @@ const Option = styled.li<{ selected: boolean }>`
 export function CustomDropdown({
   value,
   onChange,
+  onOpenChange,
 }: {
   value: string
   onChange: (e: React.ChangeEvent<HTMLSelectElement> | string) => void
+  onOpenChange?: (open: boolean) => void
 }) {
   const [open, setOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const options = ['Trainee', 'Trainer', 'Admin']
 
+  const setOpenState = useCallback(
+    (newOpen: boolean) => {
+      setOpen(newOpen)
+      if (onOpenChange) {
+        onOpenChange(newOpen)
+      }
+    },
+    [onOpenChange]
+  )
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpen(false)
+        setOpenState(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  }, [setOpenState])
 
   const getYOffset = () => {
     return (options.indexOf(value) + 1) * 100
@@ -105,7 +117,7 @@ export function CustomDropdown({
     <DropdownWrapper ref={dropdownRef}>
       <Label>Usertype: </Label>
       <InnerWrapper>
-        <Selected onClick={() => setOpen((prev) => !prev)} open={open}>
+        <Selected onClick={() => setOpenState(!open)} open={open}>
           {value || 'Select user type'}
         </Selected>
         {open && (

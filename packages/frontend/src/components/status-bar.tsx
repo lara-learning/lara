@@ -15,9 +15,13 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
 
   const [mutateUserType] = useDebugSetUsertypeMutation()
   const [mutateLogin] = useDebugLoginMutation()
-  const [visible, setVisible] = useState(false)
+  const [hoverVisible, setHoverVisible] = useState(false)
+  const [inputFocused, setInputFocused] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const [id, setId] = useState('')
+
+  const visible = hoverVisible || inputFocused || dropdownOpen
 
   const devLogin = () => {
     setId('')
@@ -43,30 +47,21 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
   }
 
   const scrollToBottom = () => {
-    const nearBottom = Math.abs(window.innerHeight + window.scrollY - document.body.scrollHeight) < 2
-
-    if (nearBottom) {
-      window.scrollTo({ top: window.scrollY - 1, behavior: 'instant' })
-    }
-
     setTimeout(() => {
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth',
-        })
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'instant',
       })
     }, 100)
   }
 
   const handleMouseEnter = () => {
     scrollToBottom()
-    setVisible(true)
+    setHoverVisible(true)
   }
 
   const handleMouseLeave = () => {
-    window.scrollTo({ top: window.scrollY - 1, behavior: 'instant' })
-    setVisible(false)
+    setHoverVisible(false)
   }
 
   return (
@@ -79,6 +74,7 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
             onChange={(newType) =>
               selectUsertype({ target: { value: newType } } as React.ChangeEvent<HTMLSelectElement>)
             }
+            onOpenChange={setDropdownOpen}
           />
         </div>
       )}
@@ -88,6 +84,8 @@ const StatusBar: React.FunctionComponent<StatusBarProps> = ({ currentUser }) => 
           type="text"
           value={id}
           onChange={(e) => setId(e.target.value)}
+          onFocus={() => setInputFocused(true)}
+          onBlur={() => setInputFocused(false)}
           onKeyDown={(e) => e.key === 'Enter' && devLogin()}
           style={{ height: '18.5px' }}
         />

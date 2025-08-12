@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
@@ -47,6 +47,7 @@ interface DayInputLayoutInterface {
   statusLabel: JSX.Element
   total?: JSX.Element
   commentsection?: JSX.Element
+  children: ReactNode
 }
 
 export const DayInputLayout: React.FC<DayInputLayoutInterface> = ({

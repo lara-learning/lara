@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import {
   darkTheme,
@@ -12,6 +12,7 @@ import { useSystemColorScheme } from './hooks/use-system-color-scheme'
 import { UserInterface } from './graphql'
 
 type ThemeProviderProps = {
+  children: ReactNode
   currentUser?: Pick<UserInterface, 'theme'>
 }
 

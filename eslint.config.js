@@ -101,6 +101,9 @@ module.exports = [
       react: require('eslint-plugin-react'),
       'react-hooks': require('eslint-plugin-react-hooks'),
     },
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+    },
   },
 
   //backend and components package rule override

@@ -8,7 +8,8 @@
     "strictNullChecks": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "module": "CommonJS",
+    "moduleResolution": "node",
+    "module": "commonjs",
     "resolveJsonModule": true,
     "sourceMap": false,
     "inlineSources": false

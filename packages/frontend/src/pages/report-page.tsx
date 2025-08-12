@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql'
 import React from 'react'
-import { Redirect, RouteComponentProps } from 'react-router'
+import { Navigate, useParams, useNavigate } from 'react-router'
 
 import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper } from '@lara/components'
 import { Box, Flex } from '@rebass/grid'
@@ -26,17 +26,15 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { useReportHelper } from '../helper/report-helper'
 
-interface ReportPageParams {
-  year: string
-  week: string
-}
-
-const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>> = (props) => {
+const ReportPage: React.FunctionComponent = () => {
+  const navigate = useNavigate()
   const { getFinishedDays } = useReportHelper()
 
+  const { year, week } = useParams()
+
   const variables: ReportPageDataQueryVariables = {
-    year: parseInt(props.match.params.year, 10),
-    week: parseInt(props.match.params.week, 10),
+    year: parseInt(year ?? '', 10),
+    week: parseInt(week ?? '', 10),
   }
 
   const { loading, data } = useReportPageDataQuery({ variables })
@@ -101,17 +99,13 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
 
   const handoverReport = () => {
     void updateReport({ status: ReportStatus.Review })
-    props.history.push('/')
+    navigate('/')
   }
 
   const unarchiveReport = () => {
     void updateReport({ status: ReportStatus.Reopened })
-    props.history.push('/')
+    navigate('/')
   }
-
-  const { match } = props
-  const { params } = match
-  const { week } = params
 
   const finishedDays = report && getFinishedDays(report)
 
@@ -181,7 +175,7 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
     <Template type="Main">
       {(loading || !data) && <Loader />}
 
-      {!loading && !data?.reportForYearAndWeek && <Redirect to="/report/missing" />}
+      {!loading && !data?.reportForYearAndWeek && <Navigate to="/report/missing" />}
 
       {!loading && (
         <>
@@ -190,7 +184,7 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
           {renderReportPageButtons()}
 
           <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
-            <H2>{strings.formatString(strings.report.modalTitle.handover, strings.weekOverview.week, week)}</H2>
+            <H2>{strings.formatString(strings.report.modalTitle.handover, strings.weekOverview.week, week ?? '')}</H2>
             <Paragraph>{strings.report.modalCopy.handover}</Paragraph>
             <Flex my={'2'}>
               <Box pr={'2'} width={1 / 2}>
@@ -207,7 +201,7 @@ const ReportPage: React.FunctionComponent<RouteComponentProps<ReportPageParams>>
           </Modal>
 
           <Modal show={showUnarchiveModal} customClose handleClose={toggleUnarchiveModal}>
-            <H2>{strings.formatString(strings.report.modalTitle.unarchive, strings.weekOverview.week, week)}</H2>
+            <H2>{strings.formatString(strings.report.modalTitle.unarchive, strings.weekOverview.week, week ?? '')}</H2>
             <Paragraph>{strings.report.modalCopy.unarchive}</Paragraph>
             <Flex my={'2'}>
               <Box pr={'2'} width={1 / 2}>

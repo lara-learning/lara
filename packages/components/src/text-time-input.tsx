@@ -1,5 +1,4 @@
 import { FlexProps } from '@rebass/grid'
-import React from 'react'
 import styled, { css } from 'styled-components'
 import { StyledEntryValueWrapper } from './entry-input-layout'
 import { FontSizes } from './font-size'

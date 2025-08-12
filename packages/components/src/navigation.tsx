@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link, NavLink, NavLinkProps } from 'react-router-dom'
+import { Link, NavLink, NavLinkProps } from 'react-router'
 import styled, { css } from 'styled-components'
 
 import { Flex } from '@rebass/grid'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Paragraph, StyledMainTemplateWrapper, GlobalBackground } from '@lara/components'
 
@@ -8,6 +8,7 @@ import { Toasts } from '../components/toasts'
 
 interface MainTemplateProps {
   loading?: boolean
+  children: ReactNode
 }
 
 const MainTemplate: React.FunctionComponent<MainTemplateProps> = ({ loading, children }) => (

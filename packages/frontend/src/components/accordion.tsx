@@ -12,7 +12,7 @@ import {
 
 interface AccordionProps {
   title: string
-  children?: React.ReactNode
+  children: React.ReactNode
   forceActive?: boolean
 }
 

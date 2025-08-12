@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { EditUserRowLayout } from '@lara/components'
 
@@ -16,11 +16,11 @@ interface EditUserRowProps {
 }
 
 export const EditUserRow: React.FunctionComponent<EditUserRowProps> = ({ user, baseUrl }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const url = `/${baseUrl}/${user.id}`
 
   const navigateToEditPage = () => {
-    history.push(url)
+    navigate(url)
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, useLocation, useHistory } from 'react-router'
+import { Navigate, useLocation, useNavigate } from 'react-router'
 
 import { H1 } from '@lara/components'
 
@@ -9,16 +9,10 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { PrimaryButton } from '../components/button'
 
-type AlexaPageParams = {
-  code?: string
-  scope?: string
-  state?: string
-}
-
 export const AlexaPage: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
-  const { search } = useLocation<AlexaPageParams>()
+  const { search } = useLocation()
   const params = new URLSearchParams(search)
 
   const toast = useToastContext()
@@ -29,12 +23,12 @@ export const AlexaPage: React.FC = () => {
   const [mutate, { loading }] = useLinkAlexaMutation()
 
   const handleLinkSuccess = () => {
-    history.push('/settings')
+    navigate('/settings')
     toast.addToast({ text: strings.settings.alexa.linkSuccess, type: 'success' })
   }
 
   const handleLinkError = () => {
-    history.push('/')
+    navigate('/')
     toast.addToast({ text: strings.settings.alexa.linkError, type: 'error' })
   }
 
@@ -55,7 +49,7 @@ export const AlexaPage: React.FC = () => {
   }
 
   if (!code || !state) {
-    return <Redirect to="" />
+    return <Navigate to="" />
   }
 
   return (

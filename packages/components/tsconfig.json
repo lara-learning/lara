@@ -6,7 +6,8 @@
     "outDir": "lib",
     "rootDir": "src",
     "strictNullChecks": true,
-    "module": "CommonJS"
+    "moduleResolution": "bundler",
+    "module": "es2020"
   },
   "include": ["src/**/*"]
 }

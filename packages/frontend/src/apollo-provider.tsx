@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import {
   ApolloClient,
@@ -13,7 +13,11 @@ import { useTokenRefreshLink } from './hooks/use-token-refresh-link'
 
 export const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
 
-const ApolloProvider: React.FunctionComponent = ({ children }) => {
+interface ApolloProviderProps {
+  children: ReactNode
+}
+
+const ApolloProvider: React.FunctionComponent<ApolloProviderProps> = ({ children }) => {
   const authenticationLink = useAuthenticationLink()
   const refreshTokenLink = useTokenRefreshLink()
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Route, RouteProps, Switch } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router'
 
 import { Admin, Trainee, Trainer, UserTypeEnum } from './graphql'
 import { useAuthentication } from './hooks/use-authentication'
@@ -31,81 +31,87 @@ type RoutesProps = {
     | Pick<Admin, 'type' | 'language' | '__typename'>
 }
 
-const Routes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
+const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
   const { authenticated } = useAuthentication()
 
-  const routes: RouteProps[] = []
-
   if (authenticated === 'unauthenticated') {
-    routes.push({ component: LoginPage })
-  } else if (authenticated === 'loading') {
-    routes.push({ component: LoadingPage })
-  } else {
-    if (currentUser) {
-      strings.setLanguage(currentUser.language || navigator.language)
-      // Current user was found
-
-      if (currentUser.type === UserTypeEnum.Trainee && currentUser.__typename === 'Trainee') {
-        // Routes for trainees
-
-        if (currentUser.course) {
-          // Trainee is ready to go
-          routes.push({ path: '/', exact: true, component: DashboardPage })
-          routes.push({ path: '/archive', component: ArchivePage })
-          routes.push({ path: '/report/:year/:week', component: ReportPage })
-          routes.push({ path: '/report/missing', component: MissingPage })
-
-          routes.push({ path: '/alexa', component: AlexaPage })
-        } else {
-          // Trainee need onboarding!
-          routes.push({ path: '/', component: OnboardingPage })
-        }
-      }
-
-      if (currentUser.type === UserTypeEnum.Trainer && currentUser.__typename === 'Trainer') {
-        const redirectRoute = currentUser.trainees.length > 0 ? '/reports' : '/trainees'
-
-        // Routes for trainers
-        routes.push({ path: '/', exact: true, render: () => <Redirect to={redirectRoute} /> })
-
-        routes.push({ path: '/reports/:trainee?', exact: true, component: TrainerReportsPage })
-        routes.push({ path: '/reports/:trainee/:year/:week', component: ReportReviewPage })
-        routes.push({ path: '/trainees/:trainee?', component: TraineePage })
-      }
-
-      if (currentUser.type === UserTypeEnum.Admin && currentUser.__typename === 'Admin') {
-        // Routes for admins
-
-        routes.push({ path: '/', exact: true, render: () => <Redirect to="/trainer" /> })
-
-        routes.push({ path: '/trainer', exact: true, component: AdminTrainerPage })
-        routes.push({ path: '/trainer/:id', component: AdminEditUserPage })
-
-        routes.push({ path: '/trainees', exact: true, component: AdminTraineesPage })
-        routes.push({ path: '/trainees/:id', component: AdminEditUserPage })
-      }
-
-      routes.push({ path: '/settings', component: SettingsPage })
-      routes.push({ path: '/oauth', component: OAuthPage })
-    }
-
-    if (!currentUser) {
-      // No user was found
-      routes.push({ component: NoUserPage, path: '/no-user-found' })
-    }
+    return (
+      <Routes>
+        <Route path="*" element={<LoginPage />} />
+      </Routes>
+    )
   }
 
-  routes.push({ path: '/support', component: SupportPage })
-  routes.push({ path: '/faq', component: FAQPage })
+  if (authenticated === 'loading') {
+    return (
+      <Routes>
+        <Route path="*" element={<LoadingPage />} />
+      </Routes>
+    )
+  }
 
-  routes.push({ path: '/', component: MissingPage })
+  if (currentUser) {
+    strings.setLanguage(currentUser.language || navigator.language)
+
+    return (
+      <Routes>
+        {/* Common Routes */}
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/oauth" element={<OAuthPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/faq" element={<FAQPage />} />
+
+        {/* Trainee Routes */}
+        {currentUser.type === UserTypeEnum.Trainee && currentUser.__typename === 'Trainee' && (
+          <>
+            {currentUser.course ? (
+              <>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/archive" element={<ArchivePage />} />
+                <Route path="/report/:year/:week" element={<ReportPage />} />
+                <Route path="/report/missing" element={<MissingPage />} />
+                <Route path="/alexa" element={<AlexaPage />} />
+              </>
+            ) : (
+              <Route path="/" element={<OnboardingPage />} />
+            )}
+          </>
+        )}
+
+        {/* Trainer Routes */}
+        {currentUser.type === UserTypeEnum.Trainer && currentUser.__typename === 'Trainer' && (
+          <>
+            <Route path="/" element={<Navigate to={currentUser.trainees.length > 0 ? '/reports' : '/trainees'} />} />
+            <Route path="/reports/:trainee?" element={<TrainerReportsPage />} />
+            <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
+            <Route path="/trainees/:trainee?" element={<TraineePage />} />
+          </>
+        )}
+
+        {/* Admin Routes */}
+        {currentUser.type === UserTypeEnum.Admin && currentUser.__typename === 'Admin' && (
+          <>
+            <Route path="/" element={<Navigate to="/trainer" />} />
+            <Route path="/trainer" element={<AdminTrainerPage />} />
+            <Route path="/trainer/:id" element={<AdminEditUserPage />} />
+            <Route path="/trainees" element={<AdminTraineesPage />} />
+            <Route path="/trainees/:id" element={<AdminEditUserPage />} />
+          </>
+        )}
+
+        {/* Fallback Route */}
+        <Route path="*" element={<MissingPage />} />
+      </Routes>
+    )
+  }
+
+  // No user found
   return (
-    <Switch>
-      {routes.map((routeProps, index) => (
-        <Route {...routeProps} key={index} />
-      ))}
-    </Switch>
+    <Routes>
+      <Route path="/no-user-found" element={<NoUserPage />} />
+      <Route path="*" element={<MissingPage />} />
+    </Routes>
   )
 }
 
-export default Routes
+export default AppRoutes

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { Container } from './container'
@@ -16,6 +16,7 @@ export interface ModelStylingProps extends ModalOverlayProps, ModalContainerProp
 
 interface ModalLayoutProps extends ModelStylingProps {
   button: JSX.Element
+  children: ReactNode
 }
 
 const ModalOverlay = styled.div<ModalOverlayProps>`

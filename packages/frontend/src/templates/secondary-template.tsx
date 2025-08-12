@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { Paragraph, StyledSecondaryTemplateWrapper } from '@lara/components'
 
-const SecondaryTemplate: React.FunctionComponent = ({ children }) => (
+interface SecondaryTemplateProps {
+  children: ReactNode
+}
+
+const SecondaryTemplate: React.FunctionComponent<SecondaryTemplateProps> = ({ children }) => (
   <StyledSecondaryTemplateWrapper>
     {children}
     <Paragraph center>Lara {TAG || `pre-release @ ${REVISION.substring(0, 7)}`}</Paragraph>

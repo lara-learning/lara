@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { JSX, ButtonHTMLAttributes } from 'react'
 import styled, { css } from 'styled-components'
 import { BorderRadii } from './border-radius'
 import { FontSizes } from './font-size'

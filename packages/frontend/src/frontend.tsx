@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-
 import { App } from './app'
+import { createRoot } from 'react-dom/client'
 
-if (window.location.hash === '') {
-  ReactDOM.render(<App />, document.getElementById('app'))
+const rootElement = document.getElementById('app')
+if (rootElement) {
+  const root = createRoot(rootElement)
+  if (window.location.hash === '') {
+    root.render(<App />)
+  }
 }
 
 if (module.hot && ENVIRONMENT.debug) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 import { BorderRadii } from './border-radius'
 import { FontSizes } from './font-size'
@@ -28,6 +28,7 @@ const StyledFAQHeader = styled.div`
 type FaqLayoutProps = {
   title: JSX.Element
   search: JSX.Element
+  children: ReactNode
 }
 
 export const FaqLayout: React.FC<FaqLayoutProps> = ({ title, search, children }) => {

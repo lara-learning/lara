@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import React, { JSX } from 'react'
+import { Link, LinkProps } from 'react-router'
 import styled from 'styled-components'
 
 import { BorderRadii } from './border-radius'

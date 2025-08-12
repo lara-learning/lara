@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
 import { StyledIcon } from './icons'
