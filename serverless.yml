@@ -548,18 +548,22 @@ resources:
           CorsConfig:
             AccessControlAllowCredentials: false
             AccessControlAllowHeaders:
-              - '*'
+              Items:
+                - '*'
             AccessControlAllowMethods:
-              - GET
-              - HEAD
-              - OPTIONS
-              - POST
-              - PUT
-              - DELETE
-              - PATCH
+              Items:
+                - GET
+                - HEAD
+                - OPTIONS
+                - POST
+                - PUT
+                - DELETE
+                - PATCH
             AccessControlAllowOrigins:
-              - '*'
-            AccessControlExposeHeaders: []
+              Items:
+                - '*'
+            AccessControlExposeHeaders:
+              Items: []
             OriginOverride: false
           SecurityHeadersConfig:
             ContentTypeOptions:
