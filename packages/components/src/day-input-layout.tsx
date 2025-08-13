@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
 
-const DayInputContainer = styled.div<{ showEntriesInput: boolean }>`
+const DayInputContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['showEntriesInput'].includes(prop),
+})<{ showEntriesInput: boolean }>`
   padding-bottom: ${(props) => (props.showEntriesInput ? Spacings.xs : Spacings.l)};
   padding-top: ${Spacings.l};
 `
@@ -21,7 +23,9 @@ const DayStatusContainer = styled.div`
   justify-content: space-between;
 `
 
-const StatusContainer = styled.div<{ visible: boolean }>`
+const StatusContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['visible'].includes(prop),
+})<{ visible: boolean }>`
   display: flex;
   align-items: center;
   transition: opacity 0.5s ease;
@@ -33,7 +37,9 @@ const TotalContainer = styled.div`
   text-align: right;
 `
 
-export const StyledStatusLabel = styled.span<{ error: boolean }>`
+export const StyledStatusLabel = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['error'].includes(prop),
+})<{ error: boolean }>`
   font-size: ${FontSizes.label};
   letter-spacing: 1.2px;
   color: ${(props) => (props.error ? props.theme.errorRed : props.theme.mediumFont)};

@@ -16,8 +16,8 @@ import {
   StyledSearchWrapper,
   Spacings,
   StyledArchiveLink,
+  Flex,
 } from '@lara/components'
-import { Flex } from '@rebass/grid'
 
 import { PrimaryButton } from '../components/button'
 import { CheckBox } from '../components/checkbox'

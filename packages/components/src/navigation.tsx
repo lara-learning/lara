@@ -1,12 +1,14 @@
 import { Link, NavLink, NavLinkProps } from 'react-router'
 import styled, { css } from 'styled-components'
 
-import { Flex } from '@rebass/grid'
+import { Flex } from './flex'
 
 import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
 
-export const StyledNavWrapper = styled(Flex)`
+export const StyledNavWrapper = styled(Flex).withConfig({
+  shouldForwardProp: (prop) => !['flexWrap', 'justifyContent'].includes(prop),
+})`
   display: flex;
   align-items: center;
   padding: 0 ${Spacings.l};
@@ -68,7 +70,7 @@ export const StyledNavItem = styled(({ isMobile: _isMobile, ...rest }: NavItemPr
   ${(props) =>
     !props.isMobile &&
     `
-    &:hover {
+    &:hover, &.active {
       border-bottom: ${Spacings.xxs} solid ${props.theme.iconWhite};
     }
   `}
@@ -76,10 +78,13 @@ export const StyledNavItem = styled(({ isMobile: _isMobile, ...rest }: NavItemPr
     props.isMobile &&
     `
     color: ${props.theme.darkFont};
+    &:hover {
+      opacity: 1;
+    }
+    &.active {
+      border-bottom: ${Spacings.xxs} solid ${props.theme.iconDarkGrey};
+    }
   `}
-  &.active {
-    border-bottom: ${Spacings.xxs} solid ${(props) => props.theme.iconWhite};
-  }
   ${(props) => props.isMobile && StyledMobileNavItemStyle}
 `
 
@@ -88,14 +93,15 @@ export const StyledLogoutItem = styled.div`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: ${(props) => props.theme.headerFont};
+  color: ${(props) => props.theme.darkFont};
   font-size: ${FontSizes.copy};
   transition: 0.1s all;
-  opacity: 0.8;
   ${StyledMobileNavItemStyle}
 
-  :hover {
+  &:hover {
     cursor: pointer;
+    opacity: 1;
+    color: ${(props) => props.theme.buttonSecondaryDangerHovered};
   }
 `
 
@@ -137,7 +143,7 @@ export const StyledLink = styled.div`
 
 export const StyledMobileNavWrapper = styled.div`
   width: 100vw;
-  background-color: ${(props) => props.theme.buttonPrimaryFont};
+  background: ${(props) => props.theme.background};
   position: fixed;
   z-index: 5;
   display: flex;

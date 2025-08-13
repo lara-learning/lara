@@ -37,7 +37,9 @@ export const StyledToastHeader = styled.div`
   justify-content: space-between;
 `
 
-export const StyledIconWrapper = styled.div<IconContainerProps>`
+export const StyledIconWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['background'].includes(prop),
+})<IconContainerProps>`
   display: flex;
   align-items: center;
   align-self: center;

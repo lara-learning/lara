@@ -1,8 +1,7 @@
 import { getDay, getISOWeek, getYear, isWeekend } from 'date-fns'
 import React from 'react'
 
-import { Container, H1, Paragraph, StyledDashboardWeeks } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
+import { Container, H1, Paragraph, StyledDashboardWeeks, Flex, Box } from '@lara/components'
 
 import DayInput from '../components/day-input'
 import Illustrations from '../components/illustration'

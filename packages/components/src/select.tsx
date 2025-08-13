@@ -39,7 +39,9 @@ export const StyledSelect = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
 `
-export const StyledSelectWithIconContainer = styled.div<SelectWithIconContainerProps>`
+export const StyledSelectWithIconContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['hasLabel'].includes(prop),
+})<SelectWithIconContainerProps>`
   display: flex;
   align-items: center;
   border-radius: ${BorderRadii.xxs};

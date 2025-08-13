@@ -33,7 +33,9 @@ const findSpacing = (...args: (SpacingKey | undefined)[]) => {
   return Spacings[spacing]
 }
 
-const IconContainer = styled.i<IconContainerProps>`
+const IconContainer = styled.i.withConfig({
+  shouldForwardProp: (prop) => !['marginLeft', 'marginRight', 'marginTop', 'marginBottom'].includes(prop),
+})<IconContainerProps>`
   width: ${(props) => props.width || props.size || '100%'};
   height: ${(props) => props.height || props.size || 'auto'};
   display: block;

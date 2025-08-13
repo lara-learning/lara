@@ -13,7 +13,9 @@ export interface ParagraphProps {
   margin?: string
 }
 
-export const Paragraph = styled.p<ParagraphProps>`
+export const Paragraph = styled.p.withConfig({
+  shouldForwardProp: (prop) => !['center', 'noMargin'].includes(prop),
+})<ParagraphProps>`
   line-height: 1.4;
   color: ${(props) => (props.color ? props.theme[props.color] : props.theme.lightFont)};
   font-family: ${(props) => props.font || Fonts.primary};

@@ -16,7 +16,9 @@ export type TextProps = {
   noLineHeight?: boolean
 }
 
-export const Text = styled.span<TextProps>`
+export const Text = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['noLineHeight'].includes(prop),
+})<TextProps>`
   font-size: ${(props) => (props.size ? FontSizes[props.size] : FontSizes.label)};
   font-weight: ${(props) => props.weight};
   font-family: ${(props) => props.font && Fonts[props.font]};

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 
-import { EditUserLayout, H1, Paragraph, Spacings } from '@lara/components'
+import { EditUserLayout, H1, Paragraph, Spacings, Flex, Box } from '@lara/components'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import { EditTraineeContent } from '../components/edit-trainee-content'
@@ -11,7 +11,6 @@ import NavigationButtonLink from '../components/navigation-button-link'
 import { useMarkUserForDeleteMutation, useUnmarkUserForDeleteMutation, useUserPageQuery } from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
-import { Box, Flex } from '@rebass/grid'
 import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
 

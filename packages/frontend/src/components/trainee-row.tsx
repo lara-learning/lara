@@ -14,9 +14,9 @@ import {
   StyledName,
   StyledUnclaimIcon,
   StyledWrapper,
+  Flex,
+  Box,
 } from '@lara/components'
-
-import { Box, Flex } from '@rebass/grid'
 
 import { Company, Trainee, Trainer, useClaimTraineeMutation, useUnclaimTraineeMutation } from '../graphql'
 import strings from '../locales/localization'
@@ -91,7 +91,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
           </StyledName>
           <StyledCourse>{trainee.course}</StyledCourse>
         </StyledHeader>
-        <StyledControls active={active}>
+        <StyledControls>
           <motion.div
             animate={{
               opacity: trainee.trainer && trainee.trainer.id === trainerId ? 1 : 0,

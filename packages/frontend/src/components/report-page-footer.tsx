@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { H2, Spacer, StyledTopBorderWrapper } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
+import { H2, Spacer, StyledTopBorderWrapper, Flex, Box } from '@lara/components'
 
 import { Comment, Day, Entry, Report, ReportStatus, useCreateCommentOnReportMutation, UserInterface } from '../graphql'
 import strings from '../locales/localization'

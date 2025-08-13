@@ -11,7 +11,11 @@ export interface StyledLinkProps extends LinkProps {
 
 // isLeft props needs to be removed from LinkProps
 
-const StyledLink = styled(Link).attrs<StyledLinkProps>(({ isLeft: _isLeft }) => ({}))<StyledLinkProps>`
+const StyledLink = styled(Link)
+  .withConfig({
+    shouldForwardProp: (prop) => !['isLeft'].includes(prop),
+  })
+  .attrs<StyledLinkProps>(({ isLeft: _isLeft }) => ({}))<StyledLinkProps>`
   display: flex;
   align-items: center;
   justify-content: center;

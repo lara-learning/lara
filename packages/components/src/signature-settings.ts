@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-import { Box, Flex } from '@rebass/grid'
+import { Box } from './box'
+
+import { Flex } from './flex'
 
 import { BorderRadii } from './border-radius'
 import { FontSizes } from './font-size'
@@ -50,7 +52,9 @@ export const StyledSignatureLine = styled.div`
   width: 100%;
   border-top: 3px dashed ${(props) => props.theme.buttonPrimaryFont};
 `
-export const StyledNoCameraAccessWarning = styled.span<{ visible: boolean }>`
+export const StyledNoCameraAccessWarning = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['visible'].includes(prop),
+})<{ visible: boolean }>`
   font-size: ${FontSizes.copy};
   margin-top: ${Spacings.xs};
   margin-bottom: ${Spacings.m};

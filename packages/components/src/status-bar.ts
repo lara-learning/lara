@@ -10,6 +10,7 @@ export const StyledStatusBar = styled.div<{ open: boolean }>`
   font-weight: bold;
 
   .status-bar-div {
+    margin-top: 8px;
     display: ${({ open }) => (open ? 'block' : 'none')};
   }
 `

@@ -11,7 +11,9 @@ export interface ContainerProps {
   overflow?: 'hidden' | 'scroll' | 'visible'
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['padding', 'paddingX', 'paddingY', 'hoverable', 'flat', 'overflow'].includes(prop),
+})<ContainerProps>`
   display: block;
   overflow: ${(props) => props.overflow || 'hidden'};
   background: ${(props) => props.theme.surface};

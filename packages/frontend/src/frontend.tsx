@@ -1,12 +1,18 @@
 import { App } from './app'
-import { createRoot } from 'react-dom/client'
+import { createRoot, Root } from 'react-dom/client'
+
+declare global {
+  interface Window {
+    __root?: Root
+  }
+}
 
 const rootElement = document.getElementById('app')
 if (rootElement) {
-  const root = createRoot(rootElement)
-  if (window.location.hash === '') {
-    root.render(<App />)
+  if (!window.__root) {
+    window.__root = createRoot(rootElement)
   }
+  window.__root.render(<App />)
 }
 
 if (module.hot && ENVIRONMENT.debug) {

@@ -8,7 +8,9 @@ interface InputLabelProps {
   valid: boolean
 }
 
-export const StyledTextInputLabel = styled.label<InputLabelProps>`
+export const StyledTextInputLabel = styled.label.withConfig({
+  shouldForwardProp: (prop) => !['valid'].includes(prop),
+})<InputLabelProps>`
   color: ${(props) => (props.valid ? props.theme.darkFont : props.theme.errorRed)};
   font-size: ${FontSizes.label};
   letter-spacing: 1.2px;
@@ -35,7 +37,9 @@ interface InputContainerProps {
   floating: boolean
 }
 
-export const StyledTextInput = styled.input<InputContainerProps>`
+export const StyledTextInput = styled.input.withConfig({
+  shouldForwardProp: (prop) => !['valid', 'floating'].includes(prop),
+})<InputContainerProps>`
   box-sizing: border-box;
   width: 100%;
   margin-top: ${Spacings.s};

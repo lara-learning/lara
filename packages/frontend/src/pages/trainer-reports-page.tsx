@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { H1, Paragraph } from '@lara/components'
-import { Flex } from '@rebass/grid'
+import { H1, Paragraph, Flex } from '@lara/components'
 
 import Illustrations from '../components/illustration'
 import Loader from '../components/loader'

@@ -19,7 +19,9 @@ interface ModalLayoutProps extends ModelStylingProps {
   children: ReactNode
 }
 
-const ModalOverlay = styled.div<ModalOverlayProps>`
+const ModalOverlay = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['show'].includes(prop),
+})<ModalOverlayProps>`
   position: fixed;
   display: ${(props) => (props.show ? 'flex' : 'none')};
   align-items: center;
@@ -33,7 +35,9 @@ const ModalOverlay = styled.div<ModalOverlayProps>`
   padding: 0 ${Spacings.m};
 `
 
-const ModalContainer = styled(Container)<ModalContainerProps>`
+const ModalContainer = styled(Container).withConfig({
+  shouldForwardProp: (prop) => !['large'].includes(prop),
+})<ModalContainerProps>`
   display: flex;
   flex-direction: column;
   min-width: 300px;
