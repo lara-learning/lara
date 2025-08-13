@@ -6,7 +6,7 @@ import { useSuggestionsDataQuery } from '../graphql'
 import { useFocusState } from '../hooks/use-focus-state'
 
 interface SuggestionProps {
-  inputRef: React.RefObject<HTMLTextAreaElement>
+  inputRef: React.RefObject<HTMLTextAreaElement | null>
   submitSuggestion: (text: string) => void
 }
 

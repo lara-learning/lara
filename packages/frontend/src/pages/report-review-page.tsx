@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, RouteComponentProps } from 'react-router'
+import { Navigate, useParams, useNavigate } from 'react-router'
 
 import {
   Container,
@@ -44,18 +44,14 @@ interface ReportReviewPageState {
   showDeclineConfimationModal: boolean
 }
 
-interface ReportReviewPageParams {
-  trainee: string
-  year: string
-  week: string
-  department: string
-}
+const ReportReviewPage: React.FunctionComponent = () => {
+  const navigate = useNavigate()
+  const { year, week, trainee } = useParams<{ year: string; week: string; trainee: string }>()
 
-const ReportReviewPage: React.FunctionComponent<RouteComponentProps<ReportReviewPageParams>> = ({ match, history }) => {
   const variables: ReportReviewPageDataQueryVariables = {
-    year: parseInt(match.params.year, 10),
-    week: parseInt(match.params.week, 10),
-    trainee: match.params.trainee,
+    year: parseInt(year ?? '', 10),
+    week: parseInt(week ?? '', 10),
+    trainee: trainee ?? '',
   }
 
   const { getTotalMinutes } = useDayHelper()
@@ -93,7 +89,7 @@ const ReportReviewPage: React.FunctionComponent<RouteComponentProps<ReportReview
         text: strings.trainerReportOverview.reportDeclinedSuccess,
         type: 'success',
       })
-      history.push('/')
+      navigate('/')
     })
   }
 
@@ -105,7 +101,7 @@ const ReportReviewPage: React.FunctionComponent<RouteComponentProps<ReportReview
         text: strings.trainerReportOverview.reportToArchiveSuccess,
         type: 'success',
       })
-      history.push('/')
+      navigate('/')
     })
   }
 
@@ -222,7 +218,7 @@ const ReportReviewPage: React.FunctionComponent<RouteComponentProps<ReportReview
     <Template type="Main">
       {loading && <Loader />}
 
-      {!loading && (!report || report.status !== ReportStatus.Review) && <Redirect to="/report/missing" />}
+      {!loading && (!report || report.status !== ReportStatus.Review) && <Navigate to="/report/missing" />}
 
       {!loading && report && (
         <>

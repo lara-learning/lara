@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { Spacings } from './spacing'
@@ -10,6 +10,7 @@ const AdminOverviewGrid = styled.div`
 
 type AdminOverviewLayoutProps = {
   heading: JSX.Element
+  children: ReactNode
 }
 
 export const AdminOverviewLayout: React.FC<AdminOverviewLayoutProps> = ({ heading, children }) => {
@@ -29,6 +30,7 @@ const AdminCreateUserGrid = styled.div`
 type AdminCreateUserLayoutProps = {
   headline: JSX.Element
   description: JSX.Element
+  children: ReactNode
 }
 
 export const AdminCreateUserLayout: React.FC<AdminCreateUserLayoutProps> = ({ headline, description, children }) => {

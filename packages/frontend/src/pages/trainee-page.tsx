@@ -1,6 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
-import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import { H1 } from '@lara/components'
 
@@ -10,17 +9,12 @@ import { useTraineePageDataQuery } from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 
-interface TraineePageParams {
-  trainee?: string
-}
-
-type TraineePageProps = RouteComponentProps<TraineePageParams>
-
-const TraineePage: React.FunctionComponent<TraineePageProps> = ({ match }) => {
+const TraineePage: React.FunctionComponent = () => {
+  const { trainee } = useParams()
   const { loading, data } = useTraineePageDataQuery()
 
   const isActive = (id: string): boolean => {
-    return id === match.params.trainee
+    return id === trainee
   }
 
   return (
@@ -36,6 +30,4 @@ const TraineePage: React.FunctionComponent<TraineePageProps> = ({ match }) => {
   )
 }
 
-const TraineePageWithRouter = withRouter(TraineePage)
-
-export default TraineePageWithRouter
+export default TraineePage

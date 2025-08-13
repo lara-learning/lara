@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const useFocusState = (ref: React.RefObject<HTMLElement>): boolean => {
+export const useFocusState = (ref: React.RefObject<HTMLElement | null>): boolean => {
   const [state, setState] = React.useState(false)
 
   const handleFocus = () => setState(true)

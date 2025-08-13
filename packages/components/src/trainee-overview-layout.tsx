@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { Flex } from '@rebass/grid'
@@ -40,6 +40,7 @@ interface TraineeOverviewLayoutProps {
   readonly name: string
   readonly icon: JSX.Element
   readonly caption: string
+  readonly children: ReactNode
 }
 
 export const TraineeOverviewLayout: React.FC<TraineeOverviewLayoutProps> = ({

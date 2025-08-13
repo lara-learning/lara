@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { JSX, ReactNode } from 'react'
+import { Link } from 'react-router'
 import styled from 'styled-components'
 
 import { Container } from './container'
@@ -71,6 +71,7 @@ export const StyledSupportTile: React.FC<StyledSupportTileProps> = ({ title, bod
 
 type StyledSupportLayoutProps = {
   illustration: JSX.Element
+  children: ReactNode
 }
 
 export const StyledSupportLayout: React.FC<StyledSupportLayoutProps> = ({ illustration, children }) => {

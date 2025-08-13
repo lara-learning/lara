@@ -1,7 +1,7 @@
 module.exports = {
   roots: ['<rootDir>/src/test'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.[tj]sx?$': ['ts-jest', { useESM: true }],
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
@@ -10,4 +10,6 @@ module.exports = {
       supportMail: 'lara@exampleCompany.com',
     },
   },
+  transformIgnorePatterns: ['/node_modules/(?!(.*\\.m?js$))'],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
 }

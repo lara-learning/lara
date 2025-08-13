@@ -2,13 +2,14 @@
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
     "keyofStringsOnly": false,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "outDir": "lib",
     "rootDir": "src",
     "strictNullChecks": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "module": "CommonJS",
+    "moduleResolution": "node",
+    "module": "commonjs",
     "resolveJsonModule": true,
     "sourceMap": false,
     "inlineSources": false

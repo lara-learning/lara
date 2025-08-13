@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from 'react'
+import React, { createContext, ReactNode, useState } from 'react'
 import { Entry } from '../../graphql'
 
 export interface EntryOrderContext {
@@ -25,7 +25,11 @@ export const EntryOrderContext = createContext<EntryOrderContext>({
   clearState: () => undefined,
 })
 
-export const EntryOrderProvider: FC = (props) => {
+interface EntryOrderProviderProps {
+  children: ReactNode
+}
+
+export const EntryOrderProvider: React.FC<EntryOrderProviderProps> = (props) => {
   const [entry, setEntry] = useState<Pick<Entry, 'id' | 'orderId'>>()
   const [dayId, setDayId] = useState<string>()
   const [targetDayId, setTargetDayId] = useState<string>()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, useHistory, useLocation } from 'react-router'
+import { Navigate, useNavigate, useLocation } from 'react-router'
 
 import { H1 } from '@lara/components'
 
@@ -8,14 +8,9 @@ import { useCreateOAuthCodeMutation } from '../graphql'
 import { Template } from '../templates/template'
 import { useToastContext } from '../hooks/use-toast-context'
 
-type OAuthParams = {
-  state?: string
-  redirectUri?: string
-}
-
 export const OAuthPage: React.FC = () => {
-  const history = useHistory()
-  const { search } = useLocation<OAuthParams>()
+  const navigate = useNavigate()
+  const { search } = useLocation()
   const params = new URLSearchParams(search)
 
   const toast = useToastContext()
@@ -29,7 +24,7 @@ export const OAuthPage: React.FC = () => {
     mutate().then(({ data }) => {
       if (!data?.createOAuthCode) {
         toast.addToast({ text: 'Es konnte keine Autorisierung durchgeführt werden', type: 'error' })
-        history.push('/')
+        navigate('/')
         return
       }
 
@@ -38,7 +33,7 @@ export const OAuthPage: React.FC = () => {
   }
 
   if (!state || !redirectUri) {
-    return <Redirect to="/" />
+    return <Navigate to="/" />
   }
 
   return (

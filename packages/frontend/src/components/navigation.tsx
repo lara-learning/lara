@@ -56,7 +56,7 @@ const Navigation: React.FunctionComponent = () => {
   const renderTraineeNav = () => {
     return (
       <>
-        <StyledNavItem exact to={'/'} onClick={toggleMenu} isMobile={isMobile}>
+        <StyledNavItem to={'/'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.dashhboard}
         </StyledNavItem>
         <StyledNavItem to={'/archive'} onClick={toggleMenu} isMobile={isMobile}>

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Router, Switch } from 'react-router-dom'
+import { BrowserRouter } from 'react-router'
 import ApolloProvider from './apollo-provider'
-import AppHistory from './app-history'
 import StatusBar from './components/status-bar'
-import Routes from './routes'
+import AppRoutes from './routes'
 import ThemeProvider from './theme-provider'
 import { AuthenticatedState, AuthenticationContext } from './hooks/use-authentication'
 import { GlobalFonts } from './components/fonts'
@@ -46,13 +45,10 @@ const InnerApp: React.FunctionComponent = () => {
 
       {!loading && (
         <ToastContextProvider>
-          <Router history={AppHistory.getInstance()}>
-            <Switch>
-              <Routes currentUser={currentUser} />
-            </Switch>
-
+          <BrowserRouter>
+            <AppRoutes currentUser={currentUser} />
             {ENVIRONMENT.debug && <StatusBar currentUser={currentUser} />}
-          </Router>
+          </BrowserRouter>
         </ToastContextProvider>
       )}
 

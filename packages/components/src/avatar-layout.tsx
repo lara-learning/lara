@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { BorderRadii } from './border-radius'
@@ -32,6 +32,7 @@ const StyledLoadingIconWrapper = styled.div`
 
 interface AvatarLayoutProps {
   size: number
+  children: ReactNode
   loadingIcon: JSX.Element
   noImageIcon: JSX.Element
 }

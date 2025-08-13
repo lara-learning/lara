@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer-core'
-import React from 'react'
+import { JSX } from 'react'
 import ReactServerDOM from 'react-dom/server'
 import { ServerStyleSheet } from 'styled-components'
 

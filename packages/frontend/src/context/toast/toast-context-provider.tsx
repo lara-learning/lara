@@ -1,8 +1,12 @@
-import React, { useRef } from 'react'
+import React, { ReactNode, useRef } from 'react'
 
 import { Toast, ToastContext, ToastInput } from './'
 
-export const ToastContextProvider: React.FunctionComponent = ({ children }) => {
+interface ToastContextProviderProps {
+  children: ReactNode
+}
+
+export const ToastContextProvider: React.FunctionComponent<ToastContextProviderProps> = ({ children }) => {
   const [dangerousToasts, setDangerousToasts] = React.useState<Toast[]>([])
 
   const toasts = React.useRef<Toast[]>([])

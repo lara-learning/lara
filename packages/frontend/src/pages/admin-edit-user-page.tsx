@@ -21,7 +21,8 @@ type AdminEditUserPageParams = {
 
 export const AdminEditUserPage: React.FunctionComponent = () => {
   const { id } = useParams<AdminEditUserPageParams>()
-  const { data, loading } = useUserPageQuery({ variables: { id } })
+  const vars = { variables: { id: id ?? '' } }
+  const { data, loading } = useUserPageQuery(vars)
 
   const [markForDelete, { loading: deleteLoading }] = useMarkUserForDeleteMutation()
   const [unmarkDelete, { loading: undeleteLoading }] = useUnmarkUserForDeleteMutation()
@@ -37,7 +38,7 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
   const renderDeleteAction = (deleteAt?: string) => {
     if (deleteAt) {
       return (
-        <SecondaryButton disabled={deleteActionLoading} onClick={() => unmarkDelete({ variables: { id } })}>
+        <SecondaryButton disabled={deleteActionLoading} onClick={() => unmarkDelete(vars)}>
           {strings.unmarkDelete}
         </SecondaryButton>
       )
@@ -114,7 +115,7 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
               <PrimaryButton
                 danger
                 onClick={() => {
-                  markForDelete({ variables: { id } }).then(() => {
+                  markForDelete(vars).then(() => {
                     toggleDeletionModal()
                     addToast({
                       icon: 'PersonAttention',

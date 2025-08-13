@@ -1,5 +1,4 @@
 import React, { ButtonHTMLAttributes, useState } from 'react'
-import AppHistory from '../app-history'
 import { PrimaryButton } from './button'
 import { useMsal } from '@azure/msal-react'
 import { loginRequest } from '../hooks/ms-auth'
@@ -7,6 +6,7 @@ import { useAuthentication } from '../hooks/use-authentication'
 import { useLoginPageLoginMutation } from '../graphql'
 import { useIsAuthenticated } from '@azure/msal-react'
 import { EventMessage, EventType, PopupEvent } from '@azure/msal-browser'
+import { useNavigate } from 'react-router'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullsize?: boolean
@@ -17,12 +17,13 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const { login } = useAuthentication()
   const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate()
 
   const [popupWindow, setPopupWindow] = useState<Window | null>(null)
 
   const handleLogin = async () => {
     if (isAuthenticated) {
-      AppHistory.getInstance().push('/')
+      navigate('/')
     }
 
     if (popupWindow) {
@@ -44,7 +45,8 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
           .then((response) => {
             const { data } = response
             if (!data?.login) {
-              return AppHistory.getInstance().push('/no-user-found')
+              navigate('/no-user-found')
+              return
             }
             login(data.login)
           })

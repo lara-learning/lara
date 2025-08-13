@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router'
 import styled from 'styled-components'
 
 interface UnstyledLinkProps extends LinkProps {

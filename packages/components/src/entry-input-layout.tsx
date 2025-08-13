@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react'
+import React, { JSX, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 import { Spacings } from './spacing'
