@@ -11,6 +11,15 @@ const getAvatarURL = (emailHash: string, size?: number): string => {
   return size ? `${AVATAR_URL}${emailHash}?s=${size}` : `${AVATAR_URL}${emailHash}`
 }
 
+async function hashEmail(email: string) {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(email.toLowerCase().trim()) // normalize
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+  return hashHex
+}
+
 /**
  * Creates the username from the first and lastname
  * @param user User to generate username
@@ -24,16 +33,17 @@ export const username = (user: Pick<User, 'firstName' | 'lastName'>): string =>
  * @param user User to get avatar from
  * @returns URL of the avatar
  */
-export const avatar = (user: Pick<User, 'email'>): string => {
+export const avatar = async (user: Pick<User, 'email'>): Promise<string> => {
   if (isDebug() || !AVATAR_URL) {
-    return `https://api.dicebear.com/9.x/identicon/svg?seed=${user.email}.`
+    console.log(hashEmail(user.email))
+    return `https://api.dicebear.com/9.x/identicon/svg?seed=${await hashEmail(user.email)}.`
   }
 
   const email =
     OLD_COMPANY_NAME && NEW_COMPANY_NAME
       ? user.email.toLowerCase().replace(OLD_COMPANY_NAME, NEW_COMPANY_NAME)
       : user.email.toLowerCase()
-  const emailHash = crypto.createHash('md5').update(email).digest('hex').toLowerCase()
+  const emailHash = await hashEmail(email)
 
   return getAvatarURL(emailHash, 300)
 }
