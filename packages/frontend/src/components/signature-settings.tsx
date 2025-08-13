@@ -15,8 +15,9 @@ import {
   StyledWebcamLabel,
   StyledWebcamPicture,
   StyledWebcamPictureContainer,
+  Flex,
+  Box,
 } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
 
 import { useSignatureSettingsDataQuery, useSignatureSettingsUpdateSignatureMutation } from '../graphql'
 import { useToastContext } from '../hooks/use-toast-context'

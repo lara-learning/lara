@@ -11,8 +11,9 @@ import {
   StyledNoUserHero,
   StyledNoUserPageContent,
   StyledPreviewImage,
+  Flex,
+  Box,
 } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
 
 import previewImage from '../assets/lara-preview.png'
 import strings from '../locales/localization'

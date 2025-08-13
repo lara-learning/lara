@@ -8,7 +8,9 @@ export interface InputProps {
   block?: boolean
 }
 
-export const Input = styled.input<InputProps>`
+export const Input = styled.input.withConfig({
+  shouldForwardProp: (prop) => !['block', 'error'].includes(prop),
+})<InputProps>`
   width: ${(props) => props.block && '100%'};
   background: ${(props) => props.theme.inputBackground};
   padding: ${Spacings.m};

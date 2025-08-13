@@ -25,7 +25,9 @@ export const StyledName = styled.span`
   margin-left: ${Spacings.m};
 `
 
-export const StyledIndicatorIcon = styled(StyledIcon)<ActivateableProps>`
+export const StyledIndicatorIcon = styled(StyledIcon).withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop),
+})<ActivateableProps>`
   margin-right: ${Spacings.m};
   transform: rotate(${(props) => (props.active ? '180deg' : '0deg')});
   transition: all 0.2s;
@@ -45,7 +47,7 @@ export const StyledWrapper = styled.div`
   }
 `
 
-export const StyledControls = styled.div<ActivateableProps>`
+export const StyledControls = styled.div`
   display: flex;
   align-items: center;
   background-color: ${(props) => props.theme.surface};

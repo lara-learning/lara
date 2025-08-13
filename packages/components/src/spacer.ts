@@ -23,7 +23,9 @@ const findSpacing = (...args: (SpacingKey | undefined)[]) => {
   return Spacings[spacing]
 }
 
-export const Spacer = styled.div<SpacerProps>`
+export const Spacer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['top', 'bottom', 'left', 'right', 'x', 'y', 'xy'].includes(prop),
+})<SpacerProps>`
   padding-top: ${(props) => findSpacing(props.top, props.y, props.xy)};
   padding-bottom: ${(props) => findSpacing(props.bottom, props.y, props.xy)};
   padding-left: ${(props) => findSpacing(props.left, props.x, props.xy)};

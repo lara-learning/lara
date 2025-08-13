@@ -12,7 +12,9 @@ export const StyledSuggestionWrapper = styled.div`
   width: 100%;
 `
 
-export const StyledSuggestionList = styled.div<ActiveProps>`
+export const StyledSuggestionList = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop),
+})<ActiveProps>`
   width: 100%;
   position: absolute;
   z-index: 2;

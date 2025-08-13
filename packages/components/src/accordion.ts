@@ -28,7 +28,9 @@ export const StyledAccordionHeader = styled.div`
   align-items: center;
 `
 
-export const StyledAccordionTitle = styled(Paragraph)<AccordionState>`
+export const StyledAccordionTitle = styled(Paragraph).withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop),
+})<AccordionState>`
   font-size: ${FontSizes.copy};
   transition: font-weight 0.1s;
   user-select: none;
@@ -44,7 +46,9 @@ export const StyledAccordionTitle = styled(Paragraph)<AccordionState>`
     `}
 `
 
-export const StyledAccordionIcon = styled(StyledIcon)<AccordionState>`
+export const StyledAccordionIcon = styled(StyledIcon).withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop),
+})<AccordionState>`
   transform: rotate(${(props) => (props.active ? '180deg' : '0deg')});
   transition: all 0.2s;
 `

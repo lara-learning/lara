@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-
+import React, { useState, useRef, useEffect } from 'react'
 import {
   StyledAvatarMenuItem,
   StyledAvatarText,
@@ -20,104 +19,101 @@ import strings from '../locales/localization'
 import Avatar from './avatar'
 import Dropdown from './dropdown'
 
-const Navigation: React.FunctionComponent = () => {
+const Navigation: React.FC = () => {
   const { data, loading } = useNavigationDataQuery()
-
   const { logout } = useAuthentication()
 
   const [showOverlay, setShowOverlay] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550)
 
-  React.useEffect(() => {
-    const updateDimensions = () => {
-      setIsMobile(window.innerWidth <= 550)
-    }
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Handle resizing
+  useEffect(() => {
+    const updateDimensions = () => setIsMobile(window.innerWidth <= 550)
     window.addEventListener('resize', updateDimensions)
-
     return () => window.removeEventListener('resize', updateDimensions)
-  }, [setIsMobile])
+  }, [])
 
-  const toggleMenu = () => {
-    setShowOverlay(!showOverlay)
-  }
+  // Close dropdown if click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false)
+      }
+    }
 
-  const hideDropdown = React.useCallback(() => {
-    setShowDropdown(!showDropdown)
-    document.removeEventListener('click', hideDropdown)
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [showDropdown])
 
-  React.useEffect(() => {
-    if (showDropdown) {
-      document.addEventListener('click', hideDropdown)
-    }
-  }, [showDropdown, hideDropdown])
+  const toggleMenu = () => setShowOverlay((prev) => !prev)
 
-  const renderTraineeNav = () => {
-    return (
-      <>
-        <StyledNavItem to={'/'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.dashhboard}
-        </StyledNavItem>
-        <StyledNavItem to={'/archive'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.archive}
-        </StyledNavItem>
-        <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.settings}
-        </StyledNavItem>
-      </>
-    )
-  }
+  // Render functions
+  const renderTraineeNav = () => (
+    <>
+      <StyledNavItem to="/" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.dashhboard}
+      </StyledNavItem>
+      <StyledNavItem to="/archive" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.archive}
+      </StyledNavItem>
+      <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.settings}
+      </StyledNavItem>
+    </>
+  )
 
-  const renderTrainerNav = () => {
-    return (
-      <>
-        <StyledNavItem to={'/reports'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.reports}
-        </StyledNavItem>
-        <StyledNavItem to={'/trainees'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.trainees}
-        </StyledNavItem>
-        <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.settings}
-        </StyledNavItem>
-      </>
-    )
-  }
+  const renderTrainerNav = () => (
+    <>
+      <StyledNavItem to="/reports" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.reports}
+      </StyledNavItem>
+      <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.trainees}
+      </StyledNavItem>
+      <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.settings}
+      </StyledNavItem>
+    </>
+  )
 
-  const renderAdminNav = () => {
-    return (
-      <>
-        <StyledNavItem to={'/trainees'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.trainees}
-        </StyledNavItem>
-        <StyledNavItem to={'/trainer'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.trainer}
-        </StyledNavItem>
-        <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.navigation.settings}
-        </StyledNavItem>
-      </>
-    )
-  }
+  const renderAdminNav = () => (
+    <>
+      <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.trainees}
+      </StyledNavItem>
+      <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.trainer}
+      </StyledNavItem>
+      <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.settings}
+      </StyledNavItem>
+    </>
+  )
 
-  const renderGeneralMobileNav = () => {
-    return (
-      <>
-        <StyledNavItem to={'/support'} onClick={toggleMenu} isMobile={isMobile}>
-          {strings.dropdown.help}
-        </StyledNavItem>
-        <StyledLogoutItem onClick={() => logout()}>{strings.dropdown.logout}</StyledLogoutItem>
-      </>
-    )
-  }
+  const renderGeneralMobileNav = () => (
+    <>
+      <StyledNavItem to="/support" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.dropdown.help}
+      </StyledNavItem>
+      <StyledLogoutItem onClick={logout}>{strings.dropdown.logout}</StyledLogoutItem>
+    </>
+  )
 
   return (
     <>
-      <StyledNavWrapper flexWrap={'wrap'} justifyContent={'space-between'}>
-        <StyledLaraLink to={'/'}>
+      <StyledNavWrapper flexWrap="wrap" justifyContent="space-between">
+        <StyledLaraLink to="/">
           <StyledLogo isInNav />
         </StyledLaraLink>
+
         {!loading && data && (
           <>
             {!isMobile && (
@@ -127,19 +123,30 @@ const Navigation: React.FunctionComponent = () => {
                 {data.currentUser?.type === UserTypeEnum.Admin && renderAdminNav()}
               </StyledNavItemsWrapper>
             )}
+
             {isMobile ? (
               <StyledLink onClick={toggleMenu}>
-                <StyledIcon name={showOverlay ? 'X' : 'BurgerMenu'} size={'30px'} />
+                <StyledIcon name={showOverlay ? 'X' : 'BurgerMenu'} size="30px" />
               </StyledLink>
             ) : (
-              <StyledAvatarMenuItem onClick={() => setShowDropdown(true)}>
-                <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
-                <Avatar size={35} image={data.currentUser?.avatar ?? ''} />
-              </StyledAvatarMenuItem>
+              <div ref={dropdownRef}>
+                <StyledAvatarMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setShowDropdown((prev) => !prev)
+                  }}
+                >
+                  <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
+                  <Avatar size={35} image={data.currentUser?.avatar ?? ''} />
+                </StyledAvatarMenuItem>
+
+                <Dropdown active={showDropdown} />
+              </div>
             )}
           </>
         )}
       </StyledNavWrapper>
+
       {!loading && data && showOverlay && isMobile && (
         <StyledMobileNavWrapper>
           {data.currentUser?.type === UserTypeEnum.Trainer && renderTrainerNav()}
@@ -148,8 +155,6 @@ const Navigation: React.FunctionComponent = () => {
           {renderGeneralMobileNav()}
         </StyledMobileNavWrapper>
       )}
-
-      <Dropdown active={showDropdown} />
     </>
   )
 }

@@ -15,7 +15,9 @@ const Bar = styled.div`
   border-radius: ${BorderRadii.xxxs};
 `
 
-export const StyledProgressBarIndicator = styled(Bar)<StyledProgressBarProps>`
+export const StyledProgressBarIndicator = styled(Bar).withConfig({
+  shouldForwardProp: (prop) => !['progress'].includes(prop),
+})<StyledProgressBarProps>`
   width: ${(props) => (props.progress * 100).toString() + '%'};
   transition: width 0.5s;
   height: 100%;

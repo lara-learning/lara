@@ -1,8 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 
-import { H1, H2, Spacer } from '@lara/components'
-import { Flex } from '@rebass/grid'
+import { H1, H2, Spacer, Flex } from '@lara/components'
 
 import { PrimaryButton } from '../components/button'
 import strings from '../locales/localization'

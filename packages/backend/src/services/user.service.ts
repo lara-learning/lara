@@ -26,7 +26,7 @@ export const username = (user: Pick<User, 'firstName' | 'lastName'>): string =>
  */
 export const avatar = (user: Pick<User, 'email'>): string => {
   if (isDebug() || !AVATAR_URL) {
-    return `https://avatars.dicebear.com/v2/human/${user.email}.svg`
+    return `https://api.dicebear.com/9.x/identicon/svg?seed=${user.email}.`
   }
 
   const email =

@@ -6,7 +6,9 @@ import { BorderRadii } from './border-radius'
 import { FontSizes } from './font-size'
 import { Spacings } from './spacing'
 
-const DropdownContainer = styled.div<{ active?: boolean }>`
+const DropdownContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['active'].includes(prop),
+})<{ active?: boolean }>`
   display: ${(props) => (props.active ? 'grid' : 'none')};
   z-index: 6;
   position: fixed;

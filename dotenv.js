@@ -1,5 +1,3 @@
- 
- 
 const dotenv = require('dotenv')
 
 const { ENABLE_FRONTEND_TUNNEL, ENABLE_BACKEND_TUNNEL, STAGE } = process.env

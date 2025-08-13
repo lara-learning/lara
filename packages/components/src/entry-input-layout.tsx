@@ -17,7 +17,9 @@ interface StyledActionInterface {
   noMargin?: boolean
 }
 
-export const StyledAction = styled.button<StyledActionInterface>`
+export const StyledAction = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['noMargin', 'danger'].includes(prop),
+})<StyledActionInterface>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +73,10 @@ interface EntryContainerProps {
   dragFromTopToBottom?: boolean
 }
 
-export const StyledEntryContainer = styled.div<EntryContainerProps>`
+export const StyledEntryContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    !['clickable', 'disabled', 'isDragged', 'isDraggedOver', 'dragFromTopToBottom'].includes(prop),
+})<EntryContainerProps>`
   position: relative;
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;

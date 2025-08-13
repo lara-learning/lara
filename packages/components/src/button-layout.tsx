@@ -174,7 +174,9 @@ const buttonStyle = (props: ButtonLayoutProps) => css`
   ${props.fullsize && 'width: 100%'};
 `
 
-const ButtonWrapper = styled.button<ButtonLayoutProps>`
+const ButtonWrapper = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['styling', 'fullsize'].includes(prop),
+})<ButtonLayoutProps>`
   font-size: ${FontSizes.button};
   border: none;
   letter-spacing: 0.2px;
@@ -223,7 +225,9 @@ const IconWrapper = styled.div`
   justify-content: center;
 `
 
-const TextWrapper = styled.div<{ hasIcon: boolean }>`
+const TextWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['hasIcon'].includes(prop),
+})<{ hasIcon: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;

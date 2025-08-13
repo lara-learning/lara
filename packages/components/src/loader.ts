@@ -11,7 +11,9 @@ export enum LoaderSize {
   Big = '50px',
 }
 
-export const StyledLoaderContainer = styled.div<StyledLoaderProps>`
+export const StyledLoaderContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['padding'].includes(prop),
+})<StyledLoaderProps>`
   display: flex;
   flex: 1;
   justify-content: center;

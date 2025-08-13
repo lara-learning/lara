@@ -1,7 +1,7 @@
 import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
-import { Flex } from '@rebass/grid'
+import { Flex } from './flex'
 
 import { BorderRadii } from './border-radius'
 import { FontSizes } from './font-size'

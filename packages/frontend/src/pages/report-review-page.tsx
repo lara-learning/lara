@@ -11,8 +11,9 @@ import {
   StyledDepartmentHeadline,
   StyledTraineeName,
   StyledTotalContainer,
+  Flex,
+  Box,
 } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import CommentSection from '../components/comment-section'

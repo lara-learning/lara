@@ -2,8 +2,7 @@ import { GraphQLError } from 'graphql'
 import React from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router'
 
-import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
+import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box } from '@lara/components'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import DayInput from '../components/day-input'

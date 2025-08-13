@@ -1,8 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-import { H1, Paragraph, Spacer, DepartmentInput, ErrorText } from '@lara/components'
-import { Flex } from '@rebass/grid'
+import { H1, Paragraph, Spacer, DepartmentInput, ErrorText, Flex } from '@lara/components'
 
 import { Report, ReportStatus, Trainee } from '../graphql'
 import DateHelper from '../helper/date-helper'
