@@ -49,6 +49,14 @@ From the root of the project call:
 5. `yarn start`
 
 `start` starts a dev server which serves the frontend on port `:8080`
+use `yarn compile:watch` during developement to directly hot reload any changes made
+
+### Ports
+
+The frontend runs on `http://localhost:8080/`
+The backend runs on `http://localhost:3000/`
+the local dynamoDB runs on `http://localhost:8001/`
+The locally emulated s3 buckets run on `http://localhost:8181/`
 
 ### Linting
 
