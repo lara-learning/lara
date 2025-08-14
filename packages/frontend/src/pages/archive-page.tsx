@@ -45,25 +45,132 @@ interface SelectedReports {
 interface ArchivePageState extends ArchiveFilter {
   checkedReports: SelectedReports
   export: boolean
+  value: string
 }
 
-const searchFilter =
-  ({ department, year, week, yearEnd, weekEnd }: ArchiveFilter) =>
-  (report?: Pick<Report, 'year' | 'week' | 'department'>): boolean => {
-    if (!report) {
+interface SearchOptions {
+  search: string
+  time?: string
+  timespan?: string
+}
+const keys: (keyof SearchOptions)[] = ['time', 'timespan']
+
+const normalize = (str: string) => {
+  return str.toLowerCase().trim()
+}
+
+const parseTime = (str: string): { year: number; week: number } => {
+  const dateRegexW = /^[0-9]{1,2}$/
+  const dateRegexY = /^[0-9]{4}$/
+  const dateRegexYW = /^[0-9]{4}:[0-9]{1,2}$/
+  const dateRegexWY = /^[0-9]{1,2}:[0-9]{4}$/
+  let year: number | string | undefined
+  let week: number | string | undefined
+
+  if (dateRegexY.test(str)) {
+    year = str
+  } else if (dateRegexW.test(str)) {
+    week = str
+  } else if (dateRegexYW.test(str)) {
+    ;[year, week] = str.split(':')
+  } else if (dateRegexWY.test(str)) {
+    ;[week, year] = str.split(':')
+  } else return { year: -1, week: -1 }
+
+  year = parseInt((year ?? '-1').toString())
+  week = parseInt((week ?? '-1').toString())
+  return { year, week }
+}
+
+const extractOptions = (str: string): SearchOptions => {
+  const options: SearchOptions = { search: str }
+  for (const opt of keys) {
+    const i = options.search.indexOf(opt + ':')
+    if (i == 0 || (i >= 0 && options.search[i - 1] == ' ')) {
+      const startIndex = i + opt.length + 2 + (i == 0 ? -1 : 0)
+      let endIndex = startIndex
+      while (endIndex < options.search.length && options.search[endIndex] !== ' ') endIndex++
+      options[opt] = options.search.slice(startIndex, endIndex)
+      options.search = options.search.slice(0, i) + options.search.slice(endIndex)
+    }
+  }
+  return options
+}
+
+const filterReports = (reports: Report[], search: string): Report[] => {
+  search = normalize(search)
+  const options = extractOptions(search)
+  search = options.search
+  const filterdByOptions = reports.filter((report) => {
+    if (options.time) {
+      const { year, week } = parseTime(options.time)
+      if (year < 0 && week < 0) return false
+      if (year >= 0 && report.year !== year) return false
+      if (week >= 0 && report.week !== week) return false
+      return true
+    }
+    if (options.timespan) {
+      const timespanRegex = /^[0-9:]{1,7}-[0-9:]{1,7}$/
+      let time1: string
+      let time2: string
+
+      if (timespanRegex.test(options.timespan)) {
+        ;[time1, time2] = options.timespan.split('-')
+      } else return false
+
+      let { year: yearFrom, week: weekFrom } = parseTime(time1)
+      let { year: yearTo, week: weekTo } = parseTime(time2)
+
+      console.log(yearFrom + ', ' + weekFrom)
+      console.log(yearTo + ', ' + weekTo)
+
+      // switch order if needed
+      if (yearTo < yearFrom) {
+        const [tempY, tempW] = [yearFrom, weekFrom]
+        yearFrom = yearTo
+        weekFrom = weekTo
+        yearTo = tempY
+        weekTo = tempW
+      } else if (yearFrom < 0 && yearTo < 0 && weekTo < weekFrom) {
+        const tempW = weekFrom
+        weekFrom = weekTo
+        weekTo = tempW
+      }
+
+      if (yearFrom >= 0 && yearTo >= 0) {
+        //both years were entered by user
+        if (report.year > yearFrom && report.year < yearTo) return true //between the years
+        if (report.year < yearFrom || report.year > yearTo) return false //outside the years
+        if (report.year == yearFrom) {
+          return weekFrom < 0 || report.week >= weekFrom //matching lower year, and no week or greater than week
+        }
+        if (report.year == yearTo) {
+          return weekTo < 0 || report.week <= weekTo //matching upper year, and no week or lower than week
+        }
+      }
+      //no years entered
+      if (yearFrom < 0 && yearTo < 0 && weekFrom >= 0 && weekTo >= 0) {
+        return report.week >= weekFrom && report.week <= weekTo
+      }
+      //misformed timespan entered
       return false
     }
+    return true
+  })
 
-    const yearMatch = !year || yearEnd || report.year === year
-    const weekMatch = !week || weekEnd || report.week === week
-    const yearSpanMatch = !yearEnd || (year && report.year >= year && report.year <= yearEnd)
-    const weekSpanMatch = !weekEnd || (week && report.week >= week && report.week <= weekEnd)
+  return filterdByOptions.filter((report) => {
+    const department = report.department ?? ''
+    const entries: string[] = report.days.map((day) => day.entries.map((entry) => normalize(entry.text))).flat()
 
-    const departmentMatch =
-      !department || (report.department && report.department.trim().toLowerCase().match(department))
+    if (department.includes(search)) return true
 
-    return Boolean(yearMatch && weekMatch && departmentMatch && yearSpanMatch && weekSpanMatch)
-  }
+    for (const entry of entries) {
+      if (entry.includes(search)) return true
+    }
+
+    return false
+  })
+}
 
 const ArchivePage: React.FunctionComponent = () => {
   const [fetchPdf, pdfLoading] = useFetchPdf()
@@ -76,6 +183,7 @@ const ArchivePage: React.FunctionComponent = () => {
     department: '',
     checkedReports: {},
     export: false,
+    value: '',
   })
 
   const [allChecked, setAllChecked] = React.useState(false)
@@ -87,7 +195,8 @@ const ArchivePage: React.FunctionComponent = () => {
   const archivedReports = getArchivedReports()
 
   const getFilteredReports = () => {
-    return archivedReports.filter(searchFilter(state))
+    if (state.value === '') return archivedReports as Report[]
+    return filterReports(archivedReports as Report[], state.value)
   }
 
   const getCheckState = (id: string): boolean => {
@@ -149,41 +258,9 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const value = (event.target as HTMLInputElement).value.toLowerCase()
-    const yearMonthRegex = /([0-9]{4}):([0-9]{1,2})/
-    const departmentRegex = /([a-z A-Z]+)/
-    const timespanRegex = /(([0-9]{4}):([0-9]{1,2})) ?- ?(([0-9]{4}):([0-9]{1,2}))/
-    let year: number | undefined = undefined
-    let week: number | undefined = undefined
-    let department: string | undefined = undefined
-    let yearEnd: number | undefined = undefined
-    let weekEnd: number | undefined = undefined
-
-    const yearMatch = yearMonthRegex.exec(value)
-    if (yearMonthRegex.test(value) && yearMatch) {
-      year = parseInt(yearMatch[1], 10)
-      week = parseInt(yearMatch[2], 10)
-    }
-
-    const timeSpanMatch = timespanRegex.exec(value)
-    if (timespanRegex.test(value) && timeSpanMatch) {
-      year = parseInt(timeSpanMatch[2], 10)
-      yearEnd = parseInt(timeSpanMatch[5], 10)
-      week = parseInt(timeSpanMatch[3], 10)
-      weekEnd = parseInt(timeSpanMatch[6], 10)
-    }
-
-    const departmentMatch = departmentRegex.exec(value)
-    if (departmentRegex.test(value) && departmentMatch) {
-      department = departmentMatch[0].replace(/\s/g, '').trim()
-    }
-
     setState({
       ...state,
-      department,
-      year,
-      week,
-      yearEnd,
-      weekEnd,
+      value,
     })
   }
 

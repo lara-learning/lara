@@ -1480,6 +1480,7 @@ export const ArchivePageDataDocument = gql`
       entries {
         id
         time
+        text
       }
     }
     __typename
