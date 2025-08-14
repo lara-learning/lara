@@ -6,8 +6,8 @@ import { launch, Browser, Page } from 'puppeteer-core'
 
 import { EmailPayload, PrintData, PrintPayload } from '@lara/api'
 
-import { createPDF } from './create-pdf'
 import { getExport, saveAttachments } from './s3'
+import { createPDF } from './create-pdf'
 
 const { IS_OFFLINE, EMAIL_FUNCTION, FRONTEND_URL } = process.env
 

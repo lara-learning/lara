@@ -1,8 +1,8 @@
 import { Handler } from 'aws-lambda'
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
+import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2'
 import { mkdirSync, writeFileSync } from 'fs'
 import { compile } from 'handlebars'
-import { createTransport } from 'nodemailer'
+import nodemailer from 'nodemailer'
 import { Attachment } from 'nodemailer/lib/mailer'
 import { MailOptions } from 'nodemailer/lib/ses-transport'
 import { resolve } from 'path'
@@ -24,10 +24,10 @@ if (!SES_REGION) {
   throw new Error("Missing Environment Variable: 'SES_REGION'")
 }
 
-const sesClient = new SESClient({ region: SES_REGION })
+const ses = new SESv2Client({ region: SES_REGION })
 
-const transporter = createTransport({
-  SES: { ses: sesClient, aws: { SendEmailCommand } },
+const transporter = nodemailer.createTransport({
+  SES: { ses, SendEmailCommand },
 })
 
 type Response = 'success' | 'error'
