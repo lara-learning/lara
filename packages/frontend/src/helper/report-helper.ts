@@ -13,7 +13,7 @@ type UseReportHelper = {
 const TraineeReportStatusColors: Record<ReportStatus, keyof DefaultTheme> = {
   archived: 'successGreen',
   reopened: 'errorRed',
-  review: 'mediumFont',
+  review: 'reviewGrey',
   todo: 'iconBlue',
 }
 

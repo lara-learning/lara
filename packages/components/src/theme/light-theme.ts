@@ -9,6 +9,7 @@ export const lightTheme: DefaultTheme = {
   progressBar: '#F5F5F5',
   overlay: '#333333',
   faq: '#AAB8EC',
+  reviewGrey: '#4F4F4F',
 
   //Fonts
   darkFont: '#333333',

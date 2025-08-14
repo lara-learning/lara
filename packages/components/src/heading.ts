@@ -30,6 +30,7 @@ export const H2 = styled.h2.withConfig({
   font-size: ${FontSizes.h2};
   letter-spacing: 0.9px;
   ${(props) => props.noMargin && 'margin: 0;'};
+  color: ${(props) => props.theme.darkFont};
 `
 
 export const Title = styled(BaseHeader).withConfig({
