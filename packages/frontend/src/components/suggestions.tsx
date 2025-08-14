@@ -7,23 +7,32 @@ import { useFocusState } from '../hooks/use-focus-state'
 
 interface SuggestionProps {
   inputRef: React.RefObject<HTMLTextAreaElement | null>
-  submitSuggestion: (text: string) => void
+  submitTextSuggestion: (text: string) => void
+  submitTimeSuggestion: (text: string) => void
 }
 
 // Maximum number suggestions
 const SUGGESTION_COUNT = 5
 
-const Suggestions: React.FC<SuggestionProps> = ({ submitSuggestion, inputRef }) => {
+const Suggestions: React.FC<SuggestionProps> = ({ submitTextSuggestion, submitTimeSuggestion, inputRef }) => {
   const { loading, data } = useSuggestionsDataQuery()
 
   const inputFocused = useFocusState(inputRef)
 
   const [visible, setVisible] = React.useState(true)
   const [waitingForBlur, setWaitingForBlur] = React.useState('')
+  const [waitingForBlurOnTimeSuggestion, setWaitingForBlurOnTimeSuggestion] = React.useState<string>('')
 
   // Ref states so the handleKeyDown handler can use the state
   const [focusIndex, setFocusIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestionsWithTimes, setSuggestionsWithTimes] = useState<
+    Array<{
+      text: string
+      time: string
+    }>
+  >([])
+  const [suggestionTime, setSuggestionTime] = useState<string[]>([])
 
   const handleInput = useCallback(() => {
     if (!inputRef.current) {
@@ -33,11 +42,28 @@ const Suggestions: React.FC<SuggestionProps> = ({ submitSuggestion, inputRef }) 
     // update suggestions on textInput change
     const input = inputRef.current.value.toLowerCase()
 
-    const newSuggestionState =
+    console.log(data?.suggestions, 'suggestions frontend')
+
+    const filteredSuggestions =
       data?.suggestions
-        .filter((suggestion) => input.replace(/\s/g, '') !== '' && suggestion.toLowerCase().indexOf(input) > -1)
+        .filter((suggestion) => input.replace(/\s/g, '') !== '' && suggestion.text.toLowerCase().indexOf(input) > -1)
         .slice(0, SUGGESTION_COUNT) ?? []
 
+    const newSuggestionState = filteredSuggestions.map((s) => s.text)
+    const suggestionTimes = filteredSuggestions.map((s) => s.time)
+
+    console.log(suggestionTimes, 'suggestionTimes')
+    console.log(newSuggestionState, 'suggestionState')
+
+    // Single array containing both text and time
+    const suggestionsWithTimes = filteredSuggestions.map((s) => ({
+      text: s.text,
+      time: s.time,
+    }))
+
+    setSuggestionsWithTimes(suggestionsWithTimes)
+
+    setSuggestionTime(suggestionTimes)
     setSuggestions(newSuggestionState)
 
     // Reduce focusIndex if less suggestions are valid
@@ -118,32 +144,48 @@ const Suggestions: React.FC<SuggestionProps> = ({ submitSuggestion, inputRef }) 
     // This is nessecary so the blur event doesn't interfere
     // with the focus event on the timeInput field
     if (waitingForBlur) {
-      submitSuggestion(waitingForBlur)
+      submitTextSuggestion(waitingForBlur)
       setWaitingForBlur('')
 
       // clear the state
       setFocusIndex(-1)
       setSuggestions([])
     }
-  }, [inputFocused, submitSuggestion, waitingForBlur])
+
+    if (waitingForBlurOnTimeSuggestion) {
+      submitTimeSuggestion(waitingForBlurOnTimeSuggestion)
+      setWaitingForBlurOnTimeSuggestion('')
+
+      // clear the state
+      setFocusIndex(-1)
+      setSuggestionTime([])
+    }
+  }, [inputFocused, submitTextSuggestion, submitTimeSuggestion, waitingForBlur, waitingForBlurOnTimeSuggestion])
 
   return (
     <StyledSuggestionWrapper>
       <StyledSuggestionList active={visible}>
-        {suggestions.map((suggestion, index) => {
+        {suggestionsWithTimes.map((suggestion, index) => {
+          console.log('rendered suggestions')
           if (!inputRef.current) {
             return
           }
 
           const input = inputRef.current.value.toLowerCase()
-          const matchIndex = suggestion.toLowerCase().indexOf(input)
+          const matchIndex = suggestion.text.toLowerCase().indexOf(input)
 
           return (
-            <StyledSuggestionItem key={index} onMouseDown={() => setWaitingForBlur(suggestion)}>
-              {suggestion.substr(0, matchIndex)}
-              <b>{suggestion.substr(matchIndex, input.length)}</b>
-              {suggestion.substr(matchIndex + input.length)}
-            </StyledSuggestionItem>
+            <>
+              <StyledSuggestionItem key={index} onMouseDown={() => setWaitingForBlur(suggestion.text)}>
+                {suggestion.text.substr(0, matchIndex)}
+                <b>{suggestion.text.substr(matchIndex, input.length)}</b>
+
+                {suggestion.text.substr(matchIndex + input.length)}
+              </StyledSuggestionItem>
+              <StyledSuggestionItem onMouseDown={() => setWaitingForBlurOnTimeSuggestion(suggestion.time)}>
+                <p>{suggestionTime}</p>
+              </StyledSuggestionItem>
+            </>
           )
         })}
       </StyledSuggestionList>

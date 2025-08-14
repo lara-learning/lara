@@ -22,6 +22,7 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
   const { validateTime } = useValidationHelper()
 
   const [timeInputValue, setTimeInputValue] = useState(entry ? TimeConversion.minutesToString(entry.time) : '')
+  console.log(timeInputValue, 'timeInputValue')
 
   const timeInput = React.useRef<HTMLInputElement>(null)
   const textInput = React.useRef<HTMLTextAreaElement>(null)
@@ -116,13 +117,23 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
     }
   }, [autoFocus])
 
-  const acceptSuggestion = (inputText: string) => {
+  const acceptTextSuggestion = (inputText: string) => {
     if (!timeInput.current || !textInput.current) {
       return
     }
 
     textInput.current.value = inputText
     timeInput.current.focus()
+    resizeInput()
+  }
+
+  const acceptTimeSuggestion = (inputTime: string) => {
+    if (!timeInput.current || !textInput.current) {
+      return
+    }
+
+    timeInput.current.value = inputTime
+    textInput.current.focus()
     resizeInput()
   }
 
@@ -149,8 +160,11 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
 
     if (regEx.test(event.target.value)) {
       setTimeInputValue(event.target.value)
+
+      console.log(timeInputValue, 'after passing regex')
     }
   }
+  //let timeSuggestionTest: React.RefObject<HTMLInputElement | null> = 8
 
   return (
     <>
@@ -178,7 +192,11 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
           />
         </StyledTextTimeInputWrapper>
       </StyledEntryContainer>
-      <Suggestions submitSuggestion={acceptSuggestion} inputRef={textInput} />
+      <Suggestions
+        submitTextSuggestion={acceptTextSuggestion}
+        submitTimeSuggestion={acceptTimeSuggestion}
+        inputRef={textInput}
+      />
     </>
   )
 }

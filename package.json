@@ -28,7 +28,7 @@
     "sls": "sls offline start",
     "sort-package-jsons": "sort-package-json package.json packages/*/package.json",
     "sort-package-jsons:verify": "yarn sort-package-jsons && git diff --exit-code package.json packages/*/package.json",
-    "start": "concurrently -kn sls,frontend,admin -c blue,red,green yarn:sls yarn:lerna:start yarn:ddb:admin",
+    "start": "concurrently -n sls,frontend,admin -c blue,red,green yarn:sls yarn:lerna:start yarn:ddb:admin",
     "test": "lerna run --parallel test --stream",
     "verify": "yarn generate:verify && yarn format:verify && yarn lint:verify && yarn sort-package-jsons:verify"
   },
