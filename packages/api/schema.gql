@@ -232,6 +232,11 @@ type LaraConfig {
   finishedWeekDayCount: Int!
 }
 
+type Suggestion {
+  text: String!
+  time: String!
+}
+
 type Query {
   config: LaraConfig!
 
@@ -260,7 +265,7 @@ type Query {
   """
   Get all Suggestions
   """
-  suggestions: [String!]!
+  suggestions: [Suggestion!]!
 
   """
   Get all Trainees

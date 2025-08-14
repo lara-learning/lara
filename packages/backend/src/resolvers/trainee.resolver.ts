@@ -15,7 +15,6 @@ import { reportById } from '../repositories/report.repo'
 import { saveUser, userById } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { company } from '../services/company.service'
-import { entries } from '../services/entry.service'
 import { createPrintReportData, createPrintUserData, invokePrintLambda, savePrintData } from '../services/print.service'
 import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
@@ -57,17 +56,52 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
   },
   Query: {
     suggestions: async (_parent, _args, { currentUser }) => {
-      const tmp: Record<string, number> = {}
+      const textCountsWithTime = {} as Record<string, { count: number; duration: number; text: string }>
+
+      function convertToHours(minutes: number) {
+        const hours = Math.floor(minutes / 60)
+        return hours
+      }
 
       const reports = await reportsWithinApprenticeship(currentUser)
-      const traineeEntries = entries(reports)
 
-      traineeEntries.forEach(({ text }) => {
-        tmp[text] = tmp[text] ? tmp[text] + 1 : 1
+      reports.forEach((report) => {
+        report.days.forEach((day) => {
+          day.entries.forEach((entry) => {
+            const { text, time } = entry
+
+            if (!textCountsWithTime[text]) {
+              textCountsWithTime[text] = { count: 0, duration: time, text: text }
+            }
+            textCountsWithTime[text].count += 1
+            textCountsWithTime[text].duration = time
+          })
+        })
       })
 
-      const sortedEntries = Object.entries(tmp).sort((a, b) => a[1] - b[1])
-      return sortedEntries.filter((entry) => entry[1] >= 5).map(([text]) => text)
+      const getFrequentTexts = () => {
+        return Object.entries(textCountsWithTime)
+          .filter(([_, data]) => data.count > 5)
+          .reduce(
+            (accumulator, [text, data]) => {
+              accumulator[text] = data
+              return accumulator
+            },
+            {} as Record<string, { count: number; duration: number; text: string }>
+          )
+      }
+
+      const frequentTexts = getFrequentTexts()
+
+      const sugg = Object.entries(frequentTexts).map(([text, data]) => {
+        const duration = convertToHours(data.duration)
+        return {
+          text,
+          time: duration.toString(),
+        }
+      })
+
+      return sugg
     },
     print: async (_parent, { ids }, { currentUser }) => {
       const reports = await Promise.all(ids.map(reportById))

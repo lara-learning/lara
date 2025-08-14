@@ -116,7 +116,7 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
     }
   }, [autoFocus])
 
-  const acceptSuggestion = (inputText: string) => {
+  const acceptTextSuggestion = (inputText: string) => {
     if (!timeInput.current || !textInput.current) {
       return
     }
@@ -124,6 +124,16 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
     textInput.current.value = inputText
     timeInput.current.focus()
     resizeInput()
+  }
+
+  const acceptTimeSuggestion = (inputTime: string) => {
+    if (!timeInput.current || !textInput.current) {
+      return
+    }
+
+    timeInput.current.value = inputTime
+    setTimeInputValue(timeInput.current.value)
+    textInput.current.focus()
   }
 
   const resizeInput = () => {
@@ -178,7 +188,11 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
           />
         </StyledTextTimeInputWrapper>
       </StyledEntryContainer>
-      <Suggestions submitSuggestion={acceptSuggestion} inputRef={textInput} />
+      <Suggestions
+        submitTextSuggestion={acceptTextSuggestion}
+        submitTimeSuggestion={acceptTimeSuggestion}
+        inputRef={textInput}
+      />
     </>
   )
 }
