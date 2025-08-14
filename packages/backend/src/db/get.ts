@@ -1,4 +1,4 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { GetCommand, GetCommandInput } from '@aws-sdk/lib-dynamodb'
 
 import { dbClient } from './ddb'
 
@@ -9,12 +9,18 @@ import { dbClient } from './ddb'
  * @param key Identifier of the DDB item
  * @returns Item from DB
  */
-export const getItem = async <T>(tablename: string, key: DocumentClient.Key): Promise<T | undefined> => {
-  const res = await dbClient().get({ TableName: tablename, Key: key }).promise()
-
-  if (res.$response.error || !res.Item) {
+export const getItem = async <T>(tablename: string, key: GetCommandInput['Key']): Promise<T | undefined> => {
+  const client = dbClient()
+  try {
+    const res = await client.send(
+      new GetCommand({
+        TableName: tablename,
+        Key: key,
+      })
+    )
+    return res.Item as T | undefined
+  } catch (err) {
+    console.error('Error fetching item from DDB:', err)
     return undefined
   }
-
-  return res.Item as T
 }

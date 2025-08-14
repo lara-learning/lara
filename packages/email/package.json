@@ -10,8 +10,9 @@
     "debug": "node lib/mock.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.864.0",
+    "@aws-sdk/client-sesv2": "3.864.0",
     "@lara/api": "^1.0.0",
-    "aws-sdk": "^2.938.0",
     "handlebars": "^4.7.7",
     "mjml": "^4.11.0",
     "nodemailer": "^7.0.5"

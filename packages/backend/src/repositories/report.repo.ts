@@ -1,5 +1,5 @@
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
-
+import { WriteRequest } from '@aws-sdk/client-dynamodb'
+import { marshall } from '@aws-sdk/util-dynamodb'
 import { Report } from '@lara/api'
 
 import {
@@ -23,11 +23,11 @@ export const saveReport = (report: Report): Promise<Report> => {
 }
 
 export const deleteReports = async (reports: Report[]): Promise<boolean> => {
-  const deleteRequests: DocumentClient.WriteRequests = reports.map((report) => ({
+  const deleteRequests: WriteRequest[] = reports.map((report) => ({
     DeleteRequest: {
-      Key: {
+      Key: marshall({
         id: report.id,
-      },
+      }),
     },
   }))
 

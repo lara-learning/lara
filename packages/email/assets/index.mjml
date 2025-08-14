@@ -13,12 +13,25 @@
         font-weight="600"
         inner-padding="12px 32px"
         line-height="1"
+        color="#FFFFFF"
       />
       <mj-class name="infoText" color="#707070" align="center" />
-      <mj-class name="paddingText" />
+      <mj-class name="paddingText" color="#000000" />
     </mj-attributes>
 
-    <mj-style> .box-shadow a { box-shadow: rgb(0 0 0 / 20%) 0px 4px 9px; } </mj-style>
+    <mj-style>
+      :root,
+      body,
+      table,
+      td,
+      p,
+      span {
+        color: #000000 !important;
+      }
+      .box-shadow a {
+        box-shadow: rgb(0 0 0 / 20%) 0px 4px 9px;
+      }
+    </mj-style>
   </mj-head>
   <mj-body>
     <mj-section background-size="600px 846px" background-repeat="no-repeat" background-url="{{ DEFAULTBACKGROUND }}">

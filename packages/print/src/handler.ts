@@ -1,4 +1,4 @@
-import { Lambda } from 'aws-sdk'
+import { Lambda } from '@aws-sdk/client-lambda'
 import AdmZip from 'adm-zip'
 import { Handler } from 'aws-lambda'
 import chromium from '@sparticuz/chromium'
@@ -6,8 +6,8 @@ import { launch, Browser, Page } from 'puppeteer-core'
 
 import { EmailPayload, PrintData, PrintPayload } from '@lara/api'
 
-import { createPDF } from './create-pdf'
 import { getExport, saveAttachments } from './s3'
+import { createPDF } from './create-pdf'
 
 const { IS_OFFLINE, EMAIL_FUNCTION, FRONTEND_URL } = process.env
 
@@ -95,29 +95,25 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
       translations: emailTranslations,
     }
 
-    await lambda
-      .invoke({
-        FunctionName: EMAIL_FUNCTION,
-        InvocationType: 'RequestResponse',
-        Payload: JSON.stringify(emailPayload),
-      })
-      .promise()
+    await lambda.invoke({
+      FunctionName: EMAIL_FUNCTION,
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify(emailPayload),
+    })
 
     return 'success'
   } catch (e) {
     console.error('Error while rendering PDF: ', e)
 
-    await lambda
-      .invoke({
-        FunctionName: EMAIL_FUNCTION,
-        InvocationType: 'RequestResponse',
-        Payload: JSON.stringify({
-          emailType: 'error',
-          userData,
-          translations: emailTranslations,
-        }),
-      })
-      .promise()
+    await lambda.invoke({
+      FunctionName: EMAIL_FUNCTION,
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify({
+        emailType: 'error',
+        userData,
+        translations: emailTranslations,
+      }),
+    })
 
     return 'error'
   } finally {
