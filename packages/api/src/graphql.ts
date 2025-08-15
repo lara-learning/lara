@@ -1,6 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, Mentor, UserInterface } from './models';
-import { Paper } from './paper';
+import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, Mentor, UserInterface, Paper } from './models';
 import { Context } from './context';
 export type Maybe<T> = T | undefined;
 export type InputMaybe<T> = T | undefined;
