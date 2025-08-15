@@ -23,4 +23,4 @@ generates:
         Trainee: ./models#Trainee
         Mentor: ./models#Mentor
         UserInterface: ./models#UserInterface
-        Paper: ./paper#Paper
+        Paper: ./models#Paper
