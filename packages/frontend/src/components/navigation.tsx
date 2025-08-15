@@ -64,6 +64,9 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/archive" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.archive}
       </StyledNavItem>
+      <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.paper}
+      </StyledNavItem>
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -81,11 +84,27 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainees}
       </StyledNavItem>
+      <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.paper}
+      </StyledNavItem>
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
     </>
   )
+
+  const renderMentorNav = () => {
+    return (
+      <>
+        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+        <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.settings}
+        </StyledNavItem>
+      </>
+    )
+  }
 
   const renderAdminNav = () => (
     <>
@@ -94,6 +113,9 @@ const Navigation: React.FC = () => {
       </StyledNavItem>
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
+      </StyledNavItem>
+      <StyledNavItem to={'/mentor'} onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.mentor}
       </StyledNavItem>
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
@@ -154,6 +176,7 @@ const Navigation: React.FC = () => {
         <StyledMobileNavWrapper>
           {data.currentUser?.type === UserTypeEnum.Trainer && renderTrainerNav()}
           {data.currentUser?.type === UserTypeEnum.Trainee && renderTraineeNav()}
+          {data.currentUser?.type === UserTypeEnum.Mentor && renderMentorNav()}
           {data.currentUser?.type === UserTypeEnum.Admin && renderAdminNav()}
           {renderGeneralMobileNav()}
         </StyledMobileNavWrapper>

@@ -4,13 +4,16 @@ import {
   GqlCommentableInterface,
   GqlDay,
   GqlEntry,
+  GqlMentor,
+  GqlPaper,
+  GqlPaperFormData,
   GqlReport,
   GqlTrainee,
   GqlTrainer,
   GqlUserInterface,
 } from './graphql'
 
-export type User = Trainee | Trainer | Admin
+export type User = Trainee | Trainer | Mentor | Admin
 
 /**
  * This values, that are omited from the gql types,
@@ -33,12 +36,14 @@ export type UserInterface = Omit<GqlUserInterface, ResolvedUserFields> & {
 }
 
 export type Trainee = UserInterface &
-  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount'> & {
+  Omit<GqlTrainee, ResolvedUserFields | 'trainer' | 'company' | 'reports' | 'openReportsCount' | 'papers'> & {
     trainerId?: string
     companyId?: string
   }
 
 export type Trainer = UserInterface & Omit<GqlTrainer, ResolvedUserFields | 'trainees'>
+
+export type Mentor = UserInterface & Omit<GqlMentor, ResolvedUserFields>
 
 export type Admin = UserInterface & Omit<GqlAdmin, ResolvedUserFields>
 
@@ -63,4 +68,16 @@ export type Report = Omit<GqlReport, 'days' | 'comments' | 'nextReportLink' | 'p
   days: Day[]
   comments: Comment[]
   traineeId: string
+}
+
+export type Paper = Omit<GqlPaper, 'briefing'> & {
+  briefing: GqlPaperFormData[]
+}
+
+export type PaperFormData = Omit<GqlPaperFormData, 'answer' | 'question' | 'questionId' | 'hint' | 'id'> & {
+  answer?: string
+  hint?: string
+  id: string
+  question: string
+  questionId: string
 }

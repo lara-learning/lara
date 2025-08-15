@@ -1,0 +1,22 @@
+mutation createPaper($input: PaperInput!) {
+  createPaper(input: $input) {
+    id
+    traineeId
+    trainerId
+    client
+    mentorId
+    periodStart
+    periodEnd
+    schoolPeriodStart
+    schoolPeriodEnd
+    subject
+    status
+    briefing {
+      id
+      questionId
+      question
+      answer
+      hint
+    }
+  }
+}
