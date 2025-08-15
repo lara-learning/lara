@@ -3,6 +3,7 @@ import 'styled-components'
 declare module 'styled-components' {
   export interface DefaultTheme {
     // Basics
+    mode: string
     header: string
     surface: string
     background: string
