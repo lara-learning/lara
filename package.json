@@ -64,7 +64,7 @@
     "husky": "9.1.7",
     "lerna": "^7.4.2",
     "prettier": "^3.6.2",
-    "serverless": "^3.40.0",
+    "serverless": "^4.18.0",
     "serverless-dynamodb": "^0.2.47",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-jetpack": "^0.11.2",
