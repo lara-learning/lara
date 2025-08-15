@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { H2, PaperLayout, Paragraph, Spacer } from '@lara/components'
+import { H2, PaperLayout, Paragraph } from '@lara/components'
 
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
@@ -126,12 +126,15 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
             </PaperAccordion>
           ))}
         </div>
-        <Flex flexDirection={'row'} justifyContent={'space-between'}>
-          <Spacer left="xxxl">
+        <Flex flexDirection={'row'} justifyContent={'center'}>
+          <Box mx={'2'} width={1 / 2}>
+            <SecondaryButton onClick={() => navigate('/paper')}>{strings.cancel}</SecondaryButton>
+          </Box>
+          <Box mx={'2'} width={1 / 2}>
             <PrimaryButton type="submit" onClick={toggleHandoverModal}>
               {strings.continue}
             </PrimaryButton>
-          </Spacer>
+          </Box>
         </Flex>
         <Modal show={showHandoverModal} customClose handleClose={toggleHandoverModal}>
           <Flex flexDirection={'row'} alignItems={'center'}>
