@@ -17,9 +17,10 @@ import { useToastContext } from '../hooks/use-toast-context'
 import Loader from '../components/loader'
 import { CreateBriefingFormData, PaperCreateForm } from '../components/paper-create-form'
 import NavigationButtonLink from '../components/navigation-button-link'
-import { RouteComponentProps } from 'react-router'
+import { useNavigate } from 'react-router'
 
-export const PaperCreateBriefingPage: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
+export const PaperCreateBriefingPage: React.FunctionComponent = () => {
+  const navigate = useNavigate()
   const { loading } = useAdminMentorPageQuery()
   const [createMentorMutation] = useCreateMentorMutation()
   const [createPaperMutation] = useCreatePaperMutation()
@@ -67,7 +68,7 @@ export const PaperCreateBriefingPage: React.FunctionComponent<RouteComponentProp
       },
     }).then((response) => {
       const paperId = response?.data?.createPaper.id
-      history.push('/paper/briefing/' + paperId)
+      navigate('/paper/briefing/' + paperId)
     })
   }
 

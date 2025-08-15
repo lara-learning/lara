@@ -2,8 +2,7 @@ import React from 'react'
 
 import { PaperFormData } from '../graphql'
 import PaperCommentBubble from './paper-comment-bubble'
-import { StyledAction, StyledIcon } from '@lara/components'
-import { Flex } from '@rebass/grid'
+import { StyledAction, StyledIcon, Flex } from '@lara/components'
 
 interface TextBoxProps {
   paperInput: PaperFormData

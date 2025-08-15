@@ -542,11 +542,10 @@ type Trainer implements UserInterface {
   language: String
   lastName: String!
   notification: Boolean
+  papers: [Paper]
   signature: String
   theme: String
   trainees: [Trainee!]!
-  type: UserTypeEnum!
-  papers: [Paper]
   type: UserTypeEnum!
   username: String!
   email: String!
