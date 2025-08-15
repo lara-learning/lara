@@ -171,9 +171,9 @@ export type Mentor = UserInterface & {
 };
 
 export type MentorInput = {
-  email?: InputMaybe<Scalars['String']["input"]>;
-  name?: InputMaybe<Scalars['String']["input"]>;
-  signature?: InputMaybe<Scalars['String']["input"]>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutateEntryPayload = {
@@ -791,6 +791,7 @@ export type CreateEntryMutationVariables = Exact<{
   input: EntryInput;
 }>;
 
+
 export type CreateEntryMutation = { __typename?: 'Mutation', createEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string }> }> } } };
 
 export type CreateMentorMutationVariables = Exact<{
@@ -1055,7 +1056,7 @@ export type UserPageQueryVariables = Exact<{
 }>;
 
 
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, avatar: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, avatar: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, avatar: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type MentorsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1862,8 +1863,8 @@ export function useAdminMentorPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AdminMentorPageQuery, AdminMentorPageQueryVariables>(AdminMentorPageDocument, options);
         }
-export function useAdminMentorPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AdminMentorPageQuery, AdminMentorPageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useAdminMentorPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminMentorPageQuery, AdminMentorPageQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AdminMentorPageQuery, AdminMentorPageQueryVariables>(AdminMentorPageDocument, options);
         }
 export type AdminMentorPageQueryHookResult = ReturnType<typeof useAdminMentorPageQuery>;
@@ -2237,11 +2238,6 @@ export const UserPageDocument = gql`
         avatar
       }
     }
-    ... on Mentor {
-      deleteAt
-      startDate
-      endDate
-    }
   }
   companies {
     id
@@ -2284,8 +2280,8 @@ export function useMentorsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MentorsPageQuery, MentorsPageQueryVariables>(MentorsPageDocument, options);
         }
-export function useMentorsPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MentorsPageQuery, MentorsPageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useMentorsPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<MentorsPageQuery, MentorsPageQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<MentorsPageQuery, MentorsPageQueryVariables>(MentorsPageDocument, options);
         }
 export type MentorsPageQueryHookResult = ReturnType<typeof useMentorsPageQuery>;
@@ -2329,8 +2325,8 @@ export function useMentorPaperPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MentorPaperPageDataQuery, MentorPaperPageDataQueryVariables>(MentorPaperPageDataDocument, options);
         }
-export function useMentorPaperPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MentorPaperPageDataQuery, MentorPaperPageDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useMentorPaperPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<MentorPaperPageDataQuery, MentorPaperPageDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<MentorPaperPageDataQuery, MentorPaperPageDataQueryVariables>(MentorPaperPageDataDocument, options);
         }
 export type MentorPaperPageDataQueryHookResult = ReturnType<typeof useMentorPaperPageDataQuery>;
@@ -2415,7 +2411,7 @@ export const PrintPaperDataDocument = gql`
   }
 }
     `;
-export function usePrintPaperDataQuery(baseOptions: Apollo.QueryHookOptions<PrintPaperDataQuery, PrintPaperDataQueryVariables>) {
+export function usePrintPaperDataQuery(baseOptions: Apollo.QueryHookOptions<PrintPaperDataQuery, PrintPaperDataQueryVariables> & ({ variables: PrintPaperDataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<PrintPaperDataQuery, PrintPaperDataQueryVariables>(PrintPaperDataDocument, options);
       }
@@ -2423,8 +2419,8 @@ export function usePrintPaperDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PrintPaperDataQuery, PrintPaperDataQueryVariables>(PrintPaperDataDocument, options);
         }
-export function usePrintPaperDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PrintPaperDataQuery, PrintPaperDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function usePrintPaperDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PrintPaperDataQuery, PrintPaperDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<PrintPaperDataQuery, PrintPaperDataQueryVariables>(PrintPaperDataDocument, options);
         }
 export type PrintPaperDataQueryHookResult = ReturnType<typeof usePrintPaperDataQuery>;
@@ -2769,8 +2765,8 @@ export function useTraineePaperDataLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TraineePaperDataQuery, TraineePaperDataQueryVariables>(TraineePaperDataDocument, options);
         }
-export function useTraineePaperDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TraineePaperDataQuery, TraineePaperDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useTraineePaperDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineePaperDataQuery, TraineePaperDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TraineePaperDataQuery, TraineePaperDataQueryVariables>(TraineePaperDataDocument, options);
         }
 export type TraineePaperDataQueryHookResult = ReturnType<typeof useTraineePaperDataQuery>;
@@ -2858,8 +2854,8 @@ export function useTrainerPaperPageDataLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>(TrainerPaperPageDataDocument, options);
         }
-export function useTrainerPaperPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useTrainerPaperPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TrainerPaperPageDataQuery, TrainerPaperPageDataQueryVariables>(TrainerPaperPageDataDocument, options);
         }
 export type TrainerPaperPageDataQueryHookResult = ReturnType<typeof useTrainerPaperPageDataQuery>;

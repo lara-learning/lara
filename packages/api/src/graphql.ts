@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, Mentor, UserInterface, Paper } from './models';
+import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, Mentor, UserInterface } from './models';
+import { Paper } from './paper';
 import { Context } from './context';
 export type Maybe<T> = T | undefined;
 export type InputMaybe<T> = T | undefined;
@@ -172,9 +173,9 @@ export type GqlMentor = GqlUserInterface & {
 };
 
 export type GqlMentorInput = {
-  email?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  signature?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlMutateEntryPayload = {
@@ -403,7 +404,7 @@ export type GqlMutationUpdateEntryOrderArgs = {
 
 
 export type GqlMutationUpdateMentorArgs = {
-  id: Scalars['ID']["input"];
+  id: Scalars['ID']['input'];
   input: GqlUpdateMentorInput;
 };
 
@@ -437,31 +438,38 @@ export type GqlMutationUpdateTrainerArgs = {
   input: GqlUpdateTrainerInput;
 };
 
+export type GqlOAuthPayload = {
+  __typename?: 'OAuthPayload';
+  accessToken: Scalars['String']['output'];
+  expiresIn: Scalars['Int']['output'];
+  refreshToken?: Maybe<Scalars['String']['output']>;
+};
+
 export type GqlPaper = {
   __typename?: 'Paper';
-  archivedAt?: Maybe<Scalars['String']["output"]>;
+  archivedAt?: Maybe<Scalars['String']['output']>;
   briefing: Array<GqlPaperFormData>;
-  client: Scalars['String']["output"];
-  conclusion?: Maybe<Scalars['String']["output"]>;
-  createdAt?: Maybe<Scalars['String']["output"]>;
-  id: Scalars['ID']["output"];
-  mentorId: Scalars['ID']["output"];
-  periodEnd?: Maybe<Scalars['String']["output"]>;
-  periodStart?: Maybe<Scalars['String']["output"]>;
-  schoolPeriodEnd?: Maybe<Scalars['String']["output"]>;
-  schoolPeriodStart?: Maybe<Scalars['String']["output"]>;
+  client: Scalars['String']['output'];
+  conclusion?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  mentorId: Scalars['ID']['output'];
+  periodEnd?: Maybe<Scalars['String']['output']>;
+  periodStart?: Maybe<Scalars['String']['output']>;
+  schoolPeriodEnd?: Maybe<Scalars['String']['output']>;
+  schoolPeriodStart?: Maybe<Scalars['String']['output']>;
   status: GqlPaperStatus;
-  subject: Scalars['String']["output"];
-  traineeId: Scalars['ID']["output"];
-  trainerId: Scalars['ID']["output"];
+  subject: Scalars['String']['output'];
+  traineeId: Scalars['ID']['output'];
+  trainerId: Scalars['ID']['output'];
 };
 
 export type GqlPaperEntryInput = {
-  answer?: InputMaybe<Scalars['String']["input"]>;
-  hint?: InputMaybe<Scalars['String']["input"]>;
-  id: Scalars['ID']["input"];
-  question: Scalars['String']["input"];
-  questionId: Scalars['ID']["input"];
+  answer?: InputMaybe<Scalars['String']['input']>;
+  hint?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  question: Scalars['String']['input'];
+  questionId: Scalars['ID']['input'];
 };
 
 export type GqlPaperFormData = {
@@ -475,16 +483,16 @@ export type GqlPaperFormData = {
 
 export type GqlPaperInput = {
   briefing: Array<GqlPaperEntryInput>;
-  client: Scalars['String']["input"];
-  mentorId: Scalars['ID']["input"];
-  periodEnd?: InputMaybe<Scalars['String']["input"]>;
-  periodStart?: InputMaybe<Scalars['String']["input"]>;
-  schoolPeriodEnd?: InputMaybe<Scalars['String']["input"]>;
-  schoolPeriodStart?: InputMaybe<Scalars['String']["input"]>;
+  client: Scalars['String']['input'];
+  mentorId: Scalars['ID']['input'];
+  periodEnd?: InputMaybe<Scalars['String']['input']>;
+  periodStart?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodEnd?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodStart?: InputMaybe<Scalars['String']['input']>;
   status: GqlPaperStatus;
-  subject: Scalars['String']["input"];
-  traineeId: Scalars['ID']["input"];
-  trainerId: Scalars['ID']["input"];
+  subject: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
+  trainerId: Scalars['ID']['input'];
 };
 
 export type GqlPaperStatus =
@@ -507,13 +515,6 @@ export type GqlPaperUpdateInput = {
   subject: Scalars['String']['input'];
   traineeId: Scalars['ID']['input'];
   trainerId: Scalars['ID']['input'];
-};
-
-export type GqlOAuthPayload = {
-  __typename?: 'OAuthPayload';
-  accessToken: Scalars['String']['output'];
-  expiresIn: Scalars['Int']['output'];
-  refreshToken?: Maybe<Scalars['String']['output']>;
 };
 
 export type GqlPrintPayload = {
@@ -674,16 +675,16 @@ export type GqlTrainerTraineePayload = {
   trainer: GqlTrainer;
 };
 
+export type GqlUpdateCurrentTraineeInput = {
+  course?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GqlUpdateMentorInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   endDate?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   startDate?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type GqlUpdateCurrentTraineeInput = {
-  course?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUpdateReportPayload = {
@@ -734,10 +735,10 @@ export type GqlUserInterface = {
 export type GqlUserTypeEnum =
   /** User is an Admin */
   | 'Admin'
-  /** User is a Trainee */
-  | 'Trainee'
   /** User is a Mentor */
   | 'Mentor'
+  /** User is a Trainee */
+  | 'Trainee'
   /** User is a Trainer */
   | 'Trainer';
 
