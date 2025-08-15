@@ -6,16 +6,14 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import PaperAccordion from '../components/paper-accordion'
 import { PrimaryButton, SecondaryButton } from '../components/button'
-import { RouteComponentProps, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { PaperFormData, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
 import Modal from '../components/modal'
-import { Box, Flex } from '@rebass/grid'
+import { Box, Flex } from '@lara/components'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import { useFetchPaperPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
-interface PaperBriefingParams {
-  paperId: string
-}
+
 type Question = { question: string; hint: string }
 
 const briefingQuestions = (): Question[] => {
@@ -34,8 +32,9 @@ const briefingQuestions = (): Question[] => {
   ]
 }
 
-export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<PaperBriefingParams>> = ({ history }) => {
-  const { paperId } = useParams<PaperBriefingParams>()
+export const PaperBriefingPage: React.FunctionComponent = () => {
+  const navigate = useNavigate()
+  const { paperId } = useParams()
   const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
   const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
   const [fetchPdf, loading] = useFetchPaperPdf()
@@ -69,7 +68,7 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
         input: {
           briefing: paperBriefing,
           client: paper?.client ?? '',
-          id: paperId,
+          id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
           periodEnd: paper?.periodEnd,
           periodStart: paper?.periodStart,
@@ -171,7 +170,7 @@ export const PaperBriefingPage: React.FunctionComponent<RouteComponentProps<Pape
                     icon={loading ? 'Loader' : 'Blank'}
                     fullsize
                     disabled={loading}
-                    onClick={() => history.push('/paper')}
+                    onClick={() => navigate('/paper')}
                   >
                     {strings.paper.modal.backToPaperButton}
                   </PrimaryButton>
