@@ -23,7 +23,7 @@
     "cors": "^2.8.5",
     "date-fns": "4.1.0",
     "date-fns-tz": "3.2.0",
-    "date-holidays": "3.25.0",
+    "date-holidays": "3.25.1",
     "express": "^5.1.0",
     "graphql": "^16.11.0",
     "graphql-middleware": "^6.1.35",
