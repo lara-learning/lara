@@ -21,6 +21,7 @@ import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
 import { avatar, username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
+import { papersByTrainee } from '../repositories/paper.repo'
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
   Trainee: {
@@ -34,6 +35,9 @@ export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
     username,
     openReportsCount: async (model) => {
       return reportsWithinApprenticeship(model, ['reopened', 'todo']).then((reports) => reports.length)
+    },
+    papers: async (model) => {
+      return papersByTrainee(model.id)
     },
   },
 }
@@ -77,14 +81,14 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
         throw new GraphQLError(t('errors.missingReport', currentUser.language))
       }
 
-      const reportsData = filteredReports.map((report) => createPrintReportData(report, currentUser))
+      const data = filteredReports.map((report) => createPrintReportData(report, currentUser))
 
       const userData = await createPrintUserData(currentUser)
       const printTranslations = t<PrintTranslations>('print', currentUser.language)
       const emailTranslations = t<EmailTranslations>('email', currentUser.language)
 
       const hash = await savePrintData({
-        reportsData,
+        data,
         userData,
         printTranslations,
         emailTranslations,

@@ -18,6 +18,7 @@ const englishTranslation: Translation = {
   done: 'done',
   markDelete: 'mark for deletion',
   unmarkDelete: 'remove deletion mark',
+  deleteAt: 'delete at',
   deactivate: 'deactivate',
   traineeShipYear: 'Year of Traineeship',
   claimed: 'Claimed',
@@ -38,6 +39,102 @@ const englishTranslation: Translation = {
     declinedReportMessage: 'You got back your report about {0}{1}. Changes are requested.',
     reportToArciveAddedSuccessTitle: 'New report in your archive',
     reportToArciveAddedSuccess: 'Your report about {0}{1} was approved by {name} and is now stored in your archive.',
+  },
+  paper: {
+    empty: {
+      headline: 'Briefing/Kick-Off Meeting',
+      description:
+        "Your apprentice is coming to a new station, and it iss time for the kick-off meeting? Here you can fill out and prepare the briefing for the station. This way, you can set a framework for the scope and topics of your apprentice's training station.",
+      createBriefing: 'Create briefing',
+    },
+    createBriefing: {
+      title: 'Briefing',
+      firstnameMentor: "Mentor's First Name",
+      lastnameMentor: "Mentor's Last Name",
+      emailMentor: "Mentor's Email",
+      trainee: 'Trainee',
+      department: 'Department',
+      customer: 'Customer',
+      projectPeriod: 'Station Period',
+      schoolPeriod: 'School Period',
+    },
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: 'Object of the Work',
+        hint: 'Please specify the general activity/task that is the subject of the project station.',
+      },
+      procedure: {
+        question: 'Procedure',
+        hint: 'Please specify the framework conditions under which the project station should be set up for the apprentice.',
+      },
+      learningContent: {
+        question: 'Learning Content Station',
+        hint: 'Please specify the general content that the apprentice should be taught during the project period.',
+      },
+      frameworkPlan: {
+        question: 'Framework Plan Learning Content',
+        hint: 'Add additional points from the framework plan here (if desired) that you consider particularly important to mention in the briefing.',
+      },
+      tasksAndDutiesTrainee: {
+        question: 'Tasks and Duties of the Trainee',
+        hint: 'Please specify (if desired) the tasks and duties that your apprentice has to fulfill.',
+      },
+      tasksAndDutiesMentor: {
+        question: 'Tasks and Duties of the Mentor',
+        hint: 'Please specify (if desired) the tasks and duties that the mentor has to fulfill.',
+      },
+      primeBlueAntMyTe: {
+        question: 'Prime / BlueAnt',
+        hint: 'Briefly summarize the positions where the apprentice can/should book hours/efforts.',
+      },
+      feedback: {
+        question: 'Feedback',
+        hint: 'Here is a brief summary of what is understood by feedback in the briefing. You can supplement the template text as needed.',
+      },
+      otherRemarks: {
+        question: 'Other Remarks',
+        hint: 'If you have any additional points to be included in the briefing, you can note them here.',
+      },
+    },
+    modal: {
+      title: 'Are you sure you want to finish the briefing?',
+      description:
+        'Once you click "Create briefing," you won\'t be able to edit the briefing anymore. The briefing will be sent as a PDF to your apprentice and the training officer via email.\n\nYou can choose to save the briefing instead, so you can edit it later.',
+      createBriefing: 'Create briefing',
+      backToPaperTitle: 'Briefing is being exported',
+      backToPaperDescription:
+        'The Lara Paper briefing is being exported and will be sent as an email to all participants. You may need to reload Lara later to see the newly created paper.\n' +
+        'Please be patient while the briefing is being exported.',
+      backToPaperButton: 'Back to Paper Overview',
+      deletePaperTitle: 'Delete Paper for {0}',
+      deletePaperDescription:
+        'Are you sure you want to delete the paper for customer {1}? This action cannot be undone.',
+      deletePaperButtonAgree: 'Confirm',
+      deletePaperButtonDisagree: 'Cancel',
+    },
+    dashboard: {
+      title: 'Station',
+      description: "It's time for the feedback meeting for your apprentice's station. You can start it here.",
+      briefing: 'Briefing',
+      feedback: 'Station Feedback',
+      conclusion: 'Conclusion',
+      pdfFeedback: 'PDF Station Feedback',
+      trainee: 'Trainee',
+      trainer: 'Trainer',
+      editPaper: 'Edit Paper',
+    },
+    createPaper: {
+      title: 'Briefing Created',
+      text: 'The briefing has been created',
+    },
+    deletePaper: {
+      title: 'Paper Deleted',
+      text: 'The Lara Paper has been deleted',
+    },
+    briefing: {
+      toastTitle: 'Creating Lara Paper briefing',
+      toastDescription: 'The briefing is being created now and will be sent to the participants as a PDF via email',
+    },
   },
   archivePage: {
     header: 'Archive',
@@ -289,6 +386,8 @@ const englishTranslation: Translation = {
     reports: 'Reports',
     trainees: 'Trainees',
     trainer: 'Trainer',
+    mentor: 'mentor',
+    paper: 'Paper',
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',
@@ -364,7 +463,19 @@ const englishTranslation: Translation = {
       'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
     success: 'The trainer {0} has been created',
   },
+  createMentor: {
+    title: 'New Mentor',
+    description:
+      'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
+    success: 'The trainer {0} has been created',
+  },
   deleteTrainer: {
+    title: 'Delete {0}?',
+    description:
+      'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',
+    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+  },
+  deleteMentor: {
     title: 'Delete {0}?',
     description:
       'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',

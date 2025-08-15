@@ -1,0 +1,5 @@
+query PrintPaperData($ids: [ID!]!) {
+  printPaper(ids: $ids) {
+    estimatedWaitingTime
+  }
+}
