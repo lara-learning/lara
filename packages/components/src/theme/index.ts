@@ -10,6 +10,7 @@ declare module 'styled-components' {
     progressBar: string
     overlay: string
     faq: string
+    reviewGrey: string
 
     // Fonts
     darkFont: string
