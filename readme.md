@@ -50,6 +50,12 @@ From the root of the project call:
 
 `start` starts a dev server which serves the frontend on port `:8080`
 
+Use `yarn compile:watch` during developement to directly hot reload any changes made
+
+### Ports
+
+The frontend runs on `http://localhost:8080/` The backend runs on `http://localhost:3000/` the local dynamoDB runs on `http://localhost:8001/` The locally emulated s3 buckets run on `http://localhost:8181/`
+
 ### Linting
 
 We're linting our files with ESLint in order to achieving a consistent codestyle and preventing simple errors. JavaScript files are linted by ESLint with `@typescript-eslint/recommended` config.
