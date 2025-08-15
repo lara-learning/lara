@@ -1,0 +1,35 @@
+query MentorPaperPageData {
+  currentUser {
+    id
+    theme
+    ... on Mentor {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
+        feedback {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
+      }
+    }
+  }
+}

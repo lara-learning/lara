@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, UserInterface } from './models';
+import { CommentableInterface, Comment, Entry, Day, Report, Trainer, Trainee, Mentor, UserInterface, Paper } from './models';
 import { Context } from './context';
 export type Maybe<T> = T | undefined;
 export type InputMaybe<T> = T | undefined;
@@ -35,6 +35,14 @@ export type GqlAdmin = GqlUserInterface & {
   type: GqlUserTypeEnum;
 };
 
+export type GqlAnswerPaperInput = {
+  answer: Scalars['String']['input'];
+  hint: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  question: Scalars['String']['input'];
+  questionId: Scalars['ID']['input'];
+};
+
 export type GqlComment = {
   __typename?: 'Comment';
   createdAt: Scalars['String']['output'];
@@ -67,6 +75,14 @@ export type GqlCreateCommentPayload = {
   __typename?: 'CreateCommentPayload';
   comment: GqlComment;
   commentable: GqlCommentableInterface;
+};
+
+export type GqlCreateMentorInput = {
+  email: Scalars['String']['input'];
+  endDate?: InputMaybe<Scalars['String']['input']>;
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  startDate?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlCreateTraineeInput = {
@@ -146,11 +162,42 @@ export type GqlLaraConfig = {
   minWorkDayMinutes: Scalars['Int']['output'];
 };
 
+export type GqlMentor = GqlUserInterface & {
+  __typename?: 'Mentor';
+  alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
+  createdAt: Scalars['String']['output'];
+  deleteAt?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  endDate?: Maybe<Scalars['String']['output']>;
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  notification?: Maybe<Scalars['Boolean']['output']>;
+  papers?: Maybe<Array<Maybe<GqlPaper>>>;
+  signature?: Maybe<Scalars['String']['output']>;
+  startDate?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
+  type: GqlUserTypeEnum;
+  username: Scalars['String']['output'];
+};
+
+export type GqlMentorInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  signature?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GqlMutateEntryPayload = {
   __typename?: 'MutateEntryPayload';
   day: GqlDay;
   entry?: Maybe<GqlEntry>;
   report: GqlReport;
+};
+
+export type GqlMutatePaperPayload = {
+  __typename?: 'MutatePaperPayload';
+  papers?: Maybe<Array<Maybe<GqlPaper>>>;
 };
 
 export type GqlMutation = {
@@ -171,8 +218,14 @@ export type GqlMutation = {
   createCommentOnReport: GqlCreateCommentPayload;
   /** Creates a new entry which is assigned to the matching report based on the day Id */
   createEntry: GqlMutateEntryPayload;
+  /** Creates Mentor. */
+  createMentor?: Maybe<GqlMentor>;
   /** Create OAuth Code */
   createOAuthCode: Scalars['String']['output'];
+  /** Create Paper */
+  createPaper: GqlPaper;
+  /** Creates Entry for Lara Paper */
+  createPaperEntry: GqlPaperFormData;
   /** Creates Trainee. */
   createTrainee?: Maybe<GqlTrainee>;
   /** Creates Trainer. */
@@ -185,8 +238,14 @@ export type GqlMutation = {
   deleteCommentOnReport: GqlDeleteCommentPayload;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
+  /** Delete Paper */
+  deletePaper: Array<Maybe<GqlPaper>>;
+  /** Deletes Entry for Lara Paper */
+  deletePaperEntry: GqlPaperFormData;
   /** Get Avatar Bucket Upload URL */
   getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
+  /** Get a User by Email */
+  getUserByEmail?: Maybe<GqlUserInterface>;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
   /** Login via microsoft */
@@ -217,6 +276,12 @@ export type GqlMutation = {
   updateDay?: Maybe<GqlDay>;
   updateEntry: GqlMutateEntryPayload;
   updateEntryOrder: GqlMutateEntryPayload;
+  /** Updates Mentor. */
+  updateMentor?: Maybe<GqlMentor>;
+  /** Update Paper */
+  updatePaper: GqlPaper;
+  /** Updates Entry for Lara Paper */
+  updatePaperEntry: GqlPaperFormData;
   /** Updates report which is identified by the id argument. */
   updateReport?: Maybe<GqlUpdateReportPayload>;
   /** Updates Trainee. */
@@ -273,6 +338,21 @@ export type GqlMutationCreateEntryArgs = {
 };
 
 
+export type GqlMutationCreateMentorArgs = {
+  input: GqlCreateMentorInput;
+};
+
+
+export type GqlMutationCreatePaperArgs = {
+  input: GqlPaperInput;
+};
+
+
+export type GqlMutationCreatePaperEntryArgs = {
+  input: GqlAnswerPaperInput;
+};
+
+
 export type GqlMutationCreateTraineeArgs = {
   input: GqlCreateTraineeInput;
 };
@@ -309,8 +389,23 @@ export type GqlMutationDeleteEntryArgs = {
 };
 
 
+export type GqlMutationDeletePaperArgs = {
+  paperId: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationDeletePaperEntryArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type GqlMutationGetAvatarSignedUrlArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type GqlMutationGetUserByEmailArgs = {
+  email: Scalars['String']['input'];
 };
 
 
@@ -405,6 +500,22 @@ export type GqlMutationUpdateEntryOrderArgs = {
 };
 
 
+export type GqlMutationUpdateMentorArgs = {
+  id: Scalars['ID']['input'];
+  input: GqlUpdateMentorInput;
+};
+
+
+export type GqlMutationUpdatePaperArgs = {
+  input: GqlPaperUpdateInput;
+};
+
+
+export type GqlMutationUpdatePaperEntryArgs = {
+  input: GqlAnswerPaperInput;
+};
+
+
 export type GqlMutationUpdateReportArgs = {
   department?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
@@ -431,6 +542,82 @@ export type GqlOAuthPayload = {
   refreshToken?: Maybe<Scalars['String']['output']>;
 };
 
+export type GqlPaper = {
+  __typename?: 'Paper';
+  archivedAt?: Maybe<Scalars['String']['output']>;
+  briefing: Array<GqlPaperFormData>;
+  client: Scalars['String']['output'];
+  conclusion?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  feedback: Array<GqlPaperFormData>;
+  id: Scalars['ID']['output'];
+  mentorId: Scalars['ID']['output'];
+  periodEnd?: Maybe<Scalars['String']['output']>;
+  periodStart?: Maybe<Scalars['String']['output']>;
+  schoolPeriodEnd?: Maybe<Scalars['String']['output']>;
+  schoolPeriodStart?: Maybe<Scalars['String']['output']>;
+  status: GqlPaperStatus;
+  subject: Scalars['String']['output'];
+  traineeId: Scalars['ID']['output'];
+  trainerId: Scalars['ID']['output'];
+};
+
+export type GqlPaperEntryInput = {
+  answer?: InputMaybe<Scalars['String']['input']>;
+  hint?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  question: Scalars['String']['input'];
+  questionId: Scalars['ID']['input'];
+};
+
+export type GqlPaperFormData = {
+  __typename?: 'PaperFormData';
+  answer?: Maybe<Scalars['String']['output']>;
+  hint?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  question: Scalars['String']['output'];
+  questionId: Scalars['ID']['output'];
+};
+
+export type GqlPaperInput = {
+  briefing: Array<GqlPaperEntryInput>;
+  client: Scalars['String']['input'];
+  feedback: Array<GqlPaperEntryInput>;
+  mentorId: Scalars['ID']['input'];
+  periodEnd?: InputMaybe<Scalars['String']['input']>;
+  periodStart?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodEnd?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodStart?: InputMaybe<Scalars['String']['input']>;
+  status: GqlPaperStatus;
+  subject: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
+  trainerId: Scalars['ID']['input'];
+};
+
+export type GqlPaperStatus =
+  | 'Archived'
+  | 'InProgress'
+  | 'InReview'
+  | 'MentorDone'
+  | 'NotStarted'
+  | 'TraineeDone';
+
+export type GqlPaperUpdateInput = {
+  briefing: Array<GqlPaperEntryInput>;
+  client: Scalars['String']['input'];
+  feedback: Array<GqlPaperEntryInput>;
+  id: Scalars['ID']['input'];
+  mentorId: Scalars['ID']['input'];
+  periodEnd?: InputMaybe<Scalars['String']['input']>;
+  periodStart?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodEnd?: InputMaybe<Scalars['String']['input']>;
+  schoolPeriodStart?: InputMaybe<Scalars['String']['input']>;
+  status: GqlPaperStatus;
+  subject: Scalars['String']['input'];
+  traineeId: Scalars['ID']['input'];
+  trainerId: Scalars['ID']['input'];
+};
+
 export type GqlPrintPayload = {
   __typename?: 'PrintPayload';
   estimatedWaitingTime: Scalars['Int']['output'];
@@ -455,8 +642,12 @@ export type GqlQuery = {
   currentUser?: Maybe<GqlUserInterface>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
+  /** Get all Trainers */
+  mentors: Array<GqlMentor>;
   /** Print single report or report batch */
   print: GqlPrintPayload;
+  /** Print single paper */
+  printPaper: GqlPrintPayload;
   /** Finds the report for a specifig trainee on the requested year and week. */
   reportForTrainee?: Maybe<GqlReport>;
   /** Finds the report for the requested year and week. */
@@ -478,6 +669,11 @@ export type GqlQueryGetUserArgs = {
 
 
 export type GqlQueryPrintArgs = {
+  ids: Array<Scalars['ID']['input']>;
+};
+
+
+export type GqlQueryPrintPaperArgs = {
   ids: Array<Scalars['ID']['input']>;
 };
 
@@ -549,6 +745,7 @@ export type GqlTrainee = GqlUserInterface & {
   lastName: Scalars['String']['output'];
   notification?: Maybe<Scalars['Boolean']['output']>;
   openReportsCount: Scalars['Int']['output'];
+  papers?: Maybe<Array<Maybe<GqlPaper>>>;
   reports: Array<GqlReport>;
   signature?: Maybe<Scalars['String']['output']>;
   startDate?: Maybe<Scalars['String']['output']>;
@@ -569,6 +766,7 @@ export type GqlTrainer = GqlUserInterface & {
   language?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
   notification?: Maybe<Scalars['Boolean']['output']>;
+  papers?: Maybe<Array<Maybe<GqlPaper>>>;
   signature?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   trainees: Array<GqlTrainee>;
@@ -595,6 +793,14 @@ export type GqlUpdateCommentPayload = {
 
 export type GqlUpdateCurrentTraineeInput = {
   course?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GqlUpdateMentorInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUpdateReportPayload = {
@@ -643,6 +849,8 @@ export type GqlUserInterface = {
 export type GqlUserTypeEnum =
   /** User is an Admin */
   | 'Admin'
+  /** User is a Mentor */
+  | 'Mentor'
   /** User is a Trainee */
   | 'Trainee'
   /** User is a Trainer */
@@ -721,12 +929,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type GqlResolversTypes = ResolversObject<{
   Admin: ResolverTypeWrapper<GqlAdmin>;
+  AnswerPaperInput: GqlAnswerPaperInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
   CommentableInterface: ResolverTypeWrapper<CommentableInterface>;
   Company: ResolverTypeWrapper<GqlCompany>;
   CreateAdminInput: GqlCreateAdminInput;
   CreateCommentPayload: ResolverTypeWrapper<Omit<GqlCreateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversTypes['Comment'], commentable: GqlResolversTypes['CommentableInterface'] }>;
+  CreateMentorInput: GqlCreateMentorInput;
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
   Day: ResolverTypeWrapper<Day>;
@@ -738,9 +948,18 @@ export type GqlResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   LaraConfig: ResolverTypeWrapper<GqlLaraConfig>;
+  Mentor: ResolverTypeWrapper<Mentor>;
+  MentorInput: GqlMentorInput;
   MutateEntryPayload: ResolverTypeWrapper<Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversTypes['Day'], entry?: Maybe<GqlResolversTypes['Entry']>, report: GqlResolversTypes['Report'] }>;
+  MutatePaperPayload: ResolverTypeWrapper<Omit<GqlMutatePaperPayload, 'papers'> & { papers?: Maybe<Array<Maybe<GqlResolversTypes['Paper']>>> }>;
   Mutation: ResolverTypeWrapper<{}>;
   OAuthPayload: ResolverTypeWrapper<GqlOAuthPayload>;
+  Paper: ResolverTypeWrapper<Paper>;
+  PaperEntryInput: GqlPaperEntryInput;
+  PaperFormData: ResolverTypeWrapper<GqlPaperFormData>;
+  PaperInput: GqlPaperInput;
+  PaperStatus: GqlPaperStatus;
+  PaperUpdateInput: GqlPaperUpdateInput;
   PrintPayload: ResolverTypeWrapper<GqlPrintPayload>;
   PublishCommentsPayload: ResolverTypeWrapper<Omit<GqlPublishCommentsPayload, 'report'> & { report: GqlResolversTypes['Report'] }>;
   Query: ResolverTypeWrapper<{}>;
@@ -754,6 +973,7 @@ export type GqlResolversTypes = ResolversObject<{
   UpdateAdminInput: GqlUpdateAdminInput;
   UpdateCommentPayload: ResolverTypeWrapper<Omit<GqlUpdateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversTypes['Comment'], commentable: GqlResolversTypes['CommentableInterface'] }>;
   UpdateCurrentTraineeInput: GqlUpdateCurrentTraineeInput;
+  UpdateMentorInput: GqlUpdateMentorInput;
   UpdateReportPayload: ResolverTypeWrapper<Omit<GqlUpdateReportPayload, 'report' | 'trainee'> & { report: GqlResolversTypes['Report'], trainee: GqlResolversTypes['Trainee'] }>;
   UpdateTraineeInput: GqlUpdateTraineeInput;
   UpdateTrainerInput: GqlUpdateTrainerInput;
@@ -765,12 +985,14 @@ export type GqlResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type GqlResolversParentTypes = ResolversObject<{
   Admin: GqlAdmin;
+  AnswerPaperInput: GqlAnswerPaperInput;
   Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
   CommentableInterface: CommentableInterface;
   Company: GqlCompany;
   CreateAdminInput: GqlCreateAdminInput;
   CreateCommentPayload: Omit<GqlCreateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversParentTypes['Comment'], commentable: GqlResolversParentTypes['CommentableInterface'] };
+  CreateMentorInput: GqlCreateMentorInput;
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
   Day: Day;
@@ -781,9 +1003,17 @@ export type GqlResolversParentTypes = ResolversObject<{
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   LaraConfig: GqlLaraConfig;
+  Mentor: Mentor;
+  MentorInput: GqlMentorInput;
   MutateEntryPayload: Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversParentTypes['Day'], entry?: Maybe<GqlResolversParentTypes['Entry']>, report: GqlResolversParentTypes['Report'] };
+  MutatePaperPayload: Omit<GqlMutatePaperPayload, 'papers'> & { papers?: Maybe<Array<Maybe<GqlResolversParentTypes['Paper']>>> };
   Mutation: {};
   OAuthPayload: GqlOAuthPayload;
+  Paper: Paper;
+  PaperEntryInput: GqlPaperEntryInput;
+  PaperFormData: GqlPaperFormData;
+  PaperInput: GqlPaperInput;
+  PaperUpdateInput: GqlPaperUpdateInput;
   PrintPayload: GqlPrintPayload;
   PublishCommentsPayload: Omit<GqlPublishCommentsPayload, 'report'> & { report: GqlResolversParentTypes['Report'] };
   Query: {};
@@ -796,6 +1026,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   UpdateAdminInput: GqlUpdateAdminInput;
   UpdateCommentPayload: Omit<GqlUpdateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversParentTypes['Comment'], commentable: GqlResolversParentTypes['CommentableInterface'] };
   UpdateCurrentTraineeInput: GqlUpdateCurrentTraineeInput;
+  UpdateMentorInput: GqlUpdateMentorInput;
   UpdateReportPayload: Omit<GqlUpdateReportPayload, 'report' | 'trainee'> & { report: GqlResolversParentTypes['Report'], trainee: GqlResolversParentTypes['Trainee'] };
   UpdateTraineeInput: GqlUpdateTraineeInput;
   UpdateTrainerInput: GqlUpdateTrainerInput;
@@ -890,10 +1121,35 @@ export type GqlLaraConfigResolvers<ContextType = Context, ParentType extends Gql
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GqlMentorResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Mentor'] = GqlResolversParentTypes['Mentor']> = ResolversObject<{
+  alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  deleteAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  endDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  language?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  papers?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Paper']>>>, ParentType, ContextType>;
+  signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  startDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
+  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type GqlMutateEntryPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['MutateEntryPayload'] = GqlResolversParentTypes['MutateEntryPayload']> = ResolversObject<{
   day?: Resolver<GqlResolversTypes['Day'], ParentType, ContextType>;
   entry?: Resolver<Maybe<GqlResolversTypes['Entry']>, ParentType, ContextType>;
   report?: Resolver<GqlResolversTypes['Report'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlMutatePaperPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['MutatePaperPayload'] = GqlResolversParentTypes['MutatePaperPayload']> = ResolversObject<{
+  papers?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Paper']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -906,14 +1162,20 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   createCommentOnEntry?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnEntryArgs, 'id' | 'text' | 'traineeId'>>;
   createCommentOnReport?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnReportArgs, 'id' | 'text' | 'traineeId'>>;
   createEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateEntryArgs, 'dayId' | 'input'>>;
+  createMentor?: Resolver<Maybe<GqlResolversTypes['Mentor']>, ParentType, ContextType, RequireFields<GqlMutationCreateMentorArgs, 'input'>>;
   createOAuthCode?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  createPaper?: Resolver<GqlResolversTypes['Paper'], ParentType, ContextType, RequireFields<GqlMutationCreatePaperArgs, 'input'>>;
+  createPaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationCreatePaperEntryArgs, 'input'>>;
   createTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTraineeArgs, 'input'>>;
   createTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationCreateTrainerArgs, 'input'>>;
   deleteCommentOnDay?: Resolver<GqlResolversTypes['DeleteCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteCommentOnDayArgs, 'commentId' | 'id' | 'traineeId'>>;
   deleteCommentOnEntry?: Resolver<GqlResolversTypes['DeleteCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteCommentOnEntryArgs, 'commentId' | 'id' | 'traineeId'>>;
   deleteCommentOnReport?: Resolver<GqlResolversTypes['DeleteCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteCommentOnReportArgs, 'commentId' | 'id' | 'traineeId'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
+  deletePaper?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
+  deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
   getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
+  getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationGetUserByEmailArgs, 'email'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;
@@ -930,6 +1192,9 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   updateDay?: Resolver<Maybe<GqlResolversTypes['Day']>, ParentType, ContextType, RequireFields<GqlMutationUpdateDayArgs, 'id'>>;
   updateEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryArgs, 'id' | 'input'>>;
   updateEntryOrder?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryOrderArgs, 'dayId' | 'entryId' | 'orderId'>>;
+  updateMentor?: Resolver<Maybe<GqlResolversTypes['Mentor']>, ParentType, ContextType, RequireFields<GqlMutationUpdateMentorArgs, 'id' | 'input'>>;
+  updatePaper?: Resolver<GqlResolversTypes['Paper'], ParentType, ContextType, RequireFields<GqlMutationUpdatePaperArgs, 'input'>>;
+  updatePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationUpdatePaperEntryArgs, 'input'>>;
   updateReport?: Resolver<Maybe<GqlResolversTypes['UpdateReportPayload']>, ParentType, ContextType, RequireFields<GqlMutationUpdateReportArgs, 'id'>>;
   updateTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationUpdateTraineeArgs, 'id' | 'input'>>;
   updateTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationUpdateTrainerArgs, 'id' | 'input'>>;
@@ -939,6 +1204,35 @@ export type GqlOAuthPayloadResolvers<ContextType = Context, ParentType extends G
   accessToken?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   expiresIn?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   refreshToken?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Paper'] = GqlResolversParentTypes['Paper']> = ResolversObject<{
+  archivedAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  briefing?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
+  client?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  feedback?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  mentorId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  periodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  periodStart?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  schoolPeriodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  schoolPeriodStart?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  status?: Resolver<GqlResolversTypes['PaperStatus'], ParentType, ContextType>;
+  subject?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  trainerId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlPaperFormDataResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PaperFormData'] = GqlResolversParentTypes['PaperFormData']> = ResolversObject<{
+  answer?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  hint?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  question?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  questionId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -960,7 +1254,9 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   config?: Resolver<GqlResolversTypes['LaraConfig'], ParentType, ContextType>;
   currentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
+  mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
+  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'ids'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;
@@ -1007,6 +1303,7 @@ export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlRes
   lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   openReportsCount?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  papers?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Paper']>>>, ParentType, ContextType>;
   reports?: Resolver<Array<GqlResolversTypes['Report']>, ParentType, ContextType>;
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   startDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
@@ -1027,6 +1324,7 @@ export type GqlTrainerResolvers<ContextType = Context, ParentType extends GqlRes
   language?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  papers?: Resolver<Maybe<Array<Maybe<GqlResolversTypes['Paper']>>>, ParentType, ContextType>;
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   trainees?: Resolver<Array<GqlResolversTypes['Trainee']>, ParentType, ContextType>;
@@ -1053,7 +1351,7 @@ export type GqlUpdateReportPayloadResolvers<ContextType = Context, ParentType ex
 }>;
 
 export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['UserInterface'] = GqlResolversParentTypes['UserInterface']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'Admin' | 'Trainee' | 'Trainer', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Admin' | 'Mentor' | 'Trainee' | 'Trainer', ParentType, ContextType>;
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -1078,9 +1376,13 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   DevSetUserPayload?: GqlDevSetUserPayloadResolvers<ContextType>;
   Entry?: GqlEntryResolvers<ContextType>;
   LaraConfig?: GqlLaraConfigResolvers<ContextType>;
+  Mentor?: GqlMentorResolvers<ContextType>;
   MutateEntryPayload?: GqlMutateEntryPayloadResolvers<ContextType>;
+  MutatePaperPayload?: GqlMutatePaperPayloadResolvers<ContextType>;
   Mutation?: GqlMutationResolvers<ContextType>;
   OAuthPayload?: GqlOAuthPayloadResolvers<ContextType>;
+  Paper?: GqlPaperResolvers<ContextType>;
+  PaperFormData?: GqlPaperFormDataResolvers<ContextType>;
   PrintPayload?: GqlPrintPayloadResolvers<ContextType>;
   PublishCommentsPayload?: GqlPublishCommentsPayloadResolvers<ContextType>;
   Query?: GqlQueryResolvers<ContextType>;

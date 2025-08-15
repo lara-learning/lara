@@ -1,9 +1,9 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import { lightTheme, ThemeProvider } from '@lara/components'
+import { lightTheme, StyledPrintPaperEntry, StyledPrintPaperSubHeadline, ThemeProvider } from '@lara/components'
 
-import { PrintUserData, PrintReport, PrintTranslations } from '@lara/api'
+import { PrintUserData, PrintReport, PrintTranslations, PrintPaper, PrintForm } from '@lara/api'
 import {
   Spacings,
   StyledPrintDay,
@@ -48,6 +48,12 @@ type TemplateProps = {
   apprenticeYear: number
   report: PrintReport
   signatureDate: string
+}
+
+type PaperTemplateProps = {
+  userData: PrintUserData
+  i18n: PrintTranslations
+  paper: PrintPaper
 }
 
 export const Template: React.FC<TemplateProps> = ({
@@ -141,6 +147,66 @@ export const Template: React.FC<TemplateProps> = ({
           />
         </StyledPrintSignatureContainer>
       </StyledPrintFooter>
+    </ThemeProvider>
+  )
+}
+
+export const PaperTemplate: React.FC<PaperTemplateProps> = ({
+  userData: { firstName, lastName, course },
+  paper,
+  i18n,
+}) => {
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyle />
+      <StyledPrintHeader>
+        <LaraLogo />
+      </StyledPrintHeader>
+      <StyledPrintUserInfo>
+        <StyledPrintUserInfoRow fullsize>
+          <StyledPrintUserInfoRowHeadline> {i18n.trainee}: </StyledPrintUserInfoRowHeadline>
+          {firstName} {lastName}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.apprenticeCourse}: </StyledPrintUserInfoRowHeadline>
+          {course}
+        </StyledPrintUserInfoRow>
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.department}: </StyledPrintUserInfoRowHeadline>
+          {paper.subject}
+        </StyledPrintUserInfoRow>
+        {paper.periodStart ? (
+          <StyledPrintUserInfoRow>
+            <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
+            {paper.periodStart + ' -' + paper.periodEnd}
+          </StyledPrintUserInfoRow>
+        ) : null}
+        <StyledPrintUserInfoRow>
+          <StyledPrintUserInfoRowHeadline> {i18n.client}: </StyledPrintUserInfoRowHeadline>
+          {paper.client}
+        </StyledPrintUserInfoRow>
+        {paper.schoolPeriodStart ? (
+          <StyledPrintUserInfoRow>
+            <StyledPrintUserInfoRowHeadline> {i18n.period}: </StyledPrintUserInfoRowHeadline>
+            {paper.schoolPeriodStart + ' -' + paper.schoolPeriodEnd}
+          </StyledPrintUserInfoRow>
+        ) : null}
+      </StyledPrintUserInfo>
+      <div>
+        {paper.briefing.map((briefing: PrintForm, index, array) => {
+          return (
+            <StyledPrintDay key={briefing.questionId}>
+              {index == 0 || array[index].questionId !== array[index - 1].questionId ? (
+                <>
+                  <StyledPrintDayHeadline>{briefing.question}</StyledPrintDayHeadline>
+                  <StyledPrintPaperSubHeadline>{briefing.hint}</StyledPrintPaperSubHeadline>
+                </>
+              ) : null}
+              <StyledPrintPaperEntry>{briefing.answer}</StyledPrintPaperEntry>
+            </StyledPrintDay>
+          )
+        })}
+      </div>
     </ThemeProvider>
   )
 }

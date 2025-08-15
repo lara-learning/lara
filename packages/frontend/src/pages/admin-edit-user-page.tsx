@@ -15,6 +15,7 @@ import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
 import { EditAdmin } from '../components/edit-admin-content'
 import { GraphQLError } from 'graphql'
+import { EditMentor } from '../components/edit-mentor-content'
 
 type AdminEditUserPageParams = {
   id: string
@@ -106,6 +107,23 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
             />
           }
           content={<EditAdmin admin={data.getUser} disableEmail={currentUser.id === id} />}
+          actions={renderDeleteAction(data.getUser.deleteAt)}
+        />
+      )}
+
+      {/* Edit Mentor page */}
+      {!loading && data?.getUser?.__typename === 'Mentor' && (
+        <EditUserLayout
+          backButton={
+            <NavigationButtonLink
+              label={strings.back}
+              to="/mentor"
+              icon="ChevronLeft"
+              isLeft
+              iconColor="iconLightGrey"
+            />
+          }
+          content={<EditMentor mentor={data.getUser} />}
           actions={renderDeleteAction(data.getUser.deleteAt)}
         />
       )}

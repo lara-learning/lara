@@ -7,18 +7,19 @@ import { FontSizes } from './font-size'
 
 export interface StyledLinkProps extends LinkProps {
   isLeft?: boolean
+  alignLeft?: boolean
 }
 
 // isLeft props needs to be removed from LinkProps
 
 const StyledLink = styled(Link)
   .withConfig({
-    shouldForwardProp: (prop) => !['isLeft'].includes(prop),
+    shouldForwardProp: (prop) => !['isLeft', 'alignLeft'].includes(prop),
   })
-  .attrs<StyledLinkProps>(({ isLeft: _isLeft }) => ({}))<StyledLinkProps>`
+  .attrs<StyledLinkProps>(({ isLeft: _isLeft, alignLeft: _alignLeft }) => ({}))<StyledLinkProps>`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${(props) => (props.alignLeft ? 'flex-start' : 'center')};
   flex-direction: ${(props) => (props.isLeft ? 'row' : 'row-reverse')};
   border-radius: ${BorderRadii.xxs};
   text-decoration: none;
@@ -35,12 +36,19 @@ interface NavigationButtonLinkLayoutProps {
   icon: JSX.Element
   label: string
   isLeft: boolean
+  alignLeft: boolean
   to: string
 }
 
-export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({ icon, isLeft, label, to }) => {
+export const NavigationButtonLinkLayout: React.FC<NavigationButtonLinkLayoutProps> = ({
+  icon,
+  isLeft,
+  alignLeft,
+  label,
+  to,
+}) => {
   return (
-    <StyledLink isLeft={isLeft} to={to}>
+    <StyledLink isLeft={isLeft} alignLeft={alignLeft} to={to}>
       {icon}
       <Label>{label}</Label>
     </StyledLink>

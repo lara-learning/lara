@@ -113,6 +113,63 @@ type UpdateReportPayload {
   report: Report!
 }
 
+input MentorInput {
+  name: String
+  email: String
+  signature: String
+}
+
+input PaperEntryInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type MutatePaperPayload {
+  papers: [Paper]
+}
+
+input PaperInput {
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+  feedback: [PaperEntryInput!]!
+}
+
+input PaperUpdateInput {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+  feedback: [PaperEntryInput!]!
+}
+
+input AnswerPaperInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String!
+  hint: String!
+}
+
 type Mutation {
   """
   [DEV] Login as a user.
@@ -237,6 +294,16 @@ type Mutation {
   createAdmin(input: CreateAdminInput!): Admin
 
   """
+  Creates Mentor.
+  """
+  createMentor(input: CreateMentorInput!): Mentor
+
+  """
+  Get a User by Email
+  """
+  getUserByEmail(email: String!): UserInterface
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -262,6 +329,11 @@ type Mutation {
   updateAdmin(input: UpdateAdminInput!, id: ID!): Admin
 
   """
+  Updates Mentor.
+  """
+  updateMentor(input: UpdateMentorInput!, id: ID!): Mentor
+
+  """
   Link Alexa account
   """
   linkAlexa(code: String!, state: String!): UserInterface
@@ -280,6 +352,36 @@ type Mutation {
   Get Avatar Bucket Upload URL
   """
   getAvatarSignedUrl(id: String!): String
+
+  """
+  Create Paper
+  """
+  createPaper(input: PaperInput!): Paper!
+
+  """
+  Update Paper
+  """
+  updatePaper(input: PaperUpdateInput!): Paper!
+
+  """
+  Delete Paper
+  """
+  deletePaper(paperId: ID!): [Paper]!
+
+  """
+  Updates Entry for Lara Paper
+  """
+  updatePaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Creates Entry for Lara Paper
+  """
+  createPaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Deletes Entry for Lara Paper
+  """
+  deletePaperEntry(id: ID!): PaperFormData!
 }
 
 type LaraConfig {
@@ -348,9 +450,19 @@ type Query {
   admins: [Admin!]!
 
   """
+  Get all Mentors
+  """
+  mentors: [Mentor!]!
+
+  """
   Print single report or report batch
   """
   print(ids: [ID!]!): PrintPayload!
+
+  """
+  Print single paper
+  """
+  printPaper(ids: [ID!]!): PrintPayload!
 
   """
   Get a User by ID
@@ -425,6 +537,7 @@ type Trainee implements UserInterface {
   lastName: String!
   notification: Boolean
   reports: [Report!]!
+  papers: [Paper]
   signature: String
   startDate: String
   startOfToolUsage: String
@@ -467,10 +580,26 @@ input CreateTrainerInput {
   lastName: String!
 }
 
+input CreateMentorInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  startDate: String
+  endDate: String
+}
+
 input UpdateTrainerInput {
   email: String
   firstName: String
   lastName: String
+}
+
+input UpdateMentorInput {
+  email: String
+  firstName: String
+  lastName: String
+  startDate: String
+  endDate: String
 }
 
 type Trainer implements UserInterface {
@@ -480,6 +609,7 @@ type Trainer implements UserInterface {
   language: String
   lastName: String!
   notification: Boolean
+  papers: [Paper]
   signature: String
   theme: String
   trainees: [Trainee!]!
@@ -499,6 +629,25 @@ input UpdateAdminInput {
   email: String
   firstName: String
   lastName: String
+}
+
+type Mentor implements UserInterface {
+  createdAt: String!
+  firstName: String!
+  id: ID!
+  language: String
+  lastName: String!
+  notification: Boolean
+  signature: String
+  theme: String
+  type: UserTypeEnum!
+  papers: [Paper]
+  startDate: String
+  endDate: String
+  username: String!
+  email: String!
+  deleteAt: String
+  alexaSkillLinked: Boolean
 }
 
 type Admin implements UserInterface {
@@ -554,7 +703,48 @@ enum UserTypeEnum {
   Trainer
 
   """
+  User is a Mentor
+  """
+  Mentor
+
+  """
   User is an Admin
   """
   Admin
+}
+
+enum PaperStatus {
+  NotStarted
+  InProgress
+  TraineeDone
+  MentorDone
+  InReview
+  Archived
+}
+
+type PaperFormData {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type Paper {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  status: PaperStatus!
+  briefing: [PaperFormData!]!
+  feedback: [PaperFormData!]!
+  conclusion: String
+  archivedAt: String
+  createdAt: String
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
 }

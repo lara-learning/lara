@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Test Kunde",
+    "mentorId": "101112",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "schoolPeriodEnd": null,
+    "schoolPeriodStart": null,
+    "subject": "Android Entwicklung",
+    "status": "NotStarted",
+    "briefing": [],
+    "feedback": []
+  },
+  {
+    "id": "2",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Test Kunde",
+    "mentorId": "101112",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "schoolPeriodEnd": null,
+    "schoolPeriodStart": null,
+    "subject": "IOS Entwicklung",
+    "status": "NotStarted",
+    "briefing": [],
+    "feedback": []
+  }
+]

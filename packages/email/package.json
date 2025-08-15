@@ -2,7 +2,7 @@
   "name": "@lara/email",
   "version": "1.0.0",
   "private": true,
-  "description": "Generats ands sends emails",
+  "description": "Generates ands sends emails",
   "license": "MIT",
   "author": "",
   "main": "index.js",
