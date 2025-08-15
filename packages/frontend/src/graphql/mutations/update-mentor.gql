@@ -1,0 +1,12 @@
+mutation UpdateMentor($input: UpdateMentorInput!, $id: ID!) {
+  updateMentor(input: $input, id: $id) {
+    id
+    startDate
+    endDate
+    firstName
+    lastName
+    email
+    avatar
+    type
+  }
+}

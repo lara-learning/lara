@@ -41,7 +41,7 @@ const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
 }
 
 const handleGettingAttachements = async (payload: EmailPayload): Promise<Attachment[]> => {
-  if (payload.emailType !== 'reportExport') {
+  if (payload.emailType !== 'reportExport' && payload.emailType !== 'paperBriefing') {
     return []
   }
 

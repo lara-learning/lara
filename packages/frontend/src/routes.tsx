@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
-import { Admin, Trainee, Trainer, UserTypeEnum } from './graphql'
+import { Admin, Trainee, Trainer, Mentor, UserTypeEnum } from './graphql'
 import { useAuthentication } from './hooks/use-authentication'
 import strings from './locales/localization'
 import { AdminEditUserPage } from './pages/admin-edit-user-page'
 import { AdminTraineesPage } from './pages/admin-trainees-page'
 import { AdminTrainerPage } from './pages/admin-trainer-page'
+import { AdminMentorPage } from './pages/admin-mentor-page'
 import { AlexaPage } from './pages/alexa-page'
 import ArchivePage from './pages/archive-page'
 import DashboardPage from './pages/dashboard-page'
@@ -21,14 +22,20 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
+import { TrainerPaperPage } from './pages/trainer-paper-page'
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
+import { PaperCreateBriefingPage } from './pages/paper-create-briefing-page'
+import { PaperBriefingPage } from './pages/paper-briefing-page'
+import { TraineePaperPage } from './pages/trainee-paper-page'
+import { MentorPaperPage } from './pages/mentor-paper-page'
 
 type RoutesProps = {
   currentUser?:
     | Pick<Trainee, 'language' | 'type' | 'course' | '__typename'>
     | (Pick<Trainer, 'type' | 'language' | '__typename'> & { trainees: Pick<Trainee, 'id'>[] })
     | Pick<Admin, 'type' | 'language' | '__typename'>
+    | Pick<Mentor, 'type' | 'language' | '__typename'>
 }
 
 const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
@@ -70,6 +77,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/archive" element={<ArchivePage />} />
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
+                <Route path="/paper" element={<TraineePaperPage />} />
                 <Route path="/alexa" element={<AlexaPage />} />
               </>
             ) : (
@@ -84,7 +92,17 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/" element={<Navigate to={currentUser.trainees.length > 0 ? '/reports' : '/trainees'} />} />
             <Route path="/reports/:trainee?" element={<TrainerReportsPage />} />
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
+            <Route path="/paper" element={<TrainerPaperPage />} />
+            <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
+            <Route path="/paper/briefing/:paperId" element={<PaperBriefingPage />} />
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
+          </>
+        )}
+
+        {/* Mentor Routes */}
+        {currentUser.type === UserTypeEnum.Mentor && currentUser.__typename === 'Mentor' && (
+          <>
+            <Route path="/paper" element={<MentorPaperPage />} />
           </>
         )}
 
@@ -96,6 +114,8 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/trainer/:id" element={<AdminEditUserPage />} />
             <Route path="/trainees" element={<AdminTraineesPage />} />
             <Route path="/trainees/:id" element={<AdminEditUserPage />} />
+            <Route path="/mentor/" element={<AdminMentorPage />} />
+            <Route path="/mentor/:id" element={<AdminEditUserPage />} />
           </>
         )}
 

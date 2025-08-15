@@ -17,6 +17,7 @@ const germanTranslation: Translation = {
   done: 'fertig',
   markDelete: 'für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
+  deleteAt: 'Löschen nach',
   cancel: 'Abbrechen',
   deactivate: 'Deaktivieren',
   traineeShipYear: 'Jahr der Ausbildung',
@@ -40,6 +41,105 @@ const germanTranslation: Translation = {
     reportToArciveAddedSuccessTitle: 'Neuer Bericht im Archiv',
     reportToArciveAddedSuccess:
       'Dein Bericht über {0}{1} wurde von {name} genehmigt und befindet sich jetzt in deinem Archiv.',
+  },
+  paper: {
+    empty: {
+      headline: 'Briefing/Kick-Off Gespräch',
+      description:
+        'Dein Azubi kommt auf eine neue Station und es steht das Kick-Off Gespräch an? Hier kannst du das Briefing für die Station ausfüllen und vorbereiten. Damit kannst du einene Rahmen über den Umfang und die Themen der Ausbildungssation deines Azubis festlegen.',
+      createBriefing: 'Briefing erstellen',
+    },
+    createBriefing: {
+      title: 'Briefing',
+      firstnameMentor: 'Vorname Ausbildungsbeauftragten',
+      lastnameMentor: 'Nachname Ausbildungsbeauftragten',
+      emailMentor: 'Email Ausbildungsbeauftragten',
+      trainee: 'Auszubildender',
+      department: 'Abteilung',
+      customer: 'Kunde',
+      projectPeriod: 'Stationszeitraum',
+      schoolPeriod: 'Schulzeitraum',
+    },
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: 'Gegenstand der Arbeit',
+        hint: 'Nenne hier bitte die allgemeine Tätigkeit/Aufgabe, die Inhalt der Projektstation ist.',
+      },
+      procedure: {
+        question: 'Vorgehen',
+        hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
+      },
+      learningContent: {
+        question: 'Lerninhalte Station',
+        hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.',
+      },
+      frameworkPlan: {
+        question: 'Rahmenplan Lerninhalte',
+        hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
+      },
+      tasksAndDutiesTrainee: {
+        question: 'Aufgaben und Pflichten des Azubis',
+        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten dein Azubi zu erfüllen hat. ',
+      },
+      tasksAndDutiesMentor: {
+        question: 'Aufgaben und Pflichten des Ausbildungsbeauftragten',
+        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten der Ausbildungsbeauftragte zu erfüllen hat.',
+      },
+      primeBlueAntMyTe: {
+        question: 'Prime / BlueAnt',
+        hint: 'Fasse hier kurz zusammen auf welchen Posten der Azubi seine Stunden/Aufwände buchen kann/soll.',
+      },
+      feedback: {
+        question: 'Feedback',
+        hint: 'Hier ist im Briefing einmal kurz zusammenefasst, was unter Feedback zu verstehen ist. Du kannst den Vorlagen Text bei Bedarf natürlich noch ergänzen.',
+      },
+      otherRemarks: {
+        question: 'Sonstige Anmerkungen',
+        hint: 'Falls du noch zusätzliche Punkte hast, welche ins Breifing aufgenommen werden sollen, kannst du diese hier festhalten.',
+      },
+    },
+    modal: {
+      title: 'Bist du sicher, dass du das Briefing beenden möchtest?',
+      description:
+        '' +
+        'Wenn du auf “Briefing erstellen” drückst, kannst du das Briefing nicht mehr bearbeiten. Das Briefing wird daraufhin als PDF an deinen Azubi und den Ausbildungsbeauftragten per E-Mail gesendet.\n' +
+        '\n' +
+        'Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.',
+      createBriefing: 'Briefing erstellen',
+      backToPaperTitle: 'Briefing wird exportiert',
+      backToPaperDescription:
+        'Das Lara Paper Briefing wird exportiert und anschließend als PDF an alle Teilnehmer verschickt. Es kann sein, dass du später Lara neuladen musst, um das neu erstellte Paper sehen zu. \n' +
+        'Hab jetzt etwas Geduld während das Briefing exportiert wird.',
+      backToPaperButton: 'Züruck zur Paper Übersicht',
+      deletePaperTitle: 'Paper löschen für {kunde}',
+      deletePaperDescription:
+        'Bist du sicher, dass du das Paper für den Kunden {kunde} löschen willst? Es kann nicht mehr rückgängig gemacht werden.',
+      deletePaperButtonAgree: 'bestätigen',
+      deletePaperButtonDisagree: 'abbrechen',
+    },
+    dashboard: {
+      title: 'Station',
+      description: 'Für die Station von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
+      briefing: 'Briefing',
+      feedback: 'Stationsfeedback',
+      conclusion: 'Fazit',
+      pdfFeedback: 'PDF Stationsfeedback',
+      trainee: 'Auszubildender',
+      trainer: 'Ausbilder',
+      editPaper: 'Paper bearbeiten',
+    },
+    createPaper: {
+      title: 'Briefing erstellt',
+      text: 'Das Briefing wurde erstellt',
+    },
+    deletePaper: {
+      title: 'Paper gelöscht',
+      text: 'Das Lara Paper wurde gelöscht',
+    },
+    briefing: {
+      toastTitle: 'Lara Paper Briefing wird erstellt',
+      toastDescription: 'Das Briefing wird jetzt erstellt und wird den Teilnehmern per Mail als PDF verschickt',
+    },
   },
   archivePage: {
     header: 'Archiv',
@@ -293,7 +393,9 @@ const germanTranslation: Translation = {
     reports: 'Berichte',
     trainees: 'Auszubildende',
     trainer: 'Ausbilder',
+    mentor: 'Ausbildungsbeauftragte',
     dashhboard: 'Dashboard',
+    paper: 'Paper',
     archive: 'Archiv',
     settings: 'Einstellungen',
   },
@@ -368,7 +470,19 @@ const germanTranslation: Translation = {
       'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
+  createMentor: {
+    title: 'Neuer Ausbildungsbeauftragte',
+    description:
+      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+  },
   deleteTrainer: {
+    title: '{0} wirklich löschen?',
+    description:
+      'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',
+    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+  },
+  deleteMentor: {
     title: '{0} wirklich löschen?',
     description:
       'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',

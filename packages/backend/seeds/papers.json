@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Test Kunde",
+    "mentorId": "1011",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "schoolPeriodEnd": null,
+    "schoolPeriodStart": null,
+    "subject": "Android Entwicklung",
+    "status": "InProgress",
+    "briefing": [
+      {
+        "id": "1",
+        "questionId": "1",
+        "answer": "Test Answer",
+        "question": "Test Question",
+        "hint": "Test Hint"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "traineeId": "123",
+    "trainerId": "456",
+    "client": "Test Kunde",
+    "mentorId": "1011",
+    "periodStart": "2022-08-07T05:14:28.000Z",
+    "periodEnd": "2025-08-07T05:14:28.000Z",
+    "schoolPeriodEnd": null,
+    "schoolPeriodStart": null,
+    "subject": "IOS Entwicklung",
+    "status": "InProgress",
+    "briefing": [
+      {
+        "id": "1",
+        "questionId": "1",
+        "answer": "Test Answer",
+        "question": "Test Question",
+        "hint": "Test Hint"
+      }
+    ]
+  }
+]
