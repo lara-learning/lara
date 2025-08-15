@@ -22,6 +22,7 @@ export const StyledWebcamPicture = styled.img<{ pictureWidth: string }>`
   height: 100%;
   width: ${(props) => props.pictureWidth};
   object-fit: cover;
+  filter: ${(props) => (props.theme.mode === 'dark' ? 'invert(1)' : 'none')};
 `
 
 export const StyledWebcamLabel = styled.span`

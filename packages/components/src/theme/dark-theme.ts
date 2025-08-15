@@ -2,6 +2,7 @@ import { DefaultTheme } from 'styled-components'
 
 export const darkTheme: DefaultTheme = {
   // Basic
+  mode: 'dark',
   header: '#1D243C',
   surface: '#1D243C',
   background: '#111832',
