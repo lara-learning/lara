@@ -1,8 +1,18 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
 
-import { Container, H1, H2, Paragraph, Spacer, StyledAction, StyledIcon, StyledName, Text } from '@lara/components'
-import { Box, Flex } from '@rebass/grid'
+import {
+  Container,
+  H1,
+  H2,
+  Paragraph,
+  Spacer,
+  StyledAction,
+  StyledIcon,
+  StyledName,
+  Text,
+  Box,
+  Flex,
+} from '@lara/components'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import strings from '../locales/localization'
@@ -17,8 +27,10 @@ import { useToastContext } from '../hooks/use-toast-context'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import Modal from '../components/modal'
 import { Paper } from '@lara/api'
+import { useNavigate } from 'react-router'
 
-export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => {
+export const TrainerPaperPage: React.FC = () => {
+  const navigate = useNavigate()
   const { loading, data } = useTrainerPaperPageDataQuery()
   const [showDeletePaperModal, setShowDeletePaperModal] = React.useState(false)
   const [toDeletePaper, setToDeletePaper] = React.useState<Paper | undefined>(undefined)
@@ -84,7 +96,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
   }
 
   const navigateToEditPaperPage = (paperId: string) => {
-    history.push('/paper/briefing/' + paperId)
+    navigate('/paper/briefing/' + paperId)
   }
 
   return (
@@ -219,7 +231,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
               <Paragraph center>{strings.paper.empty.description}</Paragraph>
               <Spacer y="l">
                 <Flex alignItems={'center'} flexDirection={'column'}>
-                  <PrimaryButton onClick={() => history.push('/paper/createBriefing')}>
+                  <PrimaryButton onClick={() => navigate('/paper/createBriefing')}>
                     {strings.paper.empty.createBriefing}
                   </PrimaryButton>
                 </Flex>
@@ -238,7 +250,7 @@ export const TrainerPaperPage: React.FC<RouteComponentProps> = ({ history }) => 
                   <Paragraph center>{strings.paper.empty.description}</Paragraph>
                   <Spacer y="l">
                     <Flex alignItems={'flex'} flexDirection={'column'}>
-                      <PrimaryButton onClick={() => history.push('/paper/createBriefing')}>
+                      <PrimaryButton onClick={() => navigate('/paper/createBriefing')}>
                         {strings.paper.empty.createBriefing}
                       </PrimaryButton>
                     </Flex>
