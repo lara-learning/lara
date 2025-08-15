@@ -39,6 +39,8 @@ export const EnglishTranslations: Translations = {
       deleteUser: 'A User will be deleted soon',
       reportInReview: 'A new report was handed in',
       alexa: 'Your Account have been linked',
+      paperBriefing: 'Your Paper Briefing',
+      paperBriefingMail: 'Your Paper Briefing',
     },
     headline: {
       export: 'Your Lara export!',
@@ -49,6 +51,7 @@ export const EnglishTranslations: Translations = {
       deleteUser: 'A User will be deleted soon',
       handOver: 'A new report was handed in',
       alexa: 'Lara has been linked with Amazon Alexa!',
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'Something went wring. Please conteact your Lara admin.',
@@ -64,9 +67,12 @@ export const EnglishTranslations: Translations = {
       handOver: 'your Trainee {{ trainee }} handed in week {{ week }} report for review.',
       alexa:
         "Your Lara Account has been linked to your Amazon Alexa Account. If you didn't initiate the Account Linking please open you Lara Settings and remove the Amazon Account. You should also change you Password for Lara.",
+      paperBriefing:
+        "attached you will find the briefing PDF for Anna's training station. We hope you have a lot of fun with it.",
     },
     link: {
       archive: 'Archive',
+      paperBriefing: 'Paper',
       report: 'Report',
       lara: 'Lara',
       settings: 'Settings',
@@ -94,5 +100,10 @@ export const EnglishTranslations: Translations = {
     thursday: 'Thursday',
     friday: 'Friday',
     hello: 'Hello',
+    client: 'Client',
+    mentor: 'Mentor',
+    trainer: 'Trainer',
+    trainee: 'Trainee',
+    briefing: 'Briefing',
   },
 }

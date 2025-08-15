@@ -30,6 +30,12 @@ query UserPage($id: ID!) {
         lastName
       }
     }
+
+    ... on Mentor {
+      deleteAt
+      startDate
+      endDate
+    }
   }
   companies {
     id

@@ -39,6 +39,8 @@ export const GermanTranslations: Translations = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       reportInReview: 'Ein Bericht wurde abgegeben',
       alexa: 'Deine Accounts wurden verknüpft',
+      paperBriefing: 'Dein Paper Briefing',
+      paperBriefingMail: 'Dein Paper Briefing',
     },
     headline: {
       export: 'Dein Lara-Export!',
@@ -49,6 +51,7 @@ export const GermanTranslations: Translations = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       handOver: 'Ein Bericht wurde übergeben',
       alexa: 'Lara wurde mit Amazon Alexa verknüpft!',
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
@@ -65,9 +68,12 @@ export const GermanTranslations: Translations = {
       handOver: 'dein Azubi {{ trainee }} hat KW {{ week }} seines Berichtsheft zur Überprüfung abgegeben.',
       alexa:
         'Dein Lara Account wurde mit deinem Amazon Alexa Account verknüpft. Sollte dies ein Fehler sein bitte öffne deine Lara Einstellungen und löse die Verknüpfung wieder auf. Außerdem solltest du dein Lara Passwort ändern.',
+      paperBriefing:
+        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation. Wir wünschen dir ganz viel Spaß damit.',
     },
     link: {
       archive: 'zum Archiv',
+      paperBriefing: 'zum Paper',
       report: 'zum Bericht',
       lara: 'zu Lara',
       settings: 'Einstellungen',
@@ -95,5 +101,10 @@ export const GermanTranslations: Translations = {
     thursday: 'Donnerstag',
     friday: 'Freitag',
     hello: 'Hallo',
+    client: 'Kunde',
+    mentor: 'Ausbildungsbeauftragter',
+    trainer: 'Ausbilder',
+    trainee: 'Auszubildender',
+    briefing: 'Briefing',
   },
 }

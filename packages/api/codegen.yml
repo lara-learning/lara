@@ -21,4 +21,6 @@ generates:
         Report: ./models#Report
         Trainer: ./models#Trainer
         Trainee: ./models#Trainee
+        Mentor: ./models#Mentor
         UserInterface: ./models#UserInterface
+        Paper: ./models#Paper

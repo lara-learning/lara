@@ -175,7 +175,7 @@ const buttonStyle = (props: ButtonLayoutProps) => css`
 `
 
 const ButtonWrapper = styled.button.withConfig({
-  shouldForwardProp: (prop) => !['styling', 'fullsize'].includes(prop),
+  shouldForwardProp: (prop) => !['styling', 'fullsize', 'danger'].includes(prop),
 })<ButtonLayoutProps>`
   font-size: ${FontSizes.button};
   border: none;
