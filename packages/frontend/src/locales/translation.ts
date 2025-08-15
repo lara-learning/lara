@@ -16,6 +16,7 @@ export default interface Translation {
   done: string
   markDelete: string
   unmarkDelete: string
+  deleteAt: string
   deactivate: string
   traineeShipYear: string
   claimed: string
@@ -36,6 +37,97 @@ export default interface Translation {
     declinedReportMessage: string
     reportToArciveAddedSuccessTitle: string
     reportToArciveAddedSuccess: string
+  }
+  paper: {
+    empty: {
+      headline: string
+      description: string
+      createBriefing: string
+    }
+    createBriefing: {
+      title: string
+      firstnameMentor: string
+      lastnameMentor: string
+      emailMentor: string
+      trainee: string
+      department: string
+      customer: string
+      projectPeriod: string
+      schoolPeriod: string
+    }
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: string
+        hint: string
+      }
+      procedure: {
+        question: string
+        hint: string
+      }
+      learningContent: {
+        question: string
+        hint: string
+      }
+      frameworkPlan: {
+        question: string
+        hint: string
+      }
+      tasksAndDutiesTrainee: {
+        question: string
+        hint: string
+      }
+      tasksAndDutiesMentor: {
+        question: string
+        hint: string
+      }
+      primeBlueAntMyTe: {
+        question: string
+        hint: string
+      }
+      feedback: {
+        question: string
+        hint: string
+      }
+      otherRemarks: {
+        question: string
+        hint: string
+      }
+    }
+    modal: {
+      title: string
+      description: string
+      createBriefing: string
+      backToPaperTitle: string
+      backToPaperDescription: string
+      backToPaperButton: string
+      deletePaperTitle: string
+      deletePaperDescription: string
+      deletePaperButtonAgree: string
+      deletePaperButtonDisagree: string
+    }
+    dashboard: {
+      title: string
+      description: string
+      briefing: string
+      feedback: string
+      conclusion: string
+      pdfFeedback: string
+      trainee: string
+      trainer: string
+      editPaper: string
+    }
+    createPaper: {
+      title: string
+      text: string
+    }
+    deletePaper: {
+      title: string
+      text: string
+    }
+    briefing: {
+      toastTitle: string
+      toastDescription: string
+    }
   }
   archivePage: {
     header: string
@@ -279,6 +371,8 @@ export default interface Translation {
     reports: string
     trainees: string
     trainer: string
+    mentor: string
+    paper: string
     dashhboard: string
     archive: string
     settings: string
@@ -343,7 +437,17 @@ export default interface Translation {
     description: string
     success: string
   }
+  createMentor: {
+    title: string
+    description: string
+    success: string
+  }
   deleteTrainer: {
+    title: string
+    description: string
+    success: string
+  }
+  deleteMentor: {
     title: string
     description: string
     success: string

@@ -87,7 +87,7 @@ export function CustomDropdown({
 }) {
   const [open, setOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const options = ['Trainee', 'Trainer', 'Admin']
+  const options = ['Trainee', 'Trainer', 'Mentor', 'Admin']
 
   const setOpenState = useCallback(
     (newOpen: boolean) => {

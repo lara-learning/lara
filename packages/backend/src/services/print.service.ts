@@ -5,15 +5,21 @@ import hash from 'object-hash'
 import {
   Day,
   Entry,
+  Paper,
+  PaperFormData,
+  PrintBriefing,
   PrintData,
   PrintDay,
   PrintEntry,
+  PrintPaper,
+  PrintPaperData,
   PrintPayload,
   PrintReport,
   PrintReportData,
   PrintUserData,
   Report,
   Trainee,
+  User,
 } from '@lara/api'
 
 import { invokeLambda } from '../aws/lambda'
@@ -35,22 +41,36 @@ export const createPDFName = (report: Report, trainee: Trainee): string => {
 }
 
 /**
+ * Creates PDF name for a print export
+ * @returns String of the PDF name
+ * @param paper
+ */
+export const createPaperPDFName = (paper: Paper): string => {
+  return `Paper_Briefing_${paper.id}.pdf`
+}
+
+/**
  * Creates the user data that is needed by the print lambda
  * for generating the PDF
- * @param trainee Trainee for PDF
+ * @param user Trainee for PDF
  * @returns Userdata
  */
-export const createPrintUserData = async (trainee: Trainee): Promise<PrintUserData> => {
+export const createPrintUserData = async (user: User): Promise<PrintUserData> => {
   const trainerSignature =
-    trainee.trainerId && (await trainerById(trainee.trainerId).then((trainer) => trainer?.signature))
+    user.__typename == 'Trainee' &&
+    user.trainerId &&
+    (await trainerById(user.trainerId).then((trainer) => trainer?.signature))
 
   return {
-    receiverEmail: trainee.email,
-    firstName: trainee.firstName,
-    lastName: trainee.lastName,
-    course: trainee.course ?? '',
-    traineeSignature: trainee.signature && `data:image/svg+xml;base64,${trainee.signature}`,
-    trainerSignature: trainerSignature && `data:image/svg+xml;base64,${trainerSignature}`,
+    receiverEmail: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    type: user.__typename,
+    course: user.__typename == 'Trainee' && user.course ? user.course : '',
+    traineeSignature:
+      user.__typename == 'Trainee' ? user.signature && `data:image/svg+xml;base64,${user.signature}` : '',
+    trainerSignature:
+      user.__typename == 'Trainee' && trainerSignature ? `data:image/svg+xml;base64,${trainerSignature}` : '',
   }
 }
 
@@ -89,6 +109,43 @@ const transformReport = (report: Report): PrintReport => {
 }
 
 /**
+ * Turns a paper from the DB into a paper for the print paper
+ * @returns Paper for print
+ * @param paperBriefing
+ */
+const transformPaperBriefing = (paperBriefing: PaperFormData[]): PrintBriefing[] => {
+  const printBriefing: PrintBriefing[] = []
+  paperBriefing.map((briefing: PaperFormData) => {
+    printBriefing.push({
+      question: briefing.question,
+      questionId: briefing.questionId,
+      hint: briefing.hint ?? '',
+      answer: briefing.answer ?? '',
+      id: briefing.id,
+    })
+  })
+  return printBriefing
+}
+
+/**
+ * Turns a paper from the DB into a paper for the print export
+ * @returns Paper for print
+ * @param paper
+ */
+const transformPaper = (paper: Paper): PrintPaper => {
+  return {
+    status: paper.status,
+    briefing: transformPaperBriefing(paper.briefing),
+    client: paper.client,
+    periodStart: paper.periodStart ?? '',
+    periodEnd: paper.periodEnd ?? '',
+    schoolPeriodStart: paper.schoolPeriodStart ?? '',
+    schoolPeriodEnd: paper.schoolPeriodEnd ?? '',
+    subject: paper.subject,
+  }
+}
+
+/**
  * Creates the report data that is needed by the print lambda
  * for generating the PDF
  * @param report Report for PDF
@@ -112,6 +169,19 @@ export const createPrintReportData = (report: Report, trainee: Trainee): PrintRe
     signatureDate: reportAccepted
       ? `${format(parseISODateString(reportAccepted), 'dd.MM.yyyy')}`
       : `${format(nextFriday(reportStartOfWeek), 'dd.MM.yyyy')}`,
+  }
+}
+
+/**
+ * Creates the paper data that is needed by the print lambda
+ * for generating the PDF
+ * @returns Paperdata
+ * @param paper
+ */
+export const createPrintPaperData = (paper: Paper): PrintPaperData => {
+  return {
+    filename: createPaperPDFName(paper),
+    paper: transformPaper(paper),
   }
 }
 
