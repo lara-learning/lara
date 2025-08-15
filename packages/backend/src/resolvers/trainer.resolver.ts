@@ -66,7 +66,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         trainee = await traineeById(paper?.traineeId)
         mentor = (await mentorById(paper?.mentorId)) ?? (await trainerById(paper?.mentorId))
       }
-       
+
       let userData = await createPrintUserData(trainee!)
       const printTranslations: PrintTranslations = t('print', currentUser.language)
       const emailTranslations: EmailTranslations = t('email', currentUser.language)
@@ -81,7 +81,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       await invokePrintLambda({
         printDataHash: traineeHash,
       })
-       
+
       userData = await createPrintUserData(mentor!)
 
       const mentorHash = await savePrintData({

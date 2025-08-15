@@ -102,7 +102,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
         {/* Mentor Routes */}
         {currentUser.type === UserTypeEnum.Mentor && currentUser.__typename === 'Mentor' && (
           <>
-            <Route path="/paper" element={<MentorPaperPage />} />
+            <Route path="/" element={<MentorPaperPage />} />
           </>
         )}
 

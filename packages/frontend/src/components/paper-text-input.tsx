@@ -7,8 +7,8 @@ import strings from '../locales/localization'
 import { useFocusState } from '../hooks/use-focus-state'
 
 interface PaperTextInputProps {
-  onSave: (paperInput: PaperFormData) => any
-  onDelete?: () => any
+  onSave: (paperInput: PaperFormData) => unknown
+  onDelete?: () => unknown
   clearOnSave?: boolean
   entry: PaperFormData
   disabled?: boolean
