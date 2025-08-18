@@ -93,7 +93,7 @@ const Navigation: React.FC = () => {
   const renderMentorNav = () => {
     return (
       <>
-        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+        <StyledNavItem to={'/'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.paper}
         </StyledNavItem>
         <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
@@ -142,6 +142,7 @@ const Navigation: React.FC = () => {
               <StyledNavItemsWrapper>
                 {data.currentUser?.type === UserTypeEnum.Trainer && renderTrainerNav()}
                 {data.currentUser?.type === UserTypeEnum.Trainee && renderTraineeNav()}
+                {data.currentUser?.type === UserTypeEnum.Mentor && renderMentorNav()}
                 {data.currentUser?.type === UserTypeEnum.Admin && renderAdminNav()}
               </StyledNavItemsWrapper>
             )}
