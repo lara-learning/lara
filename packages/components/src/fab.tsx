@@ -17,7 +17,9 @@ const dangerStyles = css`
   }
 `
 
-const StyledFab = styled.button<FabLayoutProps>`
+const StyledFab = styled.button.withConfig({
+  shouldForwardProp: (prop) => !['large'].includes(prop),
+})<FabLayoutProps>`
   position: fixed;
   cursor: pointer;
   border-radius: 50%;
