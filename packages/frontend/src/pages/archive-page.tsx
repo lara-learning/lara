@@ -23,7 +23,7 @@ import { PrimaryButton } from '../components/button'
 import { CheckBox } from '../components/checkbox'
 import Illustrations from '../components/illustration'
 import Loader from '../components/loader'
-import { Report, ReportStatus, useArchivePageDataQuery } from '../graphql'
+import { DayStatusEnum, Report, ReportStatus, useArchivePageDataQuery } from '../graphql'
 import DateHelper from '../helper/date-helper'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useIsDarkMode } from '../hooks/use-is-dark-mode'
@@ -36,6 +36,7 @@ interface ArchiveFilter {
   week?: number
   yearEnd?: number
   weekEnd?: number
+  searchText?: string
 }
 
 interface SelectedReports {
@@ -48,8 +49,29 @@ interface ArchivePageState extends ArchiveFilter {
 }
 
 const searchFilter =
-  ({ department, year, week, yearEnd, weekEnd }: ArchiveFilter) =>
-  (report?: Pick<Report, 'year' | 'week' | 'department'>): boolean => {
+  ({ department, year, week, yearEnd, weekEnd, searchText }: ArchiveFilter) =>
+  (
+    report?:
+      | {
+          __typename: 'Report'
+          id: string
+          week: number
+          year: number
+          status: ReportStatus
+          department?: string | undefined
+          days: {
+            __typename?: 'Day' | undefined
+            status?: DayStatusEnum | undefined
+            entries: {
+              __typename?: 'Entry' | undefined
+              id: string
+              time: number
+              text: string
+            }[]
+          }[]
+        }
+      | undefined
+  ): boolean => {
     if (!report) {
       return false
     }
@@ -62,14 +84,21 @@ const searchFilter =
     const departmentMatch =
       !department || (report.department && report.department.trim().toLowerCase().match(department))
 
-    return Boolean(yearMatch && weekMatch && departmentMatch && yearSpanMatch && weekSpanMatch)
+    let textMatch = true
+    if (searchText) {
+      textMatch = report.days.some((day) =>
+        day.entries.some((entry) => entry.text.toLowerCase().includes(searchText.toLowerCase()))
+      )
+    }
+
+    console.log('days: ', report.days)
+
+    return Boolean(yearMatch && weekMatch && departmentMatch && yearSpanMatch && weekSpanMatch && textMatch)
   }
 
 const ArchivePage: React.FunctionComponent = () => {
   const [fetchPdf, pdfLoading] = useFetchPdf()
-
   const { loading, data } = useArchivePageDataQuery()
-
   const isDarkMode = useIsDarkMode(data?.currentUser)
 
   const [state, setState] = React.useState<ArchivePageState>({
@@ -92,11 +121,9 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const getCheckState = (id: string): boolean => {
     const { checkedReports } = state
-
     if (checkedReports === null) {
       return false
     }
-
     return checkedReports[id]
   }
 
@@ -122,11 +149,9 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const getCheckedReports = React.useCallback((): Pick<Report, 'id'>[] => {
     const { checkedReports } = state
-
     if (checkedReports === null) {
       return []
     }
-
     return filteredReports.filter((report) => report && checkedReports[report.id]) as Pick<Report, 'id'>[]
   }, [filteredReports, state])
 
@@ -150,13 +175,14 @@ const ArchivePage: React.FunctionComponent = () => {
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const value = (event.target as HTMLInputElement).value.toLowerCase()
     const yearMonthRegex = /([0-9]{4}):([0-9]{1,2})/
-    const departmentRegex = /([a-z A-Z]+)/
+    const departmentRegex = /(department:|dep:)([a-z A-Z]+)/
     const timespanRegex = /(([0-9]{4}):([0-9]{1,2})) ?- ?(([0-9]{4}):([0-9]{1,2}))/
     let year: number | undefined = undefined
     let week: number | undefined = undefined
     let department: string | undefined = undefined
     let yearEnd: number | undefined = undefined
     let weekEnd: number | undefined = undefined
+    let searchText: string | undefined = undefined
 
     const yearMatch = yearMonthRegex.exec(value)
     if (yearMonthRegex.test(value) && yearMatch) {
@@ -173,8 +199,12 @@ const ArchivePage: React.FunctionComponent = () => {
     }
 
     const departmentMatch = departmentRegex.exec(value)
-    if (departmentRegex.test(value) && departmentMatch) {
-      department = departmentMatch[0].replace(/\s/g, '').trim()
+    if (departmentMatch) {
+      department = departmentMatch[2].replace(/\s/g, '').trim()
+    }
+
+    if (!departmentMatch) {
+      searchText = value
     }
 
     setState({
@@ -184,6 +214,7 @@ const ArchivePage: React.FunctionComponent = () => {
       week,
       yearEnd,
       weekEnd,
+      searchText,
     })
   }
 
@@ -236,7 +267,6 @@ const ArchivePage: React.FunctionComponent = () => {
                   </tr>
                 )}
               </thead>
-
               <tbody>
                 {filteredReports.map((report) => {
                   if (!report) {
