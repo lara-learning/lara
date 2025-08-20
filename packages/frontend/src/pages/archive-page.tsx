@@ -91,8 +91,6 @@ const searchFilter =
       )
     }
 
-    console.log('days: ', report.days)
-
     return Boolean(yearMatch && weekMatch && departmentMatch && yearSpanMatch && weekSpanMatch && textMatch)
   }
 

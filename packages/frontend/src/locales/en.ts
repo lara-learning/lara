@@ -52,7 +52,7 @@ const englishTranslation: Translation = {
       noResult: {
         title: "Sadly, I didn't find anything.",
         caption:
-          'Please check your search entry and try again. {0} With {1} you can search for a specific calendar week or with {2} for a time period.',
+          'Please check your search entry and try again. {0} With {1} you can search for a specific calendar week or with {2} for a time period, or with dep: for a Department.',
       },
       initial: {
         title: "There's nothing here yet.",
