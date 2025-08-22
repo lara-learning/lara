@@ -12,6 +12,7 @@ query ArchivePageData {
     year
     status
     department
+    summary
     days {
       status
       entries {

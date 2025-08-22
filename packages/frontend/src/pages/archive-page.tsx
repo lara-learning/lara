@@ -59,6 +59,7 @@ const searchFilter =
           year: number
           status: ReportStatus
           department?: string | undefined
+          summary?: string | undefined
           days: {
             __typename?: 'Day' | undefined
             status?: DayStatusEnum | undefined
@@ -89,6 +90,9 @@ const searchFilter =
       textMatch = report.days.some((day) =>
         day.entries.some((entry) => entry.text.toLowerCase().includes(searchText.toLowerCase()))
       )
+      if (!textMatch && report.summary) {
+        textMatch = report.summary.toLowerCase().includes(searchText.toLowerCase())
+      }
     }
 
     return Boolean(yearMatch && weekMatch && departmentMatch && yearSpanMatch && weekSpanMatch && textMatch)
