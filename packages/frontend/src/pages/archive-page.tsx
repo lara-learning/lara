@@ -172,9 +172,9 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const value = (event.target as HTMLInputElement).value.toLowerCase()
-    const yearMonthRegex = /([0-9]{4}):([0-9]{1,2})/
+    const yearMonthRegex = /([0-9]{4}):([0-9]{2})/
     const departmentRegex = /(department:|dep:)([a-z A-Z]+)/
-    const timespanRegex = /(([0-9]{4}):([0-9]{1,2})) ?- ?(([0-9]{4}):([0-9]{1,2}))/
+    const timespanRegex = /(([0-9]{4}):([0-9]{2})) ?- ?(([0-9]{4}):([0-9]{2}))/
     let year: number | undefined = undefined
     let week: number | undefined = undefined
     let department: string | undefined = undefined
@@ -201,7 +201,7 @@ const ArchivePage: React.FunctionComponent = () => {
       department = departmentMatch[2].replace(/\s/g, '').trim()
     }
 
-    if (!departmentMatch) {
+    if (!departmentMatch && !timeSpanMatch && !yearMatch) {
       searchText = value
     }
 
