@@ -54,7 +54,7 @@ const germanTranslation: Translation = {
       noResult: {
         title: 'Leider habe ich nichts gefunden',
         caption:
-          'Bitte überprüfe deine Sucheingabe und versuche es erneut. {0} Mit {1} kannst du eine bestimmte Kalenderwoche suchen oder mit {2} nach einem Zeitraum.',
+          'Bitte überprüfe deine Sucheingabe und versuche es erneut. {0} Mit {1} kannst du eine bestimmte Kalenderwoche suchen oder mit {2} nach einem Zeitraum, oder mit dep: nach einem Department.',
       },
       initial: {
         title: 'Hier gibt es noch nichts',

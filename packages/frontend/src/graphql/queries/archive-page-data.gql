@@ -12,11 +12,13 @@ query ArchivePageData {
     year
     status
     department
+    summary
     days {
       status
       entries {
         id
         time
+        text
       }
     }
     __typename
