@@ -1,0 +1,10 @@
+query MentorsPage {
+  mentors {
+    id
+    firstName
+    lastName
+    startDate
+    endDate
+    avatar
+  }
+}

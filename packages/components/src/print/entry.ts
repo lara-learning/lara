@@ -13,6 +13,13 @@ export const StyledPrintEntry = styled.div`
   }
 `
 
+export const StyledPrintPaperEntry = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: ${Spacings.s};
+  background-color: ${(props) => props.theme.reportGrey};
+`
+
 export const StyledPrintEntryText = styled.span`
   color: ${(props) => props.theme.mediumFont};
   font-size: ${FontSizes.copy};
