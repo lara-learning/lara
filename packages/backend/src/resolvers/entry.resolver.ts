@@ -8,10 +8,20 @@ import { generateEntry, reportDayEntryByEntryId, validateEntryUpdate } from '../
 import { isReportEditable, reportsWithinApprenticeship } from '../services/report.service'
 import { createT } from '../i18n'
 
+const tmp: Record<string, number> = {}
+
 export const entryTraineeResolver: GqlResolvers<TraineeContext> = {
   Mutation: {
     createEntry: async (_parent, { dayId, input }, { currentUser }) => {
       const reports = await reportsWithinApprenticeship(currentUser)
+      reports.forEach((report) => {
+        report.days.forEach((day) => {
+          day.entries.forEach((entry) => {
+            const text = entry.text
+            tmp[text] = tmp[text] ? tmp[text] + 1 : 1
+          })
+        })
+      })
 
       const { report, day } = reportDayByDayId(dayId, reports)
 

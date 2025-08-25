@@ -357,7 +357,7 @@ export type Query = {
   /** Get all Reports for the current User. The result can be filtered by the 'statuses' attribut */
   reports: Array<Maybe<Report>>;
   /** Get all Suggestions */
-  suggestions: Array<Scalars['String']['output']>;
+  suggestions: Array<Suggestion>;
   /** Get all Trainees */
   trainees: Array<Trainee>;
   /** Get all Trainers */
@@ -419,6 +419,12 @@ export enum ReportStatus {
   /** Report is open */
   Todo = 'todo'
 }
+
+export type Suggestion = {
+  __typename?: 'Suggestion';
+  text: Scalars['String']['output'];
+  time: Scalars['String']['output'];
+};
 
 export type Trainee = UserInterface & {
   __typename?: 'Trainee';
@@ -845,7 +851,7 @@ export type SignatureSettingsDataQuery = { __typename?: 'Query', currentUser?: {
 export type SuggestionsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<string> };
+export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: string }> };
 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2067,7 +2073,10 @@ export type SignatureSettingsDataLazyQueryHookResult = ReturnType<typeof useSign
 export type SignatureSettingsDataSuspenseQueryHookResult = ReturnType<typeof useSignatureSettingsDataSuspenseQuery>;
 export const SuggestionsDataDocument = gql`
     query SuggestionsData {
-  suggestions
+  suggestions {
+    text
+    time
+  }
 }
     `;
 export function useSuggestionsDataQuery(baseOptions?: Apollo.QueryHookOptions<SuggestionsDataQuery, SuggestionsDataQueryVariables>) {

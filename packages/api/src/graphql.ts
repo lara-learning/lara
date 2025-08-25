@@ -358,7 +358,7 @@ export type GqlQuery = {
   /** Get all Reports for the current User. The result can be filtered by the 'statuses' attribut */
   reports: Array<Maybe<GqlReport>>;
   /** Get all Suggestions */
-  suggestions: Array<Scalars['String']['output']>;
+  suggestions: Array<GqlSuggestion>;
   /** Get all Trainees */
   trainees: Array<GqlTrainee>;
   /** Get all Trainers */
@@ -419,6 +419,12 @@ export type GqlReportStatus =
   | 'review'
   /** Report is open */
   | 'todo';
+
+export type GqlSuggestion = {
+  __typename?: 'Suggestion';
+  text: Scalars['String']['output'];
+  time: Scalars['String']['output'];
+};
 
 export type GqlTrainee = GqlUserInterface & {
   __typename?: 'Trainee';
@@ -626,6 +632,7 @@ export type GqlResolversTypes = ResolversObject<{
   Report: ResolverTypeWrapper<Report>;
   ReportStatus: GqlReportStatus;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Suggestion: ResolverTypeWrapper<GqlSuggestion>;
   Trainee: ResolverTypeWrapper<Trainee>;
   Trainer: ResolverTypeWrapper<Trainer>;
   TrainerTraineePayload: ResolverTypeWrapper<Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversTypes['Trainee'], trainer: GqlResolversTypes['Trainer'] }>;
@@ -662,6 +669,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   Query: {};
   Report: Report;
   String: Scalars['String']['output'];
+  Suggestion: GqlSuggestion;
   Trainee: Trainee;
   Trainer: Trainer;
   TrainerTraineePayload: Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversParentTypes['Trainee'], trainer: GqlResolversParentTypes['Trainer'] };
@@ -812,7 +820,7 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;
-  suggestions?: Resolver<Array<GqlResolversTypes['String']>, ParentType, ContextType>;
+  suggestions?: Resolver<Array<GqlResolversTypes['Suggestion']>, ParentType, ContextType>;
   trainees?: Resolver<Array<GqlResolversTypes['Trainee']>, ParentType, ContextType>;
   trainers?: Resolver<Array<GqlResolversTypes['Trainer']>, ParentType, ContextType>;
 }>;
@@ -830,6 +838,12 @@ export type GqlReportResolvers<ContextType = Context, ParentType extends GqlReso
   summary?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   week?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   year?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlSuggestionResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Suggestion'] = GqlResolversParentTypes['Suggestion']> = ResolversObject<{
+  text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  time?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -924,6 +938,7 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   PrintPayload?: GqlPrintPayloadResolvers<ContextType>;
   Query?: GqlQueryResolvers<ContextType>;
   Report?: GqlReportResolvers<ContextType>;
+  Suggestion?: GqlSuggestionResolvers<ContextType>;
   Trainee?: GqlTraineeResolvers<ContextType>;
   Trainer?: GqlTrainerResolvers<ContextType>;
   TrainerTraineePayload?: GqlTrainerTraineePayloadResolvers<ContextType>;
