@@ -67,6 +67,9 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
+      <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.wiki}
+      </StyledNavItem>
     </>
   )
 
