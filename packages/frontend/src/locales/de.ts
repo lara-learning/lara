@@ -297,6 +297,7 @@ const germanTranslation: Translation = {
     dashhboard: 'Dashboard',
     archive: 'Archiv',
     settings: 'Einstellungen',
+    wiki: 'Wiki',
   },
   trainerReportOverview: {
     todo: 'Es ist noch {count} Berichtsheft in Arbeit',

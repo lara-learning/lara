@@ -283,6 +283,7 @@ export default interface Translation {
     dashhboard: string
     archive: string
     settings: string
+    wiki: string
   }
   trainerReportOverview: {
     todo: string

@@ -293,6 +293,7 @@ const englishTranslation: Translation = {
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',
+    wiki: 'Wiki',
   },
   trainerReportOverview: {
     todo: '{count} report is still in progress',
