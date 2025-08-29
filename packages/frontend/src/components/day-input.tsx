@@ -96,8 +96,9 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabl
     if (!day) {
       return heading ?? ''
     }
+    const date = Date.parse(day.date)
 
-    return heading || DateHelper.format(Date.parse(day.date), 'EEEE')
+    return heading || `${DateHelper.format(date, 'EEEE')} – ${DateHelper.format(date, 'dd.MM.yyyy')}`
   }
 
   const shouldRenderEntriesInput = (): boolean => {
