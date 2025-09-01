@@ -15,7 +15,7 @@ export const lightTheme: DefaultTheme = {
   //Fonts
   darkFont: '#333333',
   mediumFont: '#4F4F4F',
-  lightFont: '#757575',
+  lightFont: '#6a6767ff',
   blueFont: '#4065FA',
   placeholder: '#B8B8B8',
   headerFont: '#FFFFFF',

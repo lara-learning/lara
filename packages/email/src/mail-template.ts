@@ -43,6 +43,7 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
     case 'reportExport':
       emailVariables = {
         ...emailVariables,
+        DEFAULTBACKGROUND: createBase64UrlfromPng('background_2.png'),
         HEADLINE: headline.export,
         HEADLINEIMAGE: createBase64UrlfromPng('folder.png'),
         MAINTEXT: message.success,
