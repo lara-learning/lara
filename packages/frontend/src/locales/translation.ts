@@ -58,6 +58,7 @@ export default interface Translation {
     }
     exportTitle: string
     export: string
+    back: string
   }
   report: {
     title: string

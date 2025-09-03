@@ -16,6 +16,15 @@ export const StyledHeader = styled(NavLink)`
   flex-grow: 1;
 `
 
+export const StyledHeaderSpan = styled.span`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-grow: 1;
+  padding: 16px;
+  cursor: pointer;
+`
+
 export const StyledName = styled.span`
   font-size: ${FontSizes.copy};
   font-weight: bold;

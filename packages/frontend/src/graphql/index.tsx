@@ -404,6 +404,7 @@ export type Report = CommentableInterface & {
   reportAccepted?: Maybe<Scalars['String']['output']>;
   status: ReportStatus;
   summary?: Maybe<Scalars['String']['output']>;
+  traineeId: Scalars['ID']['output'];
   week: Scalars['Int']['output'];
   year: Scalars['Int']['output'];
 };
@@ -762,7 +763,7 @@ export type AlexaLinkingUrlQuery = { __typename?: 'Query', alexaLinkingUrl?: str
 export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
+export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
 
 export type CommentBoxDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1482,6 +1483,7 @@ export const ArchivePageDataDocument = gql`
     status
     department
     summary
+    traineeId
     days {
       status
       entries {

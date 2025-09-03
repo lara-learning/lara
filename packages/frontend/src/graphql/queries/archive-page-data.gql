@@ -13,6 +13,7 @@ query ArchivePageData {
     status
     department
     summary
+    traineeId
     days {
       status
       entries {

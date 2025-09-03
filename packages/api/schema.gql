@@ -310,6 +310,7 @@ type Report implements CommentableInterface {
   id: ID!
   status: ReportStatus!
   summary: String
+  traineeId: ID!
   week: Int!
   year: Int!
   reportAccepted: String
