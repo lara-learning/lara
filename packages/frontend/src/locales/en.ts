@@ -67,6 +67,7 @@ const englishTranslation: Translation = {
     },
     exportTitle: 'export started',
     export: 'Shortly you will receive an email with your exported reports.',
+    back: 'Back',
   },
   report: {
     title: 'Report for',

@@ -70,6 +70,7 @@ const germanTranslation: Translation = {
     },
     exportTitle: 'Export gestartet',
     export: 'Du erhältst in Kürze eine E-mail mit den exportierten Berichten.',
+    back: 'Zurück',
   },
   report: {
     title: 'Bericht für',

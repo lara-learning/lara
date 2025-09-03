@@ -43,7 +43,7 @@ export const permissions = shield<unknown, Context>(
       alexaLinkingUrl: authenticated,
 
       // Trainee queries
-      reports: and(authenticated, trainee),
+      reports: and(authenticated, or(trainee, trainer)),
       suggestions: and(authenticated, trainee),
       reportForYearAndWeek: and(authenticated, trainee),
       print: and(authenticated, trainee),
@@ -53,9 +53,9 @@ export const permissions = shield<unknown, Context>(
 
       // Trainer and Admin Queries
       trainees: and(authenticated, or(trainer, admin)),
+      getUser: and(authenticated, or(admin, trainer)),
 
       // Admin Queris
-      getUser: and(authenticated, admin),
       trainers: and(authenticated, admin),
       admins: and(authenticated, admin),
     },

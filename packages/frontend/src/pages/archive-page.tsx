@@ -23,12 +23,21 @@ import { PrimaryButton } from '../components/button'
 import { CheckBox } from '../components/checkbox'
 import Illustrations from '../components/illustration'
 import Loader from '../components/loader'
-import { DayStatusEnum, Report, ReportStatus, useArchivePageDataQuery } from '../graphql'
+import {
+  DayStatusEnum,
+  Report,
+  ReportStatus,
+  Trainee,
+  useArchivePageDataQuery,
+  UserTypeEnum,
+  useTraineePageDataQuery,
+} from '../graphql'
 import DateHelper from '../helper/date-helper'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useIsDarkMode } from '../hooks/use-is-dark-mode'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
+import TraineeSelector from '../components/trainee-selector'
 
 interface ArchiveFilter {
   department?: string
@@ -101,6 +110,9 @@ const searchFilter =
 const ArchivePage: React.FunctionComponent = () => {
   const [fetchPdf, pdfLoading] = useFetchPdf()
   const { loading, data } = useArchivePageDataQuery()
+  const { data: traineeData, loading: traineeLoading } = useTraineePageDataQuery({
+    skip: !data?.currentUser || data.currentUser.__typename !== UserTypeEnum.Trainer,
+  })
   const isDarkMode = useIsDarkMode(data?.currentUser)
 
   const [state, setState] = React.useState<ArchivePageState>({
@@ -110,10 +122,23 @@ const ArchivePage: React.FunctionComponent = () => {
   })
 
   const [allChecked, setAllChecked] = React.useState(false)
+  const [selectedTrainee, setSelectedTrainee] = React.useState<string | undefined>(undefined)
 
   const getArchivedReports = React.useCallback(() => {
-    return data ? data.reports.filter((report) => report?.status === ReportStatus.Archived) : []
-  }, [data])
+    if (!data) return []
+
+    const reports = data.reports.filter((report) => report?.status === ReportStatus.Archived)
+
+    if (data.currentUser?.__typename === UserTypeEnum.Trainer && selectedTrainee) {
+      return reports.filter((report) => report?.traineeId === selectedTrainee)
+    }
+
+    if (data.currentUser?.__typename === UserTypeEnum.Trainee) {
+      return reports.filter((report) => report?.traineeId === data.currentUser?.id)
+    }
+
+    return reports
+  }, [data, selectedTrainee])
 
   const archivedReports = getArchivedReports()
 
@@ -174,6 +199,10 @@ const ArchivePage: React.FunctionComponent = () => {
     fetchPdf(getCheckedReports())
   }
 
+  const handleTraineeSelect = (traineeId: string) => {
+    setSelectedTrainee(traineeId)
+  }
+
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const value = (event.target as HTMLInputElement).value.toLowerCase()
     const yearMonthRegex = /([0-9]{4}):([0-9]{2})/
@@ -220,9 +249,20 @@ const ArchivePage: React.FunctionComponent = () => {
     })
   }
 
+  const traineeIdsWithArchivedReports = React.useMemo(() => {
+    return [...new Set(archivedReports.map((report) => report?.traineeId).filter(Boolean))] as string[]
+  }, [archivedReports])
+
+  const filteredTrainees = React.useMemo(() => {
+    if (!traineeData?.trainees) return []
+    return traineeData.trainees.filter(
+      (trainee) => trainee && traineeIdsWithArchivedReports.includes(trainee.id)
+    ) as Trainee[]
+  }, [traineeData, traineeIdsWithArchivedReports])
+
   return (
     <Template type="Main">
-      {loading && <Loader />}
+      {(loading || traineeLoading) && <Loader />}
 
       {!loading && archivedReports.length === 0 && (
         <Flex alignItems={'center'} flexDirection={'column'} mt={'3'} style={{ overflow: 'hidden' }}>
@@ -232,132 +272,156 @@ const ArchivePage: React.FunctionComponent = () => {
         </Flex>
       )}
 
-      {!loading && archivedReports.length > 0 && (
+      {data?.currentUser?.__typename === UserTypeEnum.Trainer && filteredTrainees.length > 0 && !selectedTrainee && (
         <>
-          <StyledArchiveContainer>
-            <StyledArchiveTable>
-              <thead>
-                <tr>
-                  <th colSpan={3}>
-                    <Spacer bottom={'l'}>
-                      <H1 noMargin>{strings.archivePage.header}</H1>
-                    </Spacer>
-                  </th>
-                  <th colSpan={2}>
-                    <Spacer bottom={'l'}>
-                      <StyledSearchWrapper>
-                        <StyledIcon name={'Search'} size={Spacings.xl} color={'iconBlue'}></StyledIcon>
-                        <StyledSearch placeholder={strings.archivePage.searchPlaceholder} onInput={onInput} required />
-                      </StyledSearchWrapper>
-                    </Spacer>
-                  </th>
-                </tr>
-                {filteredReports.length !== 0 && (
-                  <tr>
-                    <td>
-                      <CheckBox iconName={'SelectAll'} checked={allChecked} onClick={checkAllBoxes} />
-                    </td>
-                    <td>
-                      <StyledTableHeadText>{strings.archivePage.tableHead.calendarWeek}</StyledTableHeadText>
-                    </td>
-                    <td>
-                      <StyledTableHeadText>{strings.archivePage.tableHead.date}</StyledTableHeadText>
-                    </td>
-                    <td>
-                      <StyledTableHeadText>{strings.archivePage.tableHead.department}</StyledTableHeadText>
-                    </td>
-                  </tr>
-                )}
-              </thead>
-              <tbody>
-                {filteredReports.map((report) => {
-                  if (!report) {
-                    return
-                  }
-
-                  const { week, year, department } = report
-                  const startDate = DateHelper.startOfWeek(year, week)
-                  const endDate = DateHelper.endOfWeek(year, week)
-
-                  const link = `/report/${year}/${week}`
-
-                  return (
-                    <StyledArchiveTableRow key={report.id}>
-                      <td>
-                        <CheckBox
-                          iconName={'Checkbox'}
-                          checked={getCheckState(report.id)}
-                          onClick={() => checkBoxUpdate(report.id, !getCheckState(report.id))}
-                        />
-                      </td>
-                      <td>
-                        <StyledArchiveLink to={link}>
-                          <StyledArchiveOverviewText>{week}</StyledArchiveOverviewText>
-                        </StyledArchiveLink>
-                      </td>
-                      <td>
-                        <StyledArchiveLink to={link}>
-                          <StyledArchiveOverviewText>
-                            {DateHelper.format(startDate, 'dd.MM.')} - {DateHelper.format(endDate, 'dd.MM.yyyy')}
-                          </StyledArchiveOverviewText>
-                        </StyledArchiveLink>
-                      </td>
-                      <td>
-                        <StyledArchiveLink to={link}>
-                          <StyledArchiveOverviewText>{department}</StyledArchiveOverviewText>
-                        </StyledArchiveLink>
-                      </td>
-                      <td>
-                        <StyledArchiveLink to={link}>
-                          <Flex justifyContent={'flex-end'}>
-                            <StyledIcon color="iconDarkGrey" name={'ChevronRight'} size={'35px'} />
-                          </Flex>
-                        </StyledArchiveLink>
-                      </td>
-                    </StyledArchiveTableRow>
-                  )
-                })}
-              </tbody>
-            </StyledArchiveTable>
-
-            {filteredReports.length === 0 && (
-              <>
-                <Spacer bottom={'xl'} top={'m'}>
-                  <Flex alignItems={'center'} flexDirection={'column'} mt={'3'} style={{ overflow: 'hidden' }}>
-                    <StyledNoResults>
-                      <H2 center>{strings.archivePage.emptyState.noResult.title}</H2>
-                      <Paragraph center>
-                        {strings.formatString(
-                          strings.archivePage.emptyState.noResult.caption,
-                          <b>
-                            <br />
-                            Tip:
-                          </b>,
-                          <code>yyyy:ww</code>,
-                          <code>yyyy:ww-yyyy:ww</code>
-                        )}
-                      </Paragraph>
-                    </StyledNoResults>
-                    <Illustrations.EmptyStateNoResult darkMode={isDarkMode} />
-                  </Flex>
-                </Spacer>
-              </>
-            )}
-          </StyledArchiveContainer>
-
-          <Flex py={'4'} flexDirection={'row-reverse'}>
-            {filteredReports.length > 0 && (
-              <PrimaryButton
-                icon={pdfLoading ? 'Loader' : 'Download'}
-                disabled={getCheckedReports().length === 0 || pdfLoading}
-                onClick={exportReports}
-              >
-                {strings.report.export}
-              </PrimaryButton>
-            )}
-          </Flex>
+          {filteredTrainees.map((trainee) => (
+            <TraineeSelector key={trainee.id} trainee={trainee} onVariableChange={handleTraineeSelect} />
+          ))}
         </>
       )}
+      {!loading && data?.currentUser?.__typename === UserTypeEnum.Trainer && selectedTrainee && (
+        <>
+          <PrimaryButton style={{ marginBottom: '16px' }} onClick={() => setSelectedTrainee(undefined)}>
+            {strings.archivePage.back}
+          </PrimaryButton>
+        </>
+      )}
+      {!loading &&
+        archivedReports.length > 0 &&
+        (selectedTrainee || data?.currentUser?.__typename === UserTypeEnum.Trainee) && (
+          <>
+            <StyledArchiveContainer>
+              <StyledArchiveTable>
+                <thead>
+                  <tr>
+                    <th colSpan={3}>
+                      <Spacer bottom={'l'}>
+                        <H1 noMargin>{strings.archivePage.header}</H1>
+                      </Spacer>
+                    </th>
+                    <th colSpan={2}>
+                      <Spacer bottom={'l'}>
+                        <StyledSearchWrapper>
+                          <StyledIcon name={'Search'} size={Spacings.xl} color={'iconBlue'}></StyledIcon>
+                          <StyledSearch
+                            placeholder={strings.archivePage.searchPlaceholder}
+                            onInput={onInput}
+                            required
+                          />
+                        </StyledSearchWrapper>
+                      </Spacer>
+                    </th>
+                  </tr>
+                  {filteredReports.length !== 0 && (
+                    <tr>
+                      <td>
+                        <CheckBox iconName={'SelectAll'} checked={allChecked} onClick={checkAllBoxes} />
+                      </td>
+                      <td>
+                        <StyledTableHeadText>{strings.archivePage.tableHead.calendarWeek}</StyledTableHeadText>
+                      </td>
+                      <td>
+                        <StyledTableHeadText>{strings.archivePage.tableHead.date}</StyledTableHeadText>
+                      </td>
+                      <td>
+                        <StyledTableHeadText>{strings.archivePage.tableHead.department}</StyledTableHeadText>
+                      </td>
+                    </tr>
+                  )}
+                </thead>
+                <tbody>
+                  {filteredReports.map((report) => {
+                    if (!report) {
+                      return
+                    }
+
+                    const { week, year, department } = report
+                    const traineeId = report.traineeId
+                    const startDate = DateHelper.startOfWeek(year, week)
+                    const endDate = DateHelper.endOfWeek(year, week)
+
+                    const link =
+                      data?.currentUser?.__typename === UserTypeEnum.Trainer
+                        ? `/report/${traineeId}/${year}/${week}`
+                        : `/report/${year}/${week}`
+
+                    return (
+                      <StyledArchiveTableRow key={report.id}>
+                        <td>
+                          <CheckBox
+                            iconName={'Checkbox'}
+                            checked={getCheckState(report.id)}
+                            onClick={() => checkBoxUpdate(report.id, !getCheckState(report.id))}
+                          />
+                        </td>
+                        <td>
+                          <StyledArchiveLink to={link}>
+                            <StyledArchiveOverviewText>{week}</StyledArchiveOverviewText>
+                          </StyledArchiveLink>
+                        </td>
+                        <td>
+                          <StyledArchiveLink to={link}>
+                            <StyledArchiveOverviewText>
+                              {DateHelper.format(startDate, 'dd.MM.')} - {DateHelper.format(endDate, 'dd.MM.yyyy')}
+                            </StyledArchiveOverviewText>
+                          </StyledArchiveLink>
+                        </td>
+                        <td>
+                          <StyledArchiveLink to={link}>
+                            <StyledArchiveOverviewText>{department}</StyledArchiveOverviewText>
+                          </StyledArchiveLink>
+                        </td>
+                        <td>
+                          <StyledArchiveLink to={link}>
+                            <Flex justifyContent={'flex-end'}>
+                              <StyledIcon color="iconDarkGrey" name={'ChevronRight'} size={'35px'} />
+                            </Flex>
+                          </StyledArchiveLink>
+                        </td>
+                      </StyledArchiveTableRow>
+                    )
+                  })}
+                </tbody>
+              </StyledArchiveTable>
+
+              {filteredReports.length === 0 && (
+                <>
+                  <Spacer bottom={'xl'} top={'m'}>
+                    <Flex alignItems={'center'} flexDirection={'column'} mt={'3'} style={{ overflow: 'hidden' }}>
+                      <StyledNoResults>
+                        <H2 center>{strings.archivePage.emptyState.noResult.title}</H2>
+                        <Paragraph center>
+                          {strings.formatString(
+                            strings.archivePage.emptyState.noResult.caption,
+                            <b>
+                              <br />
+                              Tip:
+                            </b>,
+                            <code>yyyy:ww</code>,
+                            <code>yyyy:ww-yyyy:ww</code>
+                          )}
+                        </Paragraph>
+                      </StyledNoResults>
+                      <Illustrations.EmptyStateNoResult darkMode={isDarkMode} />
+                    </Flex>
+                  </Spacer>
+                </>
+              )}
+            </StyledArchiveContainer>
+
+            <Flex py={'4'} flexDirection={'row-reverse'}>
+              {filteredReports.length > 0 && (
+                <PrimaryButton
+                  icon={pdfLoading ? 'Loader' : 'Download'}
+                  disabled={getCheckedReports().length === 0 || pdfLoading}
+                  onClick={exportReports}
+                >
+                  {strings.report.export}
+                </PrimaryButton>
+              )}
+            </Flex>
+          </>
+        )}
     </Template>
   )
 }

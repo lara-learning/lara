@@ -86,8 +86,10 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
         {currentUser.type === UserTypeEnum.Trainer && currentUser.__typename === 'Trainer' && (
           <>
             <Route path="/" element={<Navigate to={currentUser.trainees.length > 0 ? '/reports' : '/trainees'} />} />
+            <Route path="/archive" element={<ArchivePage />} />
             <Route path="/reports/:trainee?" element={<TrainerReportsPage />} />
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
+            <Route path="/report/:trainee/:year/:week" element={<ReportPage />} />
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
           </>
         )}

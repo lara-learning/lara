@@ -14,12 +14,13 @@ import { AuthenticatedContext, GqlResolvers, Report, Trainee, TraineeContext } f
 
 import { isTrainee, isTrainer } from '../permissions'
 import { reportById, reportByYearAndWeek, saveReport, updateReport } from '../repositories/report.repo'
-import { traineeByReportId } from '../repositories/trainee.repo'
+import { traineeByReportId, traineesByTrainerId } from '../repositories/trainee.repo'
 import { sendNotificationMail } from '../services/email.service'
 import {
   isReportStatus,
   reportDate,
   reportsWithinApprenticeship,
+  reportsForTrainer,
   validateStatusUpdate,
 } from '../services/report.service'
 import { endOfToolUsage, generateReports, startOfToolUsage } from '../services/trainee.service'
@@ -50,14 +51,28 @@ export const reportTraineeResolver: GqlResolvers<TraineeContext> = {
       return `/report/${getISOWeekYear(prevWeek)}/${getISOWeek(prevWeek)}`
     },
   },
+}
+
+export const reportResolver: GqlResolvers<AuthenticatedContext> = {
   Query: {
     reports: async (_parent, { statuses }, { currentUser }) => {
+      console.log('###########resolver s#######################')
       // Generate reports if executed local
-      if (IS_OFFLINE) {
+      if (IS_OFFLINE && isTrainee(currentUser)) {
+        console.log('############generate reports#######################')
         await generateReports(currentUser)
       }
 
-      return reportsWithinApprenticeship(currentUser, statuses)
+      if (isTrainee(currentUser)) {
+        return reportsWithinApprenticeship(currentUser, statuses)
+      }
+
+      if (isTrainer(currentUser)) {
+        const trainees = await traineesByTrainerId(currentUser.id)
+        return reportsForTrainer(trainees, statuses)
+      }
+
+      return []
     },
     reportForYearAndWeek: async (_parent, { week, year }, { currentUser }) => {
       let report = await reportByYearAndWeek(year, week, currentUser.id)
@@ -78,9 +93,6 @@ export const reportTraineeResolver: GqlResolvers<TraineeContext> = {
       return report
     },
   },
-}
-
-export const reportResolver: GqlResolvers<AuthenticatedContext> = {
   Mutation: {
     updateReport: async (_parent, { id, department, status: newStatus, summary }, { currentUser }) => {
       let report: Report | undefined
