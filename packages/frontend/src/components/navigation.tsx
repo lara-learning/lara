@@ -55,6 +55,12 @@ const Navigation: React.FC = () => {
 
   const toggleMenu = () => setShowOverlay((prev) => !prev)
 
+  const getAvatar = () => {
+    const pf = localStorage.getItem('avatar')
+    if (pf) return pf
+    return data?.currentUser?.avatar ?? ''
+  }
+
   // Render functions
   const renderTraineeNav = () => (
     <>
@@ -140,7 +146,7 @@ const Navigation: React.FC = () => {
                   }}
                 >
                   <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
-                  <Avatar size={35} image={data.currentUser?.avatar ?? ''} />
+                  <Avatar size={35} image={getAvatar()} />
                 </StyledAvatarMenuItem>
 
                 <Dropdown active={showDropdown} />
