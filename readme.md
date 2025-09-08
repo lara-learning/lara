@@ -120,8 +120,6 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
 - OLD_COMPANY_NAME
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
-- AVATAR_URL
-  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used.
 - SES_EMAIL
   - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
 - SES_REGION
@@ -162,8 +160,6 @@ The following variables can be added to your cloned version of Lara.
 - OLD_COMPANY_NAME
 - NEW_COMPANY_NAME
   - Add these two, if you have mails mapped from an old name to a new name. If not provided, no changes will be applied to usage of email addresses.
-- AVATAR_URL
-  - String containing the URL to avatars. In the end a mailhash from the user is added. If not provided random avatars from dicebear are used.
 - SES_EMAIL
   - String containing the email address of the bot sending notifications e.g.: lara-bot@exampleCompany.com
 - SES_REGION
