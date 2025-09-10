@@ -160,6 +160,14 @@ export default interface Translation {
     }
     other: string
     notification: string
+    avatar: {
+      label: string
+      title: string
+      description: string
+      addAvatar: string
+      removeAvatar: string
+      updateAvatar: string
+    }
     signature: {
       title: string
       addSignature: string

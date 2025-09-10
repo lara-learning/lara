@@ -15,6 +15,7 @@ import { resolvers } from './resolvers'
 import { handleAuthorizeRequest } from './routes/authorize'
 import { validateJWT } from './services/oauth.service'
 import { parseBearerAuth } from './utils/security'
+import { handleAvatarDeletion, handleAvatarUpload } from './routes/avatar'
 
 const { STAGE, AUTH_HEADER } = process.env
 
@@ -91,6 +92,8 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
     app.use(cors(corsOptions))
 
     app.post('/oauth/token', handleAuthorizeRequest)
+    app.post('/avatar', handleAvatarUpload)
+    app.delete('/avatar', handleAvatarDeletion)
 
     app.use(middleware)
 

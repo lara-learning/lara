@@ -11,6 +11,12 @@ async function hashEmail(email: string) {
   return hashHex
 }
 
+/*const { AVATAR_URL } = process.env
+
+const getAvatarURL = (emailHash: string): string => {
+  return`${AVATAR_URL}${emailHash}`
+}*/
+
 /**
  * Creates the username from the first and lastname
  * @param user User to generate username

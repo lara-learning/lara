@@ -3,14 +3,8 @@ import { OAuthPayload } from '../graphql'
 
 const storage = localStorage
 
-export const saveAvatar = (avatar?: string): void => {
-  if (avatar) storage.setItem(avatarKey, avatar)
-  else storage.removeItem(avatarKey)
-}
-
 const accessTokenKey = 'access-token'
 const expiresDateKey = 'access-token-expires'
-const avatarKey = 'avatar'
 
 export const saveOAuthData = ({ accessToken, expiresIn, refreshToken }: OAuthPayload): void => {
   storage.setItem(accessTokenKey, accessToken)

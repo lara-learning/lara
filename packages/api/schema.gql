@@ -215,6 +215,11 @@ type Mutation {
   Create OAuth Code
   """
   createOAuthCode: String!
+
+  """
+  Get Avatar Bucket Upload URL
+  """
+  getAvatarSignedUrl: String
 }
 
 type LaraConfig {

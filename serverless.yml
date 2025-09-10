@@ -77,6 +77,7 @@ custom:
     s3:
       export: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-export-bucket
       frontend: ${self:provider.environment.COMPANY_ABBREVIATION}-lara-frontend-${self:custom.stage}
+      avatar: ${self:provider.environment.COMPANY_ABBREVIATION}-${self:custom.stage}-lara-avatar-bucket
     ses:
       region: ${self:provider.environment.SES_REGION, self:provider.region}
 
@@ -145,6 +146,7 @@ functions:
           - 's3:GetObject'
         Resource:
           - 'arn:aws:s3:::${self:custom.config.s3.export}/*'
+          - 'arn:aws:s3:::${self:custom.config.s3.avatar}/*'
     environment:
       STAGE: ${self:custom.stage}
       USER_TABLE: ${self:custom.config.table.user}
@@ -159,6 +161,7 @@ functions:
       USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
       USER_OAUTH_CODE_INDEX: ${self:custom.config.gsi.userOAuthCode}
       EXPORT_BUCKET: ${self:custom.config.s3.export}
+      AVATAR_BUCKET: ${self:custom.config.s3.avatar}
 
   authorizer:
     handler: packages/authorizer/lib/handler.handler
@@ -375,6 +378,11 @@ resources:
           IgnorePublicAcls: true
           RestrictPublicBuckets: true
 
+    AvatarBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.config.s3.avatar}
+
     FrontendDistribution:
       Type: AWS::CloudFront::Distribution
       Properties:
@@ -536,6 +544,24 @@ resources:
               Resource:
                 - !Sub 'arn:aws:s3:::${AttachmentsBucket}'
                 - !Sub 'arn:aws:s3:::${AttachmentsBucket}/*'
+              Condition:
+                Bool:
+                  'aws:SecureTransport': 'false'
+
+    AvatarBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref AvatarBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'AllowSSLRequestsOnly'
+              Effect: Deny
+              Principal: '*'
+              Action: 's3:*'
+              Resource:
+                - !Sub 'arn:aws:s3:::${AvatarBucket}'
+                - !Sub 'arn:aws:s3:::${AvatarBucket}/*'
               Condition:
                 Bool:
                   'aws:SecureTransport': 'false'

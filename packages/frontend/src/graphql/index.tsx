@@ -164,6 +164,8 @@ export type Mutation = {
   createTrainer?: Maybe<Trainer>;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: MutateEntryPayload;
+  /** Get Avatar Bucket Upload URL */
+  getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Link Alexa account */
   linkAlexa?: Maybe<UserInterface>;
   /** Login via microsoft */
@@ -546,6 +548,11 @@ export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
 
 export type ApplicationSettingsUpdateUserMutation = { __typename?: 'Mutation', updateCurrentUser?: { __typename: 'Admin', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainee', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainer', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | undefined };
 
+export type AvatarSettingsGetSignedUrlMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvatarSettingsGetSignedUrlMutation = { __typename?: 'Mutation', getAvatarSignedUrl?: string | undefined };
+
 export type ClaimTraineeMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -764,6 +771,11 @@ export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
 
+export type AvatarSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvatarSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, avatar: string } | { __typename?: 'Trainee', id: string, avatar: string } | { __typename?: 'Trainer', id: string, avatar: string } | undefined };
+
 export type CommentBoxDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -892,6 +904,16 @@ export function useApplicationSettingsUpdateUserMutation(baseOptions?: Apollo.Mu
         return Apollo.useMutation<ApplicationSettingsUpdateUserMutation, ApplicationSettingsUpdateUserMutationVariables>(ApplicationSettingsUpdateUserDocument, options);
       }
 export type ApplicationSettingsUpdateUserMutationHookResult = ReturnType<typeof useApplicationSettingsUpdateUserMutation>;
+export const AvatarSettingsGetSignedUrlDocument = gql`
+    mutation AvatarSettingsGetSignedUrl {
+  getAvatarSignedUrl
+}
+    `;
+export function useAvatarSettingsGetSignedUrlMutation(baseOptions?: Apollo.MutationHookOptions<AvatarSettingsGetSignedUrlMutation, AvatarSettingsGetSignedUrlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AvatarSettingsGetSignedUrlMutation, AvatarSettingsGetSignedUrlMutationVariables>(AvatarSettingsGetSignedUrlDocument, options);
+      }
+export type AvatarSettingsGetSignedUrlMutationHookResult = ReturnType<typeof useAvatarSettingsGetSignedUrlMutation>;
 export const ClaimTraineeDocument = gql`
     mutation claimTrainee($id: ID!) {
   claimTrainee(id: $id) {
@@ -1509,6 +1531,29 @@ export function useArchivePageDataSuspenseQuery(baseOptions?: Apollo.SkipToken |
 export type ArchivePageDataQueryHookResult = ReturnType<typeof useArchivePageDataQuery>;
 export type ArchivePageDataLazyQueryHookResult = ReturnType<typeof useArchivePageDataLazyQuery>;
 export type ArchivePageDataSuspenseQueryHookResult = ReturnType<typeof useArchivePageDataSuspenseQuery>;
+export const AvatarSettingsDataDocument = gql`
+    query AvatarSettingsData {
+  currentUser {
+    id
+    avatar
+  }
+}
+    `;
+export function useAvatarSettingsDataQuery(baseOptions?: Apollo.QueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>(AvatarSettingsDataDocument, options);
+      }
+export function useAvatarSettingsDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>(AvatarSettingsDataDocument, options);
+        }
+export function useAvatarSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>(AvatarSettingsDataDocument, options);
+        }
+export type AvatarSettingsDataQueryHookResult = ReturnType<typeof useAvatarSettingsDataQuery>;
+export type AvatarSettingsDataLazyQueryHookResult = ReturnType<typeof useAvatarSettingsDataLazyQuery>;
+export type AvatarSettingsDataSuspenseQueryHookResult = ReturnType<typeof useAvatarSettingsDataSuspenseQuery>;
 export const CommentBoxDataDocument = gql`
     query CommentBoxData {
   currentUser {

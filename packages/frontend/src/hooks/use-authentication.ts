@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import { OAuthPayload } from '../graphql'
-import { clearOAuthData, saveAvatar, saveOAuthData } from '../helper/auth-helper'
+import { clearOAuthData, saveOAuthData } from '../helper/auth-helper'
 
 export type AuthenticatedState = 'loading' | 'authenticated' | 'unauthenticated'
 
@@ -16,7 +16,7 @@ export const AuthenticationContext = React.createContext<AuthenticationContext>(
 })
 
 type AuthenticationFCs = AuthenticationContext & {
-  login: (payload?: OAuthPayload, avatar?: string) => void
+  login: (payload?: OAuthPayload) => void
   logout: () => void
 }
 
@@ -24,10 +24,9 @@ export const useAuthentication = (): AuthenticationFCs => {
   const { setAuthenticated, authenticated } = useContext(AuthenticationContext)
 
   return {
-    login: (payload, avatar) => {
+    login: (payload) => {
       if (payload) {
         saveOAuthData(payload)
-        saveAvatar(avatar)
       }
 
       setAuthenticated('authenticated')

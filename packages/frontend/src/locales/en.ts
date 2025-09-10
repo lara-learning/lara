@@ -167,6 +167,14 @@ const englishTranslation: Translation = {
     },
     other: 'other',
     notification: 'Get mail notifications',
+    avatar: {
+      label: 'profile picture',
+      title: 'Add a profile picture',
+      description: 'Upload your own profile picture',
+      addAvatar: 'Add image',
+      removeAvatar: 'Remove image',
+      updateAvatar: 'Update image',
+    },
     signature: {
       title: 'signature',
       deleteSignature: 'Delete signature',

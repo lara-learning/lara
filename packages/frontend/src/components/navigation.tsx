@@ -13,7 +13,7 @@ import {
   StyledNavWrapper,
 } from '@lara/components'
 
-import { useNavigationDataQuery, UserTypeEnum } from '../graphql'
+import { useAvatarSettingsGetSignedUrlMutation, useNavigationDataQuery, UserTypeEnum } from '../graphql'
 import { useAuthentication } from '../hooks/use-authentication'
 import strings from '../locales/localization'
 import Avatar from './avatar'
@@ -22,12 +22,26 @@ import Dropdown from './dropdown'
 const Navigation: React.FC = () => {
   const { data, loading } = useNavigationDataQuery()
   const { logout } = useAuthentication()
+  const [mutate] = useAvatarSettingsGetSignedUrlMutation()
+  const [avatar, setAvatar] = useState<string | undefined>(data?.currentUser?.avatar)
 
   const [showOverlay, setShowOverlay] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550)
 
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const { currentUser } = data || {}
+
+  useEffect(() => {
+    if (!currentUser) return
+
+    mutate().then(({ data }) => {
+      if (data?.getAvatarSignedUrl) {
+        setAvatar(data.getAvatarSignedUrl)
+      } else setAvatar(currentUser.avatar)
+    })
+  }, [currentUser, mutate])
 
   // Handle resizing
   useEffect(() => {
@@ -54,12 +68,6 @@ const Navigation: React.FC = () => {
   }, [showDropdown])
 
   const toggleMenu = () => setShowOverlay((prev) => !prev)
-
-  const getAvatar = () => {
-    const pf = localStorage.getItem('avatar')
-    if (pf) return pf
-    return data?.currentUser?.avatar ?? ''
-  }
 
   // Render functions
   const renderTraineeNav = () => (
@@ -146,7 +154,7 @@ const Navigation: React.FC = () => {
                   }}
                 >
                   <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
-                  <Avatar size={35} image={getAvatar()} />
+                  <Avatar size={35} image={avatar ?? ''} />
                 </StyledAvatarMenuItem>
 
                 <Dropdown active={showDropdown} />

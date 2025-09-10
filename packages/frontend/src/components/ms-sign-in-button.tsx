@@ -40,29 +40,6 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
     try {
       const loginResponse = await instance.loginPopup(loginRequest)
 
-      let avatar: string | undefined
-      try {
-        const tokenResponse = await instance.acquireTokenSilent({
-          scopes: ['User.Read'],
-          account: loginResponse.account,
-        })
-
-        const photoResponse = await fetch('https://graph.microsoft.com/v1.0/me/photo/$value', {
-          headers: { Authorization: `Bearer ${tokenResponse.accessToken}` },
-        })
-
-        if (photoResponse.ok) {
-          const blob = await photoResponse.blob()
-          const reader = new FileReader()
-          reader.readAsDataURL(blob)
-          reader.onloadend = () => {
-            avatar = reader.result as string
-          }
-        }
-      } catch (error) {
-        console.warn('Fetching Microsoft account image failed:', error)
-      }
-
       const email = loginResponse.account?.username
       if (email) {
         mutate({ variables: { email } })
@@ -72,7 +49,7 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
               navigate('/no-user-found')
               return
             }
-            login(data.login, avatar)
+            login(data.login)
           })
           .catch((err) => {
             console.log(err)
