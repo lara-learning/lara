@@ -9,7 +9,7 @@ import CommentBox from './comment-box'
 
 interface CommentSectionProps {
   comments: (Pick<Comment, 'id' | 'text'> & {
-    user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+    user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   })[]
   onSubmit: onSubmitType
   displayTextInput: boolean

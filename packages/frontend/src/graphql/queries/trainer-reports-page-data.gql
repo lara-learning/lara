@@ -8,7 +8,6 @@ query TrainerReportsPageData {
         firstName
         lastName
         id
-        avatar
         openReportsCount
         reports {
           days {

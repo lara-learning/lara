@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { BorderRadii } from './border-radius'
 
 const AvatarContainer = styled.div<{ size: number }>`
+  position: relative;
   height: ${(props) => props.size}px;
   width: ${(props) => props.size}px;
   background: ${(props) => props.theme.background};
@@ -13,10 +14,11 @@ const AvatarContainer = styled.div<{ size: number }>`
   align-items: center;
   background-size: cover;
   overflow: hidden;
-  position: relative;
 
   img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `
 

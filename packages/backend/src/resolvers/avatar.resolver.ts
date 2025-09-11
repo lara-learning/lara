@@ -19,8 +19,8 @@ const s3Client = new S3Client(
 
 export const avatarResolver: GqlResolvers<AuthenticatedContext> = {
   Mutation: {
-    getAvatarSignedUrl: async (_parent, _args, context) => {
-      const key = `${context.currentUser.id}`
+    getAvatarSignedUrl: async (_parent, { id }, _context) => {
+      const key = `${id}`
 
       try {
         await s3Client.send(

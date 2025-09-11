@@ -21,6 +21,7 @@
     "@microsoft/microsoft-graph-client": "^3.0.5",
     "@rebass/grid": "^6.1.0",
     "apollo-link-token-refresh": "0.7.0",
+    "browser-image-compression": "^2.0.2",
     "date-fns": "4.1.0",
     "file-saver": "^2.0.2",
     "framer-motion": "^12.23.12",

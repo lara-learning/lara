@@ -3,7 +3,6 @@ query AdminTraineesPage {
     id
     firstName
     lastName
-    avatar
     deleteAt
   }
   companies {

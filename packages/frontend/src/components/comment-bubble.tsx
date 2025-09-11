@@ -5,16 +5,16 @@ import { CommentBubbleLayout } from '@lara/components'
 import Avatar from './avatar'
 
 interface CommentBubbleProps {
-  avatar?: string
+  id?: string
   author?: string
   message?: string
   right?: boolean
 }
 
-const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({ avatar, author, message, right }) => {
+const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({ id, author, message, right }) => {
   return (
     <CommentBubbleLayout
-      avatar={<>{avatar && <Avatar size={35} image={avatar} />}</>}
+      avatar={<>{id && <Avatar size={35} id={id} />}</>}
       author={author}
       message={message}
       right={right}

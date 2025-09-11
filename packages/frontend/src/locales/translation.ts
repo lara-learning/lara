@@ -167,6 +167,20 @@ export default interface Translation {
       addAvatar: string
       removeAvatar: string
       updateAvatar: string
+      toasts: {
+        success: {
+          title: string
+          description: string
+        }
+        errorCompression: {
+          title: string
+          description: string
+        }
+        errorFileSize: {
+          title: string
+          description: string
+        }
+      }
     }
     signature: {
       title: string

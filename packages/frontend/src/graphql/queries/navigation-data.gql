@@ -5,6 +5,5 @@ query NavigationData {
     id
     firstName
     lastName
-    avatar
   }
 }

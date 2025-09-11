@@ -18,7 +18,7 @@ import { company } from '../services/company.service'
 import { createPrintReportData, createPrintUserData, invokePrintLambda, savePrintData } from '../services/print.service'
 import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
-import { avatar, username } from '../services/user.service'
+import { username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
@@ -51,7 +51,6 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
     },
     startOfToolUsage: (model) => startOfToolUsage(model).toISOString(),
     endOfToolUsage: (model) => endOfToolUsage(model).toISOString(),
-    avatar,
     alexaSkillLinked,
   },
   Query: {

@@ -6,7 +6,7 @@ import Loader from './loader'
 
 interface CommentBoxProps {
   comments?: (Pick<Comment, 'text'> & {
-    user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+    user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   })[]
 }
 
@@ -27,7 +27,7 @@ const CommentBox: React.FunctionComponent<CommentBoxProps> = ({ comments }) => {
               key={index}
               author={`${comment.user.firstName} ${comment.user.lastName}`}
               message={comment.text}
-              avatar={comment.user.avatar}
+              id={comment.user.id}
               right={comment.user.id !== currentUser?.id}
             />
           ))

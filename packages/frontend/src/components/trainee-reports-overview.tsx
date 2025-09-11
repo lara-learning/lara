@@ -8,7 +8,7 @@ import Avatar from './avatar'
 import WeekOverview from './week-overview'
 
 interface TraineeReportsOverviweProps {
-  trainee: Pick<Trainee, 'firstName' | 'lastName' | 'avatar' | 'id' | 'openReportsCount'> & {
+  trainee: Pick<Trainee, 'firstName' | 'lastName' | 'id' | 'openReportsCount'> & {
     reports: Pick<Report, 'id' | 'status' | 'week' | 'year'>[]
   }
 }
@@ -21,7 +21,7 @@ const TraineeReportsOverview: React.FunctionComponent<TraineeReportsOverviweProp
   const caption = openReportsCount === 0 ? upToDate : openReportsCount > 1 ? todos : todo
   return (
     <TraineeOverviewLayout
-      avatar={<Avatar size={44} image={trainee.avatar} />}
+      avatar={<Avatar size={44} id={trainee.id} />}
       name={`${trainee.firstName} ${trainee.lastName}`}
       icon={
         openReportsCount > 0 ? (

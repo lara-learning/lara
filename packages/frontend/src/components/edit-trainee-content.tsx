@@ -12,9 +12,9 @@ import { UserInfo } from './user-info'
 interface EditTraineeProps {
   trainee: Pick<
     Trainee,
-    'id' | 'firstName' | 'lastName' | 'startDate' | 'endDate' | 'startOfToolUsage' | 'avatar' | 'email' | 'deleteAt'
+    'id' | 'firstName' | 'lastName' | 'startDate' | 'endDate' | 'startOfToolUsage' | 'email' | 'deleteAt'
   > & {
-    trainer?: Pick<Trainer, 'id' | 'firstName' | 'lastName' | 'avatar'>
+    trainer?: Pick<Trainer, 'id' | 'firstName' | 'lastName'>
     company: Pick<Company, 'id'>
   }
   companies: Pick<Company, 'id' | 'name'>[]
@@ -52,7 +52,7 @@ export const EditTraineeContent: React.FC<EditTraineeProps> = ({ trainee, compan
     <EditUserContentLayout
       user={
         <UserInfo
-          avatar={trainee.avatar}
+          id={trainee.id}
           firstName={trainee.firstName}
           lastName={trainee.lastName}
           deleteAt={trainee.deleteAt}
@@ -72,7 +72,7 @@ export const EditTraineeContent: React.FC<EditTraineeProps> = ({ trainee, compan
                 <UnstyledLink to={`/trainer/${trainee.trainer.id}`}>
                   <UserInfo
                     secondary
-                    avatar={trainee.trainer.avatar}
+                    id={trainee.trainer.id}
                     firstName={trainee.trainer.firstName}
                     lastName={trainee.trainer.lastName}
                   />

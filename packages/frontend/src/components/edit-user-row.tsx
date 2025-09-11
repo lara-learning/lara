@@ -8,7 +8,7 @@ import strings from '../locales/localization'
 import { SecondaryButton } from './button'
 import { UserInfo } from './user-info'
 
-type EditUser = Pick<Trainee | Trainer, 'id' | 'firstName' | 'lastName' | 'avatar' | 'deleteAt'>
+type EditUser = Pick<Trainee | Trainer, 'id' | 'firstName' | 'lastName' | 'deleteAt'>
 
 interface EditUserRowProps {
   user: EditUser
@@ -26,9 +26,7 @@ export const EditUserRow: React.FunctionComponent<EditUserRowProps> = ({ user, b
   return (
     <EditUserRowLayout
       to={url}
-      content={
-        <UserInfo avatar={user.avatar} firstName={user.firstName} lastName={user.lastName} deleteAt={user.deleteAt} />
-      }
+      content={<UserInfo id={user.id} firstName={user.firstName} lastName={user.lastName} deleteAt={user.deleteAt} />}
       button={
         <SecondaryButton ghost onClick={navigateToEditPage}>
           {strings.edit}

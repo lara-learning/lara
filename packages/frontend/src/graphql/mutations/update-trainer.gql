@@ -4,7 +4,6 @@ mutation UpdateTrainer($input: UpdateTrainerInput!, $id: ID!) {
     firstName
     lastName
     email
-    avatar
     type
   }
 }

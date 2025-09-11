@@ -31,6 +31,11 @@ export const handleAvatarUpload = async (req: Request, res: Response) => {
 
   const buffer = Buffer.from(base64String, 'base64')
 
+  const maxSize = 250 * 1024
+  if (buffer.length > maxSize) {
+    return res.status(413).send(`File too large. Max size is 250 KB.`)
+  }
+
   s3Client.send(
     new PutObjectCommand({
       Bucket: AVATAR_BUCKET,

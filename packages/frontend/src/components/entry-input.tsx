@@ -43,7 +43,7 @@ interface EntryDisplayFieldProps {
   }
   entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
     comments: (Pick<Comment, 'id' | 'text'> & {
-      user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+      user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
   }
   trainee: Pick<Trainee, 'id'>
