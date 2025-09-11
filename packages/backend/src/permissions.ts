@@ -1,6 +1,6 @@
 import { and, or, rule, shield } from 'graphql-shield'
 
-import { Admin, AuthenticatedContext, Context, Trainee, Trainer, User } from '@lara/api'
+import { Admin, AuthenticatedContext, Context, Mentor, Trainee, Trainer, User } from '@lara/api'
 
 const { DEBUG } = process.env
 
@@ -21,6 +21,10 @@ export const isTrainer = (user: User): user is Trainer => {
 const trainer = rule({ cache: 'contextual' })(
   (_parent, _args, ctx: AuthenticatedContext) => isTrainer(ctx.currentUser) || 'Wrong Usertype'
 )
+
+export const isMentor = (user: User): user is Mentor => {
+  return user.type === 'Mentor'
+}
 
 export const isAdmin = (user: User): user is Admin => {
   return user.type === 'Admin'
@@ -52,11 +56,12 @@ export const permissions = shield<unknown, Context>(
       reportForTrainee: and(authenticated, trainer),
 
       // Trainer and Admin Queries
-      trainees: and(authenticated, or(trainer, admin)),
+      trainees: authenticated,
 
       // Admin Queris
       getUser: and(authenticated, admin),
       trainers: and(authenticated, admin),
+      mentors: and(authenticated, admin),
     },
     Mutation: {
       _devsetusertype: and(authenticated, debug),
@@ -67,6 +72,9 @@ export const permissions = shield<unknown, Context>(
       linkAlexa: authenticated,
       unlinkAlexa: authenticated,
       createOAuthCode: authenticated,
+
+      createMentor: and(authenticated, or(trainer, admin, trainee)),
+      updateMentor: and(authenticated, or(trainer, admin, trainee)),
 
       // Trainee and Trainer mutations
       updateReport: and(authenticated, or(trainee, trainer)),
@@ -85,6 +93,9 @@ export const permissions = shield<unknown, Context>(
       // Trainer mutations
       claimTrainee: and(authenticated, trainer),
       unclaimTrainee: and(authenticated, trainer),
+      createPaper: and(authenticated, or(trainee, trainer)),
+      updatePaper: and(authenticated, or(trainee, trainer)),
+      deletePaper: and(authenticated, or(trainee, trainer)),
 
       //Admin mutations
       createTrainee: and(authenticated, admin),

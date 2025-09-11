@@ -1,0 +1,42 @@
+mutation UserEmailPage($email: String!) {
+  getUserByEmail(email: $email) {
+    id
+    avatar
+    firstName
+    lastName
+    email
+    type
+
+    ... on Trainee {
+      startDate
+      startOfToolUsage
+      endDate
+      deleteAt
+      course
+      company {
+        id
+      }
+      trainer {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+
+    ... on Trainer {
+      deleteAt
+      trainees {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+    ... on Mentor {
+      deleteAt
+      startDate
+      endDate
+    }
+  }
+}

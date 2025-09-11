@@ -98,6 +98,61 @@ type UpdateReportPayload {
   report: Report!
 }
 
+input MentorInput {
+  name: String
+  email: String
+  signature: String
+}
+
+input PaperEntryInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type MutatePaperPayload {
+  papers: [Paper]
+}
+
+input PaperInput {
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+}
+
+input PaperUpdateInput {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+}
+
+input AnswerPaperInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String!
+  hint: String!
+}
+
 type Mutation {
   """
   [DEV] Login as a user.
@@ -182,6 +237,16 @@ type Mutation {
   createTrainer(input: CreateTrainerInput!): Trainer
 
   """
+  Creates Mentor.
+  """
+  createMentor(input: CreateMentorInput!): Mentor
+
+  """
+  Get a User by Email
+  """
+  getUserByEmail(email: String!): UserInterface
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -202,6 +267,11 @@ type Mutation {
   updateTrainer(input: UpdateTrainerInput!, id: ID!): Trainer
 
   """
+  Updates Mentor.
+  """
+  updateMentor(input: UpdateMentorInput!, id: ID!): Mentor
+
+  """
   Link Alexa account
   """
   linkAlexa(code: String!, state: String!): UserInterface
@@ -215,6 +285,36 @@ type Mutation {
   Create OAuth Code
   """
   createOAuthCode: String!
+
+  """
+  Create Paper
+  """
+  createPaper(input: PaperInput!): Paper!
+
+  """
+  Update Paper
+  """
+  updatePaper(input: PaperUpdateInput!): Paper!
+
+  """
+  Delete Paper
+  """
+  deletePaper(paperId: ID!): [Paper]!
+
+  """
+  Updates Entry for Lara Paper
+  """
+  updatePaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Creates Entry for Lara Paper
+  """
+  createPaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Deletes Entry for Lara Paper
+  """
+  deletePaperEntry(id: ID!): PaperFormData!
 }
 
 type LaraConfig {
@@ -278,9 +378,19 @@ type Query {
   trainers: [Trainer!]!
 
   """
+  Get all Trainers
+  """
+  mentors: [Mentor!]!
+
+  """
   Print single report or report batch
   """
   print(ids: [ID!]!): PrintPayload!
+
+  """
+  Print single paper
+  """
+  printPaper(ids: [ID!]!): PrintPayload!
 
   """
   Get a User by ID
@@ -358,6 +468,7 @@ type Trainee implements UserInterface {
   lastName: String!
   notification: Boolean
   reports: [Report!]!
+  papers: [Paper]
   signature: String
   startDate: String
   startOfToolUsage: String
@@ -401,10 +512,26 @@ input CreateTrainerInput {
   lastName: String!
 }
 
+input CreateMentorInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  startDate: String
+  endDate: String
+}
+
 input UpdateTrainerInput {
   email: String
   firstName: String
   lastName: String
+}
+
+input UpdateMentorInput {
+  email: String
+  firstName: String
+  lastName: String
+  startDate: String
+  endDate: String
 }
 
 type Trainer implements UserInterface {
@@ -415,10 +542,31 @@ type Trainer implements UserInterface {
   language: String
   lastName: String!
   notification: Boolean
+  papers: [Paper]
   signature: String
   theme: String
   trainees: [Trainee!]!
   type: UserTypeEnum!
+  username: String!
+  email: String!
+  deleteAt: String
+  alexaSkillLinked: Boolean
+}
+
+type Mentor implements UserInterface {
+  avatar: String!
+  createdAt: String!
+  firstName: String!
+  id: ID!
+  language: String
+  lastName: String!
+  notification: Boolean
+  signature: String
+  theme: String
+  type: UserTypeEnum!
+  papers: [Paper]
+  startDate: String
+  endDate: String
   username: String!
   email: String!
   deleteAt: String
@@ -481,7 +629,46 @@ enum UserTypeEnum {
   Trainer
 
   """
+  User is a Mentor
+  """
+  Mentor
+
+  """
   User is an Admin
   """
   Admin
+}
+
+enum PaperStatus {
+  InProgress
+  TraineeDone
+  MentorDone
+  InReview
+  Archived
+}
+
+type PaperFormData {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+}
+
+type Paper {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  status: PaperStatus!
+  briefing: [PaperFormData!]!
+  conclusion: String
+  archivedAt: String
+  createdAt: String
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
 }

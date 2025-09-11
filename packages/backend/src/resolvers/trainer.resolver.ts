@@ -1,13 +1,17 @@
 import { GraphQLError } from 'graphql'
 
-import { GqlResolvers, TrainerContext } from '@lara/api'
+import { EmailTranslations, GqlResolvers, Mentor, PrintTranslations, Trainee, Trainer, TrainerContext } from '@lara/api'
 
 import { reportByYearAndWeek } from '../repositories/report.repo'
 import { allTrainees, traineeById, traineesByTrainerId } from '../repositories/trainee.repo'
 import { updateUser } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { avatar, username } from '../services/user.service'
-import { createT } from '../i18n'
+import { createT, t } from '../i18n'
+import { paperById, papersByMentor, papersByTrainer } from '../repositories/paper.repo'
+import { createPrintPaperData, createPrintUserData, invokePrintLambda, savePrintData } from '../services/print.service'
+import { mentorById } from '../repositories/mentor.repo'
+import { trainerById } from '../repositories/trainer.repo'
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
   Trainer: {
@@ -17,6 +21,18 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
     avatar,
     username,
     alexaSkillLinked,
+    papers: async (model) => {
+      const trainerPapers = await papersByTrainer(model.id)
+      if (trainerPapers?.length) {
+        const mentorPapers = await papersByMentor(model.id)
+        if (mentorPapers?.length) {
+          return [...trainerPapers, ...mentorPapers]
+        }
+      } else {
+        return await papersByMentor(model.id)
+      }
+      return trainerPapers
+    },
   },
   Query: {
     trainees: allTrainees,
@@ -39,6 +55,62 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       }
 
       return report
+    },
+    printPaper: async (_parent, { ids }, { currentUser }) => {
+      const paper = await paperById(ids[0])
+      const data = []
+      let trainee: Trainee | undefined
+      let mentor: Mentor | Trainer | undefined
+      if (paper) {
+        data.push(createPrintPaperData(paper))
+        trainee = await traineeById(paper?.traineeId)
+        mentor = (await mentorById(paper?.mentorId)) ?? (await trainerById(paper?.mentorId))
+      }
+
+      let userData = await createPrintUserData(trainee!)
+      const printTranslations: PrintTranslations = t('print', currentUser.language)
+      const emailTranslations: EmailTranslations = t('email', currentUser.language)
+
+      const traineeHash = await savePrintData({
+        data,
+        userData,
+        printTranslations,
+        emailTranslations,
+      })
+
+      await invokePrintLambda({
+        printDataHash: traineeHash,
+      })
+
+      userData = await createPrintUserData(mentor!)
+
+      const mentorHash = await savePrintData({
+        data,
+        userData,
+        printTranslations,
+        emailTranslations,
+      })
+
+      await invokePrintLambda({
+        printDataHash: mentorHash,
+      })
+
+      userData = await createPrintUserData(currentUser)
+
+      const trainerHash = await savePrintData({
+        data,
+        userData,
+        printTranslations,
+        emailTranslations,
+      })
+
+      await invokePrintLambda({
+        printDataHash: trainerHash,
+      })
+
+      return {
+        estimatedWaitingTime: Math.round(1.5 + 5),
+      }
     },
   },
   Mutation: {
