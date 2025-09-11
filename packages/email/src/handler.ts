@@ -24,10 +24,10 @@ if (!SES_REGION) {
   throw new Error("Missing Environment Variable: 'SES_REGION'")
 }
 
-const ses = new SESv2Client({ region: SES_REGION })
+const sesClient = new SESv2Client({ region: SES_REGION })
 
 const transporter = nodemailer.createTransport({
-  SES: { ses, SendEmailCommand },
+  SES: { sesClient, SendEmailCommand },
 })
 
 type Response = 'success' | 'error'
