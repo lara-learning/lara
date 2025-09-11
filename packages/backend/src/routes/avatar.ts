@@ -27,7 +27,7 @@ export const handleAvatarUpload = async (req: Request, res: Response) => {
     base64String = req.body.data
   }
 
-  if (!base64String) return res.status(400).send('No file provided' + req.body.toString())
+  if (!base64String) return res.status(400).send('No file provided in request')
 
   const buffer = Buffer.from(base64String, 'base64')
 
