@@ -121,7 +121,7 @@ const TraineeSettings: React.FunctionComponent<TraineeSettingsProps> = ({ disabl
             <Spacer right="m">
               {currentUser.trainer ? (
                 /* Display actual avatar of assigned trainer */
-                <Avatar size={50} image={currentUser.trainer.avatar} />
+                <Avatar size={50} id={currentUser.trainer.id} />
               ) : (
                 /* Display a placeholder */
                 <StyledIcon size="35px" name={'Profile'} />

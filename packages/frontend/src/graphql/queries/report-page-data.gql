@@ -7,7 +7,6 @@ query ReportPageData($year: Int!, $week: Int!) {
     id
     firstName
     lastName
-    avatar
     username
   }
   reportForYearAndWeek(year: $year, week: $week) {
@@ -26,7 +25,6 @@ query ReportPageData($year: Int!, $week: Int!) {
         id
         firstName
         lastName
-        avatar
       }
     }
     days {
@@ -40,7 +38,6 @@ query ReportPageData($year: Int!, $week: Int!) {
           id
           firstName
           lastName
-          avatar
         }
       }
       entries {
@@ -55,7 +52,6 @@ query ReportPageData($year: Int!, $week: Int!) {
             id
             firstName
             lastName
-            avatar
           }
         }
       }

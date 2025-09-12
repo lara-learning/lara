@@ -3,7 +3,6 @@ query DayInputData {
     id
     firstName
     lastName
-    avatar
     type
   }
 }

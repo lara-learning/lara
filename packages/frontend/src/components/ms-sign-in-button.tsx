@@ -39,6 +39,7 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
 
     try {
       const loginResponse = await instance.loginPopup(loginRequest)
+
       const email = loginResponse.account?.username
       if (email) {
         mutate({ variables: { email } })

@@ -10,7 +10,6 @@ mutation createCommentOnEntry($id: ID!, $text: String!, $traineeId: ID!) {
             id
             firstName
             lastName
-            avatar
           }
         }
       }

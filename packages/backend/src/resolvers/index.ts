@@ -9,6 +9,7 @@ import { reportResolver, reportTraineeResolver } from './report.resolver'
 import { traineeResolver, traineeTraineeResolver } from './trainee.resolver'
 import { trainerResolver } from './trainer.resolver'
 import { userResolver } from './user.resolver'
+import { avatarResolver } from './avatar.resolver'
 
 export const resolvers = [
   configResolver,
@@ -36,4 +37,6 @@ export const resolvers = [
   trainerAdminResolver,
 
   alexaResolver,
+
+  avatarResolver,
 ]

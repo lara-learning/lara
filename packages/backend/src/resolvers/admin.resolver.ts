@@ -10,13 +10,12 @@ import { allUsers, saveUser, updateUser, userByEmail, userById } from '../reposi
 import { sendDeletionMail } from '../services/email.service'
 import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
 import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
-import { avatar, username } from '../services/user.service'
+import { username } from '../services/user.service'
 import { parseISODateString } from '../utils/date'
 import { t } from '../i18n'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {
-    avatar,
     username,
   },
   Query: {

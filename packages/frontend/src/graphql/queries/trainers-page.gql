@@ -3,6 +3,5 @@ query TrainersPage {
     id
     firstName
     lastName
-    avatar
   }
 }

@@ -22,7 +22,6 @@ export type Scalars = {
 export type GqlAdmin = GqlUserInterface & {
   __typename?: 'Admin';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
-  avatar: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
@@ -165,6 +164,8 @@ export type GqlMutation = {
   createTrainer?: Maybe<GqlTrainer>;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
+  /** Get Avatar Bucket Upload URL */
+  getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
   /** Login via microsoft */
@@ -248,6 +249,11 @@ export type GqlMutationCreateTrainerArgs = {
 
 export type GqlMutationDeleteEntryArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationGetAvatarSignedUrlArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -429,8 +435,6 @@ export type GqlSuggestion = {
 export type GqlTrainee = GqlUserInterface & {
   __typename?: 'Trainee';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
-  /** The url for the users avatar image. */
-  avatar: Scalars['String']['output'];
   company: GqlCompany;
   course?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['String']['output'];
@@ -457,7 +461,6 @@ export type GqlTrainee = GqlUserInterface & {
 export type GqlTrainer = GqlUserInterface & {
   __typename?: 'Trainer';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
-  avatar: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   deleteAt?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
@@ -514,7 +517,6 @@ export type GqlUserInput = {
 
 export type GqlUserInterface = {
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
-  avatar: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
@@ -683,7 +685,6 @@ export type GqlResolversParentTypes = ResolversObject<{
 
 export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Admin'] = GqlResolversParentTypes['Admin']> = ResolversObject<{
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  avatar?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -781,6 +782,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   createTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTraineeArgs, 'input'>>;
   createTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationCreateTrainerArgs, 'input'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
+  getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;
@@ -849,7 +851,6 @@ export type GqlSuggestionResolvers<ContextType = Context, ParentType extends Gql
 
 export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Trainee'] = GqlResolversParentTypes['Trainee']> = ResolversObject<{
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  avatar?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   company?: Resolver<GqlResolversTypes['Company'], ParentType, ContextType>;
   course?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -876,7 +877,6 @@ export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlRes
 
 export type GqlTrainerResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Trainer'] = GqlResolversParentTypes['Trainer']> = ResolversObject<{
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  avatar?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   deleteAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -908,7 +908,6 @@ export type GqlUpdateReportPayloadResolvers<ContextType = Context, ParentType ex
 export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['UserInterface'] = GqlResolversParentTypes['UserInterface']> = ResolversObject<{
   __resolveType: TypeResolveFn<'Admin' | 'Trainee' | 'Trainer', ParentType, ContextType>;
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  avatar?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;

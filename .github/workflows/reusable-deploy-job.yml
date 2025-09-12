@@ -42,7 +42,6 @@ jobs:
       COMPANY_ABBREVIATION: ${{ secrets.COMPANY_ABBREVIATION }}
       OLD_COMPANY_NAME: ${{ secrets.OLD_COMPANY_NAME }}
       NEW_COMPANY_NAME: ${{ secrets.NEW_COMPANY_NAME }}
-      AVATAR_URL: ${{ secrets.AVATAR_URL }}
       LARA_VERSION: ${{ github.ref_name }}
       SES_REGION: ${{ secrets.SES_REGION }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}

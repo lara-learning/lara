@@ -10,8 +10,8 @@ import { TrainerForm, EditTrainerFormData } from './trainer-form'
 import { UserInfo } from './user-info'
 
 interface EditTrainerProps {
-  trainer: Pick<Trainer, 'id' | 'firstName' | 'lastName' | 'avatar' | 'email' | 'deleteAt'> & {
-    trainees: Pick<Trainee, 'id' | 'firstName' | 'lastName' | 'avatar'>[]
+  trainer: Pick<Trainer, 'id' | 'firstName' | 'lastName' | 'email' | 'deleteAt'> & {
+    trainees: Pick<Trainee, 'id' | 'firstName' | 'lastName'>[]
   }
 }
 
@@ -47,7 +47,7 @@ export const EditTrainer: React.FC<EditTrainerProps> = ({ trainer }) => {
     <EditUserContentLayout
       user={
         <UserInfo
-          avatar={trainer.avatar}
+          id={trainer.id}
           firstName={trainer.firstName}
           lastName={trainer.lastName}
           deleteAt={trainer.deleteAt}
@@ -66,12 +66,7 @@ export const EditTrainer: React.FC<EditTrainerProps> = ({ trainer }) => {
               <>
                 {trainer.trainees.map((trainee) => (
                   <UnstyledLink key={trainee.id} to={`/trainees/${trainee.id}`}>
-                    <UserInfo
-                      secondary
-                      avatar={trainee.avatar}
-                      firstName={trainee.firstName}
-                      lastName={trainee.lastName}
-                    />
+                    <UserInfo secondary id={trainee.id} firstName={trainee.firstName} lastName={trainee.lastName} />
                   </UnstyledLink>
                 ))}
               </>

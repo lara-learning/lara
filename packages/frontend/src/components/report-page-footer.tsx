@@ -12,13 +12,13 @@ import { useReportHelper } from '../helper/report-helper'
 interface ReportPageFooterProps {
   report: Pick<Report, 'id' | 'summary' | 'status'> & {
     comments: (Pick<Comment, 'id' | 'text'> & {
-      user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+      user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
     days: (Pick<Day, 'status'> & {
       entries: ({ __typename?: 'Entry' } & Pick<Entry, 'time'>)[]
     })[]
   }
-  user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+  user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   disabled: boolean
   updateReport: (values: Partial<Report>) => Promise<void>
 }

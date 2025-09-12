@@ -12,9 +12,9 @@ query TraineeSettingsData {
       __typename
       id
       trainer {
+        id
         firstName
         lastName
-        avatar
       }
     }
   }

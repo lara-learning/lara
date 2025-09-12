@@ -1,0 +1,3 @@
+mutation AvatarSettingsGetSignedUrl($id: String!) {
+  getAvatarSignedUrl(id: $id)
+}

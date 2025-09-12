@@ -23,7 +23,7 @@ interface EntriesInputProps {
   day?: Pick<Day, 'id' | 'date'> & {
     entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
       comments: (Pick<Comment, 'id' | 'text'> & {
-        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName' | 'avatar'>
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
     })[]
   }

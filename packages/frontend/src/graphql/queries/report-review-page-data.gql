@@ -3,7 +3,6 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
     id
     firstName
     lastName
-    avatar
     username
   }
   reportForTrainee(year: $year, week: $week, id: $trainee) {
@@ -20,7 +19,6 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
         id
         firstName
         lastName
-        avatar
       }
     }
     days {
@@ -39,7 +37,6 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
             id
             firstName
             lastName
-            avatar
           }
         }
       }
@@ -50,7 +47,6 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
           id
           firstName
           lastName
-          avatar
         }
       }
     }

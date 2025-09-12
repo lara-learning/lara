@@ -166,7 +166,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
     (
       day: Pick<Day, 'id'> & {
         comments: (Pick<Comment, 'id' | 'text'> & {
-          user: Pick<UserInterface, 'id' | 'avatar' | 'firstName' | 'lastName'>
+          user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
         })[]
       }
     ) =>

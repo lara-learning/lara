@@ -215,6 +215,11 @@ type Mutation {
   Create OAuth Code
   """
   createOAuthCode: String!
+
+  """
+  Get Avatar Bucket Upload URL
+  """
+  getAvatarSignedUrl(id: String!): String
 }
 
 type LaraConfig {
@@ -343,10 +348,6 @@ enum ReportStatus {
 }
 
 type Trainee implements UserInterface {
-  """
-  The url for the users avatar image.
-  """
-  avatar: String!
   company: Company!
   course: String
   createdAt: String!
@@ -408,7 +409,6 @@ input UpdateTrainerInput {
 }
 
 type Trainer implements UserInterface {
-  avatar: String!
   createdAt: String!
   firstName: String!
   id: ID!
@@ -426,7 +426,6 @@ type Trainer implements UserInterface {
 }
 
 type Admin implements UserInterface {
-  avatar: String!
   createdAt: String!
   firstName: String!
   id: ID!
@@ -454,7 +453,6 @@ input UserInput {
 }
 
 interface UserInterface {
-  avatar: String!
   createdAt: String!
   firstName: String!
   id: ID!

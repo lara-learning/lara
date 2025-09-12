@@ -1,0 +1,5 @@
+query AvatarSettingsData {
+  currentUser {
+    id
+  }
+}

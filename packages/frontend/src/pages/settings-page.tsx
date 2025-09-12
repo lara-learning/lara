@@ -10,6 +10,7 @@ import TraineeSettings from '../components/trainee-settings'
 import { UserTypeEnum, useSettingsPageDataQuery } from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
+import AvatarSettings from '../components/avatar-settings'
 
 const SettingsPage: React.FunctionComponent = () => {
   const { loading, data } = useSettingsPageDataQuery()
@@ -34,18 +35,29 @@ const SettingsPage: React.FunctionComponent = () => {
       )}
 
       {/* Admin Settings */}
-      {!loading && data?.currentUser && data.currentUser.type !== UserTypeEnum.Admin && (
-        <Spacer bottom="xl">
+      {!loading && data?.currentUser && (
+        <Spacer bottom="xl" id="testidd">
           <Container>
             <Spacer xy="l">
               <Spacer bottom="l">
                 <H1 noMargin>{strings.settings.user}</H1>
               </Spacer>
-              <StyledTextInputLabel valid>{strings.settings.signature.title}</StyledTextInputLabel>
+
+              <StyledTextInputLabel valid>{strings.settings.avatar.label}</StyledTextInputLabel>
 
               <StyledSettingsSpacer xy={'l'}>
-                <SignatureSettings />
+                <AvatarSettings />
               </StyledSettingsSpacer>
+
+              {data.currentUser.type !== UserTypeEnum.Admin && (
+                <Spacer top="l">
+                  <StyledTextInputLabel valid>{strings.settings.signature.title}</StyledTextInputLabel>
+
+                  <StyledSettingsSpacer xy={'l'}>
+                    <SignatureSettings />
+                  </StyledSettingsSpacer>
+                </Spacer>
+              )}
 
               {data.currentUser.__typename === 'Trainee' && (
                 <Spacer top="l">
