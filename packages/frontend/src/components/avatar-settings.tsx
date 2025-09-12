@@ -139,6 +139,13 @@ const AvatarSettings: React.FunctionComponent = () => {
             text: strings.settings.avatar.toasts.errorFileSize.description,
             type: 'error',
           })
+        } else {
+          addToast({
+            icon: 'Error',
+            title: `Error ${response.status}:`,
+            text: `${await response.text()}`,
+            type: 'error',
+          })
         }
       }
     }
@@ -154,7 +161,7 @@ const AvatarSettings: React.FunctionComponent = () => {
   async function removeAvatar() {
     if (!currentUser) return
 
-    await fetch(`${BackendUrl}/avatar`, {
+    const response = await fetch(`${BackendUrl}/avatar`, {
       method: 'DELETE',
       headers: {
         authorization: 'allow',
@@ -162,6 +169,15 @@ const AvatarSettings: React.FunctionComponent = () => {
       body: JSON.stringify({ id: currentUser.id }),
       credentials: 'include',
     })
+
+    if (!response.ok) {
+      addToast({
+        icon: 'Error',
+        title: `Error ${response.status}:`,
+        text: `${await response.text()}`,
+        type: 'error',
+      })
+    }
 
     eventBus.emit('avatarUpdated', undefined)
   }

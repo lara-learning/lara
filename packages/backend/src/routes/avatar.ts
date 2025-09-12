@@ -24,7 +24,7 @@ export const handleAvatarUpload = async (req: Request, res: Response) => {
     base64String = parsed.data
     key = parsed.id
   } catch {
-    throw new Error('Error: Could not JSON.parse() the request body')
+    return res.status(400).send('Could not JSON.parse() the request body')
   }
 
   if (!base64String) return res.status(400).send('No file provided in request')
@@ -55,7 +55,7 @@ export const handleAvatarDeletion = async (req: Request, res: Response) => {
     const parsed = JSON.parse(req.body.toString())
     key = parsed.id
   } catch {
-    throw new Error('Error: Could not JSON.parse() the request body')
+    return res.status(400).send('Could not JSON.parse() the request body')
   }
 
   s3Client.send(
