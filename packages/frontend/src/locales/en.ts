@@ -168,6 +168,28 @@ const englishTranslation: Translation = {
     },
     other: 'other',
     notification: 'Get mail notifications',
+    avatar: {
+      label: 'profile picture',
+      title: 'Add a profile picture',
+      description: 'Upload your own profile picture.',
+      addAvatar: 'Add image',
+      removeAvatar: 'Remove image',
+      updateAvatar: 'Update image',
+      toasts: {
+        success: {
+          title: 'Image uploaded',
+          description: 'Your image was uploaded successfully.',
+        },
+        errorCompression: {
+          title: 'Compression failed',
+          description: 'Could not compress file to below 250 KB.',
+        },
+        errorFileSize: {
+          title: 'Upload failed',
+          description: 'File was too large. Maximum is 250 KB.',
+        },
+      },
+    },
     signature: {
       title: 'signature',
       deleteSignature: 'Delete signature',

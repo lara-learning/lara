@@ -29,6 +29,8 @@ const Navigation: React.FC = () => {
 
   const dropdownRef = useRef<HTMLDivElement>(null)
 
+  const { currentUser } = data || {}
+
   // Handle resizing
   useEffect(() => {
     const updateDimensions = () => setIsMobile(window.innerWidth <= 550)
@@ -143,7 +145,7 @@ const Navigation: React.FC = () => {
                   }}
                 >
                   <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
-                  <Avatar size={35} image={data.currentUser?.avatar ?? ''} />
+                  <Avatar size={35} id={currentUser?.id ?? ''} />
                 </StyledAvatarMenuItem>
 
                 <Dropdown active={showDropdown} />

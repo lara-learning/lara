@@ -170,6 +170,28 @@ const germanTranslation: Translation = {
     },
     other: 'Sonstiges',
     notification: 'E-Mail Benachrichtigungen erhalten',
+    avatar: {
+      label: 'Profilbild',
+      title: 'Füge ein Profilbild hinzu',
+      description: 'Lade ein eigenens Profilbild hoch.',
+      addAvatar: 'Bild hochladen',
+      removeAvatar: 'Bild entfernen',
+      updateAvatar: 'Bild ändern',
+      toasts: {
+        success: {
+          title: 'Bild hochgeladen',
+          description: 'Ihr Bild konnte erfolgreich hochgeladen werden.',
+        },
+        errorCompression: {
+          title: 'Komprimieren fehlgeschlagen',
+          description: 'Datei konnte nicht unter 250 KB komprimiert werden.',
+        },
+        errorFileSize: {
+          title: 'Hochladen fehlgeschlagen',
+          description: 'Datei war zu groß. Maximale Größe ist 250 KB.',
+        },
+      },
+    },
     signature: {
       title: 'Unterschrift',
       deleteSignature: 'Unterschrift löschen',

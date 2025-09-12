@@ -18,7 +18,7 @@ export type User = Trainee | Trainer | Admin
  * during the runtime in the backend. Only after beeing
  * transformed by GraphQL these fields are available
  */
-type ResolvedUserFields = 'avatar' | 'username' | 'alexaSkillLinked'
+type ResolvedUserFields = 'username' | 'alexaSkillLinked'
 
 export type UserInterface = Omit<GqlUserInterface, ResolvedUserFields> & {
   email: string

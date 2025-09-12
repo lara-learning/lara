@@ -8,15 +8,15 @@ import Avatar from './avatar'
 type UserInfoProps = {
   firstName: string
   lastName: string
-  avatar: string
+  id: string
   secondary?: boolean
   deleteAt?: string
 }
 
-export const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, avatar, secondary, deleteAt }) => {
+export const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, id, secondary, deleteAt }) => {
   return (
     <UserInfoLayout
-      avatar={<Avatar size={48} image={avatar} />}
+      avatar={<Avatar size={48} id={id} />}
       name={firstName + ' ' + lastName}
       secondary={Boolean(secondary)}
       forDeletion={Boolean(deleteAt)}

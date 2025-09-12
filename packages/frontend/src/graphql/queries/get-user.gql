@@ -1,7 +1,6 @@
 query UserPage($id: ID!) {
   getUser(id: $id) {
     id
-    avatar
     firstName
     lastName
     email
@@ -20,7 +19,6 @@ query UserPage($id: ID!) {
         id
         firstName
         lastName
-        avatar
       }
     }
 
@@ -30,7 +28,6 @@ query UserPage($id: ID!) {
         id
         firstName
         lastName
-        avatar
       }
     }
   }

@@ -7,7 +7,6 @@ mutation UpdateTrainee($input: UpdateTraineeInput!, $id: ID!) {
     firstName
     lastName
     email
-    avatar
     company {
       id
     }

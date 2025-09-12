@@ -5,7 +5,6 @@ query TraineePageData {
     firstName
     lastName
     course
-    avatar
     startDate
     trainer {
       id

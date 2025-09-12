@@ -26,7 +26,7 @@ import Loader from './loader'
 
 interface TraineeRowProps {
   active?: boolean
-  trainee: Pick<Trainee, 'startDate' | 'id' | 'firstName' | 'lastName' | 'avatar' | 'course'> & {
+  trainee: Pick<Trainee, 'startDate' | 'id' | 'firstName' | 'lastName' | 'course'> & {
     trainer?: Pick<Trainer, 'id' | 'firstName' | 'lastName'>
     company?: Pick<Company, 'id' | 'name'>
   }
@@ -85,7 +85,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
     <StyledWrapper>
       <Flex justifyContent="center" alignItems="space-between">
         <StyledHeader to={headerDestination}>
-          <Avatar size={44} image={trainee.avatar} />
+          <Avatar size={44} id={trainee.id} />
           <StyledName>
             {trainee.firstName} {trainee.lastName}
           </StyledName>
