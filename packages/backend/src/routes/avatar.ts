@@ -17,14 +17,14 @@ const s3Client = new S3Client(
 )
 
 export const handleAvatarUpload = async (req: Request, res: Response) => {
-  const key = req.headers['x-user-id'] as string
-
+  let key: string
   let base64String: string
   try {
     const parsed = JSON.parse(req.body.toString())
     base64String = parsed.data
+    key = parsed.id
   } catch {
-    base64String = req.body.data
+    throw new Error('Error: Could not JSON.parse() the request body')
   }
 
   if (!base64String) return res.status(400).send('No file provided in request')
@@ -50,7 +50,13 @@ export const handleAvatarUpload = async (req: Request, res: Response) => {
 }
 
 export const handleAvatarDeletion = async (req: Request, res: Response) => {
-  const key = req.headers['x-user-id'] as string
+  let key: string
+  try {
+    const parsed = JSON.parse(req.body.toString())
+    key = parsed.id
+  } catch {
+    throw new Error('Error: Could not JSON.parse() the request body')
+  }
 
   s3Client.send(
     new DeleteObjectCommand({

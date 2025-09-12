@@ -117,9 +117,8 @@ const AvatarSettings: React.FunctionComponent = () => {
         headers: {
           authorization: 'allow',
           'Content-Type': file.type,
-          'X-User-Id': currentUser.id,
         },
-        body: JSON.stringify({ data: base64String }),
+        body: JSON.stringify({ id: currentUser.id, data: base64String }),
         credentials: 'include',
       })
 
@@ -159,8 +158,8 @@ const AvatarSettings: React.FunctionComponent = () => {
       method: 'DELETE',
       headers: {
         authorization: 'allow',
-        'X-User-Id': currentUser.id,
       },
+      body: JSON.stringify({ id: currentUser.id }),
       credentials: 'include',
     })
 
