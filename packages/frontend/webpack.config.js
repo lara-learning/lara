@@ -7,6 +7,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 
 const {
+  NODE_ENV,
   MICROSOFT_CLIENT_ID,
   MICROSOFT_TENANT_ID,
   DEBUG,
@@ -21,7 +22,7 @@ const {
 const DEFAULT_ENVIRONMENT = 'development'
 const DEFAULT_MODE = 'development'
 
-/** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string}}} */
+/** @returns {{mode: string, authHeader: string, supportMail: string, debug: boolean, microsoftClientID: string, frontendUrl: string, name: (*|string), microsoftTenantID: string, backendUrl: string, nodeEnv: string}}} */
 const getEnvironmentConfig = () => {
   const name = ENVIRONMENT_NAME ?? DEFAULT_ENVIRONMENT
 
@@ -34,6 +35,7 @@ const getEnvironmentConfig = () => {
       console.log(`Using environment variables from ${envVarsPath}`)
       return {
         name,
+        nodeEnv: parsed.NODE_ENV ?? DEFAULT_ENVIRONMENT,
         mode: parsed.MODE,
         microsoftClientID: parsed.MICROSOFT_CLIENT_ID,
         microsoftTenantID: parsed.MICROSOFT_TENANT_ID,
@@ -55,6 +57,7 @@ const getEnvironmentConfig = () => {
   console.log(`Using injected environment variables from process.env`)
   return {
     name,
+    nodeEnv: NODE_ENV ?? DEFAULT_ENVIRONMENT,
     mode: MODE ?? '',
     microsoftClientID: MICROSOFT_CLIENT_ID ?? '',
     microsoftTenantID: MICROSOFT_TENANT_ID ?? '',

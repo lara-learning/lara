@@ -22,6 +22,7 @@ jobs:
     name: build-job
     environment: ${{ inputs.environmentName }}
     env:
+      NODE_ENV: ${{ inputs.environmentName }}
       DEBUG: ${{ inputs.debug }}
       MODE: ${{ inputs.mode }}
       AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
