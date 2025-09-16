@@ -7,6 +7,8 @@ import { useLoginPageLoginMutation } from '../graphql'
 import { useIsAuthenticated } from '@azure/msal-react'
 import { EventMessage, EventType, PopupEvent } from '@azure/msal-browser'
 import { useNavigate } from 'react-router'
+import { useToastContext } from '../hooks/use-toast-context'
+import strings from '../locales/localization'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullsize?: boolean
@@ -18,6 +20,7 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
+  const { addToast } = useToastContext()
 
   const [popupWindow, setPopupWindow] = useState<Window | null>(null)
 
@@ -52,7 +55,13 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
             login(data.login)
           })
           .catch((err) => {
-            console.log(err)
+            console.error(err)
+            addToast({
+              icon: 'Error',
+              title: strings.login.userNotRegisteredError.title,
+              text: strings.login.userNotRegisteredError.description,
+              type: 'error',
+            })
           })
       }
     } catch (error) {

@@ -24,6 +24,12 @@ const englishTranslation: Translation = {
   back: 'back',
   on: 'on',
   off: 'off',
+  login: {
+    userNotRegisteredError: {
+      title: 'Login failed',
+      description: 'Unfortunately, you are not yet registered. Please contact the administrator or your trainer.',
+    },
+  },
   modal: {
     defaultClose: 'Close',
   },
