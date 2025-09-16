@@ -24,6 +24,13 @@ const germanTranslation: Translation = {
   back: 'zurück',
   on: 'an',
   off: 'aus',
+  login: {
+    userNotRegisteredError: {
+      title: 'Fehler bei der Anmeldung',
+      description:
+        'Leider sind Sie noch nicht registriert. Bitte wenden Sie sich an den Administrator oder Ihren Ausbilder.',
+    },
+  },
   modal: {
     defaultClose: 'Schließen',
   },

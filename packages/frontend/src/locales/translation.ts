@@ -22,6 +22,12 @@ export default interface Translation {
   back: string
   on: string
   off: string
+  login: {
+    userNotRegisteredError: {
+      title: string
+      description: string
+    }
+  }
   modal: {
     defaultClose: string
   }
