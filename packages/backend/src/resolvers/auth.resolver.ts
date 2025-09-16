@@ -6,7 +6,7 @@ import { GqlResolvers } from '@lara/api'
 
 import { t } from '../i18n'
 import { isDebug } from '../permissions'
-import { saveUser, userByEmail, userById } from '../repositories/user.repo'
+import { userById, userByEmail, saveUser } from '../repositories/user.repo'
 import { createOAuthData } from '../services/oauth.service'
 import { generateTrainee } from '../services/trainee.service'
 
@@ -24,6 +24,8 @@ const createMockUser = async (email: string) => {
   return saveUser(userModel)
 }
 
+const isDevEnv = (): boolean => process.env.NODE_ENV === 'development'
+
 export const authResolver: GqlResolvers = {
   Mutation: {
     login: async (_parent, { email }) => {
@@ -34,12 +36,12 @@ export const authResolver: GqlResolvers = {
       let user = await userByEmail(email)
 
       // creates mock user on dev stages
-      if (!user && isDebug()) {
+      if (!user && isDevEnv()) {
         user = await createMockUser(email)
       }
 
       if (!user) {
-        return
+        throw new GraphQLError('USER_NOT_REGISTERED')
       }
 
       return createOAuthData(user)

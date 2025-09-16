@@ -25,6 +25,7 @@ jobs:
       id-token: write
       contents: read
     env:
+      NODE_ENV: ${{ inputs.target }}
       ALEXA_SKILL_STAGE: ${{ inputs.alexaSkillStage }}
       DEBUG: ${{ inputs.debug }}
       ALEXA_AMAZON_CLIENT_ID: ${{ secrets.ALEXA_AMAZON_CLIENT_ID }}
