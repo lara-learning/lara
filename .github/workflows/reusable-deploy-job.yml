@@ -94,9 +94,16 @@ jobs:
       - name: Deploy Backends
         run: serverless deploy --stage ${{ inputs.target }}
 
-      - name: Invalidate CloudFront cache
+      - name: Invalidate CloudFront cache for Frontend
         continue-on-error: true
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_FRONTEND_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+      - name: Invalidate CloudFront cache for Backend
+        continue-on-error: true
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_BACKEND_DISTRIBUTION_ID }} \
             --paths "/*"
