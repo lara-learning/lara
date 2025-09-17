@@ -57,7 +57,7 @@ const Selected = styled.div.withConfig({
 const Menu = styled.ul.withConfig({
   shouldForwardProp: (prop) => !['yOffset'].includes(prop),
 })<{ yOffset: number }>`
-  position: relative
+  position: relative;
   width: 100%;
   height: 100%;
   background: #fff;

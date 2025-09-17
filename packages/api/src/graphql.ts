@@ -152,7 +152,6 @@ export type GqlLaraConfig = {
 export type GqlMentor = GqlUserInterface & {
   __typename?: 'Mentor';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
-  avatar: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   deleteAt?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
@@ -218,17 +217,14 @@ export type GqlMutation = {
   createTrainer?: Maybe<GqlTrainer>;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
-<<<<<<< HEAD
-  /** Get Avatar Bucket Upload URL */
-  getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
-=======
   /** Delete Paper */
   deletePaper: Array<Maybe<GqlPaper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: GqlPaperFormData;
+  /** Get Avatar Bucket Upload URL */
+  getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Get a User by Email */
   getUserByEmail?: Maybe<GqlUserInterface>;
->>>>>>> e238f35 (chore: manually rebased lara-paper onto main)
   /** Link Alexa account */
   linkAlexa?: Maybe<GqlUserInterface>;
   /** Login via microsoft */
@@ -336,10 +332,6 @@ export type GqlMutationDeleteEntryArgs = {
 };
 
 
-<<<<<<< HEAD
-export type GqlMutationGetAvatarSignedUrlArgs = {
-  id: Scalars['String']['input'];
-=======
 export type GqlMutationDeletePaperArgs = {
   paperId: Scalars['ID']['input'];
 };
@@ -350,9 +342,13 @@ export type GqlMutationDeletePaperEntryArgs = {
 };
 
 
+export type GqlMutationGetAvatarSignedUrlArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type GqlMutationGetUserByEmailArgs = {
   email: Scalars['String']['input'];
->>>>>>> e238f35 (chore: manually rebased lara-paper onto main)
 };
 
 
@@ -996,7 +992,6 @@ export type GqlLaraConfigResolvers<ContextType = Context, ParentType extends Gql
 
 export type GqlMentorResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Mentor'] = GqlResolversParentTypes['Mentor']> = ResolversObject<{
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  avatar?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   deleteAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -1042,13 +1037,10 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   createTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationCreateTraineeArgs, 'input'>>;
   createTrainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType, RequireFields<GqlMutationCreateTrainerArgs, 'input'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
-<<<<<<< HEAD
-  getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
-=======
   deletePaper?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
   deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
+  getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
   getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationGetUserByEmailArgs, 'email'>>;
->>>>>>> e238f35 (chore: manually rebased lara-paper onto main)
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   markUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationMarkUserForDeletionArgs, 'id'>>;

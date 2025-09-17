@@ -3,7 +3,6 @@ query AdminMentorPage {
     id
     firstName
     lastName
-    avatar
     startDate
     endDate
     deleteAt

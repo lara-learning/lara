@@ -126,7 +126,7 @@ export const TrainerPaperPage: React.FC = () => {
                               <StyledName>
                                 {trainee.firstName} {trainee.lastName}
                               </StyledName>
-                              <Avatar size={44} image={trainee.avatar} />
+                              <Avatar size={44} id={trainee.id} />
                             </Flex>
                           ) : null
                         )}

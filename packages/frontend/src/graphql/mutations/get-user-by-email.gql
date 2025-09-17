@@ -1,7 +1,6 @@
 mutation UserEmailPage($email: String!) {
   getUserByEmail(email: $email) {
     id
-    avatar
     firstName
     lastName
     email
@@ -20,7 +19,6 @@ mutation UserEmailPage($email: String!) {
         id
         firstName
         lastName
-        avatar
       }
     }
 
@@ -30,7 +28,6 @@ mutation UserEmailPage($email: String!) {
         id
         firstName
         lastName
-        avatar
       }
     }
     ... on Mentor {

@@ -5,6 +5,5 @@ query MentorsPage {
     lastName
     startDate
     endDate
-    avatar
   }
 }

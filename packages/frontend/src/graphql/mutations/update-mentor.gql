@@ -6,7 +6,6 @@ mutation UpdateMentor($input: UpdateMentorInput!, $id: ID!) {
     firstName
     lastName
     email
-    avatar
     type
   }
 }

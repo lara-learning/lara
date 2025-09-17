@@ -10,7 +10,7 @@ import { UserInfo } from './user-info'
 import { Mentor, useUpdateMentorMutation } from '../graphql'
 
 interface EditMentorProps {
-  mentor: Pick<Mentor, 'id' | 'firstName' | 'lastName' | 'avatar' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
+  mentor: Pick<Mentor, 'id' | 'firstName' | 'lastName' | 'email' | 'startDate' | 'endDate' | 'deleteAt'>
 }
 
 export const EditMentor: React.FC<EditMentorProps> = ({ mentor }) => {
@@ -44,12 +44,7 @@ export const EditMentor: React.FC<EditMentorProps> = ({ mentor }) => {
   return (
     <EditUserContentLayout
       user={
-        <UserInfo
-          firstName={mentor.firstName}
-          lastName={mentor.lastName}
-          avatar={mentor.avatar}
-          deleteAt={mentor.deleteAt}
-        />
+        <UserInfo firstName={mentor.firstName} lastName={mentor.lastName} id={mentor.id} deleteAt={mentor.deleteAt} />
       }
       form={<MentorForm blurSubmit mentor={mentor} submit={updateMentor} />}
       relatedUsers={<></>}
