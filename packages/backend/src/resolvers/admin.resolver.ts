@@ -69,7 +69,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
       }
 
-      user.deleteAt = addMonths(new Date(), 4).toISOString()
+      user.deleteAt = addMonths(new Date(), 3).toISOString()
 
       await updateUser(user, { updateKeys: ['deleteAt'] })
 
