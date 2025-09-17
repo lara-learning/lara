@@ -10,16 +10,8 @@
     "schoolPeriodEnd": null,
     "schoolPeriodStart": null,
     "subject": "Android Entwicklung",
-    "status": "InProgress",
-    "briefing": [
-      {
-        "id": "1",
-        "questionId": "1",
-        "answer": "Test Answer",
-        "question": "Test Question",
-        "hint": "Test Hint"
-      }
-    ]
+    "status": "NotStarted",
+    "briefing": []
   },
   {
     "id": "2",
@@ -32,15 +24,7 @@
     "schoolPeriodEnd": null,
     "schoolPeriodStart": null,
     "subject": "IOS Entwicklung",
-    "status": "InProgress",
-    "briefing": [
-      {
-        "id": "1",
-        "questionId": "1",
-        "answer": "Test Answer",
-        "question": "Test Question",
-        "hint": "Test Hint"
-      }
-    ]
+    "status": "NotStarted",
+    "briefing": []
   }
 ]

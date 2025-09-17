@@ -504,6 +504,7 @@ export type GqlPaperStatus =
   | 'InProgress'
   | 'InReview'
   | 'MentorDone'
+  | 'NotStarted'
   | 'TraineeDone';
 
 export type GqlPaperUpdateInput = {

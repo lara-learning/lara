@@ -503,6 +503,7 @@ export enum PaperStatus {
   InProgress = 'InProgress',
   InReview = 'InReview',
   MentorDone = 'MentorDone',
+  NotStarted = 'NotStarted',
   TraineeDone = 'TraineeDone'
 }
 

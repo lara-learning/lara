@@ -13,7 +13,7 @@ export const StyledPaperTitle = styled.h1`
 const StyledPaperLayout = styled.div`
   display: grid;
   justify-items: center;
-  grid-gap: ${Spacings.xxl};
+  grid-gap: ${Spacings.s};
 `
 
 interface PaperLayoutProps {

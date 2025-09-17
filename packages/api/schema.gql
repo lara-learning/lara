@@ -637,6 +637,7 @@ enum UserTypeEnum {
 }
 
 enum PaperStatus {
+  NotStarted
   InProgress
   TraineeDone
   MentorDone

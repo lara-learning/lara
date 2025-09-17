@@ -62,7 +62,7 @@ export const PaperCreateBriefingPage: React.FunctionComponent = () => {
           periodEnd: data.endDateProject,
           schoolPeriodStart: data.startDateSchool,
           schoolPeriodEnd: data.endDateSchool,
-          status: PaperStatus.InProgress,
+          status: PaperStatus.NotStarted,
           subject: data.department,
         },
       },

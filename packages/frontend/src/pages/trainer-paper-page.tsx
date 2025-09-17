@@ -18,7 +18,7 @@ import { PrimaryButton, SecondaryButton } from '../components/button'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import EmptyPaper from '../assets/illustrations/empty-paper'
-import { Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
+import { PaperStatus, Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
 import Loader from '../components/loader'
 import ProgressBar from '../components/progress-bar'
 import Avatar from '../components/avatar'
@@ -99,6 +99,17 @@ export const TrainerPaperPage: React.FC = () => {
     navigate('/paper/briefing/' + paperId)
   }
 
+  const mapStatusToProgess = (status: PaperStatus): number => {
+    switch (status) {
+      case 'NotStarted':
+        return 0
+      case 'InProgress':
+        return 0.3
+      default:
+        return 0
+    }
+  }
+
   return (
     <Template type="Main">
       {loading && <Loader />}
@@ -136,7 +147,7 @@ export const TrainerPaperPage: React.FC = () => {
                         <Flex alignItems={'center'} width={'100%'}>
                           <Box width={2 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              {paper?.briefing.length ? (
+                              {paper.status !== 'NotStarted' ? (
                                 <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                               ) : (
                                 <StyledIcon name={'X'} size="24px" color={'errorRed'} />
@@ -177,15 +188,13 @@ export const TrainerPaperPage: React.FC = () => {
                     </Box>
                   </Flex>
                   <Spacer y="xl">
-                    <ProgressBar progress={0.3} color={'primaryDefault'} />
+                    <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {!paper.briefing.length ? (
+                  {paper.status === 'NotStarted' ? (
                     <Flex justifyContent={'flex-end'}>
-                      <Spacer y="xl">
-                        <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
-                          {strings.paper.dashboard.editPaper}
-                        </PrimaryButton>
-                      </Spacer>
+                      <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
+                        {strings.paper.dashboard.editPaper}
+                      </PrimaryButton>
                     </Flex>
                   ) : null}
                   <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal(undefined)}>

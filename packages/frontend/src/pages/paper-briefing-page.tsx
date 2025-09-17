@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
-import { H2, PaperLayout, Paragraph } from '@lara/components'
+import { H2, PaperLayout, Paragraph, Spacer } from '@lara/components'
 
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import PaperAccordion from '../components/paper-accordion'
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import { useNavigate, useParams } from 'react-router'
-import { PaperFormData, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
+import { PaperEntryInput, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
 import Modal from '../components/modal'
 import { Box, Flex } from '@lara/components'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import { useFetchPaperPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
+import { omitDeep } from '@apollo/client/utilities'
+import NavigationButtonLink from '../components/navigation-button-link'
 
 type Question = { question: string; hint: string }
 
@@ -35,8 +37,8 @@ const briefingQuestions = (): Question[] => {
 export const PaperBriefingPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { paperId } = useParams()
-  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
-  const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
+  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperEntryInput>()
+  const [paperBriefing, setPaperBriefing] = React.useState<PaperEntryInput[]>([])
   const [fetchPdf, loading] = useFetchPaperPdf()
 
   const QAs = briefingQuestions()
@@ -55,18 +57,54 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
   const paper = currentUser?.papers?.find((paper) => paper?.id == paperId)
   useEffect(() => {
     if (paperBriefingInput) {
-      setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
+      setPaperBriefing((oldArray: PaperEntryInput[]) => [...oldArray, paperBriefingInput])
     }
   }, [paperBriefingInput])
+
+  useEffect(() => {
+    if (paper && paper.briefing.length > 0 && paperBriefing.length == 0) setPaperBriefing(paper.briefing)
+  }, [paper, paperBriefing])
 
   if (!currentUser) {
     return null
   }
-  const updatePaper = async (paperBriefing: PaperFormData[]) => {
+
+  const savePaper = async (paperBriefing: PaperEntryInput[]) => {
     await updatePaperMutation({
       variables: {
         input: {
-          briefing: paperBriefing,
+          briefing: omitDeep(paperBriefing, '__typename'),
+          client: paper?.client ?? '',
+          id: paperId ?? '',
+          mentorId: paper?.mentorId ?? '',
+          periodEnd: paper?.periodEnd,
+          periodStart: paper?.periodStart,
+          schoolPeriodEnd: paper?.schoolPeriodEnd,
+          schoolPeriodStart: paper?.schoolPeriodStart,
+          status: PaperStatus.NotStarted,
+          subject: paper?.subject ?? '',
+          traineeId: paper?.traineeId ?? '',
+          trainerId: currentUser.id,
+        },
+      },
+      updateQueries: {
+        TrainerPaperPageData: (prevData, { mutationResult }) => {
+          return {
+            currentUser: {
+              ...prevData,
+              papers: mutationResult.data?.updatePaper,
+            },
+          }
+        },
+      },
+    })
+  }
+
+  const submitPaper = async (paperBriefing: PaperEntryInput[]) => {
+    await updatePaperMutation({
+      variables: {
+        input: {
+          briefing: omitDeep(paperBriefing, '__typename'),
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
@@ -110,6 +148,16 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
 
   return (
     <Template type="Main">
+      <Spacer bottom="m">
+        <NavigationButtonLink
+          label={strings.back}
+          to="/paper"
+          icon="ChevronLeft"
+          isLeft
+          alignLeft
+          iconColor="iconLightGrey"
+        />
+      </Spacer>
       <PaperLayout>
         <div>
           {filteredQAs.map(({ question: q, hint: h }, index) => (
@@ -117,7 +165,13 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
               setPaperBriefingInput={setPaperBriefingInput}
               setPaperBriefing={setPaperBriefing}
               completedInput={paperBriefing}
-              paperInput={{ id: Date.now().toString(), question: q, questionId: index.toString(), hint: h, answer: '' }}
+              paperInput={{
+                id: Date.now().toString(),
+                question: q,
+                questionId: index.toString(),
+                hint: h,
+                answer: '',
+              }}
               forceActive={filteredQAs.length === 1}
               key={q}
               title={q}
@@ -126,11 +180,18 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
             </PaperAccordion>
           ))}
         </div>
-        <Flex flexDirection={'row'} justifyContent={'center'}>
-          <Box mx={'2'} width={1 / 2}>
-            <SecondaryButton onClick={() => navigate('/paper')}>{strings.cancel}</SecondaryButton>
+        <Flex width={'100%'} flexDirection={'row'} justifyContent={'space-between'}>
+          <Box mr={'2'}>
+            <SecondaryButton
+              onClick={() => {
+                savePaper(paperBriefing)
+                navigate('/paper')
+              }}
+            >
+              {strings.save}
+            </SecondaryButton>
           </Box>
-          <Box mx={'2'} width={1 / 2}>
+          <Box ml={'2'}>
             <PrimaryButton type="submit" onClick={toggleHandoverModal}>
               {strings.continue}
             </PrimaryButton>
@@ -151,7 +212,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
                   </SecondaryButton>
                 </Box>
                 <Box pl={'2'} width={1 / 2}>
-                  <PrimaryButton fullsize onClick={() => updatePaper(paperBriefing)}>
+                  <PrimaryButton fullsize onClick={() => submitPaper(paperBriefing)}>
                     {strings.paper.modal.createBriefing}
                   </PrimaryButton>
                 </Box>
