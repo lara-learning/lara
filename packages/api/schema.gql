@@ -128,6 +128,7 @@ input PaperInput {
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
+  feedback: [PaperEntryInput!]!
 }
 
 input PaperUpdateInput {
@@ -143,6 +144,7 @@ input PaperUpdateInput {
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
+  feedback: [PaperEntryInput!]!
 }
 
 input AnswerPaperInput {
@@ -659,6 +661,7 @@ type Paper {
   trainerId: ID!
   status: PaperStatus!
   briefing: [PaperFormData!]!
+  feedback: [PaperFormData!]!
   conclusion: String
   archivedAt: String
   createdAt: String

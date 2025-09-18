@@ -21,7 +21,8 @@ export type PrintReport = {
 
 export type PrintPaper = {
   status: string
-  briefing: PrintBriefing[]
+  briefing: PrintForm[]
+  feedback: PrintForm[]
   client: string
   periodStart: string
   periodEnd: string
@@ -31,7 +32,7 @@ export type PrintPaper = {
   //department: string
 }
 
-export type PrintBriefing = {
+export type PrintForm = {
   question: string
   questionId: string
   hint: string

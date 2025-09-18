@@ -1,7 +1,7 @@
-query TraineePaperData {
+query TraineePaperPageData {
   currentUser {
+    id
     ... on Trainee {
-      id
       papers {
         id
         traineeId

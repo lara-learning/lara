@@ -11,7 +11,7 @@ interface PaperAccordionState {
 
 export const StyledPaperAccordionContainer = styled(Container)`
   width: 100%;
-  padding: ${Spacings.xs} ${Spacings.xs} ${Spacings.xs} ${Spacings.s};
+  padding: ${Spacings.s} ${Spacings.s} ${Spacings.s} ${Spacings.s};
   margin-bottom: ${Spacings.l};
 
   :hover {
@@ -23,6 +23,7 @@ export const StyledPaperAccordionContainer = styled(Container)`
 
 export const StyledPaperAccordionText = styled(Paragraph)`
   font-size: ${FontSizes.copy};
+  margin: ${Spacings.s} ${Spacings.l} 0 ${Spacings.l};
 `
 
 export const StyledPaperAccordionHeader = styled.div`
@@ -31,6 +32,7 @@ export const StyledPaperAccordionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: ${FontSizes.h2};
+  margin-left: ${Spacings.l};
 `
 
 export const StyledPaperAccordionTitle = styled(Paragraph).withConfig({
@@ -40,6 +42,7 @@ export const StyledPaperAccordionTitle = styled(Paragraph).withConfig({
   transition: font-weight 0.1s;
   user-select: none;
   cursor: pointer;
+  margin: ${Spacings.s} 0;
 
   ${(props) =>
     props.active &&

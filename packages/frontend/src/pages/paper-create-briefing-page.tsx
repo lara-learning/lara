@@ -54,6 +54,7 @@ export const PaperCreateBriefingPage: React.FunctionComponent = () => {
       variables: {
         input: {
           briefing: [],
+          feedback: [],
           client: data.customer,
           mentorId: mentorId,
           traineeId: data.trainee,

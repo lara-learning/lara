@@ -30,6 +30,13 @@ query TraineePageData {
         answer
         hint
       }
+      feedback {
+        id
+        questionId
+        question
+        answer
+        hint
+      }
     }
     company {
       id

@@ -7,10 +7,10 @@ import {
   Entry,
   Paper,
   PaperFormData,
-  PrintBriefing,
   PrintData,
   PrintDay,
   PrintEntry,
+  PrintForm,
   PrintPaper,
   PrintPaperData,
   PrintPayload,
@@ -113,18 +113,18 @@ const transformReport = (report: Report): PrintReport => {
  * @returns Paper for print
  * @param paperBriefing
  */
-const transformPaperBriefing = (paperBriefing: PaperFormData[]): PrintBriefing[] => {
-  const printBriefing: PrintBriefing[] = []
-  paperBriefing.map((briefing: PaperFormData) => {
-    printBriefing.push({
-      question: briefing.question,
-      questionId: briefing.questionId,
-      hint: briefing.hint ?? '',
-      answer: briefing.answer ?? '',
-      id: briefing.id,
+const transformPaperForm = (paperForm: PaperFormData[]): PrintForm[] => {
+  const printForm: PrintForm[] = []
+  paperForm.map((form: PaperFormData) => {
+    printForm.push({
+      question: form.question,
+      questionId: form.questionId,
+      hint: form.hint ?? '',
+      answer: form.answer ?? '',
+      id: form.id,
     })
   })
-  return printBriefing
+  return printForm
 }
 
 /**
@@ -135,7 +135,8 @@ const transformPaperBriefing = (paperBriefing: PaperFormData[]): PrintBriefing[]
 const transformPaper = (paper: Paper): PrintPaper => {
   return {
     status: paper.status,
-    briefing: transformPaperBriefing(paper.briefing),
+    briefing: transformPaperForm(paper.briefing),
+    feedback: transformPaperForm(paper.feedback),
     client: paper.client,
     periodStart: paper.periodStart ?? '',
     periodEnd: paper.periodEnd ?? '',

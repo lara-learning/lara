@@ -27,6 +27,13 @@ query TrainerPaperPageData {
           answer
           hint
         }
+        feedback {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
       }
     }
   }

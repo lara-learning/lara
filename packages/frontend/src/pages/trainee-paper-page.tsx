@@ -8,9 +8,16 @@ import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
 import { PrimaryButton } from '../components/button'
 import EmptyPaper from '../assets/illustrations/empty-paper'
+import { useNavigate } from 'react-router'
+import { mapStatusToProgess } from '../helper/paper-helper'
 
 export const TraineePaperPage: React.FC = () => {
   const { loading, data } = useTraineePageDataQuery()
+  const navigate = useNavigate()
+
+  const navigateToPaperFeedbackPage = (paperId: string) => {
+    navigate('/paper/feedback/' + paperId)
+  }
 
   if (!data) {
     return (
@@ -87,8 +94,15 @@ export const TraineePaperPage: React.FC = () => {
                         </Flex>
                       </Box>
                       <Spacer y="xl">
-                        <ProgressBar progress={0.3} color={'primaryDefault'} />
+                        <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                       </Spacer>
+                      {paper.status !== 'NotStarted' ? (
+                        <Flex justifyContent={'flex-end'}>
+                          <PrimaryButton onClick={() => navigateToPaperFeedbackPage(paper.id)}>
+                            {strings.start}
+                          </PrimaryButton>
+                        </Flex>
+                      ) : null}
                     </Container>
                   </Spacer>
                 ) : null

@@ -13,8 +13,8 @@ const germanTranslation: Translation = {
   companyPick: 'Bitte wähle deine Firma:',
   continue: 'Weiter',
   save: 'Speichern',
-  edit: 'bearbeiten',
-  done: 'fertig',
+  edit: 'Bearbeiten',
+  done: 'Fertig',
   markDelete: 'für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
   deleteAt: 'Löschen nach',
@@ -25,6 +25,7 @@ const germanTranslation: Translation = {
   back: 'zurück',
   on: 'an',
   off: 'aus',
+  start: 'Starten',
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
@@ -103,6 +104,31 @@ const germanTranslation: Translation = {
       otherRemarks: {
         question: 'Sonstige Anmerkungen',
         hint: 'Falls du noch zusätzliche Punkte hast, welche ins Breifing aufgenommen werden sollen, kannst du diese hier festhalten.',
+      },
+    },
+    feedback: {
+      headlineEvaluationByTrainee: 'Bewertung durch den Auszubildenden',
+    },
+    feedbackQuestions: {
+      descriptionOfActivities: {
+        question: 'Berschreibung der Tätigkeiten',
+        hint: 'Nenne hier bitte die Tätigkeiten oder Aufgaben, die du in der Station gemacht hast.',
+      },
+      feedbackOnProjectTeam: {
+        question: 'Feedback zu deinem Projekt Team ',
+        hint: 'Bitte beschreibe hier wie du dich ins Team aufgenommen gefühlt hast und wie der Einstieg und die Zusammenarbeit lief.',
+      },
+      feedbackOnTasksAndProject: {
+        question: 'Feedaback zu deinen Aufgaben und Projekt',
+        hint: 'Was lief gut? Was war herausfordernd? Welche Aufgaben hast du mit besonderem Interesse und Erfolg ausgeübt? Was hat dich weitergebracht? Was war weniger erfolgreich? Was macht zufrieden? Was erzeugt Frust? Hierbei beschreibe möglichst an konkreten Beispielen vornehmlich dich und nicht dein Umfeld.',
+      },
+      periodOfTime: {
+        question: 'Zeitumfang',
+        hint: 'Damit ist gemeint, ob die Dauer der Ausbildungsstation angemessen war, zu kurz oder zu lang.',
+      },
+      learningContent: {
+        question: 'Lerninhalte',
+        hint: 'Wurden die zu Beginn deiner Station vereinbarten Lerninhalte behandelt?Diese sind hier nochmal automatisch aufgeführt. Ergänze hier, ob du ausreichend Gelegenheit hattest, die Inhalte zu lernen.',
       },
     },
     modal: {

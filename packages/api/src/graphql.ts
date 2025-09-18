@@ -456,6 +456,7 @@ export type GqlPaper = {
   client: Scalars['String']['output'];
   conclusion?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  feedback: Array<GqlPaperFormData>;
   id: Scalars['ID']['output'];
   mentorId: Scalars['ID']['output'];
   periodEnd?: Maybe<Scalars['String']['output']>;
@@ -488,6 +489,7 @@ export type GqlPaperFormData = {
 export type GqlPaperInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String']['input'];
+  feedback: Array<GqlPaperEntryInput>;
   mentorId: Scalars['ID']['input'];
   periodEnd?: InputMaybe<Scalars['String']['input']>;
   periodStart?: InputMaybe<Scalars['String']['input']>;
@@ -510,6 +512,7 @@ export type GqlPaperStatus =
 export type GqlPaperUpdateInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String']['input'];
+  feedback: Array<GqlPaperEntryInput>;
   id: Scalars['ID']['input'];
   mentorId: Scalars['ID']['input'];
   periodEnd?: InputMaybe<Scalars['String']['input']>;
@@ -1074,6 +1077,7 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   client?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  feedback?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   mentorId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   periodEnd?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;

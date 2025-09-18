@@ -70,8 +70,9 @@ export type Report = Omit<GqlReport, 'days' | 'comments' | 'nextReportLink' | 'p
   traineeId: string
 }
 
-export type Paper = Omit<GqlPaper, 'briefing'> & {
+export type Paper = Omit<GqlPaper, 'briefing' | 'feedback'> & {
   briefing: GqlPaperFormData[]
+  feedback: GqlPaperFormData[]
 }
 
 export type PaperFormData = Omit<GqlPaperFormData, 'answer' | 'question' | 'questionId' | 'hint' | 'id'> & {

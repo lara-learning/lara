@@ -30,6 +30,7 @@ import { PaperBriefingPage } from './pages/paper-briefing-page'
 import { TraineePaperPage } from './pages/trainee-paper-page'
 import { MentorPaperPage } from './pages/mentor-paper-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
+import { TraineePaperFeedbackPage } from './pages/trainee-paper-feedback-page'
 
 type RoutesProps = {
   currentUser?:
@@ -79,6 +80,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
                 <Route path="/paper" element={<TraineePaperPage />} />
+                <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
                 <Route path="/alexa" element={<AlexaPage />} />
                 <Route path="/wiki" element={<AzubiWikiPage />} />
               </>

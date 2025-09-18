@@ -1,5 +1,5 @@
 mutation deletePaper($paperId: ID!) {
-deletePaper(paperId: $paperId) {
+  deletePaper(paperId: $paperId) {
     id
     traineeId
     trainerId
@@ -12,6 +12,12 @@ deletePaper(paperId: $paperId) {
     subject
     status
     briefing {
+      id
+      questionId
+      answer
+      hint
+    }
+    feedback {
       id
       questionId
       answer

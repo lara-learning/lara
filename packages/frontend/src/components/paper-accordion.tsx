@@ -10,31 +10,30 @@ import {
   StyledPaperAccordionTitle,
 } from '@lara/components'
 import PaperTextInput from './paper-text-input'
-import { PaperFormData, Trainer, useTrainerPaperPageDataQuery } from '../graphql'
+import { Mentor, PaperFormData, Trainee, Trainer } from '../graphql'
 import PaperTextBox from './paper-text-box'
 
 interface PaperAccordionProps {
   paperInput: PaperFormData
   completedInput: PaperFormData[]
-  setPaperBriefing: (value: PaperFormData[]) => void
-  setPaperBriefingInput: (value: PaperFormData) => void
+  setPaperForm: (value: PaperFormData[]) => void
+  setPaperFormInput: (value: PaperFormData) => void
   title: string
   children?: React.ReactNode
   forceActive?: boolean
+  currentUser: Trainer | Trainee | Mentor
 }
 
 const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({
   paperInput,
-  setPaperBriefing,
+  setPaperForm,
   completedInput,
-  setPaperBriefingInput,
+  setPaperFormInput,
   title,
   forceActive,
+  currentUser,
 }) => {
   const [activeState, setActiveState] = React.useState(false)
-  const trainerPaperPageData = useTrainerPaperPageDataQuery()
-
-  const currentUser = trainerPaperPageData?.data?.currentUser as Trainer
 
   if (!currentUser) {
     return null
@@ -52,7 +51,7 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({
         filteredInputs.push(input)
       }
     })
-    setPaperBriefing(filteredInputs)
+    setPaperForm(filteredInputs)
   }
 
   return (
@@ -76,7 +75,7 @@ const PaperAccordion: React.FunctionComponent<PaperAccordionProps> = ({
         <StyledPaperAccordionText>{paperInput.hint}</StyledPaperAccordionText>
 
         <Spacer top="s" right="xxl" bottom="xs">
-          <PaperTextInput autoFocus entry={paperInput} clearOnSave={true} onSave={setPaperBriefingInput} />
+          <PaperTextInput autoFocus entry={paperInput} clearOnSave={true} onSave={setPaperFormInput} />
           {completedInput.length ? (
             <PaperTextBox paperInput={paperInput} paperEntries={completedInput} handleDelete={handleDelete} />
           ) : null}

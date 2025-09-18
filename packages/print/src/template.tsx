@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 
 import { lightTheme, StyledPrintPaperEntry, StyledPrintPaperSubHeadline, ThemeProvider } from '@lara/components'
 
-import { PrintUserData, PrintReport, PrintTranslations, PrintPaper, PrintBriefing } from '@lara/api'
+import { PrintUserData, PrintReport, PrintTranslations, PrintPaper, PrintForm } from '@lara/api'
 import {
   Spacings,
   StyledPrintDay,
@@ -193,7 +193,7 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
         ) : null}
       </StyledPrintUserInfo>
       <div>
-        {paper.briefing.map((briefing: PrintBriefing, index, array) => {
+        {paper.briefing.map((briefing: PrintForm, index, array) => {
           return (
             <StyledPrintDay key={briefing.questionId}>
               {index == 0 || array[index].questionId !== array[index - 1].questionId ? (

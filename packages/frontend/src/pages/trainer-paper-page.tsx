@@ -18,7 +18,7 @@ import { PrimaryButton, SecondaryButton } from '../components/button'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import EmptyPaper from '../assets/illustrations/empty-paper'
-import { PaperStatus, Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
+import { Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
 import Loader from '../components/loader'
 import ProgressBar from '../components/progress-bar'
 import Avatar from '../components/avatar'
@@ -28,6 +28,7 @@ import PaperModal from '../assets/illustrations/paper-modal-illustraion'
 import Modal from '../components/modal'
 import { Paper } from '@lara/api'
 import { useNavigate } from 'react-router'
+import { mapStatusToProgess } from '../helper/paper-helper'
 
 export const TrainerPaperPage: React.FC = () => {
   const navigate = useNavigate()
@@ -97,17 +98,6 @@ export const TrainerPaperPage: React.FC = () => {
 
   const navigateToEditPaperPage = (paperId: string) => {
     navigate('/paper/briefing/' + paperId)
-  }
-
-  const mapStatusToProgess = (status: PaperStatus): number => {
-    switch (status) {
-      case 'NotStarted':
-        return 0
-      case 'InProgress':
-        return 0.3
-      default:
-        return 0
-    }
   }
 
   return (

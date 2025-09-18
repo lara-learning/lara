@@ -253,6 +253,15 @@ export const DUMMY_PAPER_DATA: PrintData = {
             hint: 'Test Hinweis',
           },
         ],
+        feedback: [
+          {
+            id: '3',
+            questionId: '4',
+            answer: 'Test Antwort',
+            question: 'Test Frage',
+            hint: 'Test Hinweis',
+          },
+        ],
         client: 'Kunde',
         periodStart: '2022-08-07T05:14:28.000Z',
         periodEnd: '2025-08-07T05:14:28.000Z',

@@ -23,3 +23,11 @@ interface PaperLayoutProps {
 export const PaperLayout: React.FC<PaperLayoutProps> = ({ children }) => {
   return <StyledPaperLayout>{children}</StyledPaperLayout>
 }
+
+export const PaperH2 = styled.h2`
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: ${(props) => props.theme.mediumFont};
+  text-transform: uppercase;
+  margin: ${Spacings.xxl} 0 ${Spacings.l} 0;
+`

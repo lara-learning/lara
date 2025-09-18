@@ -22,6 +22,13 @@ query MentorPaperPageData {
           answer
           hint
         }
+        feedback {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
       }
     }
   }

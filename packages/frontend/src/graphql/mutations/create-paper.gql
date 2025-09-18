@@ -18,5 +18,12 @@ mutation createPaper($input: PaperInput!) {
       answer
       hint
     }
+    feedback {
+      id
+      questionId
+      question
+      answer
+      hint
+    }
   }
 }

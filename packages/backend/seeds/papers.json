@@ -11,7 +11,8 @@
     "schoolPeriodStart": null,
     "subject": "Android Entwicklung",
     "status": "NotStarted",
-    "briefing": []
+    "briefing": [],
+    "feedback": []
   },
   {
     "id": "2",
@@ -25,6 +26,7 @@
     "schoolPeriodStart": null,
     "subject": "IOS Entwicklung",
     "status": "NotStarted",
-    "briefing": []
+    "briefing": [],
+    "feedback": []
   }
 ]

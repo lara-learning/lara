@@ -7,7 +7,7 @@ import { Template } from '../templates/template'
 import PaperAccordion from '../components/paper-accordion'
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import { useNavigate, useParams } from 'react-router'
-import { PaperEntryInput, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
+import { PaperFormData, PaperStatus, Trainer, useTrainerPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
 import Modal from '../components/modal'
 import { Box, Flex } from '@lara/components'
 import PaperModal from '../assets/illustrations/paper-modal-illustraion'
@@ -15,8 +15,7 @@ import { useFetchPaperPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
 import { omitDeep } from '@apollo/client/utilities'
 import NavigationButtonLink from '../components/navigation-button-link'
-
-type Question = { question: string; hint: string }
+import { Question } from '../helper/paper-helper'
 
 const briefingQuestions = (): Question[] => {
   const questions = strings.paper.briefingQuestions
@@ -37,8 +36,8 @@ const briefingQuestions = (): Question[] => {
 export const PaperBriefingPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { paperId } = useParams()
-  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperEntryInput>()
-  const [paperBriefing, setPaperBriefing] = React.useState<PaperEntryInput[]>([])
+  const [paperBriefingInput, setPaperBriefingInput] = React.useState<PaperFormData>()
+  const [paperBriefing, setPaperBriefing] = React.useState<PaperFormData[]>([])
   const [fetchPdf, loading] = useFetchPaperPdf()
 
   const QAs = briefingQuestions()
@@ -57,7 +56,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
   const paper = currentUser?.papers?.find((paper) => paper?.id == paperId)
   useEffect(() => {
     if (paperBriefingInput) {
-      setPaperBriefing((oldArray: PaperEntryInput[]) => [...oldArray, paperBriefingInput])
+      setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
     }
   }, [paperBriefingInput])
 
@@ -69,11 +68,12 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
     return null
   }
 
-  const savePaper = async (paperBriefing: PaperEntryInput[]) => {
+  const savePaper = async (paperBriefing: PaperFormData[]) => {
     await updatePaperMutation({
       variables: {
         input: {
           briefing: omitDeep(paperBriefing, '__typename'),
+          feedback: paper ? omitDeep(paper.feedback, '__typename') : [],
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
@@ -100,11 +100,12 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
     })
   }
 
-  const submitPaper = async (paperBriefing: PaperEntryInput[]) => {
+  const submitPaper = async (paperBriefing: PaperFormData[]) => {
     await updatePaperMutation({
       variables: {
         input: {
           briefing: omitDeep(paperBriefing, '__typename'),
+          feedback: paper?.feedback ?? [],
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
@@ -162,8 +163,8 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
         <div>
           {filteredQAs.map(({ question: q, hint: h }, index) => (
             <PaperAccordion
-              setPaperBriefingInput={setPaperBriefingInput}
-              setPaperBriefing={setPaperBriefing}
+              setPaperFormInput={setPaperBriefingInput}
+              setPaperForm={setPaperBriefing}
               completedInput={paperBriefing}
               paperInput={{
                 id: Date.now().toString(),
@@ -175,6 +176,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
               forceActive={filteredQAs.length === 1}
               key={q}
               title={q}
+              currentUser={currentUser}
             >
               {h}
             </PaperAccordion>

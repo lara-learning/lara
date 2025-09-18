@@ -25,6 +25,7 @@ const englishTranslation: Translation = {
   back: 'back',
   on: 'on',
   off: 'off',
+  start: 'Start',
   login: {
     userNotRegisteredError: {
       title: 'Login failed',
@@ -100,6 +101,31 @@ const englishTranslation: Translation = {
       otherRemarks: {
         question: 'Other Remarks',
         hint: 'If you have any additional points to be included in the briefing, you can note them here.',
+      },
+    },
+    feedback: {
+      headlineEvaluationByTrainee: 'Evaluation by the trainee',
+    },
+    feedbackQuestions: {
+      descriptionOfActivities: {
+        question: 'Description of activities',
+        hint: 'Please name the activities or tasks that you did in the ward.',
+      },
+      feedbackOnProjectTeam: {
+        question: 'Feedback on your project team',
+        hint: 'Please describe here how you felt as part of the team and how the start and the cooperation went.',
+      },
+      feedbackOnTasksAndProject: {
+        question: 'Feedback on your tasks and project',
+        hint: 'What went well? What was challenging? Which tasks have you carried out with particular interest and success? What got you going? What was less successful? What makes you happy? What creates frustration? If possible, use concrete examples to describe yourself and not your environment.',
+      },
+      periodOfTime: {
+        question: 'Period of time',
+        hint: 'This means whether the duration of the training station was appropriate, too short or too long.',
+      },
+      learningContent: {
+        question: 'Learning content',
+        hint: 'Was the learning content agreed at the beginning of your station covered? These are automatically listed here again. Add here if you had enough opportunity to learn the content.',
       },
     },
     modal: {

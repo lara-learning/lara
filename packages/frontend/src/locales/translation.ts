@@ -23,6 +23,7 @@ export default interface Translation {
   back: string
   on: string
   off: string
+  start: string
   login: {
     userNotRegisteredError: {
       title: string
@@ -95,6 +96,31 @@ export default interface Translation {
         hint: string
       }
       otherRemarks: {
+        question: string
+        hint: string
+      }
+    }
+    feedback: {
+      headlineEvaluationByTrainee: string
+    }
+    feedbackQuestions: {
+      descriptionOfActivities: {
+        question: string
+        hint: string
+      }
+      feedbackOnProjectTeam: {
+        question: string
+        hint: string
+      }
+      feedbackOnTasksAndProject: {
+        question: string
+        hint: string
+      }
+      periodOfTime: {
+        question: string
+        hint: string
+      }
+      learningContent: {
         question: string
         hint: string
       }
