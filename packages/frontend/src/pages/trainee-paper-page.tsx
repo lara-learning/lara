@@ -47,7 +47,7 @@ export const TraineePaperPage: React.FC = () => {
                 paper?.traineeId == currentUser.id ? (
                   <Spacer bottom="xl" key={paper?.id}>
                     <Container overflow={'visible'} padding={'l'}>
-                      <Box width={[3, 5 / 5]}>
+                      <Box width={1}>
                         <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                         <Spacer bottom="xl">
                           <Text size={'copy'}>

@@ -79,10 +79,16 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/archive" element={<ArchivePage />} />
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
-                <Route path="/paper" element={<TraineePaperPage />} />
-                <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
+
                 <Route path="/alexa" element={<AlexaPage />} />
-                <Route path="/wiki" element={<AzubiWikiPage />} />
+
+                {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+                  <>
+                    <Route path="/paper" element={<TraineePaperPage />} />
+                    <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
+                    <Route path="/wiki" element={<AzubiWikiPage />} />
+                  </>
+                )}
               </>
             ) : (
               <Route path="/" element={<OnboardingPage />} />
@@ -96,10 +102,15 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/" element={<Navigate to={currentUser.trainees.length > 0 ? '/reports' : '/trainees'} />} />
             <Route path="/reports/:trainee?" element={<TrainerReportsPage />} />
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
-            <Route path="/paper" element={<TrainerPaperPage />} />
-            <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
-            <Route path="/paper/briefing/:paperId" element={<PaperBriefingPage />} />
+
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
+            {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+              <>
+                <Route path="/paper" element={<TrainerPaperPage />} />
+                <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
+                <Route path="/paper/briefing/:paperId" element={<PaperBriefingPage />} />
+              </>
+            )}
           </>
         )}
 
@@ -118,8 +129,12 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/trainer/:id" element={<AdminEditUserPage />} />
             <Route path="/trainees" element={<AdminTraineesPage />} />
             <Route path="/trainees/:id" element={<AdminEditUserPage />} />
-            <Route path="/mentor/" element={<AdminMentorPage />} />
-            <Route path="/mentor/:id" element={<AdminEditUserPage />} />
+            {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+              <>
+                <Route path="/mentor/" element={<AdminMentorPage />} />
+                <Route path="/mentor/:id" element={<AdminEditUserPage />} />
+              </>
+            )}
           </>
         )}
 

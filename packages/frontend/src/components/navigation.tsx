@@ -66,15 +66,19 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/archive" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.archive}
       </StyledNavItem>
-      <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
-        {strings.navigation.paper}
-      </StyledNavItem>
+      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
-      <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
-        {strings.navigation.wiki}
-      </StyledNavItem>
+      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+        <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.wiki}
+        </StyledNavItem>
+      )}
     </>
   )
 
@@ -86,9 +90,11 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainees}
       </StyledNavItem>
-      <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
-        {strings.navigation.paper}
-      </StyledNavItem>
+      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -116,9 +122,11 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
       </StyledNavItem>
-      <StyledNavItem to={'/mentor'} onClick={toggleMenu} isMobile={isMobile}>
-        {strings.navigation.mentor}
-      </StyledNavItem>
+      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+        <StyledNavItem to={'/mentor'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.mentor}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -136,7 +144,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <StyledNavWrapper flexWrap="wrap" justifyContent="space-between">
+      <StyledNavWrapper flexWrap="nowrap" justifyContent="space-between">
         <StyledLaraLink to="/">
           <StyledLogo isInNav />
         </StyledLaraLink>
@@ -164,7 +172,13 @@ const Navigation: React.FC = () => {
                     setShowDropdown((prev) => !prev)
                   }}
                 >
-                  <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
+                  <StyledAvatarText
+                    $minScreenWidth={
+                      ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging' ? 800 : 720
+                    }
+                  >
+                    {data.currentUser?.firstName + ' ' + data.currentUser?.lastName}
+                  </StyledAvatarText>
                   <Avatar size={35} id={currentUser?.id ?? ''} />
                 </StyledAvatarMenuItem>
 
