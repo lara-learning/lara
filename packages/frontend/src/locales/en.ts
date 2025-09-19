@@ -88,6 +88,10 @@ const englishTranslation: Translation = {
       departmentMissingTitle: 'Add department',
       departmentMissingText: 'You have to add a department to hand over your report.',
     },
+    incomplete: {
+      title: 'Report incomplete',
+      description: 'Please make sure all days, your department, and your working hours are filled in.',
+    },
     unarchive: 'Unarchive report',
     total: 'Hours per week',
     headingContainer: {
