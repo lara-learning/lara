@@ -51,6 +51,10 @@ export default interface Translation {
       description: string
       createBriefing: string
     }
+    emptyTrainee: {
+      headline: string
+      description: string
+    }
     createBriefing: {
       title: string
       firstnameMentor: string
@@ -140,6 +144,10 @@ export default interface Translation {
     dashboard: {
       title: string
       description: string
+      traineeDiscription: {
+        b: string
+        a: string
+      }
       briefing: string
       feedback: string
       conclusion: string

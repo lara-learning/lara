@@ -54,6 +54,11 @@ const englishTranslation: Translation = {
         "Your apprentice is coming to a new station, and it iss time for the kick-off meeting? Here you can fill out and prepare the briefing for the station. This way, you can set a framework for the scope and topics of your apprentice's training station.",
       createBriefing: 'Create briefing',
     },
+    emptyTrainee: {
+      headline: "There's nothing here yet",
+      description:
+        'After your first kick-off/briefing for a station, you will be able to find it here, download it and give your station feedback on it.',
+    },
     createBriefing: {
       title: 'Briefing',
       firstnameMentor: "Mentor's First Name",
@@ -147,6 +152,10 @@ const englishTranslation: Translation = {
     dashboard: {
       title: 'Station',
       description: "It's time for the feedback meeting for your apprentice's station. You can start it here.",
+      traineeDiscription: {
+        a: 'There is a briefing for your station ',
+        b: ', with all the key data about your station. If your station feedback session is pending, you can start it here.',
+      },
       briefing: 'Briefing',
       feedback: 'Station Feedback',
       conclusion: 'Conclusion',

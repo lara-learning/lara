@@ -2,7 +2,7 @@ import { Container, H1, Paragraph, Spacer, StyledIcon, Text } from '@lara/compon
 import React from 'react'
 import Loader from '../components/loader'
 import { Template } from '../templates/template'
-import { useTraineePageDataQuery } from '../graphql'
+import { PaperStatus, useTraineePageDataQuery } from '../graphql'
 import { Box, Flex } from '@lara/components'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
@@ -50,7 +50,11 @@ export const TraineePaperPage: React.FC = () => {
                       <Box width={[3, 5 / 5]}>
                         <H1 center>{strings.paper.dashboard.title + ' ' + paper?.client + ' - ' + paper?.subject}</H1>
                         <Spacer bottom="xl">
-                          <Text size={'copy'}>{strings.paper.dashboard.description}</Text>
+                          <Text size={'copy'}>
+                            {strings.paper.dashboard.traineeDiscription.a +
+                              paper?.client +
+                              strings.paper.dashboard.traineeDiscription.b}
+                          </Text>
                         </Spacer>
                         <Flex alignItems={'center'} width={'100%'}>
                           <Box width={2 / 5}>
@@ -96,7 +100,7 @@ export const TraineePaperPage: React.FC = () => {
                       <Spacer y="xl">
                         <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                       </Spacer>
-                      {paper.status !== 'NotStarted' ? (
+                      {paper.status === PaperStatus.InProgress ? (
                         <Flex justifyContent={'flex-end'}>
                           <PrimaryButton onClick={() => navigateToPaperFeedbackPage(paper.id)}>
                             {strings.start}
@@ -110,13 +114,9 @@ export const TraineePaperPage: React.FC = () => {
             ) : (
               <Flex alignItems={'center'} flexDirection={'column'}>
                 <Box width={[1, 3 / 5]}>
-                  <H1 center>{strings.paper.empty.headline}</H1>
-                  <Paragraph center>{strings.paper.empty.description}</Paragraph>
-                  <Spacer y="l">
-                    <Flex alignItems={'center'} flexDirection={'column'}>
-                      <PrimaryButton disabled={true}>{strings.paper.empty.createBriefing}</PrimaryButton>
-                    </Flex>
-                  </Spacer>
+                  <H1 center>{strings.paper.emptyTrainee.headline}</H1>
+                  <Paragraph center>{strings.paper.emptyTrainee.description}</Paragraph>
+
                   <EmptyPaper />
                 </Box>
               </Flex>

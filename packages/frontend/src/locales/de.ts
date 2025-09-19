@@ -57,6 +57,11 @@ const germanTranslation: Translation = {
         'Dein Azubi kommt auf eine neue Station und es steht das Kick-Off Gespräch an? Hier kannst du das Briefing für die Station ausfüllen und vorbereiten. Damit kannst du einene Rahmen über den Umfang und die Themen der Ausbildungssation deines Azubis festlegen.',
       createBriefing: 'Briefing erstellen',
     },
+    emptyTrainee: {
+      headline: 'Hier gibt es noch nichts',
+      description:
+        'Nach deinem Ersten Kick-Off/Briefing Gespräch für eine Station, wirst du dieses hier finden und herunterladen können und dein Stationsfeedback zu dieser geben können.',
+    },
     createBriefing: {
       title: 'Briefing',
       firstnameMentor: 'Vorname Ausbildungsbeauftragten',
@@ -153,6 +158,10 @@ const germanTranslation: Translation = {
     dashboard: {
       title: 'Station',
       description: 'Für die Station von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
+      traineeDiscription: {
+        a: 'Für deine Station ',
+        b: ' liegt ein Briefing vor, mit allen Eckdaten zu deiner Station. Falls dein Stationsfeedbackgespräch ansteht, kannst du dies hier starten.',
+      },
       briefing: 'Briefing',
       feedback: 'Stationsfeedback',
       conclusion: 'Fazit',
