@@ -179,7 +179,20 @@ const ReportPage: React.FunctionComponent = () => {
       <Spacer y="l">
         <Flex justifyContent={'flex-end'} alignItems={'center'}>
           {(reportTodo || reportReopened) && (
-            <PrimaryButton disabled={finishedDays !== 5 || !report.department} onClick={toggleHandoverModal}>
+            <PrimaryButton
+              onClick={() => {
+                if (finishedDays !== 5 && !report.department) {
+                  addToast({
+                    icon: 'Error',
+                    title: strings.report.incomplete.title,
+                    text: strings.report.incomplete.description,
+                    type: 'error',
+                  })
+                  return
+                }
+                toggleHandoverModal()
+              }}
+            >
               {strings.report.handover}
             </PrimaryButton>
           )}
