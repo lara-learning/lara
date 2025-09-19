@@ -130,10 +130,10 @@ export const StyledAvatarMenuItem = styled.button`
   color: ${(props) => props.theme.buttonPrimaryFont};
 `
 
-export const StyledAvatarText = styled.div`
+export const StyledAvatarText = styled.div<{ $minScreenWidth: number }>`
   font-size: ${FontSizes.copy};
   margin-right: ${Spacings.m};
-  @media (max-width: 720px) {
+  @media (max-width: ${(props) => props.$minScreenWidth + 'px'}) {
     display: none;
   }
 `

@@ -1,0 +1,12 @@
+mutation CreateMentor($input: CreateMentorInput!) {
+  createMentor(input: $input) {
+    id
+    firstName
+    lastName
+    startDate
+    endDate
+    email
+    type
+    deleteAt
+  }
+}
