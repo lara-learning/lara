@@ -18,7 +18,7 @@ import { PrimaryButton, SecondaryButton } from '../components/button'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import EmptyPaper from '../assets/illustrations/empty-paper'
-import { Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
+import { PaperStatus, Trainer, useDeletePaperMutation, useTrainerPaperPageDataQuery } from '../graphql'
 import Loader from '../components/loader'
 import ProgressBar from '../components/progress-bar'
 import Avatar from '../components/avatar'
@@ -149,7 +149,11 @@ export const TrainerPaperPage: React.FC = () => {
                           </Box>
                           <Box width={3 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              {paper?.status === PaperStatus.TraineeDone ? (
+                                <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                              ) : (
+                                <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              )}
                               <Spacer left="xs">
                                 <Text>{strings.paper.dashboard.feedback}</Text>
                               </Spacer>
@@ -183,7 +187,7 @@ export const TrainerPaperPage: React.FC = () => {
                   {paper.status === 'NotStarted' ? (
                     <Flex justifyContent={'flex-end'}>
                       <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
-                        {strings.paper.dashboard.editPaper}
+                        {paper?.briefing.length > 0 ? strings.edit : strings.start}
                       </PrimaryButton>
                     </Flex>
                   ) : null}

@@ -28,6 +28,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
   const { paperId } = useParams()
   const [paperFeedbackInput, setPaperFeedbackInput] = React.useState<PaperFormData>()
   const [paperFeedback, setPaperFeedback] = React.useState<PaperFormData[]>([])
+  const [filledFromSave, setFilledFromSave] = React.useState(false)
 
   const traineePaperPageData = useTraineePaperPageDataQuery()
   const [updatePaperMutation] = useUpdatePaperMutation()
@@ -45,8 +46,11 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
   }, [paperFeedbackInput])
 
   useEffect(() => {
-    if (paper && paper.feedback.length > 0 && paperFeedback.length == 0) setPaperFeedback(paper.feedback)
-  }, [paper, paperFeedback])
+    if (!filledFromSave && paper && paper.feedback.length > 0 && paperFeedback.length == 0) {
+      setPaperFeedback(paper.feedback)
+      setFilledFromSave(true)
+    }
+  }, [filledFromSave, paper, paperFeedback])
 
   if (!currentUser) {
     return null
@@ -77,7 +81,38 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
         TraineePaperPageData: ({ mutationResult }) => {
           return {
             currentUser: {
-              papers: mutationResult.data?.updatePaper,
+              papers: mutationResult?.data?.updatePaper,
+            },
+          }
+        },
+      },
+    })
+  }
+
+  const submitPaper = async (paperFeedback: PaperFormData[]) => {
+    await updatePaperMutation({
+      variables: {
+        input: {
+          briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
+          feedback: omitDeep(paperFeedback, '__typename'),
+          client: paper?.client ?? '',
+          id: paperId ?? '',
+          mentorId: paper?.mentorId ?? '',
+          periodEnd: paper?.periodEnd,
+          periodStart: paper?.periodStart,
+          schoolPeriodEnd: paper?.schoolPeriodEnd,
+          schoolPeriodStart: paper?.schoolPeriodStart,
+          status: PaperStatus.TraineeDone,
+          subject: paper?.subject ?? '',
+          traineeId: paper?.traineeId ?? '',
+          trainerId: currentUser.id,
+        },
+      },
+      updateQueries: {
+        TraineePaperPageData: ({ mutationResult }) => {
+          return {
+            currentUser: {
+              papers: mutationResult?.data?.updatePaper,
             },
           }
         },
@@ -136,7 +171,13 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
           </SecondaryButton>
         </Box>
         <Box ml={'2'}>
-          <PrimaryButton type="submit" onClick={() => {}}>
+          <PrimaryButton
+            type="submit"
+            onClick={() => {
+              navigate('/paper')
+              submitPaper(paperFeedback)
+            }}
+          >
             {strings.done}
           </PrimaryButton>
         </Box>

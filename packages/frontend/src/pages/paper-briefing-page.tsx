@@ -44,6 +44,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
   const [filteredQAs] = useState(QAs)
   const [showHandoverModal, setShowHandoverModal] = React.useState(false)
   const [showBackToPaperModal, setShowBackToPaperModal] = React.useState(false)
+  const [filledFromSave, setFilledFromSave] = React.useState(false)
 
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const toggleBackToPaperModal = () => setShowBackToPaperModal(!showBackToPaperModal)
@@ -61,8 +62,11 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
   }, [paperBriefingInput])
 
   useEffect(() => {
-    if (paper && paper.briefing.length > 0 && paperBriefing.length == 0) setPaperBriefing(paper.briefing)
-  }, [paper, paperBriefing])
+    if (!filledFromSave && paper && paper.briefing.length > 0 && paperBriefing.length == 0) {
+      setPaperBriefing(paper.briefing)
+      setFilledFromSave(true)
+    }
+  }, [filledFromSave, paper, paperBriefing])
 
   if (!currentUser) {
     return null

@@ -71,7 +71,11 @@ export const TraineePaperPage: React.FC = () => {
                           </Box>
                           <Box width={3 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              {paper?.status === PaperStatus.TraineeDone ? (
+                                <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                              ) : (
+                                <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              )}
                               <Spacer left="xs">
                                 <Text>{strings.paper.dashboard.feedback}</Text>
                               </Spacer>
@@ -100,10 +104,10 @@ export const TraineePaperPage: React.FC = () => {
                       <Spacer y="xl">
                         <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                       </Spacer>
-                      {paper.status === PaperStatus.InProgress ? (
+                      {paper?.status === PaperStatus.InProgress ? (
                         <Flex justifyContent={'flex-end'}>
                           <PrimaryButton onClick={() => navigateToPaperFeedbackPage(paper.id)}>
-                            {strings.start}
+                            {paper?.feedback.length > 0 ? strings.edit : strings.start}
                           </PrimaryButton>
                         </Flex>
                       ) : null}

@@ -18,6 +18,7 @@ import { useAuthentication } from '../hooks/use-authentication'
 import strings from '../locales/localization'
 import Avatar from './avatar'
 import Dropdown from './dropdown'
+import { isPaperFeatureEnabled } from '../helper/paper-helper'
 
 const Navigation: React.FC = () => {
   const { data, loading } = useNavigationDataQuery()
@@ -66,7 +67,7 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/archive" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.archive}
       </StyledNavItem>
-      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+      {isPaperFeatureEnabled() && (
         <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.paper}
         </StyledNavItem>
@@ -90,7 +91,7 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainees}
       </StyledNavItem>
-      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+      {isPaperFeatureEnabled() && (
         <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.paper}
         </StyledNavItem>
@@ -122,7 +123,7 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
       </StyledNavItem>
-      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+      {isPaperFeatureEnabled() && (
         <StyledNavItem to={'/mentor'} onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.mentor}
         </StyledNavItem>
@@ -172,11 +173,7 @@ const Navigation: React.FC = () => {
                     setShowDropdown((prev) => !prev)
                   }}
                 >
-                  <StyledAvatarText
-                    $minScreenWidth={
-                      ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging' ? 800 : 720
-                    }
-                  >
+                  <StyledAvatarText $minScreenWidth={isPaperFeatureEnabled() ? 800 : 720}>
                     {data.currentUser?.firstName + ' ' + data.currentUser?.lastName}
                   </StyledAvatarText>
                   <Avatar size={35} id={currentUser?.id ?? ''} />

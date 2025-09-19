@@ -31,6 +31,7 @@ import { TraineePaperPage } from './pages/trainee-paper-page'
 import { MentorPaperPage } from './pages/mentor-paper-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
 import { TraineePaperFeedbackPage } from './pages/trainee-paper-feedback-page'
+import { isPaperFeatureEnabled } from './helper/paper-helper'
 
 type RoutesProps = {
   currentUser?:
@@ -82,12 +83,15 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
 
                 <Route path="/alexa" element={<AlexaPage />} />
 
-                {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+                {isPaperFeatureEnabled() && (
                   <>
                     <Route path="/paper" element={<TraineePaperPage />} />
                     <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
-                    <Route path="/wiki" element={<AzubiWikiPage />} />
                   </>
+                )}
+
+                {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+                  <Route path="/wiki" element={<AzubiWikiPage />} />
                 )}
               </>
             ) : (
@@ -104,7 +108,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
 
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
-            {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+            {isPaperFeatureEnabled() && (
               <>
                 <Route path="/paper" element={<TrainerPaperPage />} />
                 <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
@@ -129,7 +133,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/trainer/:id" element={<AdminEditUserPage />} />
             <Route path="/trainees" element={<AdminTraineesPage />} />
             <Route path="/trainees/:id" element={<AdminEditUserPage />} />
-            {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+            {isPaperFeatureEnabled() && (
               <>
                 <Route path="/mentor/" element={<AdminMentorPage />} />
                 <Route path="/mentor/:id" element={<AdminEditUserPage />} />
