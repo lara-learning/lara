@@ -88,8 +88,12 @@ const germanTranslation: Translation = {
       title: 'Abteilung',
       departmentAddedTitle: 'Abteilung hinzugefügt',
       departmentAddedText: 'Deine Abteilung wurde erfolgreich hinzugefügt und gespeichert.',
-      departmentMissingTitle: 'Abteilung hinzugefügen',
+      departmentMissingTitle: 'Abteilung hinzufügen',
       departmentMissingText: 'Du musst eine Abteilung eintragen, damit dein Bericht übergeben werden kann.',
+    },
+    incomplete: {
+      title: 'Bericht unvollständig',
+      description: 'Bitte stelle sicher, dass alle Tage, deine Abteilung und deine Arbeitsstunden eingetragen sind.',
     },
     unarchive: 'Aus dem Archiv holen',
     total: 'Wochenstunden',
