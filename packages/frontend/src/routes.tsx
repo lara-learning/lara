@@ -24,6 +24,7 @@ import SupportPage from './pages/support-page'
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
+import { isWikiFeatureEnabled } from './helper/wiki-helper'
 
 type RoutesProps = {
   currentUser?:
@@ -72,7 +73,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
                 <Route path="/alexa" element={<AlexaPage />} />
-                <Route path="/wiki" element={<AzubiWikiPage />} />
+                {isWikiFeatureEnabled() && <Route path="/wiki" element={<AzubiWikiPage />} />}
               </>
             ) : (
               <Route path="/" element={<OnboardingPage />} />
