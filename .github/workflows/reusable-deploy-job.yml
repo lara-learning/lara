@@ -39,7 +39,6 @@ jobs:
       LARA_SECRET: ${{ secrets.LARA_SECRET }}
       SES_EMAIL: ${{ secrets.SES_EMAIL }}
       SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}
-      URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
       COMPANY_ABBREVIATION: ${{ secrets.COMPANY_ABBREVIATION }}
       OLD_COMPANY_NAME: ${{ secrets.OLD_COMPANY_NAME }}
       NEW_COMPANY_NAME: ${{ secrets.NEW_COMPANY_NAME }}
