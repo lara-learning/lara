@@ -28,6 +28,7 @@ declare const ENVIRONMENT: {
   backendUrl: string
   frontendUrl: string
   supportMail: string
+  nodeEnv: string
 }
 
 declare const REVISION: string
