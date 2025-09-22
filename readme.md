@@ -113,8 +113,6 @@ PDF printing is developed inside `packages/print`. Run `yarn debug` inside this 
   - String containing AWS IAM User ID used for deployment
 - AWS_SECRET_ACCESS_KEY
   - String containing AWS IAM User Secret Key used for deployment
-- URL_ORIGIN
-  - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
 - COMPANY_ABBREVIATION
   - Shortform of your companies name to create s3-buckets
 - OLD_COMPANY_NAME
@@ -151,8 +149,6 @@ The following variables can be added to your cloned version of Lara.
   - String containing AWS IAM User Secret Key used for deployment
 - AUTH_HEADER
   - String containing the value for the authorization header
-- URL_ORIGIN
-  - String containing the origin of the environments. Used in emails. E.g.: lara.exampleCompany
 - DEBUG
   - More information is shown in the console. Not necessary for production.
 - COMPANY_ABBREVIATION

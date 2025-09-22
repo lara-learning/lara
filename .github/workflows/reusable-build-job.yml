@@ -29,7 +29,6 @@ jobs:
       MICROSOFT_TENANT_ID: ${{ secrets.MICROSOFT_TENANT_ID }}
       MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
       SUPPORT_MAIL: ${{ secrets.SUPPORT_MAIL }}
-      URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
       COMPANY_ABBREVIATION: ${{ secrets.COMPANY_ABBREVIATION }}
       OLD_COMPANY_NAME: ${{ secrets.OLD_COMPANY_NAME }}
       NEW_COMPANY_NAME: ${{ secrets.NEW_COMPANY_NAME }}
