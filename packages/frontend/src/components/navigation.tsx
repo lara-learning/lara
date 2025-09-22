@@ -18,6 +18,7 @@ import { useAuthentication } from '../hooks/use-authentication'
 import strings from '../locales/localization'
 import Avatar from './avatar'
 import Dropdown from './dropdown'
+import { isWikiFeatureEnabled } from '../helper/wiki-helper'
 
 const Navigation: React.FC = () => {
   const { data, loading } = useNavigationDataQuery()
@@ -69,9 +70,11 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
-      <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
-        {strings.navigation.wiki}
-      </StyledNavItem>
+      {isWikiFeatureEnabled() && (
+        <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.wiki}
+        </StyledNavItem>
+      )}
     </>
   )
 
