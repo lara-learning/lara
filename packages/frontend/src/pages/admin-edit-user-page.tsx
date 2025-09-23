@@ -13,6 +13,7 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
+import { EditAdmin } from '../components/edit-admin-content'
 
 type AdminEditUserPageParams = {
   id: string
@@ -84,6 +85,23 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
             />
           }
           content={<EditTrainer trainer={data.getUser} />}
+          actions={renderDeleteAction(data.getUser.deleteAt)}
+        />
+      )}
+
+      {/* Edit Admin page */}
+      {!loading && data?.getUser?.__typename === 'Admin' && (
+        <EditUserLayout
+          backButton={
+            <NavigationButtonLink
+              label={strings.back}
+              to="/admins"
+              icon="ChevronLeft"
+              isLeft
+              iconColor="iconLightGrey"
+            />
+          }
+          content={<EditAdmin admin={data.getUser} />}
           actions={renderDeleteAction(data.getUser.deleteAt)}
         />
       )}

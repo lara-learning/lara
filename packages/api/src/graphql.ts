@@ -23,6 +23,7 @@ export type GqlAdmin = GqlUserInterface & {
   __typename?: 'Admin';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
   createdAt: Scalars['String']['output'];
+  deleteAt?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -32,7 +33,6 @@ export type GqlAdmin = GqlUserInterface & {
   signature?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: GqlUserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type GqlComment = {
@@ -54,6 +54,12 @@ export type GqlCompany = {
   id: Scalars['String']['output'];
   logo: Scalars['String']['output'];
   name: Scalars['String']['output'];
+};
+
+export type GqlCreateAdminInput = {
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
 };
 
 export type GqlCreateCommentPayload = {
@@ -148,6 +154,8 @@ export type GqlMutation = {
   _devsetusertype: GqlDevSetUserPayload;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<GqlTrainerTraineePayload>;
+  /** Creates Admin. */
+  createAdmin?: Maybe<GqlAdmin>;
   /** Creates a new comment on a Day which is identified by the id argument. */
   createCommentOnDay: GqlCreateCommentPayload;
   /** Creates a new comment on a Entry which is identified by the id argument. */
@@ -178,6 +186,8 @@ export type GqlMutation = {
   unlinkAlexa?: Maybe<GqlUserInterface>;
   /** Unmarks User from deletion */
   unmarkUserForDeletion?: Maybe<GqlUserInterface>;
+  /** Updates Admin. */
+  updateAdmin?: Maybe<GqlAdmin>;
   /** Updates the current trainee */
   updateCurrentTrainee?: Maybe<GqlTrainee>;
   /** Updates the current user */
@@ -207,6 +217,11 @@ export type GqlMutation_DevsetusertypeArgs = {
 
 export type GqlMutationClaimTraineeArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationCreateAdminArgs = {
+  input: GqlCreateAdminInput;
 };
 
 
@@ -283,6 +298,12 @@ export type GqlMutationUnmarkUserForDeletionArgs = {
 };
 
 
+export type GqlMutationUpdateAdminArgs = {
+  id: Scalars['ID']['input'];
+  input: GqlUpdateAdminInput;
+};
+
+
 export type GqlMutationUpdateCurrentTraineeArgs = {
   input: GqlUpdateCurrentTraineeInput;
 };
@@ -345,6 +366,8 @@ export type GqlPrintPayload = {
 
 export type GqlQuery = {
   __typename?: 'Query';
+  /** Get all Admins */
+  admins: Array<GqlAdmin>;
   /** Get the alexa account linking url */
   alexaLinkingUrl?: Maybe<Scalars['String']['output']>;
   /** Will look for Users to delete */
@@ -455,7 +478,6 @@ export type GqlTrainee = GqlUserInterface & {
   theme?: Maybe<Scalars['String']['output']>;
   trainer?: Maybe<GqlTrainer>;
   type: GqlUserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type GqlTrainer = GqlUserInterface & {
@@ -473,13 +495,18 @@ export type GqlTrainer = GqlUserInterface & {
   theme?: Maybe<Scalars['String']['output']>;
   trainees: Array<GqlTrainee>;
   type: GqlUserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type GqlTrainerTraineePayload = {
   __typename?: 'TrainerTraineePayload';
   trainee: GqlTrainee;
   trainer: GqlTrainer;
+};
+
+export type GqlUpdateAdminInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GqlUpdateCurrentTraineeInput = {
@@ -527,7 +554,6 @@ export type GqlUserInterface = {
   signature?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: GqlUserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type GqlUserTypeEnum =
@@ -615,6 +641,7 @@ export type GqlResolversTypes = ResolversObject<{
   Comment: ResolverTypeWrapper<Comment>;
   CommentableInterface: ResolverTypeWrapper<CommentableInterface>;
   Company: ResolverTypeWrapper<GqlCompany>;
+  CreateAdminInput: GqlCreateAdminInput;
   CreateCommentPayload: ResolverTypeWrapper<Omit<GqlCreateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversTypes['Comment'], commentable: GqlResolversTypes['CommentableInterface'] }>;
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
@@ -638,6 +665,7 @@ export type GqlResolversTypes = ResolversObject<{
   Trainee: ResolverTypeWrapper<Trainee>;
   Trainer: ResolverTypeWrapper<Trainer>;
   TrainerTraineePayload: ResolverTypeWrapper<Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversTypes['Trainee'], trainer: GqlResolversTypes['Trainer'] }>;
+  UpdateAdminInput: GqlUpdateAdminInput;
   UpdateCurrentTraineeInput: GqlUpdateCurrentTraineeInput;
   UpdateReportPayload: ResolverTypeWrapper<Omit<GqlUpdateReportPayload, 'report' | 'trainee'> & { report: GqlResolversTypes['Report'], trainee: GqlResolversTypes['Trainee'] }>;
   UpdateTraineeInput: GqlUpdateTraineeInput;
@@ -654,6 +682,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   Comment: Comment;
   CommentableInterface: CommentableInterface;
   Company: GqlCompany;
+  CreateAdminInput: GqlCreateAdminInput;
   CreateCommentPayload: Omit<GqlCreateCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversParentTypes['Comment'], commentable: GqlResolversParentTypes['CommentableInterface'] };
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
@@ -675,6 +704,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   Trainee: Trainee;
   Trainer: Trainer;
   TrainerTraineePayload: Omit<GqlTrainerTraineePayload, 'trainee' | 'trainer'> & { trainee: GqlResolversParentTypes['Trainee'], trainer: GqlResolversParentTypes['Trainer'] };
+  UpdateAdminInput: GqlUpdateAdminInput;
   UpdateCurrentTraineeInput: GqlUpdateCurrentTraineeInput;
   UpdateReportPayload: Omit<GqlUpdateReportPayload, 'report' | 'trainee'> & { report: GqlResolversParentTypes['Report'], trainee: GqlResolversParentTypes['Trainee'] };
   UpdateTraineeInput: GqlUpdateTraineeInput;
@@ -686,6 +716,7 @@ export type GqlResolversParentTypes = ResolversObject<{
 export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Admin'] = GqlResolversParentTypes['Admin']> = ResolversObject<{
   alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  deleteAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
@@ -695,7 +726,6 @@ export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResol
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
-  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -774,6 +804,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   _devloginuser?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutation_DevloginuserArgs, 'id'>>;
   _devsetusertype?: Resolver<GqlResolversTypes['DevSetUserPayload'], ParentType, ContextType, RequireFields<GqlMutation_DevsetusertypeArgs, 'type'>>;
   claimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationClaimTraineeArgs, 'id'>>;
+  createAdmin?: Resolver<Maybe<GqlResolversTypes['Admin']>, ParentType, ContextType, RequireFields<GqlMutationCreateAdminArgs, 'input'>>;
   createCommentOnDay?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnDayArgs, 'id' | 'text' | 'traineeId'>>;
   createCommentOnEntry?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnEntryArgs, 'id' | 'text' | 'traineeId'>>;
   createCommentOnReport?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnReportArgs, 'id' | 'text' | 'traineeId'>>;
@@ -789,6 +820,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   unclaimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationUnclaimTraineeArgs, 'id'>>;
   unlinkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
   unmarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationUnmarkUserForDeletionArgs, 'id'>>;
+  updateAdmin?: Resolver<Maybe<GqlResolversTypes['Admin']>, ParentType, ContextType, RequireFields<GqlMutationUpdateAdminArgs, 'id' | 'input'>>;
   updateCurrentTrainee?: Resolver<Maybe<GqlResolversTypes['Trainee']>, ParentType, ContextType, RequireFields<GqlMutationUpdateCurrentTraineeArgs, 'input'>>;
   updateCurrentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, Partial<GqlMutationUpdateCurrentUserArgs>>;
   updateDay?: Resolver<Maybe<GqlResolversTypes['Day']>, ParentType, ContextType, RequireFields<GqlMutationUpdateDayArgs, 'id'>>;
@@ -812,6 +844,7 @@ export type GqlPrintPayloadResolvers<ContextType = Context, ParentType extends G
 }>;
 
 export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Query'] = GqlResolversParentTypes['Query']> = ResolversObject<{
+  admins?: Resolver<Array<GqlResolversTypes['Admin']>, ParentType, ContextType>;
   alexaLinkingUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   cleanup?: Resolver<GqlResolversTypes['Boolean'], ParentType, ContextType>;
   companies?: Resolver<Maybe<Array<GqlResolversTypes['Company']>>, ParentType, ContextType>;
@@ -871,7 +904,6 @@ export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlRes
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   trainer?: Resolver<Maybe<GqlResolversTypes['Trainer']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
-  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -889,7 +921,6 @@ export type GqlTrainerResolvers<ContextType = Context, ParentType extends GqlRes
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   trainees?: Resolver<Array<GqlResolversTypes['Trainee']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
-  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -918,7 +949,6 @@ export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends 
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
-  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
 }>;
 
 export type GqlResolvers<ContextType = Context> = ResolversObject<{

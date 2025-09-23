@@ -326,6 +326,7 @@ const germanTranslation: Translation = {
     reports: 'Berichte',
     trainees: 'Auszubildende',
     trainer: 'Ausbilder',
+    admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archiv',
     settings: 'Einstellungen',

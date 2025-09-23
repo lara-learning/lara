@@ -11,7 +11,7 @@ const StyledContentGrid = styled.div`
 type EditUserContentLayoutProps = {
   user: JSX.Element
   form: JSX.Element
-  relatedUsers: JSX.Element
+  relatedUsers?: JSX.Element
 }
 
 export const EditUserContentLayout: React.FC<EditUserContentLayoutProps> = ({ user, form, relatedUsers }) => {

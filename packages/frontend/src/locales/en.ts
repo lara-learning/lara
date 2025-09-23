@@ -321,6 +321,7 @@ const englishTranslation: Translation = {
     reports: 'Reports',
     trainees: 'Trainees',
     trainer: 'Trainer',
+    admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',

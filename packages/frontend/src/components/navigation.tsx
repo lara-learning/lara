@@ -100,6 +100,9 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
       </StyledNavItem>
+      <StyledNavItem to="/admins" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.admin}
+      </StyledNavItem>
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>

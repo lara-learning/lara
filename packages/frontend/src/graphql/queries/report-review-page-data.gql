@@ -3,7 +3,6 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
     id
     firstName
     lastName
-    username
   }
   reportForTrainee(year: $year, week: $week, id: $trainee) {
     id

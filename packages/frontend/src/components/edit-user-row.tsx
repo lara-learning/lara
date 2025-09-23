@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router'
 
 import { EditUserRowLayout } from '@lara/components'
 
-import { Trainee, Trainer } from '../graphql'
+import { Admin, Trainee, Trainer } from '../graphql'
 import strings from '../locales/localization'
 import { SecondaryButton } from './button'
 import { UserInfo } from './user-info'
 
-type EditUser = Pick<Trainee | Trainer, 'id' | 'firstName' | 'lastName' | 'deleteAt'>
+type EditUser = Pick<Trainee | Trainer | Admin, 'id' | 'firstName' | 'lastName' | 'deleteAt'>
 
 interface EditUserRowProps {
   user: EditUser
-  baseUrl: 'trainees' | 'trainer'
+  baseUrl: 'trainees' | 'trainer' | 'admins'
 }
 
 export const EditUserRow: React.FunctionComponent<EditUserRowProps> = ({ user, baseUrl }) => {

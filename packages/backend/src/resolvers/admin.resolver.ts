@@ -1,24 +1,24 @@
 import { addMonths, isFuture, isToday, subWeeks } from 'date-fns'
 import { GraphQLError } from 'graphql'
 
-import { AdminContext, GqlResolvers, Trainee, Trainer, User } from '@lara/api'
+import { Admin, AdminContext, GqlResolvers, Trainee, Trainer, User } from '@lara/api'
 
 import { isAdmin, isTrainee, isTrainer } from '../permissions'
 import { traineeById } from '../repositories/trainee.repo'
 import { trainerById, allTrainers } from '../repositories/trainer.repo'
+import { allAdmins } from '../repositories/admin.repo'
+import { generateAdmin, validateAdmin } from '../services/admin.service'
 import { allUsers, saveUser, updateUser, userByEmail, userById } from '../repositories/user.repo'
 import { sendDeletionMail } from '../services/email.service'
 import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
 import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
-import { username } from '../services/user.service'
 import { parseISODateString } from '../utils/date'
 import { t } from '../i18n'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
-  Admin: {
-    username,
-  },
+  Admin: {},
   Query: {
+    admins: allAdmins,
     trainers: allTrainers,
     async cleanup() {
       const users = await allUsers()
@@ -54,7 +54,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
     getUser: async (_parent, { id }, { currentUser }) => {
       const user = await userById<User>(id)
 
-      if (!user || isAdmin(user)) {
+      if (!user) {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
       }
 
@@ -65,7 +65,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
     markUserForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
 
-      if (!user || isAdmin(user)) {
+      if (!user) {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
       }
 
@@ -80,7 +80,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
     unmarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
 
-      if (!user || isAdmin(user)) {
+      if (!user) {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
       }
 
@@ -162,6 +162,41 @@ export const traineeAdminResolver: GqlResolvers<AdminContext> = {
       // because we don't know what exactly changed
       // if we use update DDB would throw an error
       return saveUser(updatedTrainee)
+    },
+  },
+}
+
+export const adminAdminResolver: GqlResolvers<AdminContext> = {
+  Mutation: {
+    createAdmin: async (_parent, { input }, { currentUser }) => {
+      const existingUser = await userByEmail(input.email)
+
+      if (existingUser) {
+        throw new GraphQLError(t('errors.userAlreadyExists', currentUser.language))
+      }
+
+      const newAdmin = generateAdmin(input)
+
+      return saveUser(newAdmin)
+    },
+    updateAdmin: async (_parent, { input, id }, { currentUser }) => {
+      const admin = (await userById(id)) as Admin
+
+      if (!admin) {
+        throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
+
+      const updatedAdmin: Admin = {
+        ...admin,
+        ...input,
+      }
+
+      await validateAdmin(updatedAdmin)
+
+      // we need to save the user and not update it
+      // because we don't know what exactly changed
+      // if we use update DDB would throw an error
+      return saveUser(updatedAdmin)
     },
   },
 }

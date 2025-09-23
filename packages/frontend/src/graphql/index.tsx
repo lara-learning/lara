@@ -21,6 +21,7 @@ export type Admin = UserInterface & {
   __typename?: 'Admin';
   alexaSkillLinked?: Maybe<Scalars['Boolean']['output']>;
   createdAt: Scalars['String']['output'];
+  deleteAt?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -30,7 +31,6 @@ export type Admin = UserInterface & {
   signature?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: UserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type Comment = {
@@ -52,6 +52,12 @@ export type Company = {
   id: Scalars['String']['output'];
   logo: Scalars['String']['output'];
   name: Scalars['String']['output'];
+};
+
+export type CreateAdminInput = {
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
 };
 
 export type CreateCommentPayload = {
@@ -147,6 +153,8 @@ export type Mutation = {
   _devsetusertype: DevSetUserPayload;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<TrainerTraineePayload>;
+  /** Creates Admin. */
+  createAdmin?: Maybe<Admin>;
   /** Creates a new comment on a Day which is identified by the id argument. */
   createCommentOnDay: CreateCommentPayload;
   /** Creates a new comment on a Entry which is identified by the id argument. */
@@ -177,6 +185,8 @@ export type Mutation = {
   unlinkAlexa?: Maybe<UserInterface>;
   /** Unmarks User from deletion */
   unmarkUserForDeletion?: Maybe<UserInterface>;
+  /** Updates Admin. */
+  updateAdmin?: Maybe<Admin>;
   /** Updates the current trainee */
   updateCurrentTrainee?: Maybe<Trainee>;
   /** Updates the current user */
@@ -206,6 +216,11 @@ export type Mutation_DevsetusertypeArgs = {
 
 export type MutationClaimTraineeArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationCreateAdminArgs = {
+  input: CreateAdminInput;
 };
 
 
@@ -282,6 +297,12 @@ export type MutationUnmarkUserForDeletionArgs = {
 };
 
 
+export type MutationUpdateAdminArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateAdminInput;
+};
+
+
 export type MutationUpdateCurrentTraineeArgs = {
   input: UpdateCurrentTraineeInput;
 };
@@ -344,6 +365,8 @@ export type PrintPayload = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get all Admins */
+  admins: Array<Admin>;
   /** Get the alexa account linking url */
   alexaLinkingUrl?: Maybe<Scalars['String']['output']>;
   /** Will look for Users to delete */
@@ -455,7 +478,6 @@ export type Trainee = UserInterface & {
   theme?: Maybe<Scalars['String']['output']>;
   trainer?: Maybe<Trainer>;
   type: UserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type Trainer = UserInterface & {
@@ -473,13 +495,18 @@ export type Trainer = UserInterface & {
   theme?: Maybe<Scalars['String']['output']>;
   trainees: Array<Trainee>;
   type: UserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type TrainerTraineePayload = {
   __typename?: 'TrainerTraineePayload';
   trainee: Trainee;
   trainer: Trainer;
+};
+
+export type UpdateAdminInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateCurrentTraineeInput = {
@@ -527,7 +554,6 @@ export type UserInterface = {
   signature?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: UserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export enum UserTypeEnum {
@@ -665,7 +691,7 @@ export type MarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
 
 export type SignatureSettingsUpdateSignatureMutationVariables = Exact<{
   signature?: InputMaybe<Scalars['String']['input']>;
@@ -698,7 +724,15 @@ export type UnmarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+
+export type UpdateAdminMutationVariables = Exact<{
+  input: UpdateAdminInput;
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type UpdateAdminMutation = { __typename?: 'Mutation', updateAdmin?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | undefined };
 
 export type UpdateEntryOrderMutationVariables = Exact<{
   entryId: Scalars['ID']['input'];
@@ -752,6 +786,11 @@ export type UpdateTrainerMutationVariables = Exact<{
 
 
 export type UpdateTrainerMutation = { __typename?: 'Mutation', updateTrainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | undefined };
+
+export type AdminAdminsPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AdminAdminsPageQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', id: string, firstName: string, lastName: string, deleteAt?: string | undefined }> };
 
 export type AdminTraineesPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -809,14 +848,14 @@ export type DayInputDataQuery = { __typename?: 'Query', currentUser?: { __typena
 export type EntryInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | undefined };
+export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string } | undefined };
 
 export type UserPageQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -841,7 +880,7 @@ export type ReportPageDataQueryVariables = Exact<{
 }>;
 
 
-export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, username: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
+export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
 
 export type ReportReviewPageDataQueryVariables = Exact<{
   year: Scalars['Int']['input'];
@@ -850,7 +889,7 @@ export type ReportReviewPageDataQueryVariables = Exact<{
 }>;
 
 
-export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, username: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
+export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
 
 export type SettingsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -870,7 +909,7 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -880,7 +919,7 @@ export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { _
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', username: string, firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
+export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
 
 export type TrainersPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1186,6 +1225,9 @@ export const MarkUserForDeleteDocument = gql`
     ... on Trainer {
       deleteAt
     }
+    ... on Admin {
+      deleteAt
+    }
   }
 }
     `;
@@ -1266,6 +1308,9 @@ export const UnmarkUserForDeleteDocument = gql`
     ... on Trainer {
       deleteAt
     }
+    ... on Admin {
+      deleteAt
+    }
   }
 }
     `;
@@ -1274,6 +1319,22 @@ export function useUnmarkUserForDeleteMutation(baseOptions?: Apollo.MutationHook
         return Apollo.useMutation<UnmarkUserForDeleteMutation, UnmarkUserForDeleteMutationVariables>(UnmarkUserForDeleteDocument, options);
       }
 export type UnmarkUserForDeleteMutationHookResult = ReturnType<typeof useUnmarkUserForDeleteMutation>;
+export const UpdateAdminDocument = gql`
+    mutation UpdateAdmin($input: UpdateAdminInput!, $id: ID!) {
+  updateAdmin(input: $input, id: $id) {
+    id
+    firstName
+    lastName
+    email
+    type
+  }
+}
+    `;
+export function useUpdateAdminMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAdminMutation, UpdateAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateAdminMutation, UpdateAdminMutationVariables>(UpdateAdminDocument, options);
+      }
+export type UpdateAdminMutationHookResult = ReturnType<typeof useUpdateAdminMutation>;
 export const UpdateEntryOrderDocument = gql`
     mutation updateEntryOrder($entryId: ID!, $dayId: ID!, $orderId: Int!) {
   updateEntryOrder(entryId: $entryId, dayId: $dayId, orderId: $orderId) {
@@ -1407,6 +1468,31 @@ export function useUpdateTrainerMutation(baseOptions?: Apollo.MutationHookOption
         return Apollo.useMutation<UpdateTrainerMutation, UpdateTrainerMutationVariables>(UpdateTrainerDocument, options);
       }
 export type UpdateTrainerMutationHookResult = ReturnType<typeof useUpdateTrainerMutation>;
+export const AdminAdminsPageDocument = gql`
+    query AdminAdminsPage {
+  admins {
+    id
+    firstName
+    lastName
+    deleteAt
+  }
+}
+    `;
+export function useAdminAdminsPageQuery(baseOptions?: Apollo.QueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
+      }
+export function useAdminAdminsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
+        }
+export function useAdminAdminsPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
+        }
+export type AdminAdminsPageQueryHookResult = ReturnType<typeof useAdminAdminsPageQuery>;
+export type AdminAdminsPageLazyQueryHookResult = ReturnType<typeof useAdminAdminsPageLazyQuery>;
+export type AdminAdminsPageSuspenseQueryHookResult = ReturnType<typeof useAdminAdminsPageSuspenseQuery>;
 export const AdminTraineesPageDocument = gql`
     query AdminTraineesPage {
   trainees {
@@ -1738,7 +1824,6 @@ export const EntryInputDataDocument = gql`
     type
     firstName
     lastName
-    username
   }
 }
     `;
@@ -1787,6 +1872,9 @@ export const UserPageDocument = gql`
         firstName
         lastName
       }
+    }
+    ... on Admin {
+      deleteAt
     }
   }
   companies {
@@ -1891,7 +1979,6 @@ export const ReportPageDataDocument = gql`
     id
     firstName
     lastName
-    username
   }
   reportForYearAndWeek(year: $year, week: $week) {
     id
@@ -1964,7 +2051,6 @@ export const ReportReviewPageDataDocument = gql`
     id
     firstName
     lastName
-    username
   }
   reportForTrainee(year: $year, week: $week, id: $trainee) {
     id
@@ -2119,7 +2205,6 @@ export const TraineePageDataDocument = gql`
     query TraineePageData {
   trainees {
     id
-    username
     firstName
     lastName
     course
@@ -2199,7 +2284,6 @@ export const TrainerReportsPageDataDocument = gql`
     theme
     ... on Trainer {
       trainees {
-        username
         firstName
         lastName
         id

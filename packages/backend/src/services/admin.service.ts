@@ -21,3 +21,12 @@ export const generateAdmin = (options: GenerateAdminOptions): Admin => {
     type: 'Admin',
   }
 }
+
+/**
+ * Validates that the trainer attributes are all
+ * correct. Throws an error if not
+ * @param _trainer Trainer to validate
+ */
+export const validateAdmin = async (_trainer: Admin): Promise<void> => {
+  // function for validations in the future
+}

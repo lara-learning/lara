@@ -311,6 +311,7 @@ export default interface Translation {
     reports: string
     trainees: string
     trainer: string
+    admin: string
     dashhboard: string
     archive: string
     settings: string

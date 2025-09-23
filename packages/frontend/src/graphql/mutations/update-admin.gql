@@ -1,0 +1,9 @@
+mutation UpdateAdmin($input: UpdateAdminInput!, $id: ID!) {
+  updateAdmin(input: $input, id: $id) {
+    id
+    firstName
+    lastName
+    email
+    type
+  }
+}

@@ -7,7 +7,6 @@ query ReportPageData($year: Int!, $week: Int!) {
     id
     firstName
     lastName
-    username
   }
   reportForYearAndWeek(year: $year, week: $week) {
     id

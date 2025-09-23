@@ -18,7 +18,6 @@ import { company } from '../services/company.service'
 import { createPrintReportData, createPrintUserData, invokePrintLambda, savePrintData } from '../services/print.service'
 import { reportsWithinApprenticeship } from '../services/report.service'
 import { endOfToolUsage, startOfToolUsage, validateTrainee } from '../services/trainee.service'
-import { username } from '../services/user.service'
 import { filterNullish } from '../utils/array'
 
 export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
@@ -30,7 +29,6 @@ export const traineeResolver: GqlResolvers<AuthenticatedContext> = {
 
       return reportsWithinApprenticeship(model)
     },
-    username,
     openReportsCount: async (model) => {
       return reportsWithinApprenticeship(model, ['reopened', 'todo']).then((reports) => reports.length)
     },

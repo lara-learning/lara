@@ -30,6 +30,10 @@ query UserPage($id: ID!) {
         lastName
       }
     }
+
+    ... on Admin {
+      deleteAt
+    }
   }
   companies {
     id
