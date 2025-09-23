@@ -18,6 +18,7 @@ import { useAuthentication } from '../hooks/use-authentication'
 import strings from '../locales/localization'
 import Avatar from './avatar'
 import Dropdown from './dropdown'
+import { isPaperFeatureEnabled } from '../helper/paper-helper'
 import { isWikiFeatureEnabled } from '../helper/wiki-helper'
 
 const Navigation: React.FC = () => {
@@ -67,6 +68,11 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/archive" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.archive}
       </StyledNavItem>
+      {isPaperFeatureEnabled() && (
+        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -86,11 +92,29 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainees" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainees}
       </StyledNavItem>
+      {isPaperFeatureEnabled() && (
+        <StyledNavItem to={'/paper'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
     </>
   )
+
+  const renderMentorNav = () => {
+    return (
+      <>
+        <StyledNavItem to={'/'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.paper}
+        </StyledNavItem>
+        <StyledNavItem to={'/settings'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.settings}
+        </StyledNavItem>
+      </>
+    )
+  }
 
   const renderAdminNav = () => (
     <>
@@ -100,6 +124,11 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
       </StyledNavItem>
+      {isPaperFeatureEnabled() && (
+        <StyledNavItem to={'/mentor'} onClick={toggleMenu} isMobile={isMobile}>
+          {strings.navigation.mentor}
+        </StyledNavItem>
+      )}
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -117,7 +146,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <StyledNavWrapper flexWrap="wrap" justifyContent="space-between">
+      <StyledNavWrapper flexWrap="nowrap" justifyContent="space-between">
         <StyledLaraLink to="/">
           <StyledLogo isInNav />
         </StyledLaraLink>
@@ -128,6 +157,7 @@ const Navigation: React.FC = () => {
               <StyledNavItemsWrapper>
                 {data.currentUser?.type === UserTypeEnum.Trainer && renderTrainerNav()}
                 {data.currentUser?.type === UserTypeEnum.Trainee && renderTraineeNav()}
+                {data.currentUser?.type === UserTypeEnum.Mentor && renderMentorNav()}
                 {data.currentUser?.type === UserTypeEnum.Admin && renderAdminNav()}
               </StyledNavItemsWrapper>
             )}
@@ -144,7 +174,9 @@ const Navigation: React.FC = () => {
                     setShowDropdown((prev) => !prev)
                   }}
                 >
-                  <StyledAvatarText>{data.currentUser?.firstName + ' ' + data.currentUser?.lastName}</StyledAvatarText>
+                  <StyledAvatarText $minScreenWidth={isPaperFeatureEnabled() ? 800 : 720}>
+                    {data.currentUser?.firstName + ' ' + data.currentUser?.lastName}
+                  </StyledAvatarText>
                   <Avatar size={35} id={currentUser?.id ?? ''} />
                 </StyledAvatarMenuItem>
 
@@ -159,6 +191,7 @@ const Navigation: React.FC = () => {
         <StyledMobileNavWrapper>
           {data.currentUser?.type === UserTypeEnum.Trainer && renderTrainerNav()}
           {data.currentUser?.type === UserTypeEnum.Trainee && renderTraineeNav()}
+          {data.currentUser?.type === UserTypeEnum.Mentor && renderMentorNav()}
           {data.currentUser?.type === UserTypeEnum.Admin && renderAdminNav()}
           {renderGeneralMobileNav()}
         </StyledMobileNavWrapper>

@@ -27,7 +27,9 @@ const Label = styled.label`
   margin-right: 4px;
 `
 
-const Selected = styled.div<{ open: boolean }>`
+const Selected = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['open'].includes(prop),
+})<{ open: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
@@ -52,8 +54,10 @@ const Selected = styled.div<{ open: boolean }>`
   }
 `
 
-const Menu = styled.ul<{ yOffset: number }>`
-  position: relative
+const Menu = styled.ul.withConfig({
+  shouldForwardProp: (prop) => !['yOffset'].includes(prop),
+})<{ yOffset: number }>`
+  position: relative;
   width: 100%;
   height: 100%;
   background: #fff;
@@ -64,7 +68,9 @@ const Menu = styled.ul<{ yOffset: number }>`
   transform: ${({ yOffset }) => 'translateY(-' + yOffset + '%)'};
 `
 
-const Option = styled.li<{ selected: boolean }>`
+const Option = styled.li.withConfig({
+  shouldForwardProp: (prop) => !['selected'].includes(prop),
+})<{ selected: boolean }>`
   width: 100px;
   height: 100%;
   background: ${({ selected }) => (selected ? '#ddd' : '#fff')};
@@ -87,7 +93,7 @@ export function CustomDropdown({
 }) {
   const [open, setOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const options = ['Trainee', 'Trainer', 'Admin']
+  const options = ['Trainee', 'Trainer', 'Mentor', 'Admin']
 
   const setOpenState = useCallback(
     (newOpen: boolean) => {
@@ -110,7 +116,7 @@ export function CustomDropdown({
   }, [setOpenState])
 
   const getYOffset = () => {
-    return (options.indexOf(value) + 1) * 100
+    return options.length * 50 + 50
   }
 
   return (
