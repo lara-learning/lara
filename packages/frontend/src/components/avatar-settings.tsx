@@ -180,6 +180,9 @@ const AvatarSettings: React.FunctionComponent = () => {
     }
 
     eventBus.emit('avatarUpdated', undefined)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   return (

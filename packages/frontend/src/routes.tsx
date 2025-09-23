@@ -32,6 +32,7 @@ import { MentorPaperPage } from './pages/mentor-paper-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
 import { TraineePaperFeedbackPage } from './pages/trainee-paper-feedback-page'
 import { isPaperFeatureEnabled } from './helper/paper-helper'
+import { isWikiFeatureEnabled } from './helper/wiki-helper'
 
 type RoutesProps = {
   currentUser?:
@@ -80,19 +81,14 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/archive" element={<ArchivePage />} />
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
-
                 <Route path="/alexa" element={<AlexaPage />} />
-
                 {isPaperFeatureEnabled() && (
                   <>
                     <Route path="/paper" element={<TraineePaperPage />} />
                     <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
                   </>
                 )}
-
-                {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
-                  <Route path="/wiki" element={<AzubiWikiPage />} />
-                )}
+                {isWikiFeatureEnabled() && <Route path="/wiki" element={<AzubiWikiPage />} />}
               </>
             ) : (
               <Route path="/" element={<OnboardingPage />} />

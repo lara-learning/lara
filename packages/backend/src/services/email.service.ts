@@ -7,7 +7,7 @@ import { allAdmins } from '../repositories/admin.repo'
 import { traineeById } from '../repositories/trainee.repo'
 import { trainerById } from '../repositories/trainer.repo'
 
-const { STAGE, URL_ORIGIN } = process.env
+const { FRONTEND_URL } = process.env
 
 const translations = (user: User): EmailTranslations =>
   t('email', user.language, {
@@ -18,9 +18,7 @@ const translations = (user: User): EmailTranslations =>
   })
 
 const envLink = (path: string) => {
-  const envDomain = STAGE === 'staging' ? 'staging.' : ''
-
-  return `https://${envDomain}${URL_ORIGIN}${path}`
+  return `${FRONTEND_URL}${path}`
 }
 
 const trainerNotificationMailPayload = (receiver: Trainer, sender: Trainee, report: Report): EmailPayload => ({

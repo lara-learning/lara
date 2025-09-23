@@ -46,8 +46,8 @@
 
         <mj-spacer height="32px" />
 
-        <mj-text mj-class="paddingText">{{ GREETING }},</mj-text>
-        <mj-text mj-class="paddingText">{{ MAINTEXT }}</mj-text>
+        <mj-text mj-class="paddingText" style="color:#000000 !important">{{ GREETING }},</mj-text>
+        <mj-text mj-class="paddingText" style="color:#000000 !important">{{ MAINTEXT }}</mj-text>
 
         <mj-spacer height="32px" />
 

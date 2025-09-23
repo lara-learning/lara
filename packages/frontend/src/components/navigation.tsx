@@ -19,6 +19,7 @@ import strings from '../locales/localization'
 import Avatar from './avatar'
 import Dropdown from './dropdown'
 import { isPaperFeatureEnabled } from '../helper/paper-helper'
+import { isWikiFeatureEnabled } from '../helper/wiki-helper'
 
 const Navigation: React.FC = () => {
   const { data, loading } = useNavigationDataQuery()
@@ -75,7 +76,7 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
-      {(ENVIRONMENT.nodeEnv === 'development' || ENVIRONMENT.nodeEnv === 'staging') && (
+      {isWikiFeatureEnabled() && (
         <StyledNavItem to="/wiki" onClick={toggleMenu} isMobile={isMobile}>
           {strings.navigation.wiki}
         </StyledNavItem>

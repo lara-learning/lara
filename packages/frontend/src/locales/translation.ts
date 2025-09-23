@@ -211,6 +211,10 @@ export default interface Translation {
       departmentMissingTitle: string
       departmentMissingText: string
     }
+    incomplete: {
+      title: string
+      description: string
+    }
     reportSaveSuccess: string
     total: string
     headingContainer: {
