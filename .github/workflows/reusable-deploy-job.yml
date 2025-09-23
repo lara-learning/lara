@@ -88,10 +88,10 @@ jobs:
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
 
       - name: Deploy Frontend
-        run: SLS_DEBUG=* serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
+        run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
 
       - name: Deploy Backends
-        run: SLS_DEBUG=* serverless deploy --stage ${{ inputs.target }}
+        run: serverless deploy --stage ${{ inputs.target }}
 
       - name: Invalidate CloudFront cache for Frontend
         continue-on-error: true
