@@ -27,7 +27,8 @@ export const Input = styled.input.withConfig({
   }
 
   &:disabled {
-    color: ${(props) => props.theme.lightFont};
+    color: ${(props) => props.theme.placeholder};
+    border-bottom: solid 2px ${(props) => props.theme.placeholder};
   }
 
   &:focus {

@@ -7,14 +7,12 @@ import { generateAdmin } from '../services/admin.service'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { generateTrainee } from '../services/trainee.service'
 import { generateTrainer } from '../services/trainer.service'
-import { username } from '../services/user.service'
 
 export const userResolver: GqlResolvers<AuthenticatedContext> = {
   UserInterface: {
     __resolveType: (model) => {
       return model.type
     },
-    username,
     alexaSkillLinked,
   },
   Query: {

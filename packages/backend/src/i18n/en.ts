@@ -24,6 +24,8 @@ export const EnglishTranslations: Translations = {
     wrongUserType: 'You have the wrong user type',
     reportIncomplete: 'Report is incomplete',
     missingPeriod: 'Missing period',
+    cantDeleteYourself: "An Admin can't mark themselves for deletion",
+    cantChangeOwnEmail: "An Admin can't change their own e-mail address",
   },
   email: {
     hello: 'Hello',

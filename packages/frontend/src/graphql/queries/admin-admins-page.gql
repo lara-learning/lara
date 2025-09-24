@@ -1,0 +1,8 @@
+query AdminAdminsPage {
+  admins {
+    id
+    firstName
+    lastName
+    deleteAt
+  }
+}

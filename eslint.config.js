@@ -14,7 +14,6 @@ module.exports = [
       'node_modules/',
       'packages/frontend/src/graphql/index.tsx',
       'packages/api/src/graphql.ts',
-      'packages/db-migration/**',
       '**/lib/**',
       '**/dist/**',
     ],

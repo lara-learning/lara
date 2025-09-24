@@ -24,6 +24,8 @@ export const GermanTranslations: Translations = {
     wrongUserType: 'Du besitzt den falschen Nutzer Typen um dies zu tun',
     reportIncomplete: 'Der Bericht ist nicht vollständig',
     missingPeriod: 'Die Ausbildungsperiode fehlt',
+    cantDeleteYourself: 'Ein Admin kann sich nicht selber für die Löschung markieren',
+    cantChangeOwnEmail: 'Ein Admin kann seine eigene E-Mail Adresse nicht ändern',
   },
   email: {
     hello: 'Hallo',
