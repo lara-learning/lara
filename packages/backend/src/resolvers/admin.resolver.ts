@@ -7,7 +7,7 @@ import { isAdmin, isTrainee, isTrainer } from '../permissions'
 import { traineeById } from '../repositories/trainee.repo'
 import { trainerById, allTrainers } from '../repositories/trainer.repo'
 import { allAdmins } from '../repositories/admin.repo'
-import { generateAdmin, validateAdmin } from '../services/admin.service'
+import { deleteAdmin, generateAdmin, validateAdmin } from '../services/admin.service'
 import { allUsers, saveUser, updateUser, userByEmail, userById } from '../repositories/user.repo'
 import { sendDeletionMail } from '../services/email.service'
 import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
@@ -25,7 +25,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
       await Promise.all(
         users.map(async (user) => {
-          if (isAdmin(user) || !user.deleteAt) {
+          if (!user.deleteAt) {
             return
           }
 
@@ -45,6 +45,10 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
           if (isTrainer(user)) {
             await deleteTrainer(user)
+          }
+
+          if (isAdmin(user)) {
+            await deleteAdmin(user)
           }
         })
       )
@@ -67,6 +71,10 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
       if (!user) {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
+
+      if (user.id === currentUser.id) {
+        throw new GraphQLError(t('errors.cantDeleteYourself', currentUser.language))
       }
 
       user.deleteAt = addMonths(new Date(), 3).toISOString()
@@ -184,6 +192,10 @@ export const adminAdminResolver: GqlResolvers<AdminContext> = {
 
       if (!admin) {
         throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
+
+      if (currentUser.id === admin.id && input.email !== admin.email) {
+        throw new GraphQLError(t('errors.cantChangeOwnEmail', currentUser.language))
       }
 
       const updatedAdmin: Admin = {

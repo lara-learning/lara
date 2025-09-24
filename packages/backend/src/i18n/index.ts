@@ -28,6 +28,8 @@ export type Translations = {
     wrongUserType: string
     reportIncomplete: string
     missingPeriod: string
+    cantDeleteYourself: string
+    cantChangeOwnEmail: string
   }
   email: EmailTranslations
   print: PrintTranslations

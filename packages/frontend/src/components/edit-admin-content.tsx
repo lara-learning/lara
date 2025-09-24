@@ -11,9 +11,10 @@ import { UserInfo } from './user-info'
 
 interface EditAdminProps {
   admin: Pick<Admin, 'id' | 'firstName' | 'lastName' | 'email' | 'deleteAt'>
+  disableEmail?: boolean
 }
 
-export const EditAdmin: React.FC<EditAdminProps> = ({ admin }) => {
+export const EditAdmin: React.FC<EditAdminProps> = ({ admin, disableEmail = false }) => {
   const [mutate] = useUpdateAdminMutation()
   const { addToast } = useToastContext()
 
@@ -44,7 +45,7 @@ export const EditAdmin: React.FC<EditAdminProps> = ({ admin }) => {
   return (
     <EditUserContentLayout
       user={<UserInfo id={admin.id} firstName={admin.firstName} lastName={admin.lastName} deleteAt={admin.deleteAt} />}
-      form={<AdminForm blurSubmit admin={admin} submit={updateAdmin} />}
+      form={<AdminForm blurSubmit admin={admin} submit={updateAdmin} disableEmail={disableEmail} />}
     />
   )
 }

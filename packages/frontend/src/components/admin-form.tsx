@@ -12,6 +12,7 @@ interface EditAdminFormProps {
   submit: (data: EditAdminFormData) => Promise<void>
   cancel?: () => void
   blurSubmit: boolean
+  disableEmail?: boolean
 }
 
 export interface EditAdminFormData {
@@ -27,7 +28,13 @@ const inputLabelProps: TextProps = {
   uppercase: true,
 }
 
-export const AdminForm: React.FC<EditAdminFormProps> = ({ admin, submit, blurSubmit, cancel }) => {
+export const AdminForm: React.FC<EditAdminFormProps> = ({
+  admin,
+  submit,
+  blurSubmit,
+  cancel,
+  disableEmail = false,
+}) => {
   const { validateEmail } = useValidationHelper()
 
   const {
@@ -104,7 +111,7 @@ export const AdminForm: React.FC<EditAdminFormProps> = ({ admin, submit, blurSub
                 validate: validateEmail,
               })}
               defaultValue={admin?.email}
-              disabled={updating}
+              disabled={disableEmail}
               error={Boolean(errors.email)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />

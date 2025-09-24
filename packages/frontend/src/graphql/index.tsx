@@ -588,6 +588,13 @@ export type ClaimTraineeMutationVariables = Exact<{
 
 export type ClaimTraineeMutation = { __typename?: 'Mutation', claimTrainee?: { __typename?: 'TrainerTraineePayload', trainee: { __typename?: 'Trainee', id: string, trainer?: { __typename?: 'Trainer', id: string } | undefined }, trainer: { __typename?: 'Trainer', id: string, trainees: Array<{ __typename?: 'Trainee', id: string }> } } | undefined };
 
+export type CreateAdminMutationVariables = Exact<{
+  input: CreateAdminInput;
+}>;
+
+
+export type CreateAdminMutation = { __typename?: 'Mutation', createAdmin?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | undefined };
+
 export type CreateCommentOnDayMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   text: Scalars['String']['input'];
@@ -855,7 +862,7 @@ export type UserPageQueryVariables = Exact<{
 }>;
 
 
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -978,6 +985,22 @@ export function useClaimTraineeMutation(baseOptions?: Apollo.MutationHookOptions
         return Apollo.useMutation<ClaimTraineeMutation, ClaimTraineeMutationVariables>(ClaimTraineeDocument, options);
       }
 export type ClaimTraineeMutationHookResult = ReturnType<typeof useClaimTraineeMutation>;
+export const CreateAdminDocument = gql`
+    mutation CreateAdmin($input: CreateAdminInput!) {
+  createAdmin(input: $input) {
+    id
+    firstName
+    lastName
+    email
+    type
+  }
+}
+    `;
+export function useCreateAdminMutation(baseOptions?: Apollo.MutationHookOptions<CreateAdminMutation, CreateAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAdminMutation, CreateAdminMutationVariables>(CreateAdminDocument, options);
+      }
+export type CreateAdminMutationHookResult = ReturnType<typeof useCreateAdminMutation>;
 export const CreateCommentOnDayDocument = gql`
     mutation createCommentOnDay($id: ID!, $text: String!, $traineeId: ID!) {
   createCommentOnDay(id: $id, text: $text, traineeId: $traineeId) {
@@ -1880,6 +1903,9 @@ export const UserPageDocument = gql`
   companies {
     id
     name
+  }
+  currentUser {
+    id
   }
 }
     `;

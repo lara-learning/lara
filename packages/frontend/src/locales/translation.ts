@@ -377,6 +377,11 @@ export default interface Translation {
     description: string
     success: string
   }
+  createAdmin: {
+    title: string
+    description: string
+    success: string
+  }
   deleteTrainer: {
     title: string
     description: string

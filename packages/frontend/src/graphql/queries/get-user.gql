@@ -39,4 +39,7 @@ query UserPage($id: ID!) {
     id
     name
   }
+  currentUser {
+    id
+  }
 }

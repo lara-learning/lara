@@ -120,7 +120,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <StyledNavWrapper flexWrap="wrap" justifyContent="space-between">
+      <StyledNavWrapper flexWrap="nowrap" justifyContent="space-between">
         <StyledLaraLink to="/">
           <StyledLogo isInNav />
         </StyledLaraLink>
