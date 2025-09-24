@@ -103,6 +103,9 @@ const Navigation: React.FC = () => {
       <StyledNavItem to="/trainer" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.trainer}
       </StyledNavItem>
+      <StyledNavItem to="/admins" onClick={toggleMenu} isMobile={isMobile}>
+        {strings.navigation.admin}
+      </StyledNavItem>
       <StyledNavItem to="/settings" onClick={toggleMenu} isMobile={isMobile}>
         {strings.navigation.settings}
       </StyledNavItem>
@@ -120,7 +123,7 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <StyledNavWrapper flexWrap="wrap" justifyContent="space-between">
+      <StyledNavWrapper flexWrap="nowrap" justifyContent="space-between">
         <StyledLaraLink to="/">
           <StyledLogo isInNav />
         </StyledLaraLink>

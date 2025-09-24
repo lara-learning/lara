@@ -13,6 +13,8 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import Modal from '../components/modal'
 import { useToastContext } from '../hooks/use-toast-context'
+import { EditAdmin } from '../components/edit-admin-content'
+import { GraphQLError } from 'graphql'
 
 type AdminEditUserPageParams = {
   id: string
@@ -33,8 +35,11 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
   const toggleDeletionModal = () => {
     setShowDeletionModal(!showDeletionModal)
   }
+  const currentUser = data?.currentUser
+  if (!currentUser) return null
 
   const renderDeleteAction = (deleteAt?: string) => {
+    if (currentUser.id === id) return <></>
     if (deleteAt) {
       return (
         <SecondaryButton disabled={deleteActionLoading} onClick={() => unmarkDelete(vars)}>
@@ -88,6 +93,23 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
         />
       )}
 
+      {/* Edit Admin page */}
+      {!loading && data?.getUser?.__typename === 'Admin' && (
+        <EditUserLayout
+          backButton={
+            <NavigationButtonLink
+              label={strings.back}
+              to="/admins"
+              icon="ChevronLeft"
+              isLeft
+              iconColor="iconLightGrey"
+            />
+          }
+          content={<EditAdmin admin={data.getUser} disableEmail={currentUser.id === id} />}
+          actions={renderDeleteAction(data.getUser.deleteAt)}
+        />
+      )}
+
       {!loading && (
         <Modal show={showDeletionModal} customClose handleClose={toggleDeletionModal}>
           <H1 noMargin>
@@ -114,15 +136,23 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
               <PrimaryButton
                 danger
                 onClick={() => {
-                  markForDelete(vars).then(() => {
-                    toggleDeletionModal()
-                    addToast({
-                      icon: 'PersonAttention',
-                      title: strings.userDelete.title,
-                      text: strings.userDelete.description,
-                      type: 'error',
+                  markForDelete(vars)
+                    .then(() => {
+                      toggleDeletionModal()
+                      addToast({
+                        icon: 'PersonAttention',
+                        title: strings.userDelete.title,
+                        text: strings.userDelete.description,
+                        type: 'error',
+                      })
                     })
-                  })
+                    .catch((exception: GraphQLError) => {
+                      addToast({
+                        title: strings.errors.error,
+                        text: exception.message,
+                        type: 'error',
+                      })
+                    })
                 }}
               >
                 {strings.deactivate}

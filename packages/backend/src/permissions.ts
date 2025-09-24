@@ -57,6 +57,7 @@ export const permissions = shield<unknown, Context>(
 
       // Admin Queris
       trainers: and(authenticated, admin),
+      admins: and(authenticated, admin),
     },
     Mutation: {
       _devsetusertype: and(authenticated, debug),

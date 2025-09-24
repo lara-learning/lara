@@ -322,6 +322,7 @@ const englishTranslation: Translation = {
     reports: 'Reports',
     trainees: 'Trainees',
     trainer: 'Trainer',
+    admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archive',
     settings: 'Settings',
@@ -397,6 +398,12 @@ const englishTranslation: Translation = {
     description:
       'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
     success: 'The trainer {0} has been created',
+  },
+  createAdmin: {
+    title: 'New Admin',
+    description:
+      'Please enter the informations of the new Admin here so she/he can login. You can still change the data later.',
+    success: 'The admin {0} has been created',
   },
   deleteTrainer: {
     title: 'Delete {0}?',

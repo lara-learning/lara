@@ -9,5 +9,9 @@ mutation MarkUserForDelete($id: ID!) {
     ... on Trainer {
       deleteAt
     }
+
+    ... on Admin {
+      deleteAt
+    }
   }
 }

@@ -6,7 +6,6 @@ import { reportByYearAndWeek } from '../repositories/report.repo'
 import { allTrainees, traineeById, traineesByTrainerId } from '../repositories/trainee.repo'
 import { updateUser } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
-import { username } from '../services/user.service'
 import { createT } from '../i18n'
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
@@ -14,7 +13,6 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
     trainees: async (model) => {
       return traineesByTrainerId(model.id)
     },
-    username,
     alexaSkillLinked,
   },
   Query: {

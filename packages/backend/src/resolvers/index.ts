@@ -1,5 +1,5 @@
 import { alexaResolver } from './alexa.resolver'
-import { adminResolver, traineeAdminResolver, trainerAdminResolver } from './admin.resolver'
+import { adminAdminResolver, adminResolver, traineeAdminResolver, trainerAdminResolver } from './admin.resolver'
 import { authResolver } from './auth.resolver'
 import { commentResolver } from './comment.resolver'
 import { configResolver } from './config.resolver'
@@ -35,6 +35,7 @@ export const resolvers = [
   adminResolver,
   traineeAdminResolver,
   trainerAdminResolver,
+  adminAdminResolver,
 
   alexaResolver,
 

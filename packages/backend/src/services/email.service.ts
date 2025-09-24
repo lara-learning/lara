@@ -62,7 +62,7 @@ export const sendNotificationMail = async (report: Report, sender: User): Promis
 }
 
 // creates Payload for admin if a user will be deleted
-export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer): EmailPayload => {
+export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer | Admin): EmailPayload => {
   const link = isTrainee(user) ? envLink(`/trainees/${user.id}`) : envLink(`/trainer/${user.id}`)
   return {
     emailType: 'deleteUser',
@@ -91,7 +91,7 @@ export const trainerDeletionMailPayload = (trainer: Trainer, user: Trainee): Ema
 }
 
 // creates Payload for the user that will be deleted
-export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer): EmailPayload => {
+export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer | Admin): EmailPayload => {
   return {
     emailType: 'deleteAccount',
     userData: {
@@ -108,7 +108,7 @@ export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer)
  * If UserToDelete is a Trainee the Trainer will be notified too.
  * @param userToDelete
  */
-export const sendDeletionMail = async (userToDelete: Trainee | Trainer): Promise<void> => {
+export const sendDeletionMail = async (userToDelete: Trainee | Trainer | Admin): Promise<void> => {
   const admins = await allAdmins()
 
   // notify admins

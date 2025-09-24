@@ -182,6 +182,11 @@ type Mutation {
   createTrainer(input: CreateTrainerInput!): Trainer
 
   """
+  Creates Admin.
+  """
+  createAdmin(input: CreateAdminInput!): Admin
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -200,6 +205,11 @@ type Mutation {
   Updates Trainer.
   """
   updateTrainer(input: UpdateTrainerInput!, id: ID!): Trainer
+
+  """
+  Updates Admin.
+  """
+  updateAdmin(input: UpdateAdminInput!, id: ID!): Admin
 
   """
   Link Alexa account
@@ -281,6 +291,11 @@ type Query {
   Get all Trainers
   """
   trainers: [Trainer!]!
+
+  """
+  Get all Admins
+  """
+  admins: [Admin!]!
 
   """
   Print single report or report batch
@@ -366,7 +381,6 @@ type Trainee implements UserInterface {
   theme: String
   trainer: Trainer
   type: UserTypeEnum!
-  username: String!
   email: String!
   deleteAt: String
   openReportsCount: Int!
@@ -420,10 +434,21 @@ type Trainer implements UserInterface {
   theme: String
   trainees: [Trainee!]!
   type: UserTypeEnum!
-  username: String!
   email: String!
   deleteAt: String
   alexaSkillLinked: Boolean
+}
+
+input CreateAdminInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateAdminInput {
+  email: String
+  firstName: String
+  lastName: String
 }
 
 type Admin implements UserInterface {
@@ -435,9 +460,9 @@ type Admin implements UserInterface {
   notification: Boolean
   theme: String
   type: UserTypeEnum!
-  username: String!
   email: String!
   signature: String
+  deleteAt: String
   alexaSkillLinked: Boolean
 }
 
@@ -463,7 +488,6 @@ interface UserInterface {
   signature: String
   theme: String
   type: UserTypeEnum!
-  username: String!
   email: String!
   alexaSkillLinked: Boolean
 }

@@ -327,6 +327,7 @@ const germanTranslation: Translation = {
     reports: 'Berichte',
     trainees: 'Auszubildende',
     trainer: 'Ausbilder',
+    admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archiv',
     settings: 'Einstellungen',
@@ -402,6 +403,12 @@ const germanTranslation: Translation = {
     description:
       'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+  },
+  createAdmin: {
+    title: 'Neuer Admin',
+    description:
+      'Trage hier die Daten des neuen Admins ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Admin {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   deleteTrainer: {
     title: '{0} wirklich löschen?',

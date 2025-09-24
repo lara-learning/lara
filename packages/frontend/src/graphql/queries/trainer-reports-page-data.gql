@@ -4,7 +4,6 @@ query TrainerReportsPageData {
     theme
     ... on Trainer {
       trainees {
-        username
         firstName
         lastName
         id

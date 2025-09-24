@@ -4,6 +4,5 @@ query EntryInputData {
     type
     firstName
     lastName
-    username
   }
 }

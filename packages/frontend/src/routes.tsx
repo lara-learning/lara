@@ -25,6 +25,7 @@ import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
 import { isWikiFeatureEnabled } from './helper/wiki-helper'
+import { AdminAdminsPage } from './pages/admin-admins-page'
 
 type RoutesProps = {
   currentUser?:
@@ -101,6 +102,8 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/trainer/:id" element={<AdminEditUserPage />} />
             <Route path="/trainees" element={<AdminTraineesPage />} />
             <Route path="/trainees/:id" element={<AdminEditUserPage />} />
+            <Route path="/admins" element={<AdminAdminsPage />} />
+            <Route path="/admins/:id" element={<AdminEditUserPage />} />
           </>
         )}
 

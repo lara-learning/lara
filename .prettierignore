@@ -1,5 +1,4 @@
 **/graphql/index.tsx
 **/graphql.ts
 **/lib/**
-**/db-migration/**
 .serverless
