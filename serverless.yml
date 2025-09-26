@@ -608,3 +608,8 @@ resources:
               Protection: true
               ModeBlock: true
               Override: false
+          CustomHeadersConfig:
+            Items:
+              - Header: Cache-Control
+                Value: 'no-store'
+                Override: true
