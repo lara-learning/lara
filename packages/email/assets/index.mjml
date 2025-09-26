@@ -16,7 +16,6 @@
         color="#FFFFFF"
       />
       <mj-class name="infoText" color="#707070" align="center" />
-      <mj-class name="paddingText" color="#000000" />
     </mj-attributes>
 
     <mj-style>
@@ -38,7 +37,7 @@
       <mj-column width="70%">
         <mj-spacer height="104px" />
 
-        <mj-text mj-class="header" height="48px">{{ HEADLINE }}</mj-text>
+        <mj-text mj-class="header" height="48px"><span style="color: #000000 !important;" data-ogsc>{{ HEADLINE }}</span></mj-text>
 
         <mj-spacer height="24px" />
 
@@ -46,8 +45,8 @@
 
         <mj-spacer height="32px" />
 
-        <mj-text mj-class="paddingText" style="color:#000000 !important">{{ GREETING }},</mj-text>
-        <mj-text mj-class="paddingText" style="color:#000000 !important">{{ MAINTEXT }}</mj-text>
+        <mj-text><span style="color: #000000 !important;" data-ogsc>{{ GREETING }},</span></mj-text>
+        <mj-text><span style="color: #000000 !important;" data-ogsc>{{ MAINTEXT }}</span></mj-text>
 
         <mj-spacer height="32px" />
 
