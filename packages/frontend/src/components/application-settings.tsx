@@ -37,7 +37,7 @@ const ApplicationSettings: React.FunctionComponent<ApplicationSettingsProps> = (
   const updateNotifications = () =>
     updateApplicationSettings({
       variables: {
-        notification: user.notification,
+        notification: !user.notification,
       },
     })
 
