@@ -37,6 +37,7 @@ query DashboardPageData($currentYear: Int!, $currentWeek: Int!) {
             firstName
             lastName
           }
+          published
         }
       }
       comments {
@@ -47,6 +48,7 @@ query DashboardPageData($currentYear: Int!, $currentWeek: Int!) {
           firstName
           lastName
         }
+        published
       }
     }
   }

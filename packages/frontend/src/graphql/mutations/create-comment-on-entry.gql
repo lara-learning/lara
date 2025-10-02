@@ -11,6 +11,7 @@ mutation createCommentOnEntry($id: ID!, $text: String!, $traineeId: ID!) {
             firstName
             lastName
           }
+          published
         }
       }
     }

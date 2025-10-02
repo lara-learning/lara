@@ -75,6 +75,20 @@ export const reportTraineeResolver: GqlResolvers<TraineeContext> = {
           : report
       }
 
+      if (report && report.status === 'review')
+        return {
+          ...report,
+          comments: report.comments.filter((com) => com.published),
+          days: report.days.map((day) => ({
+            ...day,
+            entries: day.entries.map((entry) => ({
+              ...entry,
+              comments: entry.comments.filter((com) => com.published),
+            })),
+            comments: day.comments.filter((com) => com.published),
+          })),
+        }
+
       return report
     },
   },

@@ -12,11 +12,22 @@ import ReportPageFooter from '../components/report-page-footer'
 import ReportPageHeader from '../components/report-page-header'
 import { EntryOrderProvider } from '../context/entry-order'
 import {
+  Comment,
+  Day,
   DayStatusEnum,
+  Entry,
   Report,
   ReportPageDataQueryVariables,
   ReportStatus,
+  useDeleteCommentOnDayMutation,
+  useDeleteCommentOnEntryMutation,
+  useDeleteCommentOnReportMutation,
+  usePublishAllCommentsMutation,
   useReportPageDataQuery,
+  UserInterface,
+  useUpdateCommentOnDayMutation,
+  useUpdateCommentOnEntryMutation,
+  useUpdateCommentOnReportMutation,
   useUpdateReportMutation,
 } from '../graphql'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
@@ -37,13 +48,25 @@ const ReportPage: React.FunctionComponent = () => {
   }
 
   const { loading, data } = useReportPageDataQuery({ variables })
+
   const report = data?.reportForYearAndWeek
+
   const currentUser = data?.currentUser
 
   const [updateReportMutation] = useUpdateReportMutation()
   const { addToast } = useToastContext()
 
   const [fetchPdf, pdfLoading] = useFetchPdf()
+
+  const [updateCommentOnReportMutation] = useUpdateCommentOnReportMutation()
+  const [updateCommentOnDayMutation] = useUpdateCommentOnDayMutation()
+  const [updateCommentOnEntryMutation] = useUpdateCommentOnEntryMutation()
+
+  const [deleteCommentOnReportMutation] = useDeleteCommentOnReportMutation()
+  const [deleteCommentOnDayMutation] = useDeleteCommentOnDayMutation()
+  const [deleteCommentOnEntryMutation] = useDeleteCommentOnEntryMutation()
+
+  const [publishAllCommentsMutation] = usePublishAllCommentsMutation()
 
   const [showHandoverModal, setShowHandoverModal] = React.useState(false)
   const [showUnarchiveModal, setShowUnarchiveModal] = React.useState(false)
@@ -96,13 +119,122 @@ const ReportPage: React.FunctionComponent = () => {
       })
   }
 
+  function updateReportComment(text: string, commentId: string) {
+    if (!data) {
+      return
+    }
+
+    const { currentUser } = data
+    if (!report || !currentUser || currentUser.__typename !== 'Trainee') {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnReportMutation({
+        variables: {
+          id: report.id,
+          text,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnReportMutation({
+        variables: {
+          id: report.id,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    }
+  }
+
+  function updateDayComment(
+    day: Pick<Day, 'id'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    },
+    text: string,
+    commentId: string
+  ) {
+    if (!data) {
+      return
+    }
+
+    const { currentUser } = data
+    if (!currentUser || currentUser.__typename !== 'Trainee') {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnDayMutation({
+        variables: {
+          id: day.id,
+          text,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnDayMutation({
+        variables: {
+          id: day.id,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    }
+  }
+
+  function updateEntryComment(
+    entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    },
+    text: string,
+    commentId: string
+  ) {
+    if (!data) {
+      return
+    }
+
+    const { currentUser } = data
+    if (!currentUser || currentUser.__typename !== 'Trainee') {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnEntryMutation({
+        variables: {
+          id: entry.id,
+          text,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnEntryMutation({
+        variables: {
+          id: entry.id,
+          traineeId: currentUser.id,
+          commentId,
+        },
+      })
+    }
+  }
+
   const handoverReport = () => {
-    void updateReport({ status: ReportStatus.Review })
+    void updateReport({ status: ReportStatus.Review }).then(() => {
+      if (!report || !currentUser) return
+      publishAllCommentsMutation({ variables: { id: report.id, traineeId: currentUser.id } })
+    })
     navigate('/')
   }
 
   const unarchiveReport = () => {
-    void updateReport({ status: ReportStatus.Reopened })
+    void updateReport({ status: ReportStatus.Reopened }).then(() => {
+      if (!report || !currentUser) return
+      publishAllCommentsMutation({ variables: { id: report.id, traineeId: currentUser.id } })
+    })
     navigate('/')
   }
 
@@ -121,12 +253,14 @@ const ReportPage: React.FunctionComponent = () => {
         <ReportPageHeader report={report} currentUser={currentUser} updateReport={updateReport} />
 
         <EntryOrderProvider>
-          {report.days.map((day) => (
+          {report?.days.map((day) => (
             <StyledTopBorderWrapper key={day.id}>
               <DayInput
                 day={day}
                 disabled={reportArchived || reportReview || day.status === DayStatusEnum.Holiday}
                 reportStatus={report.status}
+                updateMessageDay={(msg, commentId) => updateDayComment(day, msg, commentId)}
+                updateMessageEntry={(msg, commentId, entry) => updateEntryComment(entry, msg, commentId)}
               />
             </StyledTopBorderWrapper>
           ))}
@@ -138,6 +272,7 @@ const ReportPage: React.FunctionComponent = () => {
             disabled={reportArchived || reportReview}
             user={data.currentUser}
             updateReport={updateReport}
+            updateMessage={(msg, commentId) => updateReportComment(msg, commentId)}
           />
         )}
       </Container>

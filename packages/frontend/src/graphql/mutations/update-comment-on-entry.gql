@@ -1,7 +1,7 @@
-mutation createCommentOnDay($id: ID!, $text: String!, $traineeId: ID!) {
-  createCommentOnDay(id: $id, text: $text, traineeId: $traineeId) {
+mutation updateCommentOnEntry($id: ID!, $text: String!, $traineeId: ID!, $commentId: ID!) {
+  updateCommentOnEntry(id: $id, text: $text, traineeId: $traineeId, commentId: $commentId) {
     commentable {
-      ... on Day {
+      ... on Entry {
         id
         comments {
           id

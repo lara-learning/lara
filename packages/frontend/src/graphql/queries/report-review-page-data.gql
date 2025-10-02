@@ -19,6 +19,7 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
         firstName
         lastName
       }
+      published
     }
     days {
       status
@@ -37,6 +38,7 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
             firstName
             lastName
           }
+          published
         }
       }
       comments {
@@ -47,6 +49,7 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
           firstName
           lastName
         }
+        published
       }
     }
   }
