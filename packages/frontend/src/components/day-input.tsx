@@ -21,6 +21,7 @@ import EntriesInput from './entries-input'
 import Loader from './loader'
 import Total from './total'
 import { useDayHelper } from '../helper/day-helper'
+import { useToastContext } from '../hooks/use-toast-context'
 
 export interface EntryStatusType {
   message?: string
@@ -51,12 +52,12 @@ export const StatusTypes = {
 
 interface DayInputProps {
   day?: Pick<Day, 'id' | 'date' | 'status'> & {
-    comments: (Pick<Comment, 'id' | 'text'> & {
+    comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
   } & {
     entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
-      comments: (Pick<Comment, 'id' | 'text'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
         user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
     })[]
@@ -65,10 +66,29 @@ interface DayInputProps {
   disabled?: boolean
   reportStatus?: ReportStatus
   primary?: boolean
+  updateMessageDay?: (message: string, commentId: string) => void
+  updateMessageEntry?: (
+    message: string,
+    commentId: string,
+    entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    }
+  ) => void
 }
 
-const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabled, reportStatus, primary }) => {
+const DayInput: React.FunctionComponent<DayInputProps> = ({
+  day,
+  heading,
+  disabled,
+  reportStatus,
+  primary,
+  updateMessageDay,
+  updateMessageEntry,
+}) => {
   const { getTotalMinutes } = useDayHelper()
+  const { addToast } = useToastContext()
 
   const { loading, data } = useDayInputDataQuery()
   const [createComment] = useCreateCommentOnDayMutation()
@@ -143,11 +163,19 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabl
                 id: 'null',
                 text,
                 user: data.currentUser,
+                published: false,
               },
             ],
           },
         },
       },
+    }).then(() => {
+      addToast({
+        icon: 'Comment',
+        title: strings.trainerReportOverview.reportCommentSuccessTitle,
+        text: strings.trainerReportOverview.reportCommentSuccess,
+        type: 'success',
+      })
     })
   }
 
@@ -194,7 +222,12 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabl
       total={day && <Total minutes={getTotalMinutes(day)} />}
       commentsection={
         reportStatus !== ReportStatus.Todo && day ? (
-          <CommentSection comments={day.comments} onSubmit={commentOnDay} displayTextInput={isCommentable()} />
+          <CommentSection
+            comments={day.comments}
+            onSubmit={commentOnDay}
+            displayTextInput={isCommentable()}
+            updateMessage={updateMessageDay}
+          />
         ) : undefined
       }
     >
@@ -204,6 +237,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({ day, heading, disabl
         reportStatus={reportStatus ?? ReportStatus.Todo}
         disabled={Boolean(disabled)}
         trainee={data.currentUser}
+        updateMessage={updateMessageEntry}
       />
     </DayInputLayout>
   )

@@ -8,10 +8,11 @@ import CommentSection from './comment-section'
 import { TextArea } from './text-area'
 import Total from './total'
 import { useReportHelper } from '../helper/report-helper'
+import { useToastContext } from '../hooks/use-toast-context'
 
 interface ReportPageFooterProps {
   report: Pick<Report, 'id' | 'summary' | 'status'> & {
-    comments: (Pick<Comment, 'id' | 'text'> & {
+    comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
     days: (Pick<Day, 'status'> & {
@@ -21,11 +22,19 @@ interface ReportPageFooterProps {
   user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   disabled: boolean
   updateReport: (values: Partial<Report>) => Promise<void>
+  updateMessage?: (message: string, commentId: string) => void
 }
 
-const ReportPageFooter: React.FunctionComponent<ReportPageFooterProps> = ({ disabled, report, updateReport, user }) => {
+const ReportPageFooter: React.FunctionComponent<ReportPageFooterProps> = ({
+  disabled,
+  report,
+  updateReport,
+  user,
+  updateMessage,
+}) => {
   const [createCommentOnReportMutation] = useCreateCommentOnReportMutation()
 
+  const { addToast } = useToastContext()
   const { getTotalMinutes } = useReportHelper()
 
   const updateRemarks = (event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -59,11 +68,19 @@ const ReportPageFooter: React.FunctionComponent<ReportPageFooterProps> = ({ disa
                 id: 'null',
                 text,
                 user,
+                published: false,
               },
             ],
           },
         },
       },
+    }).then(() => {
+      addToast({
+        icon: 'Comment',
+        title: strings.trainerReportOverview.reportCommentSuccessTitle,
+        text: strings.trainerReportOverview.reportCommentSuccess,
+        type: 'success',
+      })
     })
   }
 
@@ -83,6 +100,7 @@ const ReportPageFooter: React.FunctionComponent<ReportPageFooterProps> = ({ disa
         comments={report.comments}
         onSubmit={commentOnReport}
         displayTextInput={report.status === ReportStatus.Reopened}
+        updateMessage={updateMessage}
       />
       <StyledTopBorderWrapper>
         <Spacer xy="l">

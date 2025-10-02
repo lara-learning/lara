@@ -13,6 +13,7 @@
     "@rebass/grid": "^6.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-localization": "^2.0.6",
     "styled-components": "^6.1.19",
     "styled-modern-normalize": "^0.2.0"
   },

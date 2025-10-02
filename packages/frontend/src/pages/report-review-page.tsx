@@ -25,13 +25,21 @@ import Total from '../components/total'
 import {
   Comment,
   Day,
+  Entry,
   ReportReviewPageDataQueryVariables,
   ReportStatus,
   UpdateReportMutationVariables,
   useCreateCommentOnDayMutation,
   useCreateCommentOnReportMutation,
+  useDeleteCommentOnDayMutation,
+  useDeleteCommentOnEntryMutation,
+  useDeleteCommentOnReportMutation,
+  usePublishAllCommentsMutation,
   useReportReviewPageDataQuery,
   UserInterface,
+  useUpdateCommentOnDayMutation,
+  useUpdateCommentOnEntryMutation,
+  useUpdateCommentOnReportMutation,
   useUpdateReportReportReviewPageMutation,
 } from '../graphql'
 import DateHelper from '../helper/date-helper'
@@ -61,6 +69,17 @@ const ReportReviewPage: React.FunctionComponent = () => {
   const [createCommentOnDayMutation] = useCreateCommentOnDayMutation()
   const [createCommentOnReportMutation] = useCreateCommentOnReportMutation()
   const [updateReportMutation] = useUpdateReportReportReviewPageMutation()
+
+  const [updateCommentOnReportMutation] = useUpdateCommentOnReportMutation()
+  const [updateCommentOnDayMutation] = useUpdateCommentOnDayMutation()
+  const [updateCommentOnEntryMutation] = useUpdateCommentOnEntryMutation()
+
+  const [deleteCommentOnReportMutation] = useDeleteCommentOnReportMutation()
+  const [deleteCommentOnDayMutation] = useDeleteCommentOnDayMutation()
+  const [deleteCommentOnEntryMutation] = useDeleteCommentOnEntryMutation()
+
+  const [publishAllCommentsMutation] = usePublishAllCommentsMutation()
+
   const { addToast } = useToastContext()
 
   const [state, setState] = React.useState<ReportReviewPageState>({
@@ -83,27 +102,37 @@ const ReportReviewPage: React.FunctionComponent = () => {
   }
 
   const handBackReport = () => {
-    updateReport({ status: ReportStatus.Reopened }).then(() => {
-      addToast({
-        icon: 'Report',
-        title: strings.trainerReportOverview.reportDeclinedSuccessTitle,
-        text: strings.trainerReportOverview.reportDeclinedSuccess,
-        type: 'success',
+    updateReport({ status: ReportStatus.Reopened })
+      .then(() => {
+        if (!data?.reportForTrainee) return
+        publishAllCommentsMutation({ variables: { id: data?.reportForTrainee.id, traineeId: variables.trainee } })
       })
-      navigate('/')
-    })
+      .then(() => {
+        addToast({
+          icon: 'Report',
+          title: strings.trainerReportOverview.reportDeclinedSuccessTitle,
+          text: strings.trainerReportOverview.reportDeclinedSuccess,
+          type: 'success',
+        })
+        navigate('/')
+      })
   }
 
   const archiveReport = () => {
-    updateReport({ status: ReportStatus.Archived }).then(() => {
-      addToast({
-        icon: 'Report',
-        title: strings.trainerReportOverview.reportToArchiveSuccessTitle,
-        text: strings.trainerReportOverview.reportToArchiveSuccess,
-        type: 'success',
+    updateReport({ status: ReportStatus.Archived })
+      .then(() => {
+        if (!data?.reportForTrainee) return
+        publishAllCommentsMutation({ variables: { id: data?.reportForTrainee.id, traineeId: variables.trainee } })
       })
-      navigate('/')
-    })
+      .then(() => {
+        addToast({
+          icon: 'Report',
+          title: strings.trainerReportOverview.reportToArchiveSuccessTitle,
+          text: strings.trainerReportOverview.reportToArchiveSuccess,
+          type: 'success',
+        })
+        navigate('/')
+      })
   }
 
   const updateReport = (values: Partial<UpdateReportMutationVariables>) => {
@@ -147,6 +176,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                 id: '',
                 text,
                 user: currentUser,
+                published: false,
               },
             ],
           },
@@ -165,7 +195,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
   const commentOnDay =
     (
       day: Pick<Day, 'id'> & {
-        comments: (Pick<Comment, 'id' | 'text'> & {
+        comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
           user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
         })[]
       }
@@ -194,6 +224,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                   id: '',
                   text,
                   user: data?.currentUser,
+                  published: false,
                 },
               ],
             },
@@ -208,6 +239,104 @@ const ReportReviewPage: React.FunctionComponent = () => {
         })
       })
     }
+
+  function updateReportComment(text: string, commentId: string) {
+    if (!data) {
+      return
+    }
+
+    const { reportForTrainee, currentUser } = data
+    if (!reportForTrainee || !currentUser) {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnReportMutation({
+        variables: {
+          id: reportForTrainee.id,
+          text,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnReportMutation({
+        variables: {
+          id: reportForTrainee.id,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    }
+  }
+
+  function updateDayComment(
+    day: Pick<Day, 'id'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    },
+    text: string,
+    commentId: string
+  ) {
+    if (!data?.currentUser) {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnDayMutation({
+        variables: {
+          id: day.id,
+          text,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnDayMutation({
+        variables: {
+          id: day.id,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    }
+  }
+
+  function updateEntryComment(
+    entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    },
+    text: string,
+    commentId: string
+  ) {
+    if (!data) {
+      return
+    }
+
+    const { currentUser: user } = data
+    if (!user) {
+      return
+    }
+    if (text !== '') {
+      void updateCommentOnEntryMutation({
+        variables: {
+          id: entry.id,
+          text,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    } else {
+      void deleteCommentOnEntryMutation({
+        variables: {
+          id: entry.id,
+          traineeId: variables.trainee,
+          commentId,
+        },
+      })
+    }
+  }
 
   const getHeading = (day: Pick<Day, 'date'>): string => {
     return DateHelper.format(Date.parse(day.date), 'EEEE')
@@ -265,6 +394,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                             disabled={true}
                             reportStatus={report.status}
                             trainee={{ id: variables.trainee }}
+                            updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
                           />
                         ))}
                         <StyledTotalContainer>
@@ -277,6 +407,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                       comments={day.comments}
                       onSubmit={commentOnDay(day)}
                       displayTextInput={true}
+                      updateMessage={(msg, commentId) => updateDayComment(day, msg, commentId)}
                     />
                   </div>
                 ))}
@@ -289,7 +420,13 @@ const ReportReviewPage: React.FunctionComponent = () => {
             <Spacer x="l">
               <Paragraph>{report.summary}</Paragraph>
             </Spacer>
-            <CommentSection bottomSpace comments={report.comments} onSubmit={commentOnReport} displayTextInput={true} />
+            <CommentSection
+              bottomSpace
+              comments={report.comments}
+              onSubmit={commentOnReport}
+              displayTextInput={true}
+              updateMessage={(msg, commentId) => updateReportComment(msg, commentId)}
+            />
           </Container>
 
           <Flex py={'3'} justifyContent="space-between">

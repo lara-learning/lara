@@ -42,7 +42,7 @@ interface EntryDisplayFieldProps {
     entries: Pick<Entry, 'id' | 'text' | 'time'>[]
   }
   entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
-    comments: (Pick<Comment, 'id' | 'text'> & {
+    comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
   }
@@ -52,6 +52,7 @@ interface EntryDisplayFieldProps {
   handleStatusChange?: (status: EntryStatusType) => void
   showContextMenu?: string
   setShowContextMenu?: React.Dispatch<React.SetStateAction<string>>
+  updateMessage?: (message: string, commentId: string) => void
 }
 
 const EntryInput: React.FC<EntryDisplayFieldProps> = ({
@@ -63,6 +64,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   trainee,
   showContextMenu,
   setShowContextMenu,
+  updateMessage,
 }) => {
   const { loading, data } = useEntryInputDataQuery()
 
@@ -94,11 +96,21 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
     const key = event.key
 
     if (key === 'Enter') {
+      if (target.value.trim() === '') return
       commentOnEntry(target.value)
 
       target.value = ''
       toggleCommentInput()
     }
+  }
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement
+    if (target.value.trim() === '') return
+    commentOnEntry(target.value)
+
+    target.value = ''
+    toggleCommentInput()
   }
 
   const commentOnEntry = (text: string) => {
@@ -130,11 +142,19 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
                 id: '',
                 text,
                 user,
+                published: false,
               },
             ],
           },
         },
       },
+    }).then(() => {
+      addToast({
+        icon: 'Comment',
+        title: strings.trainerReportOverview.reportCommentSuccessTitle,
+        text: strings.trainerReportOverview.reportCommentSuccess,
+        type: 'success',
+      })
     })
   }
 
@@ -332,10 +352,10 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
           }
         />
       )}
-      <CommentBox comments={entry.comments} />
+      <CommentBox comments={entry.comments} updateMessage={updateMessage} />
       {showComment && (
         <StyledCommentInput>
-          <TextInput label={strings.report.comments.addCommentToEntry} onKeyDown={handleKeyDown} />
+          <TextInput label={strings.report.comments.addCommentToEntry} onKeyDown={handleKeyDown} onBlur={handleBlur} />
         </StyledCommentInput>
       )}
     </>

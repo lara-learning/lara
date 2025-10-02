@@ -1,0 +1,17 @@
+mutation publishAllComments($id: ID!, $traineeId: ID!) {
+  publishAllComments(id: $id, traineeId: $traineeId) {
+    report {
+      id
+      comments {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+        }
+        published
+      }
+    }
+  }
+}
