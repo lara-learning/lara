@@ -13,6 +13,7 @@ export const EnglishTranslations: Translations = {
     missingReport: "clouldn't find report",
     missingDay: "clouldn't find day",
     missingEntry: "couldn't find entry",
+    missingComment: "couldn't find comment",
     wrongReportStatus: 'wrong report status',
     wrongDayStatus: 'wrong Day status',
     userAlreadyExists: 'User with this Email already exists',
@@ -26,6 +27,7 @@ export const EnglishTranslations: Translations = {
     missingPeriod: 'Missing period',
     cantDeleteYourself: "An Admin can't mark themselves for deletion",
     cantChangeOwnEmail: "An Admin can't change their own e-mail address",
+    cantEditPublishedComment: 'Published Comments can not be edited',
   },
   email: {
     hello: 'Hello',

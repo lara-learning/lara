@@ -8,12 +8,13 @@ import strings from '../locales/localization'
 import CommentBox from './comment-box'
 
 interface CommentSectionProps {
-  comments: (Pick<Comment, 'id' | 'text'> & {
+  comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
     user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   })[]
   onSubmit: onSubmitType
   displayTextInput: boolean
   bottomSpace?: boolean
+  updateMessage?: (message: string, commentId: string) => void
 }
 
 type onSubmitType = (comment: string) => void
@@ -23,6 +24,7 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
   bottomSpace,
   displayTextInput,
   onSubmit: submit,
+  updateMessage,
 }) => {
   const {
     handleSubmit,
@@ -32,16 +34,17 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
   } = useForm<{ comment: string }>()
 
   const onSubmit = handleSubmit((formData) => {
+    if (formData.comment.trim() === '') return
     submit(formData.comment)
     void setValue('comment', '')
   })
 
   return (
     <>
-      <CommentBox comments={comments} />
+      <CommentBox comments={comments} updateMessage={updateMessage} />
       {displayTextInput && (
         <Spacer x="l" bottom={bottomSpace ? 'l' : undefined}>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} onBlur={onSubmit}>
             <StyledTextInputLabel valid={!errors.comment}>{strings.report.comments.addComment}</StyledTextInputLabel>
             <Input
               error={Boolean(errors.comment)}

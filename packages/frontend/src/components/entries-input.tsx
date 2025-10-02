@@ -22,7 +22,7 @@ import { useDayHelper } from '../helper/day-helper'
 interface EntriesInputProps {
   day?: Pick<Day, 'id' | 'date'> & {
     entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
-      comments: (Pick<Comment, 'id' | 'text'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
         user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
     })[]
@@ -31,9 +31,25 @@ interface EntriesInputProps {
   reportStatus: ReportStatus
   disabled: boolean
   handleStatusChange: (status: EntryStatusType) => void
+  updateMessage?: (
+    message: string,
+    commentId: string,
+    entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+      comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      })[]
+    }
+  ) => void
 }
 
-const EntriesInput: React.FC<EntriesInputProps> = ({ day, disabled, reportStatus, handleStatusChange, trainee }) => {
+const EntriesInput: React.FC<EntriesInputProps> = ({
+  day,
+  disabled,
+  reportStatus,
+  handleStatusChange,
+  trainee,
+  updateMessage,
+}) => {
   const [createEntryMutation] = useCreateEntryMutation()
   const { addToast } = useToastContext()
   const [showContextMenu, setShowContextMenu] = React.useState('')
@@ -100,6 +116,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({ day, disabled, reportStatus
             trainee={trainee}
             showContextMenu={showContextMenu}
             setShowContextMenu={setShowContextMenu}
+            updateMessage={updateMessage ? (msg, commentId) => updateMessage(msg, commentId, entry) : undefined}
           />
         ))}
       {!disabled && <TextTimeInput clearOnSave={true} onSave={createEntry} />}

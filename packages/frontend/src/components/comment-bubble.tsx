@@ -9,15 +9,26 @@ interface CommentBubbleProps {
   author?: string
   message?: string
   right?: boolean
+  updateMessage?: (message: string, commentId: string) => void
+  commentId?: string
 }
 
-const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({ id, author, message, right }) => {
+const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({
+  id,
+  author,
+  message,
+  right,
+  updateMessage,
+  commentId,
+}) => {
   return (
     <CommentBubbleLayout
       avatar={<>{id && <Avatar size={35} id={id} />}</>}
       author={author}
       message={message}
       right={right}
+      updateMessage={updateMessage}
+      commentId={commentId}
     ></CommentBubbleLayout>
   )
 }

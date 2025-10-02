@@ -17,6 +17,7 @@ export type Translations = {
     missingReport: string
     missingDay: string
     missingEntry: string
+    missingComment: string
     wrongReportStatus: string
     wrongDayStatus: string
     userAlreadyExists: string
@@ -30,6 +31,7 @@ export type Translations = {
     missingPeriod: string
     cantDeleteYourself: string
     cantChangeOwnEmail: string
+    cantEditPublishedComment: string
   }
   email: EmailTranslations
   print: PrintTranslations

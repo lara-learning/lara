@@ -3,6 +3,7 @@ type Comment {
   id: ID!
   text: String
   user: UserInterface!
+  published: Boolean!
 }
 
 """
@@ -22,6 +23,20 @@ type Company {
 type CreateCommentPayload {
   comment: Comment!
   commentable: CommentableInterface!
+}
+
+type UpdateCommentPayload {
+  comment: Comment!
+  commentable: CommentableInterface!
+}
+
+type DeleteCommentPayload {
+  comment: Comment!
+  commentable: CommentableInterface!
+}
+
+type PublishCommentsPayload {
+  report: Report!
 }
 
 type Day implements CommentableInterface {
@@ -128,6 +143,41 @@ type Mutation {
   Creates a new comment on a Report which is identified by the id argument.
   """
   createCommentOnReport(text: String!, id: ID!, traineeId: ID!): CreateCommentPayload!
+
+  """
+  Updates a comment on a Day which is identified by the id argument.
+  """
+  updateCommentOnDay(text: String!, id: ID!, traineeId: ID!, commentId: ID!): UpdateCommentPayload!
+
+  """
+  Updates a comment on a Entry which is identified by the id argument.
+  """
+  updateCommentOnEntry(text: String!, id: ID!, traineeId: ID!, commentId: ID!): UpdateCommentPayload!
+
+  """
+  Updates a comment on a Report which is identified by the id argument.
+  """
+  updateCommentOnReport(text: String!, id: ID!, traineeId: ID!, commentId: ID!): UpdateCommentPayload!
+
+  """
+  Deletes a comment on a Day which is identified by the id argument.
+  """
+  deleteCommentOnDay(id: ID!, traineeId: ID!, commentId: ID!): DeleteCommentPayload!
+
+  """
+  Deletes a comment on a Entry which is identified by the id argument.
+  """
+  deleteCommentOnEntry(id: ID!, traineeId: ID!, commentId: ID!): DeleteCommentPayload!
+
+  """
+  Deletes a comment on a Report which is identified by the id argument.
+  """
+  deleteCommentOnReport(id: ID!, traineeId: ID!, commentId: ID!): DeleteCommentPayload!
+
+  """
+  Publishes all comments on a report which is identified by the id argument.
+  """
+  publishAllComments(id: ID!, traineeId: ID!): PublishCommentsPayload!
 
   """
   Creates a new entry which is assigned to the matching report based on the day Id

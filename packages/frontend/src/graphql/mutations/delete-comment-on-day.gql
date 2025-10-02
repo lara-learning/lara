@@ -1,5 +1,5 @@
-mutation createCommentOnDay($id: ID!, $text: String!, $traineeId: ID!) {
-  createCommentOnDay(id: $id, text: $text, traineeId: $traineeId) {
+mutation deleteCommentOnDay($id: ID!, $traineeId: ID!, $commentId: ID!) {
+  deleteCommentOnDay(id: $id, traineeId: $traineeId, commentId: $commentId) {
     commentable {
       ... on Day {
         id

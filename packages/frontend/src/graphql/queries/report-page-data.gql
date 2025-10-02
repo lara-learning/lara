@@ -25,6 +25,7 @@ query ReportPageData($year: Int!, $week: Int!) {
         firstName
         lastName
       }
+      published
     }
     days {
       status
@@ -38,6 +39,7 @@ query ReportPageData($year: Int!, $week: Int!) {
           firstName
           lastName
         }
+        published
       }
       entries {
         id
@@ -52,6 +54,7 @@ query ReportPageData($year: Int!, $week: Int!) {
             firstName
             lastName
           }
+          published
         }
       }
     }
