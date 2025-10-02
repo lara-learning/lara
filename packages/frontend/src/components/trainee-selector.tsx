@@ -5,7 +5,7 @@ import { Trainee } from '../graphql'
 import Avatar from './avatar'
 
 interface TraineeSelectorProps {
-  trainee: Pick<Trainee, 'id' | 'firstName' | 'lastName' | 'avatar'>
+  trainee: Pick<Trainee, 'id' | 'firstName' | 'lastName'>
   onVariableChange: (traineeId: string) => void
 }
 
@@ -20,7 +20,7 @@ const TraineeSelector: React.FunctionComponent<TraineeSelectorProps> = (props) =
     <StyledWrapper onClick={handleClick}>
       <Flex justifyContent="center" alignItems="space-between">
         <StyledHeaderSpan>
-          <Avatar size={44} image={trainee.avatar} />
+          <Avatar size={44} id={trainee.id} />
           <StyledName>
             {trainee.firstName} {trainee.lastName}
           </StyledName>
