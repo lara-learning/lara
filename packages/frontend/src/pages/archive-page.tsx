@@ -267,7 +267,11 @@ const ArchivePage: React.FunctionComponent = () => {
       {!loading && archivedReports.length === 0 && (
         <Flex alignItems={'center'} flexDirection={'column'} mt={'3'} style={{ overflow: 'hidden' }}>
           <H1 center>{strings.archivePage.emptyState.initial.title}</H1>
-          <Paragraph center>{strings.archivePage.emptyState.initial.caption} </Paragraph>
+          <Paragraph center>
+            {data?.currentUser?.__typename === 'Trainee'
+              ? strings.archivePage.emptyState.initial.caption_trainee
+              : strings.archivePage.emptyState.initial.caption_trainer}{' '}
+          </Paragraph>
           <Illustrations.EmptyStateWaiting darkMode={isDarkMode} />
         </Flex>
       )}

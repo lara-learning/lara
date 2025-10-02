@@ -59,7 +59,8 @@ export default interface Translation {
       }
       initial: {
         title: string
-        caption: string
+        caption_trainee: string
+        caption_trainer: string
       }
     }
     exportTitle: string
