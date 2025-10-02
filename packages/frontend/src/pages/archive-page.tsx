@@ -410,7 +410,7 @@ const ArchivePage: React.FunctionComponent = () => {
             </StyledArchiveContainer>
 
             <Flex py={'4'} flexDirection={'row-reverse'}>
-              {filteredReports.length > 0 && (
+              {filteredReports.length > 0 && data?.currentUser?.__typename !== 'Trainer' && (
                 <PrimaryButton
                   icon={pdfLoading ? 'Loader' : 'Download'}
                   disabled={getCheckedReports().length === 0 || pdfLoading}

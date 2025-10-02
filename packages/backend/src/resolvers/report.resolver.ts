@@ -56,10 +56,8 @@ export const reportTraineeResolver: GqlResolvers<TraineeContext> = {
 export const reportResolver: GqlResolvers<AuthenticatedContext> = {
   Query: {
     reports: async (_parent, { statuses }, { currentUser }) => {
-      console.log('###########resolver s#######################')
       // Generate reports if executed local
       if (IS_OFFLINE && isTrainee(currentUser)) {
-        console.log('############generate reports#######################')
         await generateReports(currentUser)
       }
 
