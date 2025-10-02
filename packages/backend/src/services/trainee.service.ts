@@ -47,6 +47,7 @@ export const generateTrainee = async (options: GenerateTraineeOptions): Promise<
     id: v4(),
     createdAt: new Date().toISOString(),
     type: 'Trainee',
+    notification: true,
     ...options,
   }
 

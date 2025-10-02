@@ -23,6 +23,7 @@ export const generateTrainer = async (options: GenerateTrainerOptions): Promise<
     id: v4(),
     createdAt: new Date().toISOString(),
     type: 'Trainer',
+    notification: true,
     ...options,
   }
 
