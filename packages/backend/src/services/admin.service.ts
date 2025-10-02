@@ -20,6 +20,7 @@ export const generateAdmin = (options: GenerateAdminOptions): Admin => {
     id: v4(),
     createdAt: new Date().toISOString(),
     type: 'Admin',
+    notification: true,
   }
 }
 
