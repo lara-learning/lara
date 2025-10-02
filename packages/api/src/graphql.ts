@@ -511,6 +511,7 @@ export type GqlReport = GqlCommentableInterface & {
   reportAccepted?: Maybe<Scalars['String']['output']>;
   status: GqlReportStatus;
   summary?: Maybe<Scalars['String']['output']>;
+  traineeId: Scalars['ID']['output'];
   week: Scalars['Int']['output'];
   year: Scalars['Int']['output'];
 };
@@ -979,6 +980,7 @@ export type GqlReportResolvers<ContextType = Context, ParentType extends GqlReso
   reportAccepted?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<GqlResolversTypes['ReportStatus'], ParentType, ContextType>;
   summary?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  traineeId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   week?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   year?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

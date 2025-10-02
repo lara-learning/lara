@@ -65,11 +65,14 @@ const germanTranslation: Translation = {
       },
       initial: {
         title: 'Hier gibt es noch nichts',
-        caption: 'Deine Berichtshefte erscheinen hier sobald sie akzeptiert wurden und stehen dann zum Export bereit.',
+        caption_trainee:
+          'Deine Berichtshefte erscheinen hier sobald sie akzeptiert wurden und stehen dann zum Export bereit.',
+        caption_trainer: 'Du hast keine Azubis, die Archive der Azubis werden hier erscheinen sobald sie da sind.',
       },
     },
     exportTitle: 'Export gestartet',
     export: 'Du erhältst in Kürze eine E-mail mit den exportierten Berichten.',
+    back: 'Zurück',
   },
   report: {
     title: 'Bericht für',

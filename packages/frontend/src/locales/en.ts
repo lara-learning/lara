@@ -62,11 +62,13 @@ const englishTranslation: Translation = {
       },
       initial: {
         title: "There's nothing here yet.",
-        caption: 'Your reports appear here as soon as they have been accepted and are then ready for export.',
+        caption_trainee: 'Your reports appear here as soon as they have been accepted and are then ready for export.',
+        caption_trainer: 'You have no Trainees, their archives will appear here when available.',
       },
     },
     exportTitle: 'export started',
     export: 'Shortly you will receive an email with your exported reports.',
+    back: 'Back',
   },
   report: {
     title: 'Report for',

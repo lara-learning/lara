@@ -17,8 +17,12 @@ import {
   DayStatusEnum,
   Entry,
   Report,
+  ReportPageDataQuery,
   ReportPageDataQueryVariables,
+  ReportReviewPageDataQuery,
+  ReportReviewPageDataQueryVariables,
   ReportStatus,
+  Trainee,
   useDeleteCommentOnDayMutation,
   useDeleteCommentOnEntryMutation,
   useDeleteCommentOnReportMutation,
@@ -28,7 +32,9 @@ import {
   useUpdateCommentOnDayMutation,
   useUpdateCommentOnEntryMutation,
   useUpdateCommentOnReportMutation,
+  useReportReviewPageDataQuery,
   useUpdateReportMutation,
+  useUserPageQuery,
 } from '../graphql'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
@@ -39,23 +45,44 @@ import { useReportHelper } from '../helper/report-helper'
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { getFinishedDays } = useReportHelper()
-
-  const { year, week } = useParams()
+  const { trainee, year, week } = useParams()
 
   const variables: ReportPageDataQueryVariables = {
     year: parseInt(year ?? '', 10),
     week: parseInt(week ?? '', 10),
   }
 
-  const { loading, data } = useReportPageDataQuery({ variables })
+  const variables_trainer: ReportReviewPageDataQueryVariables = {
+    year: parseInt(year ?? '', 10),
+    week: parseInt(week ?? '', 10),
+    trainee: trainee ?? '',
+  }
 
-  const report = data?.reportForYearAndWeek
+  const reviewQuery = useReportReviewPageDataQuery({
+    variables: variables_trainer,
+    skip: !trainee,
+  })
 
-  const currentUser = data?.currentUser
+  const reportQuery = useReportPageDataQuery({
+    variables,
+    skip: !!trainee,
+  })
+
+  const userQuery = useUserPageQuery({
+    variables: { id: trainee ?? '' },
+    skip: !trainee,
+  })
+
+  const { loading, data } = trainee ? reviewQuery : reportQuery
+
+  const report = trainee
+    ? (data as ReportReviewPageDataQuery | undefined)?.reportForTrainee
+    : (data as ReportPageDataQuery | undefined)?.reportForYearAndWeek
+
+  const currentUser = trainee ? (userQuery.data?.getUser as Trainee) : data?.currentUser
 
   const [updateReportMutation] = useUpdateReportMutation()
   const { addToast } = useToastContext()
-
   const [fetchPdf, pdfLoading] = useFetchPdf()
 
   const [updateCommentOnReportMutation] = useUpdateCommentOnReportMutation()
@@ -67,7 +94,6 @@ const ReportPage: React.FunctionComponent = () => {
   const [deleteCommentOnEntryMutation] = useDeleteCommentOnEntryMutation()
 
   const [publishAllCommentsMutation] = usePublishAllCommentsMutation()
-
   const [showHandoverModal, setShowHandoverModal] = React.useState(false)
   const [showUnarchiveModal, setShowUnarchiveModal] = React.useState(false)
 
@@ -76,7 +102,6 @@ const ReportPage: React.FunctionComponent = () => {
 
   const updateReport = async (values: Partial<Report>) => {
     if (!report) return
-
     return updateReportMutation({
       variables: {
         ...report,
@@ -246,11 +271,12 @@ const ReportPage: React.FunctionComponent = () => {
   const reportTodo = report?.status === ReportStatus.Todo
 
   const renderReportPageBody = () => {
-    if (!report || !currentUser || currentUser.__typename !== 'Trainee') return
+    if (!report || !currentUser || (currentUser.__typename !== 'Trainee' && currentUser.__typename !== 'Trainer'))
+      return
 
     return (
       <Container overflow="visible">
-        <ReportPageHeader report={report} currentUser={currentUser} updateReport={updateReport} />
+        <ReportPageHeader report={report} currentUser={currentUser as Trainee} updateReport={updateReport} />
 
         <EntryOrderProvider>
           {report?.days.map((day) => (
@@ -266,7 +292,7 @@ const ReportPage: React.FunctionComponent = () => {
           ))}
         </EntryOrderProvider>
 
-        {data.currentUser && (
+        {data?.currentUser && (
           <ReportPageFooter
             report={report}
             disabled={reportArchived || reportReview}
@@ -303,7 +329,7 @@ const ReportPage: React.FunctionComponent = () => {
               {strings.report.handover}
             </PrimaryButton>
           )}
-          {reportArchived && (
+          {reportArchived && trainee === undefined && (
             <>
               <Spacer right="m">
                 <SecondaryButton onClick={toggleUnarchiveModal}>{strings.report.unarchive}</SecondaryButton>
@@ -322,7 +348,7 @@ const ReportPage: React.FunctionComponent = () => {
     <Template type="Main">
       {(loading || !data) && <Loader />}
 
-      {!loading && !data?.reportForYearAndWeek && <Navigate to="/report/missing" />}
+      {!loading && !report && <Navigate to="/report/missing" />}
 
       {!loading && (
         <>

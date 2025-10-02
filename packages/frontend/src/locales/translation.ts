@@ -59,11 +59,13 @@ export default interface Translation {
       }
       initial: {
         title: string
-        caption: string
+        caption_trainee: string
+        caption_trainer: string
       }
     }
     exportTitle: string
     export: string
+    back: string
   }
   report: {
     title: string

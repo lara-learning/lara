@@ -47,6 +47,12 @@ export const reportsWithinApprenticeship = async (
   )
 }
 
+export const reportsForTrainer = async (trainees: Trainee[], statuses?: GqlReportStatus[]): Promise<Report[]> => {
+  const allReports = await Promise.all(trainees.map((trainee) => reportsWithinApprenticeship(trainee, statuses)))
+
+  return sortReportsByDate(allReports.flat())
+}
+
 const DANGEROUSLY_reportsForTraineeAndStatuses = async (
   traineeId: string,
   statuses: GqlReportStatus[]
