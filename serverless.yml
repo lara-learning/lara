@@ -12,6 +12,7 @@ provider:
   lambdaHashingVersion: 20201221
   environment: ${file(dotenv.js)} # takes care of env variables in CI/CD
   timeout: 30
+  logRetentionInDays: 30
 
 plugins:
   - serverless-jetpack
