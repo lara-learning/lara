@@ -56,7 +56,7 @@ export const TraineePaperPage: React.FC = () => {
                   <Flex alignItems={'center'} width={'100%'}>
                     <Box width={2 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        {paper?.briefing.length ? (
+                        {paper?.status !== PaperStatus.NotStarted ? (
                           <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                         ) : (
                           <StyledIcon name={'X'} size="24px" color={'errorRed'} />
