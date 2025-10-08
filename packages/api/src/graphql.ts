@@ -179,7 +179,6 @@ export type GqlMentor = GqlUserInterface & {
   startDate?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: GqlUserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type GqlMentorInput = {
@@ -642,7 +641,7 @@ export type GqlQuery = {
   currentUser?: Maybe<GqlUserInterface>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
-  /** Get all Trainers */
+  /** Get all Mentors */
   mentors: Array<GqlMentor>;
   /** Print single report or report batch */
   print: GqlPrintPayload;
@@ -1137,7 +1136,6 @@ export type GqlMentorResolvers<ContextType = Context, ParentType extends GqlReso
   startDate?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
-  username?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

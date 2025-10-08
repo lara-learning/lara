@@ -178,7 +178,6 @@ export type Mentor = UserInterface & {
   startDate?: Maybe<Scalars['String']['output']>;
   theme?: Maybe<Scalars['String']['output']>;
   type: UserTypeEnum;
-  username: Scalars['String']['output'];
 };
 
 export type MentorInput = {
@@ -642,7 +641,7 @@ export type Query = {
   currentUser?: Maybe<UserInterface>;
   /** Get a User by ID */
   getUser?: Maybe<UserInterface>;
-  /** Get all Trainers */
+  /** Get all Mentors */
   mentors: Array<Mentor>;
   /** Print single report or report batch */
   print: PrintPayload;
@@ -895,11 +894,7 @@ export type CreateCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type CreateCommentOnDayMutation = { __typename?: 'Mutation', createCommentOnDay: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
-=======
-export type CreateCommentOnDayMutation = { __typename?: 'Mutation', createCommentOnDay: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type CreateCommentOnDayMutation = { __typename?: 'Mutation', createCommentOnDay: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
 
 export type CreateCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -908,11 +903,7 @@ export type CreateCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type CreateCommentOnEntryMutation = { __typename?: 'Mutation', createCommentOnEntry: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
-=======
-export type CreateCommentOnEntryMutation = { __typename?: 'Mutation', createCommentOnEntry: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type CreateCommentOnEntryMutation = { __typename?: 'Mutation', createCommentOnEntry: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
 
 export type CreateCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -921,11 +912,7 @@ export type CreateCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type CreateCommentOnReportMutation = { __typename?: 'Mutation', createCommentOnReport: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
-=======
-export type CreateCommentOnReportMutation = { __typename?: 'Mutation', createCommentOnReport: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type CreateCommentOnReportMutation = { __typename?: 'Mutation', createCommentOnReport: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
 
 export type CreateEntryMutationVariables = Exact<{
   dayId: Scalars['String']['input'];
@@ -997,7 +984,7 @@ export type DeleteCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnDayMutation = { __typename?: 'Mutation', deleteCommentOnDay: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
+export type DeleteCommentOnDayMutation = { __typename?: 'Mutation', deleteCommentOnDay: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
 
 export type DeleteCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1006,7 +993,7 @@ export type DeleteCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnEntryMutation = { __typename?: 'Mutation', deleteCommentOnEntry: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
+export type DeleteCommentOnEntryMutation = { __typename?: 'Mutation', deleteCommentOnEntry: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
 
 export type DeleteCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1015,7 +1002,7 @@ export type DeleteCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnReportMutation = { __typename?: 'Mutation', deleteCommentOnReport: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
+export type DeleteCommentOnReportMutation = { __typename?: 'Mutation', deleteCommentOnReport: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
 
 export type DeleteEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1058,8 +1045,7 @@ export type MarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
 
 export type PublishAllCommentsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1067,10 +1053,7 @@ export type PublishAllCommentsMutationVariables = Exact<{
 }>;
 
 
-export type PublishAllCommentsMutation = { __typename?: 'Mutation', publishAllComments: { __typename?: 'PublishCommentsPayload', report: { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
-=======
-export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type PublishAllCommentsMutation = { __typename?: 'Mutation', publishAllComments: { __typename?: 'PublishCommentsPayload', report: { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
 
 export type SignatureSettingsUpdateSignatureMutationVariables = Exact<{
   signature?: InputMaybe<Scalars['String']['input']>;
@@ -1103,8 +1086,7 @@ export type UnmarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
 
 export type UpdateAdminMutationVariables = Exact<{
   input: UpdateAdminInput;
@@ -1122,7 +1104,7 @@ export type UpdateCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnDayMutation = { __typename?: 'Mutation', updateCommentOnDay: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
+export type UpdateCommentOnDayMutation = { __typename?: 'Mutation', updateCommentOnDay: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
 
 export type UpdateCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1132,7 +1114,7 @@ export type UpdateCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnEntryMutation = { __typename?: 'Mutation', updateCommentOnEntry: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
+export type UpdateCommentOnEntryMutation = { __typename?: 'Mutation', updateCommentOnEntry: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
 
 export type UpdateCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1142,10 +1124,7 @@ export type UpdateCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnReportMutation = { __typename?: 'Mutation', updateCommentOnReport: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
-=======
-export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type UpdateCommentOnReportMutation = { __typename?: 'Mutation', updateCommentOnReport: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
 
 export type UpdateEntryOrderMutationVariables = Exact<{
   entryId: Scalars['ID']['input'];
@@ -1215,17 +1194,15 @@ export type UpdateTrainerMutationVariables = Exact<{
 
 export type UpdateTrainerMutation = { __typename?: 'Mutation', updateTrainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | undefined };
 
-<<<<<<< HEAD
 export type AdminAdminsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AdminAdminsPageQuery = { __typename?: 'Query', admins: Array<{ __typename?: 'Admin', id: string, firstName: string, lastName: string, deleteAt?: string | undefined }> };
-=======
+
 export type AdminMentorPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AdminMentorPageQuery = { __typename?: 'Query', mentors: Array<{ __typename?: 'Mentor', id: string, firstName: string, lastName: string, startDate?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined }> };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
 
 export type AdminTraineesPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1245,11 +1222,7 @@ export type AlexaLinkingUrlQuery = { __typename?: 'Query', alexaLinkingUrl?: str
 export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-<<<<<<< HEAD
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
-=======
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number, text: string }> }> } | undefined> };
 
 export type AvatarSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1277,11 +1250,7 @@ export type DashboardPageDataQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
-=======
-export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time: number }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
 
 export type DayInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1291,21 +1260,14 @@ export type DayInputDataQuery = { __typename?: 'Query', currentUser?: { __typena
 export type EntryInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-<<<<<<< HEAD
-export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string } | undefined };
-=======
-export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | { __typename?: 'Mentor', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string, username: string } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string } | undefined };
 
 export type UserPageQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-<<<<<<< HEAD
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
-=======
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type MentorsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1316,7 +1278,6 @@ export type MentorPaperPageDataQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type MentorPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1348,11 +1309,7 @@ export type ReportPageDataQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
-=======
-export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, username: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
 
 export type ReportReviewPageDataQueryVariables = Exact<{
   year: Scalars['Int']['input'];
@@ -1361,11 +1318,7 @@ export type ReportReviewPageDataQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
-=======
-export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, username: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, username: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
 
 export type SettingsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1385,10 +1338,7 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-<<<<<<< HEAD
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
-=======
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, username: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type TraineePaperPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1399,7 +1349,6 @@ export type TraineePaperDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type TraineePaperDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename?: 'Mentor' } | { __typename?: 'Trainee', id: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainer' } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1409,16 +1358,12 @@ export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { _
 export type TrainerPaperPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TrainerPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string, trainees: Array<{ __typename?: 'Trainee', username: string, firstName: string, lastName: string, id: string }>, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | undefined };
+export type TrainerPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string }>, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedback: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | undefined };
 
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-<<<<<<< HEAD
-export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
-=======
-export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', username: string, firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
+export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
 
 export type TrainersPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2366,28 +2311,16 @@ export function useUpdateTrainerMutation(baseOptions?: Apollo.MutationHookOption
         return Apollo.useMutation<UpdateTrainerMutation, UpdateTrainerMutationVariables>(UpdateTrainerDocument, options);
       }
 export type UpdateTrainerMutationHookResult = ReturnType<typeof useUpdateTrainerMutation>;
-<<<<<<< HEAD
 export const AdminAdminsPageDocument = gql`
     query AdminAdminsPage {
   admins {
     id
     firstName
     lastName
-=======
-export const AdminMentorPageDocument = gql`
-    query AdminMentorPage {
-  mentors {
-    id
-    firstName
-    lastName
-    startDate
-    endDate
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
     deleteAt
   }
 }
     `;
-<<<<<<< HEAD
 export function useAdminAdminsPageQuery(baseOptions?: Apollo.QueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
@@ -2403,7 +2336,18 @@ export function useAdminAdminsPageSuspenseQuery(baseOptions?: Apollo.SkipToken |
 export type AdminAdminsPageQueryHookResult = ReturnType<typeof useAdminAdminsPageQuery>;
 export type AdminAdminsPageLazyQueryHookResult = ReturnType<typeof useAdminAdminsPageLazyQuery>;
 export type AdminAdminsPageSuspenseQueryHookResult = ReturnType<typeof useAdminAdminsPageSuspenseQuery>;
-=======
+export const AdminMentorPageDocument = gql`
+    query AdminMentorPage {
+  mentors {
+    id
+    firstName
+    lastName
+    startDate
+    endDate
+    deleteAt
+  }
+}
+    `;
 export function useAdminMentorPageQuery(baseOptions?: Apollo.QueryHookOptions<AdminMentorPageQuery, AdminMentorPageQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<AdminMentorPageQuery, AdminMentorPageQueryVariables>(AdminMentorPageDocument, options);
@@ -2419,7 +2363,6 @@ export function useAdminMentorPageSuspenseQuery(baseOptions?: Apollo.SkipToken |
 export type AdminMentorPageQueryHookResult = ReturnType<typeof useAdminMentorPageQuery>;
 export type AdminMentorPageLazyQueryHookResult = ReturnType<typeof useAdminMentorPageLazyQuery>;
 export type AdminMentorPageSuspenseQueryHookResult = ReturnType<typeof useAdminMentorPageSuspenseQuery>;
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
 export const AdminTraineesPageDocument = gql`
     query AdminTraineesPage {
   trainees {
@@ -2803,15 +2746,13 @@ export const UserPageDocument = gql`
         lastName
       }
     }
-<<<<<<< HEAD
     ... on Admin {
       deleteAt
-=======
+    }
     ... on Mentor {
       deleteAt
       startDate
       endDate
->>>>>>> a2f4f37 (chore: manually rebased lara-paper onto main)
     }
   }
   companies {
@@ -3458,7 +3399,6 @@ export const TrainerPaperPageDataDocument = gql`
     id
     ... on Trainer {
       trainees {
-        username
         firstName
         lastName
         id

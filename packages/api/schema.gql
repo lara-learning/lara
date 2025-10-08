@@ -644,7 +644,6 @@ type Mentor implements UserInterface {
   papers: [Paper]
   startDate: String
   endDate: String
-  username: String!
   email: String!
   deleteAt: String
   alexaSkillLinked: Boolean

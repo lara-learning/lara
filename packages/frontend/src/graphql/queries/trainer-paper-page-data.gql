@@ -3,7 +3,6 @@ query TrainerPaperPageData {
     id
     ... on Trainer {
       trainees {
-        username
         firstName
         lastName
         id
