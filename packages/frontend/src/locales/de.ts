@@ -27,8 +27,7 @@ const germanTranslation: Translation = {
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
-      description:
-        'Leider sind du noch nicht registriert. Bitte wenden Du sich an den Administrator oder Ihren Ausbilder.',
+      description: 'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder.',
     },
   },
   modal: {
@@ -66,8 +65,8 @@ const germanTranslation: Translation = {
       initial: {
         title: 'Hier gibt es noch nichts',
         caption_trainee:
-          'Deine Berichtshefte erscheinen hier sobald du akzeptiert wurden und stehen dann zum Export bereit.',
-        caption_trainer: 'Du hast keine Azubis, die Archive der Azubis werden hier erscheinen sobald du da sind.',
+          'Deine Berichtshefte erscheinen hier sobald sie akzeptiert wurden und stehen dann zum Export bereit.',
+        caption_trainer: 'Du hast keine Azubis, die Archive der Azubis werden hier erscheinen sobald sie da sind.',
       },
     },
     exportTitle: 'Export gestartet',
@@ -278,7 +277,7 @@ const germanTranslation: Translation = {
       features: {
         question: 'Was kann das Berichtsheft Tool?',
         answer:
-          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können du von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
+          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
       },
       timetable: {
         question: 'Kann ich meinen Stundenplan hochladen?',
@@ -397,19 +396,19 @@ const germanTranslation: Translation = {
   createTrainee: {
     title: 'Neuer Auszubildender',
     description:
-      'Trage hier die Daten des neuen Auszubildenden / der neuen Auszubildenden ein, damit er/du sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+      'Trage hier die Daten des neuen Auszubildenden / der neuen Auszubildenden ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Auszubildende {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createTrainer: {
     title: 'Neuer Ausbilder',
     description:
-      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/du sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createAdmin: {
     title: 'Neuer Admin',
     description:
-      'Trage hier die Daten des neuen Admins ein, damit er/du sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+      'Trage hier die Daten des neuen Admins ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Admin {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   deleteTrainer: {
