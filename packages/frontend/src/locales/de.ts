@@ -27,8 +27,7 @@ const germanTranslation: Translation = {
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
-      description:
-        'Leider sind Sie noch nicht registriert. Bitte wenden Sie sich an den Administrator oder Ihren Ausbilder.',
+      description: 'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder.',
     },
   },
   modal: {
@@ -278,7 +277,7 @@ const germanTranslation: Translation = {
       features: {
         question: 'Was kann das Berichtsheft Tool?',
         answer:
-          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können sie von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
+          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
       },
       timetable: {
         question: 'Kann ich meinen Stundenplan hochladen?',
