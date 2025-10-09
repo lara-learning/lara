@@ -1,4 +1,4 @@
-import { Admin, EmailPayload, EmailTranslations, Report, Trainee, Trainer, User } from '@lara/api'
+import { Admin, EmailPayload, EmailTranslations, Mentor, Report, Trainee, Trainer, User } from '@lara/api'
 import { invokeLambda } from '../aws/lambda'
 
 import { t } from '../i18n'
@@ -10,7 +10,12 @@ import { trainerById } from '../repositories/trainer.repo'
 const { FRONTEND_URL } = process.env
 
 const translations = (user: User): EmailTranslations =>
-  t('email', user.language, { interpolation: { prefix: 'turnOff', suffix: 'turnOff' } })
+  t('email', user.language, {
+    interpolation: {
+      prefix: 'turnOff',
+      suffix: 'turnOff',
+    },
+  })
 
 const envLink = (path: string) => {
   return `${FRONTEND_URL}${path}`
@@ -50,19 +55,25 @@ export const sendNotificationMail = async (report: Report, sender: User): Promis
     const receiver = sender.trainerId && (await trainerById(sender.trainerId))
     if (!receiver || !receiver.notification) return
 
-    await invokeLambda({ payload: trainerNotificationMailPayload(receiver, sender, report), functionName: 'email' })
+    await invokeLambda({
+      payload: trainerNotificationMailPayload(receiver, sender, report),
+      functionName: 'email',
+    })
   }
 
   if (isTrainer(sender) && (report.status === 'reopened' || report.status === 'archived')) {
     const receiver = await traineeById(report.traineeId)
     if (!receiver || !receiver.notification) return
 
-    await invokeLambda({ payload: traineeNoficationMailPayload(receiver, sender, report), functionName: 'email' })
+    await invokeLambda({
+      payload: traineeNoficationMailPayload(receiver, sender, report),
+      functionName: 'email',
+    })
   }
 }
 
 // creates Payload for admin if a user will be deleted
-export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer | Admin): EmailPayload => {
+export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer | Admin | Mentor): EmailPayload => {
   const link = isTrainee(user) ? envLink(`/trainees/${user.id}`) : envLink(`/trainer/${user.id}`)
   return {
     emailType: 'deleteUser',
@@ -91,7 +102,7 @@ export const trainerDeletionMailPayload = (trainer: Trainer, user: Trainee): Ema
 }
 
 // creates Payload for the user that will be deleted
-export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer | Admin): EmailPayload => {
+export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer | Admin | Mentor): EmailPayload => {
   return {
     emailType: 'deleteAccount',
     userData: {
@@ -108,13 +119,16 @@ export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer 
  * If UserToDelete is a Trainee the Trainer will be notified too.
  * @param userToDelete
  */
-export const sendDeletionMail = async (userToDelete: Trainee | Trainer | Admin): Promise<void> => {
+export const sendDeletionMail = async (userToDelete: Trainee | Mentor | Trainer | Admin): Promise<void> => {
   const admins = await allAdmins()
 
   // notify admins
   await Promise.all(
     admins.map((admin) => {
-      return invokeLambda({ payload: adminDeletionMailPayload(admin, userToDelete), functionName: 'email' })
+      return invokeLambda({
+        payload: adminDeletionMailPayload(admin, userToDelete),
+        functionName: 'email',
+      })
     })
   )
 
@@ -125,11 +139,17 @@ export const sendDeletionMail = async (userToDelete: Trainee | Trainer | Admin):
       return
     }
 
-    await invokeLambda({ payload: trainerDeletionMailPayload(trainer, userToDelete), functionName: 'email' })
+    await invokeLambda({
+      payload: trainerDeletionMailPayload(trainer, userToDelete),
+      functionName: 'email',
+    })
   }
 
   // notify user that will be deleted
-  await invokeLambda({ payload: userToDeleteDeletionMailPayload(userToDelete), functionName: 'email' })
+  await invokeLambda({
+    payload: userToDeleteDeletionMailPayload(userToDelete),
+    functionName: 'email',
+  })
 }
 
 /**
@@ -146,7 +166,11 @@ export const sendAlexaNotificationMail = async (user: User): Promise<void> => {
     payload: {
       emailType: 'alexa',
       translations: translations(user),
-      userData: { buttonLink: envLink('/settings'), receiverEmail: user.email, receiverName: user.firstName },
+      userData: {
+        buttonLink: envLink('/settings'),
+        receiverEmail: user.email,
+        receiverName: user.firstName,
+      },
     },
   })
 }

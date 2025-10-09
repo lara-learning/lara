@@ -17,7 +17,7 @@ export type TextProps = {
 }
 
 export const Text = styled.span.withConfig({
-  shouldForwardProp: (prop) => !['noLineHeight'].includes(prop),
+  shouldForwardProp: (prop) => !['noLineHeight', 'uppercase', 'spacing', 'background'].includes(prop),
 })<TextProps>`
   font-size: ${(props) => (props.size ? FontSizes[props.size] : FontSizes.label)};
   font-weight: ${(props) => props.weight};
