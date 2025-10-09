@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Input, Text, TextProps, DefaultTheme, Spacer, StyledSelect } from '@lara/components'
 
 import strings from '../locales/localization'
 import { PrimaryButton } from './button'
 import { useValidationHelper } from '../helper/validation-helper'
-import { Trainer } from '../graphql'
+import { Trainer, useUserEmailPageMutation } from '../graphql'
 import { CreateBriefingLayout } from '@lara/components/lib/paper-form'
 
 interface CreateBriefingFormProps {
@@ -36,14 +36,18 @@ const inputLabelProps: TextProps = {
 
 export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, submit, blurSubmit }) => {
   const { validateEmail } = useValidationHelper()
+  const [getUserByEmail] = useUserEmailPageMutation()
+  const [nameInputDisabled, setNameInputDisabled] = useState(false)
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateBriefingFormData>()
 
   const onSubmit = handleSubmit((formdata) => {
+    console.log('HELLO')
     setUpdating(true)
     submit(formdata).then(() => {
       setUpdating(false)
@@ -77,6 +81,40 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             </StyledSelect>
           </>
         }
+        emailMentorInput={
+          <>
+            <Text color={getFontColor(errors.emailMentor)} {...inputLabelProps}>
+              {strings.paper.createBriefing.emailMentor}
+            </Text>
+            <Input
+              type="email"
+              {...register('emailMentor', {
+                required: true,
+                validate: validateEmail,
+              })}
+              disabled={updating}
+              error={Boolean(errors.emailMentor)}
+              onBlur={async (e) => {
+                if (e.target.value.trim() === '') {
+                  setNameInputDisabled(false)
+                  return
+                }
+                await getUserByEmail({
+                  variables: {
+                    email: e.target.value,
+                  },
+                }).then((response) => {
+                  if (response.data?.getUserByEmail) {
+                    setValue('firstNameMentor', response.data.getUserByEmail.firstName, { shouldValidate: true })
+                    setValue('lastNameMentor', response.data.getUserByEmail.lastName, { shouldValidate: true })
+                    setNameInputDisabled(true)
+                  } else setNameInputDisabled(false)
+                })
+                if (blurSubmit) onSubmit()
+              }}
+            />
+          </>
+        }
         firstNameMentorInput={
           <>
             <Text color={getFontColor(errors.firstNameMentor)} {...inputLabelProps}>
@@ -86,7 +124,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
               {...register('firstNameMentor', {
                 required: strings.validation.required,
               })}
-              disabled={updating}
+              disabled={nameInputDisabled}
               error={Boolean(errors.firstNameMentor)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
@@ -102,25 +140,8 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
               {...register('lastNameMentor', {
                 required: strings.validation.required,
               })}
-              disabled={updating}
+              disabled={nameInputDisabled}
               error={Boolean(errors.lastNameMentor)}
-              onBlur={blurSubmit ? onSubmit : undefined}
-            />
-          </>
-        }
-        emailMentorInput={
-          <>
-            <Text color={getFontColor(errors.emailMentor)} {...inputLabelProps}>
-              {strings.paper.createBriefing.emailMentor}
-            </Text>
-            <Input
-              type="email"
-              {...register('emailMentor', {
-                required: true,
-                validate: validateEmail,
-              })}
-              disabled={updating}
-              error={Boolean(errors.emailMentor)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
           </>

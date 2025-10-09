@@ -16,6 +16,7 @@ import { parseISODateString } from '../utils/date'
 import { t } from '../i18n'
 import { deleteMentor, generateMentor, validateMentor } from '../services/mentor.service'
 import { allMentors, mentorById } from '../repositories/mentor.repo'
+import { papersByMentor } from '../repositories/paper.repo'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {},
@@ -29,6 +30,11 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
       await Promise.all(
         users.map(async (user) => {
+          if (isMentor(user)) {
+            const papers = await papersByMentor(user.id)
+            if (!papers || papers.filter((paper) => paper.status !== 'Archived').length === 0) await deleteMentor(user)
+          }
+
           if (!user.deleteAt) {
             return
           }

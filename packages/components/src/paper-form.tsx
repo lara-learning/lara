@@ -74,13 +74,13 @@ export const CreateBriefingLayout: React.FC<CreateBriefingLayoutProps> = ({
 
         <StyledFormGridItem>{emptyFieldTrainee}</StyledFormGridItem>
 
-        <StyledFormGridItem>{firstNameMentorInput}</StyledFormGridItem>
-
-        <StyledFormGridItem>{lastNameMentorInput}</StyledFormGridItem>
-
         <StyledFormGridItem>{emailMentorInput}</StyledFormGridItem>
 
         <StyledFormGridItem>{emptyFieldMentor}</StyledFormGridItem>
+
+        <StyledFormGridItem>{firstNameMentorInput}</StyledFormGridItem>
+
+        <StyledFormGridItem>{lastNameMentorInput}</StyledFormGridItem>
 
         <StyledFormGridItem>{customerInput}</StyledFormGridItem>
 
