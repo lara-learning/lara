@@ -18,4 +18,8 @@ query TraineePageData {
   currentUser {
     id
   }
+  companies {
+    id
+    name
+  }
 }
