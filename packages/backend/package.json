@@ -14,7 +14,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.883.0",
     "@aws-sdk/client-lambda": "3.883.0",
-    "@aws-sdk/lib-dynamodb": "3.883.0",
+    "@aws-sdk/lib-dynamodb": "3.908.0",
     "@aws-sdk/s3-request-presigner": "3.883.0",
     "@aws-sdk/util-dynamodb": "3.883.0",
     "@graphql-tools/schema": "^10.0.25",
