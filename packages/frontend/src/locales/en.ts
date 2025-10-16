@@ -110,6 +110,7 @@ const englishTranslation: Translation = {
     },
     feedback: {
       headlineEvaluationByTrainee: 'Evaluation by the trainee',
+      headlineEvaluationByMentor: 'Assessment by the training officer',
     },
     feedbackQuestions: {
       descriptionOfActivities: {
@@ -175,6 +176,28 @@ const englishTranslation: Translation = {
     briefing: {
       toastTitle: 'Creating Lara Paper briefing',
       toastDescription: 'The briefing is being created now and will be sent to the participants as a PDF via email',
+    },
+    mentorFeedbackQuestions: {
+      integrationIntoTeam: {
+        question: 'Assesment by the Training Officer',
+        hint: "Please describe the trainee's social behavior towards colleagues and, if applicable, external employees.",
+      },
+      communicationWithCustomers: {
+        question: 'Communication with customers and service providers',
+        hint: 'Please describe how the trainee behaved towards customers or service providers.',
+      },
+      willingnessToWork: {
+        question: 'Willigness to work / Way of working',
+        hint: "Please describe the trainee's willingness to work and working methods in the project and team context.",
+      },
+      abilities: {
+        question: 'Work ability/Skills',
+        hint: 'What competencies (hard and soft skills) did you particularly notice? Which tasks are carried out with interest and success? Please describe the skills and competences specifically based on observations',
+      },
+      goalAchieved: {
+        question: 'Learning content',
+        hint: 'Was the trainee able to acquire the previously agreed learning content and skills? These are listed here again automatically.',
+      },
     },
   },
   archivePage: {

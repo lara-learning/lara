@@ -17,7 +17,13 @@ mutation updatePaper($input: PaperUpdateInput!) {
       answer
       hint
     }
-    feedback {
+    feedbackTrainee {
+      id
+      questionId
+      answer
+      hint
+    }
+    feedbackMentor {
       id
       questionId
       answer

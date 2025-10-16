@@ -106,6 +106,7 @@ export default interface Translation {
     }
     feedback: {
       headlineEvaluationByTrainee: string
+      headlineEvaluationByMentor: string
     }
     feedbackQuestions: {
       descriptionOfActivities: {
@@ -125,6 +126,28 @@ export default interface Translation {
         hint: string
       }
       learningContent: {
+        question: string
+        hint: string
+      }
+    }
+    mentorFeedbackQuestions: {
+      integrationIntoTeam: {
+        question: string
+        hint: string
+      }
+      communicationWithCustomers: {
+        question: string
+        hint: string
+      }
+      willingnessToWork: {
+        question: string
+        hint: string
+      }
+      abilities: {
+        question: string
+        hint: string
+      }
+      goalAchieved: {
         question: string
         hint: string
       }

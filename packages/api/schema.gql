@@ -143,7 +143,8 @@ input PaperInput {
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
-  feedback: [PaperEntryInput!]!
+  feedbackTrainee: [PaperEntryInput!]!
+  feedbackMentor: [PaperEntryInput!]!
 }
 
 input PaperUpdateInput {
@@ -159,7 +160,8 @@ input PaperUpdateInput {
   subject: String!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
-  feedback: [PaperEntryInput!]!
+  feedbackTrainee: [PaperEntryInput!]!
+  feedbackMentor: [PaperEntryInput!]!
 }
 
 input AnswerPaperInput {
@@ -735,7 +737,8 @@ type Paper {
   trainerId: ID!
   status: PaperStatus!
   briefing: [PaperFormData!]!
-  feedback: [PaperFormData!]!
+  feedbackTrainee: [PaperFormData!]!
+  feedbackMentor: [PaperFormData!]!
   conclusion: String
   archivedAt: String
   createdAt: String

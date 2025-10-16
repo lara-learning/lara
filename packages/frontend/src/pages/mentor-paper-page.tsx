@@ -1,15 +1,18 @@
 import { Container, H1, Paragraph, Spacer, StyledIcon, Text } from '@lara/components'
 import React from 'react'
 import { Template } from '../templates/template'
-import { useMentorPaperPageDataQuery } from '../graphql'
-import { Mentor } from '@lara/api'
+import { Mentor, PaperStatus, useMentorPaperPageDataQuery } from '../graphql'
 import { Box, Flex } from '@lara/components'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
 import Loader from '../components/loader'
+import { useNavigate } from 'react-router'
+import { PrimaryButton } from '../components/button'
+import { mapStatusToProgess } from '../helper/paper-helper'
 
 export const MentorPaperPage: React.FC = () => {
   const { loading, data } = useMentorPaperPageDataQuery()
+  const navigate = useNavigate()
 
   if (!data) {
     return (
@@ -48,7 +51,7 @@ export const MentorPaperPage: React.FC = () => {
                         <Flex alignItems={'center'} width={'100%'}>
                           <Box width={2 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              {paper?.briefing.length ? (
+                              {paper?.status !== PaperStatus.NotStarted ? (
                                 <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                               ) : (
                                 <StyledIcon name={'X'} size="24px" color={'errorRed'} />
@@ -60,7 +63,11 @@ export const MentorPaperPage: React.FC = () => {
                           </Box>
                           <Box width={3 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              {[PaperStatus.MentorDone].includes(paper?.status) ? (
+                                <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                              ) : (
+                                <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                              )}
                               <Spacer left="xs">
                                 <Text>{strings.paper.dashboard.feedback}</Text>
                               </Spacer>
@@ -89,8 +96,15 @@ export const MentorPaperPage: React.FC = () => {
                     </Box>
                   </Flex>
                   <Spacer y="xl">
-                    <ProgressBar progress={0.3} color={'primaryDefault'} />
+                    <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
+                  {paper?.status === PaperStatus.TraineeDone ? (
+                    <Flex justifyContent={'flex-end'}>
+                      <PrimaryButton onClick={() => navigate(`/paper/feedback/${paper?.id}`)}>
+                        {paper.feedbackMentor.length > 0 ? strings.edit : strings.start}
+                      </PrimaryButton>
+                    </Flex>
+                  ) : null}
                 </Container>
               </Spacer>
             ) : null

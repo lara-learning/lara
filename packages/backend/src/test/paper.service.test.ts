@@ -47,7 +47,8 @@ describe('createPaperData', () => {
           hint: 'TestHint',
         },
       ],
-      feedback: [],
+      feedbackTrainee: [],
+      feedbackMentor: [],
     }
 
     paper = generatePaper(paperInput)

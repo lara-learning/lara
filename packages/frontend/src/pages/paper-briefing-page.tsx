@@ -77,7 +77,8 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
       variables: {
         input: {
           briefing: omitDeep(paperBriefing, '__typename'),
-          feedback: paper ? omitDeep(paper.feedback, '__typename') : [],
+          feedbackTrainee: paper ? omitDeep(paper.feedbackTrainee, '__typename') : [],
+          feedbackMentor: paper ? omitDeep(paper.feedbackMentor, '__typename') : [],
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
@@ -109,7 +110,8 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
       variables: {
         input: {
           briefing: omitDeep(paperBriefing, '__typename'),
-          feedback: paper?.feedback ?? [],
+          feedbackTrainee: paper?.feedbackTrainee ?? [],
+          feedbackMentor: paper?.feedbackMentor ?? [],
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',

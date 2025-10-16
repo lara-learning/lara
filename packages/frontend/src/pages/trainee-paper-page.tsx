@@ -68,7 +68,7 @@ export const TraineePaperPage: React.FC = () => {
                     </Box>
                     <Box width={3 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        {paper?.status === PaperStatus.TraineeDone ? (
+                        {[PaperStatus.TraineeDone, PaperStatus.MentorDone].includes(paper?.status) ? (
                           <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                         ) : (
                           <StyledIcon name={'X'} size="24px" color={'errorRed'} />
@@ -104,7 +104,7 @@ export const TraineePaperPage: React.FC = () => {
                 {paper?.status === PaperStatus.InProgress ? (
                   <Flex justifyContent={'flex-end'}>
                     <PrimaryButton onClick={() => navigateToPaperFeedbackPage(paper.id)}>
-                      {paper?.feedback.length > 0 ? strings.edit : strings.start}
+                      {paper?.feedbackTrainee.length > 0 ? strings.edit : strings.start}
                     </PrimaryButton>
                   </Flex>
                 ) : null}

@@ -26,6 +26,10 @@ export const isMentor = (user: User): user is Mentor => {
   return user.type === 'Mentor'
 }
 
+const mentor = rule({ cache: 'contextual' })(
+  (_parent, _args, ctx: AuthenticatedContext) => isMentor(ctx.currentUser) || 'Wrong Usertype'
+)
+
 export const isAdmin = (user: User): user is Admin => {
   return user.type === 'Admin'
 }
@@ -95,8 +99,10 @@ export const permissions = shield<unknown, Context>(
       claimTrainee: and(authenticated, trainer),
       unclaimTrainee: and(authenticated, trainer),
       createPaper: and(authenticated, or(trainee, trainer)),
-      updatePaper: and(authenticated, or(trainee, trainer)),
       deletePaper: and(authenticated, or(trainee, trainer)),
+
+      // Trainer and Trainee and Mentor mutations
+      updatePaper: and(authenticated, or(trainee, trainer, mentor)),
 
       //Admin mutations
       createTrainee: and(authenticated, admin),

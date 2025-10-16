@@ -29,7 +29,14 @@ query TraineePageData {
         answer
         hint
       }
-      feedback {
+      feedbackTrainee {
+        id
+        questionId
+        question
+        answer
+        hint
+      }
+      feedbackMentor {
         id
         questionId
         question
