@@ -63,6 +63,7 @@ const DashboardPage: React.FunctionComponent = () => {
             <Container overflow={'visible'}>
               <DayInput
                 primary
+                term=""
                 heading={getTodayHeading()}
                 reportStatus={reportForYearAndWeek?.status}
                 day={day}

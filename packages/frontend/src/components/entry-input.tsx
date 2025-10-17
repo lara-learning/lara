@@ -53,6 +53,7 @@ interface EntryDisplayFieldProps {
   showContextMenu?: string
   setShowContextMenu?: React.Dispatch<React.SetStateAction<string>>
   updateMessage?: (message: string, commentId: string) => void
+  term: string
 }
 
 const EntryInput: React.FC<EntryDisplayFieldProps> = ({
@@ -65,6 +66,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   showContextMenu,
   setShowContextMenu,
   updateMessage,
+  term,
 }) => {
   const { loading, data } = useEntryInputDataQuery()
 
@@ -301,6 +303,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
         <TextTimeInput autoFocus entry={entry} onDelete={handleDelete} onSave={handleSave} />
       ) : (
         <EntryInputLayout
+          term={term}
           clickable
           disabled={disabled}
           draggable={!disabled}

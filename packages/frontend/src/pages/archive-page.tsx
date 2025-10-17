@@ -123,6 +123,7 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const [allChecked, setAllChecked] = React.useState(false)
   const [selectedTrainee, setSelectedTrainee] = React.useState<string | undefined>(undefined)
+  const [term, setTerm] = React.useState<string | undefined>(undefined)
 
   const getArchivedReports = React.useCallback(() => {
     if (!data) return []
@@ -214,6 +215,8 @@ const ArchivePage: React.FunctionComponent = () => {
     let yearEnd: number | undefined = undefined
     let weekEnd: number | undefined = undefined
     let searchText: string | undefined = undefined
+
+    setTerm(value)
 
     const yearMatch = yearMonthRegex.exec(value)
     if (yearMonthRegex.test(value) && yearMatch) {
@@ -346,8 +349,8 @@ const ArchivePage: React.FunctionComponent = () => {
 
                     const link =
                       data?.currentUser?.__typename === UserTypeEnum.Trainer
-                        ? `/report/${traineeId}/${year}/${week}`
-                        : `/report/${year}/${week}`
+                        ? `/report/${traineeId}/${year}/${week}/${term ? term : ''}`
+                        : `/report/${year}/${week}/${term ? term : ''}`
 
                     return (
                       <StyledArchiveTableRow key={report.id}>
