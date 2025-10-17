@@ -17,7 +17,13 @@ mutation deletePaper($paperId: ID!) {
       answer
       hint
     }
-    feedback {
+    feedbackTrainee {
+      id
+      questionId
+      answer
+      hint
+    }
+    feedbackMentor {
       id
       questionId
       answer

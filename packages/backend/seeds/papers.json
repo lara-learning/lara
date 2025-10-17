@@ -12,7 +12,8 @@
     "subject": "Android Entwicklung",
     "status": "NotStarted",
     "briefing": [],
-    "feedback": []
+    "feedbackTrainee": [],
+    "feedbackMentor": []
   },
   {
     "id": "2",
@@ -27,6 +28,7 @@
     "subject": "IOS Entwicklung",
     "status": "NotStarted",
     "briefing": [],
-    "feedback": []
+    "feedbackTrainee": [],
+    "feedbackMentor": []
   }
 ]

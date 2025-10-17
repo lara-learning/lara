@@ -113,6 +113,7 @@ const germanTranslation: Translation = {
     },
     feedback: {
       headlineEvaluationByTrainee: 'Bewertung durch den Auszubildenden',
+      headlineEvaluationByMentor: 'Bewertung durch den Ausbildungsbeauftragten',
     },
     feedbackQuestions: {
       descriptionOfActivities: {
@@ -134,6 +135,28 @@ const germanTranslation: Translation = {
       learningContent: {
         question: 'Lerninhalte',
         hint: 'Wurden die zu Beginn deiner Station vereinbarten Lerninhalte behandelt?Diese sind hier nochmal automatisch aufgeführt. Ergänze hier, ob du ausreichend Gelegenheit hattest, die Inhalte zu lernen.',
+      },
+    },
+    mentorFeedbackQuestions: {
+      integrationIntoTeam: {
+        question: 'Integration ins Team',
+        hint: 'Bitte beschreibe das Sozialverhalten des Azubis gegenüber den Kollegen und ggf. externen Mitarbeitern.',
+      },
+      communicationWithCustomers: {
+        question: 'Kommunikation mit Kunden oder Dienstleistern',
+        hint: 'Bitte beschreibe, wie sich der Azubi gegenüber Kunden oder Dienstleistern verhalten hat.',
+      },
+      willingnessToWork: {
+        question: 'Arbeitsbereitschaft/Arbeitsweise',
+        hint: 'Bitte beschreibe die Arbeitsbereitschaft und Arbeitsweise des Azubis im Projekt- und Teamkontext.',
+      },
+      abilities: {
+        question: 'Arbeitsbefähigung/Können',
+        hint: 'Welche Kompetenzen (Hard- und Softskills) hast du besonders wahrgenommen? \n Welche Aufgaben werden mit Interesse und Erfolg ausgeübt? \n Bitte beschreibe die Fähigkeiten und Kompetenzen konkret anhand von Beobachtungen.',
+      },
+      goalAchieved: {
+        question: 'Lerninhalte',
+        hint: 'Hat der Azubi die vorher vereinbarten Lerninhalte und Kompetenzen erwerben können? Diese sind hier nochmal automatisiert aufgeführt.',
       },
     },
     modal: {

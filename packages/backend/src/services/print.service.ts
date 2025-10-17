@@ -136,7 +136,7 @@ const transformPaper = (paper: Paper): PrintPaper => {
   return {
     status: paper.status,
     briefing: transformPaperForm(paper.briefing),
-    feedback: transformPaperForm(paper.feedback),
+    feedback: transformPaperForm(paper.feedbackTrainee),
     client: paper.client,
     periodStart: paper.periodStart ?? '',
     periodEnd: paper.periodEnd ?? '',

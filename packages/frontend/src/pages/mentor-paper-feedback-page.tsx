@@ -8,37 +8,30 @@ import { useNavigate, useParams } from 'react-router'
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import PaperAccordion from '../components/paper-accordion'
 import React from 'react'
-import { PaperFormData, PaperStatus, Trainee, useTraineePaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
+import { Mentor, PaperFormData, PaperStatus, useMentorPaperPageDataQuery, useUpdatePaperMutation } from '../graphql'
 import { omitDeep } from '@apollo/client/utilities'
 
-const briefingQuestions = (): Question[] => {
-  const questions = strings.paper.feedbackQuestions
-
-  return [
-    questions.descriptionOfActivities,
-    questions.feedbackOnProjectTeam,
-    questions.feedbackOnTasksAndProject,
-    questions.periodOfTime,
-    questions.learningContent,
-  ]
+const mentorFeedbackQuestions = (): Question[] => {
+  const q = strings.paper.mentorFeedbackQuestions
+  return [q.integrationIntoTeam, q.communicationWithCustomers, q.willingnessToWork, q.abilities, q.goalAchieved]
 }
 
-export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
+export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { paperId } = useParams()
   const [paperFeedbackInput, setPaperFeedbackInput] = React.useState<PaperFormData>()
   const [paperFeedback, setPaperFeedback] = React.useState<PaperFormData[]>([])
   const [filledFromSave, setFilledFromSave] = React.useState(false)
 
-  const traineePaperPageData = useTraineePaperPageDataQuery()
+  const { data } = useMentorPaperPageDataQuery()
   const [updatePaperMutation] = useUpdatePaperMutation()
 
-  const QAs = briefingQuestions()
+  const QAs = mentorFeedbackQuestions()
   const [filteredQAs] = useState(QAs)
 
-  const currentUser = traineePaperPageData?.data?.currentUser as Trainee
+  const currentUser = data?.currentUser as Mentor
+  const paper = (currentUser?.papers || []).find((p) => p?.id == paperId)
 
-  const paper = currentUser?.papers?.find((paper) => paper?.id == paperId)
   useEffect(() => {
     if (paperFeedbackInput) {
       setPaperFeedback((oldArray: PaperFormData[]) => [...oldArray, paperFeedbackInput])
@@ -46,77 +39,65 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
   }, [paperFeedbackInput])
 
   useEffect(() => {
-    if (!filledFromSave && paper && paper.feedbackTrainee.length > 0 && paperFeedback.length == 0) {
-      setPaperFeedback(paper.feedbackTrainee)
+    if (!filledFromSave && paper && paper.feedbackMentor.length > 0 && paperFeedback.length == 0) {
+      setPaperFeedback(paper.feedbackMentor)
       setFilledFromSave(true)
     }
   }, [filledFromSave, paper, paperFeedback])
 
-  if (!currentUser) {
-    return null
-  }
+  if (!currentUser) return null
 
-  console.log(paperFeedback)
-
-  const savePaper = async (paperFeedback: PaperFormData[]) => {
+  const savePaper = async (feedback: PaperFormData[]) => {
     await updatePaperMutation({
       variables: {
         input: {
-          briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
-          feedbackTrainee: omitDeep(paperFeedback, '__typename'),
-          feedbackMentor: paper?.feedbackMentor ? omitDeep(paper.feedbackMentor, '__typename') : [],
-          client: paper?.client ?? '',
           id: paperId ?? '',
+          traineeId: paper?.traineeId ?? '',
+          trainerId: paper?.trainerId ?? '',
+          client: paper?.client ?? '',
           mentorId: paper?.mentorId ?? '',
           periodEnd: paper?.periodEnd,
           periodStart: paper?.periodStart,
           schoolPeriodEnd: paper?.schoolPeriodEnd,
           schoolPeriodStart: paper?.schoolPeriodStart,
-          status: PaperStatus.InProgress,
           subject: paper?.subject ?? '',
-          traineeId: paper?.traineeId ?? '',
-          trainerId: currentUser.id,
+          status: PaperStatus.TraineeDone,
+          briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
+          feedbackTrainee: paper?.feedbackTrainee ? omitDeep(paper.feedbackTrainee, '__typename') : [],
+          feedbackMentor: omitDeep(feedback, '__typename'),
         },
       },
       updateQueries: {
-        TraineePaperPageData: ({ mutationResult }) => {
-          return {
-            currentUser: {
-              papers: mutationResult?.data?.updatePaper,
-            },
-          }
+        MentorPaperPageData: ({ mutationResult }) => {
+          return { currentUser: { papers: mutationResult?.data?.updatePaper } }
         },
       },
     })
   }
 
-  const submitPaper = async (paperFeedback: PaperFormData[]) => {
+  const submitPaper = async (feedback: PaperFormData[]) => {
     await updatePaperMutation({
       variables: {
         input: {
-          briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
-          feedbackTrainee: omitDeep(paperFeedback, '__typename'),
-          feedbackMentor: paper?.feedbackMentor ? omitDeep(paper.feedbackMentor, '__typename') : [],
-          client: paper?.client ?? '',
           id: paperId ?? '',
+          traineeId: paper?.traineeId ?? '',
+          trainerId: paper?.trainerId ?? '',
+          client: paper?.client ?? '',
           mentorId: paper?.mentorId ?? '',
           periodEnd: paper?.periodEnd,
           periodStart: paper?.periodStart,
           schoolPeriodEnd: paper?.schoolPeriodEnd,
           schoolPeriodStart: paper?.schoolPeriodStart,
-          status: PaperStatus.TraineeDone,
           subject: paper?.subject ?? '',
-          traineeId: paper?.traineeId ?? '',
-          trainerId: currentUser.id,
+          status: PaperStatus.MentorDone,
+          briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
+          feedbackTrainee: paper?.feedbackTrainee ? omitDeep(paper.feedbackTrainee, '__typename') : [],
+          feedbackMentor: omitDeep(feedback, '__typename'),
         },
       },
       updateQueries: {
-        TraineePaperPageData: ({ mutationResult }) => {
-          return {
-            currentUser: {
-              papers: mutationResult?.data?.updatePaper,
-            },
-          }
+        MentorPaperPageData: ({ mutationResult }) => {
+          return { currentUser: { papers: mutationResult?.data?.updatePaper } }
         },
       },
     })
@@ -127,7 +108,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
       <Spacer bottom="m">
         <NavigationButtonLink
           label={strings.back}
-          to="/paper"
+          to="/"
           icon="ChevronLeft"
           isLeft
           alignLeft
@@ -138,7 +119,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
         <div style={{ width: '100%' }}>
           {filteredQAs.map(({ question: q, hint: h }, index) => (
             <div key={index}>
-              {index.toString() === '1' && <PaperH2>{strings.paper.feedback.headlineEvaluationByTrainee}</PaperH2>}
+              {index.toString() === '1' && <PaperH2>{strings.paper.feedback.headlineEvaluationByMentor}</PaperH2>}
               <PaperAccordion
                 setPaperFormInput={setPaperFeedbackInput}
                 setPaperForm={setPaperFeedback}
@@ -165,7 +146,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
         <Box mr={'2'}>
           <SecondaryButton
             onClick={() => {
-              navigate('/paper')
+              navigate('/')
               savePaper(paperFeedback)
             }}
           >
@@ -176,7 +157,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
           <PrimaryButton
             type="submit"
             onClick={() => {
-              navigate('/paper')
+              navigate('/')
               submitPaper(paperFeedback)
             }}
           >
