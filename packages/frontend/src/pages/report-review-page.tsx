@@ -388,6 +388,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                       <>
                         {day.entries.map((entry, entryIndex) => (
                           <EntryInput
+                            term=""
                             key={entryIndex}
                             entry={entry}
                             day={day}

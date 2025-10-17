@@ -20,6 +20,7 @@ import { useToastContext } from '../hooks/use-toast-context'
 import { useDayHelper } from '../helper/day-helper'
 
 interface EntriesInputProps {
+  term: string
   day?: Pick<Day, 'id' | 'date'> & {
     entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
       comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
@@ -49,6 +50,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
   handleStatusChange,
   trainee,
   updateMessage,
+  term,
 }) => {
   const [createEntryMutation] = useCreateEntryMutation()
   const { addToast } = useToastContext()
@@ -107,6 +109,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
         .sort((a, b) => a.orderId - b.orderId)
         .map((entry) => (
           <EntryInput
+          term={term}
             handleStatusChange={handleStatusChange}
             key={entry.id}
             disabled={disabled}

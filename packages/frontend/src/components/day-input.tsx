@@ -66,6 +66,7 @@ interface DayInputProps {
   disabled?: boolean
   reportStatus?: ReportStatus
   primary?: boolean
+  term: string
   updateMessageDay?: (message: string, commentId: string) => void
   updateMessageEntry?: (
     message: string,
@@ -86,6 +87,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
   primary,
   updateMessageDay,
   updateMessageEntry,
+  term,
 }) => {
   const { getTotalMinutes } = useDayHelper()
   const { addToast } = useToastContext()
@@ -232,6 +234,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       }
     >
       <EntriesInput
+        term={term}
         handleStatusChange={handleStatusChange}
         day={day}
         reportStatus={reportStatus ?? ReportStatus.Todo}
