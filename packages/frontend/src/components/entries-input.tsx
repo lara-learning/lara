@@ -109,7 +109,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
         .sort((a, b) => a.orderId - b.orderId)
         .map((entry) => (
           <EntryInput
-          term={term}
+            term={term}
             handleStatusChange={handleStatusChange}
             key={entry.id}
             disabled={disabled}

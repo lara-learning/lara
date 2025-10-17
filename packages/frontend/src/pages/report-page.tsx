@@ -282,7 +282,7 @@ const ReportPage: React.FunctionComponent = () => {
           {report?.days.map((day) => (
             <StyledTopBorderWrapper key={day.id}>
               <DayInput
-                term={term ? term : ""}
+                term={term ? term : ''}
                 day={day}
                 disabled={reportArchived || reportReview || day.status === DayStatusEnum.Holiday}
                 reportStatus={report.status}

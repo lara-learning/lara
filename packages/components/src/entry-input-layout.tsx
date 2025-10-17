@@ -191,7 +191,14 @@ interface EntryInputLayoutProps extends HTMLAttributes<HTMLElement>, EntryContai
   clickHandler: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const EntryInputLayout: React.FC<EntryInputLayoutProps> = ({ text, time, actions, term, clickHandler, ...rest }) => {
+export const EntryInputLayout: React.FC<EntryInputLayoutProps> = ({
+  text,
+  time,
+  actions,
+  term,
+  clickHandler,
+  ...rest
+}) => {
   console.log(term)
   return (
     <>

@@ -216,7 +216,7 @@ const ArchivePage: React.FunctionComponent = () => {
     let weekEnd: number | undefined = undefined
     let searchText: string | undefined = undefined
 
-    setTerm(value) 
+    setTerm(value)
 
     const yearMatch = yearMonthRegex.exec(value)
     if (yearMonthRegex.test(value) && yearMatch) {
@@ -349,8 +349,8 @@ const ArchivePage: React.FunctionComponent = () => {
 
                     const link =
                       data?.currentUser?.__typename === UserTypeEnum.Trainer
-                        ? `/report/${traineeId}/${year}/${week}/${term ? term: ""}`
-                        : `/report/${year}/${week}/${term ? term: ""}`
+                        ? `/report/${traineeId}/${year}/${week}/${term ? term : ''}`
+                        : `/report/${year}/${week}/${term ? term : ''}`
 
                     return (
                       <StyledArchiveTableRow key={report.id}>
