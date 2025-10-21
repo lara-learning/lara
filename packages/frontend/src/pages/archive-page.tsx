@@ -75,8 +75,10 @@ const searchFilter =
             entries: {
               __typename?: 'Entry' | undefined
               id: string
-              time: number
-              text: string
+              time?: number | undefined
+              text?: string | undefined
+              text_split?: string | undefined
+              time_split?: number | undefined
             }[]
           }[]
         }
@@ -97,7 +99,9 @@ const searchFilter =
     let textMatch = true
     if (searchText) {
       textMatch = report.days.some((day) =>
-        day.entries.some((entry) => entry.text.toLowerCase().includes(searchText.toLowerCase()))
+        day.entries.some((entry) =>
+          (entry.text ? entry.text : entry.text_split!).toLowerCase().includes(searchText.toLowerCase())
+        )
       )
       if (!textMatch && report.summary) {
         textMatch = report.summary.toLowerCase().includes(searchText.toLowerCase())
@@ -322,7 +326,12 @@ const ArchivePage: React.FunctionComponent = () => {
                   {filteredReports.length !== 0 && (
                     <tr>
                       <td>
-                        <CheckBox iconName={'SelectAll'} checked={allChecked} onClick={checkAllBoxes} />
+                        <CheckBox
+                          disabled={false}
+                          iconName={'SelectAll'}
+                          checked={allChecked}
+                          onClick={checkAllBoxes}
+                        />
                       </td>
                       <td>
                         <StyledTableHeadText>{strings.archivePage.tableHead.calendarWeek}</StyledTableHeadText>
@@ -357,6 +366,7 @@ const ArchivePage: React.FunctionComponent = () => {
                         <td>
                           <CheckBox
                             iconName={'Checkbox'}
+                            disabled={false}
                             checked={getCheckState(report.id)}
                             onClick={() => checkBoxUpdate(report.id, !getCheckState(report.id))}
                           />

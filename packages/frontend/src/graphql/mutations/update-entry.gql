@@ -4,6 +4,8 @@ mutation updateEntry($id: ID!, $input: EntryInput!) {
       id
       time
       text
+      time_split
+      text_split
     }
   }
 }

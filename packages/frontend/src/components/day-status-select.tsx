@@ -7,11 +7,12 @@ import strings from '../locales/localization'
 import { SelectWithIcon } from './select'
 
 interface DayStatusSelectProps {
-  day: Pick<Day, 'status' | 'id'>
+  day: Pick<Day, 'status' | 'id' | 'status_split'>
   disabled?: boolean
+  secondary: boolean
 }
 
-const DayStatusSelect: React.FunctionComponent<DayStatusSelectProps> = ({ day, disabled }) => {
+const DayStatusSelect: React.FunctionComponent<DayStatusSelectProps> = ({ day, disabled, secondary }) => {
   const [mutate] = useDayStatusSelectUpdateDayMutation()
 
   const getIcon = (): IconName => {
@@ -31,28 +32,53 @@ const DayStatusSelect: React.FunctionComponent<DayStatusSelectProps> = ({ day, d
     return 'Work'
   }
 
+  const getIconSecondary = (): IconName => {
+    switch (day.status_split) {
+      case DayStatusEnum.Sick:
+        return 'Pill'
+      case DayStatusEnum.Work:
+        return 'Work'
+      case DayStatusEnum.Vacation:
+        return 'Vacation'
+      case DayStatusEnum.Education:
+        return 'School'
+      case DayStatusEnum.Holiday:
+        return 'Holiday'
+    }
+
+    return 'Work'
+  }
+
   const onChange = (event: React.FormEvent) => {
     const target = event.target as HTMLSelectElement
     const { value } = target
     const { id } = day
-    const status = value as DayStatusEnum
+    const status = secondary ? undefined : (value as DayStatusEnum)
+    const status_split = secondary ? (value as DayStatusEnum) : undefined
     void mutate({
       variables: {
         id,
         status,
+        status_split,
       },
       optimisticResponse: {
         updateDay: {
           __typename: 'Day',
           id,
           status,
+          status_split,
         },
       },
     })
   }
 
   return (
-    <SelectWithIcon disabled={disabled} value={day.status} icon={getIcon()} onChange={onChange}>
+    <SelectWithIcon
+      disabled={disabled}
+      value={!secondary ? day.status : day.status_split}
+      icon={!secondary ? getIcon() : getIconSecondary()}
+      onChange={onChange}
+    >
       <option value="work">{strings.dayStatus.work}</option>
       <option value="education">{strings.dayStatus.education}</option>
       <option value="vacation">{strings.dayStatus.vacation}</option>

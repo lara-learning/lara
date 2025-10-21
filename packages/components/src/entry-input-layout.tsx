@@ -199,7 +199,6 @@ export const EntryInputLayout: React.FC<EntryInputLayoutProps> = ({
   clickHandler,
   ...rest
 }) => {
-  console.log(term)
   return (
     <>
       <StyledEntryContainer {...rest}>

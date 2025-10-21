@@ -46,6 +46,7 @@ type Day implements CommentableInterface {
   entries: [Entry!]!
   id: ID!
   status: DayStatusEnum
+  status_split: DayStatusEnum
 }
 
 enum DayStatusEnum {
@@ -87,13 +88,17 @@ type Entry implements CommentableInterface {
   createdAt: String!
   id: ID!
   orderId: Int!
-  text: String!
-  time: Int!
+  text: String
+  time: Int
+  text_split: String
+  time_split: Int
 }
 
 input EntryInput {
-  text: String!
-  time: Int!
+  text: String
+  time: Int
+  text_split: String
+  time_split: Int
 }
 
 type OAuthPayload {
@@ -212,7 +217,7 @@ type Mutation {
   """
   Updates day which is identified by the id argument.
   """
-  updateDay(status: String, id: ID!): Day
+  updateDay(status: String, status_split: String, id: ID!): Day
   updateEntry(id: ID!, input: EntryInput!): MutateEntryPayload!
   updateEntryOrder(entryId: ID!, dayId: ID!, orderId: Int!): MutateEntryPayload!
 

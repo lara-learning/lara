@@ -9,7 +9,6 @@ const Highlighter: React.FC<highlighterProps> = ({ term, children }) => {
   }
   const regex = new RegExp(`(${term})`, 'gi')
   const parts = children.split(regex)
-  console.log(parts)
 
   return (
     <>

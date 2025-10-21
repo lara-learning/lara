@@ -18,7 +18,9 @@ export const entryTraineeResolver: GqlResolvers<TraineeContext> = {
         report.days.forEach((day) => {
           day.entries.forEach((entry) => {
             const text = entry.text
-            tmp[text] = tmp[text] ? tmp[text] + 1 : 1
+            tmp[text ? text : entry.text_split!] = tmp[text ? text : entry.text_split!]
+              ? tmp[text ? text : entry.text_split!] + 1
+              : 1
           })
         })
       })
@@ -99,6 +101,8 @@ export const entryTraineeResolver: GqlResolvers<TraineeContext> = {
 
       entry.text = input.text
       entry.time = input.time
+      entry.text_split = input.text_split
+      entry.time_split = input.time_split
 
       await updateReport(report, { updateKeys: ['days'] })
 

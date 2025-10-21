@@ -65,13 +65,17 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
       reports.forEach((report) => {
         report.days.forEach((day) => {
           day.entries.forEach((entry) => {
-            const { text, time } = entry
+            const { text, time, text_split, time_split } = entry
 
-            if (!textCountsWithTime[text]) {
-              textCountsWithTime[text] = { count: 0, duration: time, text: text }
+            if (!textCountsWithTime[text ? text : text_split!]) {
+              textCountsWithTime[text ? text : text_split!] = {
+                count: 0,
+                duration: time ? time : time_split!,
+                text: text ? text : text_split!,
+              }
             }
-            textCountsWithTime[text].count += 1
-            textCountsWithTime[text].duration = time
+            textCountsWithTime[text ? text : text_split!].count += 1
+            textCountsWithTime[text ? text : text_split!].duration = time ? time : time_split!
           })
         })
       })

@@ -29,6 +29,7 @@ query ReportPageData($year: Int!, $week: Int!) {
     }
     days {
       status
+      status_split
       date
       id
       comments {
@@ -45,6 +46,8 @@ query ReportPageData($year: Int!, $week: Int!) {
         id
         text
         time
+        text_split
+        time_split
         orderId
         comments {
           id

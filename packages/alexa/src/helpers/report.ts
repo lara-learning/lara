@@ -1,9 +1,10 @@
 import { Report, Day, Entry } from '@lara/api'
 import { getLaraConfig } from '../graphql/config'
 
-type ReducedDay = Pick<Day, 'id' | 'status'> & { entries: Pick<Entry, 'time'>[] }
+type ReducedDay = Pick<Day, 'id' | 'status'> & { entries: Pick<Entry, 'time' | 'time_split'>[] }
 
-const totalDayMinutes = (day: ReducedDay) => day.entries.reduce((acc, entry) => acc + entry.time, 0)
+const totalDayMinutes = (day: ReducedDay) =>
+  day.entries.reduce((acc, entry) => acc + (entry.time ? entry.time : entry.time_split!), 0)
 
 export const finishedDays = async (days: ReducedDay[]): Promise<number> => {
   const config = await getLaraConfig()

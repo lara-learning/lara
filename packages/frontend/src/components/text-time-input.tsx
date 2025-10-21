@@ -13,15 +13,26 @@ interface TextTimeInputProps {
   onSave: (entry: EntryInput) => void
   onDelete?: () => void
   clearOnSave?: boolean
-  entry?: Pick<Entry, 'time' | 'text'>
+  entry?: Pick<Entry, 'time' | 'text' | 'time_split' | 'text_split'>
   disabled?: boolean
   autoFocus?: boolean
+  secondary: boolean
 }
 
-const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete, onSave, clearOnSave, autoFocus }) => {
+const TextTimeInput: React.FC<TextTimeInputProps> = ({
+  entry,
+  disabled,
+  onDelete,
+  onSave,
+  clearOnSave,
+  autoFocus,
+  secondary,
+}) => {
   const { validateTime } = useValidationHelper()
 
-  const [timeInputValue, setTimeInputValue] = useState(entry ? TimeConversion.minutesToString(entry.time) : '')
+  const [timeInputValue, setTimeInputValue] = useState(
+    entry ? TimeConversion.minutesToString(!secondary ? entry.time! : entry.time_split!) : ''
+  )
 
   const timeInput = React.useRef<HTMLInputElement>(null)
   const textInput = React.useRef<HTMLTextAreaElement>(null)
@@ -99,10 +110,17 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
       ? TimeConversion.stringToMinutes(timeInput.current.value)
       : 0
 
-    onSave({
-      text: textInput.current.value,
-      time,
-    })
+    if (!secondary) {
+      onSave({
+        text: textInput.current.value,
+        time,
+      })
+    } else {
+      onSave({
+        text_split: textInput.current.value,
+        time_split: time,
+      })
+    }
   }
 
   React.useEffect(() => {
@@ -152,7 +170,7 @@ const TextTimeInput: React.FC<TextTimeInputProps> = ({ entry, disabled, onDelete
     }
   }
 
-  const textDefaultValue = entry ? entry.text : ''
+  const textDefaultValue = !secondary ? (entry ? entry.text : '') : entry ? entry.text_split : ''
 
   const handleTimeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const regEx = /^\d{0,2}:?\d{0,2}$/

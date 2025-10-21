@@ -30,6 +30,7 @@ interface EntriesInputProps {
   }
   trainee: Pick<Trainee, 'id'>
   reportStatus: ReportStatus
+  secondary: boolean
   disabled: boolean
   handleStatusChange: (status: EntryStatusType) => void
   updateMessage?: (
@@ -48,6 +49,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
   disabled,
   reportStatus,
   handleStatusChange,
+  secondary,
   trainee,
   updateMessage,
   term,
@@ -63,55 +65,104 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
   }
 
   const createEntry = (entry: EntryInputType) => {
-    if (!isValidTimeUpdate(day, entry.time)) {
+    if (!isValidTimeUpdate(day, entry.time ? entry.time : entry.time_split!)) {
       addToast({ title: strings.errors.error, text: strings.entryStatus.dayLimitError, type: 'error' })
       return
     }
 
     handleStatusChange(StatusTypes.loading)
 
-    createEntryMutation({
-      variables: {
-        input: {
-          text: entry.text,
-          time: entry.time,
+    if (!secondary) {
+      createEntryMutation({
+        variables: {
+          input: {
+            text: entry.text,
+            time: entry.time,
+          },
+          dayId: day.id,
         },
-        dayId: day.id,
-      },
-      optimisticResponse: {
-        createEntry: {
-          __typename: 'MutateEntryPayload',
-          day: {
-            __typename: 'Day',
-            ...day,
-            entries: [
-              ...day.entries,
-              {
-                __typename: 'Entry',
-                id: 'null',
-                ...entry,
-                comments: [],
-                orderId: day.entries.length,
-              },
-            ],
+        optimisticResponse: {
+          createEntry: {
+            __typename: 'MutateEntryPayload',
+            day: {
+              __typename: 'Day',
+              ...day,
+              entries: [
+                ...day.entries,
+                {
+                  __typename: 'Entry',
+                  id: 'null',
+                  ...entry,
+                  comments: [],
+                  orderId: day.entries.length,
+                },
+              ],
+            },
           },
         },
-      },
-    })
-      .then(() => handleStatusChange(StatusTypes.save.success))
-      .catch(() => handleStatusChange(StatusTypes.save.error))
+      })
+        .then(() => handleStatusChange(StatusTypes.save.success))
+        .catch(() => handleStatusChange(StatusTypes.save.error))
+    } else {
+      createEntryMutation({
+        variables: {
+          input: {
+            text_split: entry.text_split,
+            time_split: entry.time_split,
+          },
+          dayId: day.id,
+        },
+        optimisticResponse: {
+          createEntry: {
+            __typename: 'MutateEntryPayload',
+            day: {
+              __typename: 'Day',
+              ...day,
+              entries: [
+                ...day.entries,
+                {
+                  __typename: 'Entry',
+                  id: 'null',
+                  ...entry,
+                  comments: [],
+                  orderId: day.entries.length,
+                },
+              ],
+            },
+          },
+        },
+      })
+        .then(() => handleStatusChange(StatusTypes.save.success))
+        .catch(() => handleStatusChange(StatusTypes.save.error))
+    }
+  }
+
+  const isValidForInput = (entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'>) => {
+    if (secondary) {
+      if (entry.text) {
+        return false
+      }
+      return true
+    } else {
+      if (entry.text) {
+        return true
+      }
+      return false
+    }
   }
 
   return (
     <Spacer top="s">
       {day.entries
         .slice()
+        .filter((entry) => isValidForInput(entry))
         .sort((a, b) => a.orderId - b.orderId)
         .map((entry) => (
           <EntryInput
             term={term}
             handleStatusChange={handleStatusChange}
             key={entry.id}
+            secondary={secondary}
             disabled={disabled}
             entry={entry}
             day={day}
@@ -122,7 +173,7 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
             updateMessage={updateMessage ? (msg, commentId) => updateMessage(msg, commentId, entry) : undefined}
           />
         ))}
-      {!disabled && <TextTimeInput clearOnSave={true} onSave={createEntry} />}
+      {!disabled && <TextTimeInput clearOnSave={true} onSave={createEntry} secondary={secondary} />}
     </Spacer>
   )
 }
