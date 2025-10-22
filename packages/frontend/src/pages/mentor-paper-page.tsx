@@ -14,6 +14,14 @@ export const MentorPaperPage: React.FC = () => {
   const { loading, data } = useMentorPaperPageDataQuery()
   const navigate = useNavigate()
 
+  const navigateToPaperFeedbackPage = (paperId: string) => {
+    navigate('/paper/feedback/' + paperId)
+  }
+
+  const navigateToPaperDiscussionPage = (paperId: string) => {
+    navigate('/paper/feedback/discussion/' + paperId)
+  }
+
   if (!data) {
     return (
       <Template type="Main">
@@ -98,13 +106,25 @@ export const MentorPaperPage: React.FC = () => {
                   <Spacer y="xl">
                     <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {paper?.status === PaperStatus.TraineeDone ? (
+                  {[
+                    PaperStatus.NotStarted,
+                    PaperStatus.InProgress,
+                    PaperStatus.TraineeDone,
+                    PaperStatus.Archived,
+                    PaperStatus.MentorDone,
+                  ].includes(paper?.status) && (
                     <Flex justifyContent={'flex-end'}>
-                      <PrimaryButton onClick={() => navigate(`/paper/feedback/${paper?.id}`)}>
-                        {paper.feedbackMentor.length > 0 ? strings.edit : strings.start}
+                      <PrimaryButton
+                        onClick={() =>
+                          (paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0
+                            ? navigateToPaperDiscussionPage(paper.id)
+                            : navigateToPaperFeedbackPage(paper.id)
+                        }
+                      >
+                        {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
                       </PrimaryButton>
                     </Flex>
-                  ) : null}
+                  )}
                 </Container>
               </Spacer>
             ) : null

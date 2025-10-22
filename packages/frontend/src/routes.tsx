@@ -34,6 +34,7 @@ import { isWikiFeatureEnabled } from './helper/wiki-helper'
 import { AdminAdminsPage } from './pages/admin-admins-page'
 import { TraineePaperFeedbackPage } from './pages/trainee-paper-feedback-page'
 import { MentorPaperFeedbackPage } from './pages/mentor-paper-feedback-page'
+import PaperFeedbackDiscussionPage from './pages/paper-feedback-discussion-page'
 import { isPaperFeatureEnabled } from './helper/paper-helper'
 
 type RoutesProps = {
@@ -92,6 +93,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                   <>
                     <Route path="/paper" element={<TraineePaperPage />} />
                     <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
+                    <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
                   </>
                 )}
               </>
@@ -127,6 +129,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/" element={<MentorPaperPage />} />
             <Route path="/paper" element={<MentorPaperPage />} />
             <Route path="/paper/feedback/:paperId" element={<MentorPaperFeedbackPage />} />
+            <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
           </>
         )}
 
