@@ -1,12 +1,13 @@
 import { AuthenticatedContext, GqlResolvers, User } from '@lara/api'
 
-import { isAdmin, isTrainee, isTrainer } from '../permissions'
+import { isAdmin, isTrainee, isTrainer, isMentor } from '../permissions'
 import { allTrainees } from '../repositories/trainee.repo'
 import { saveUser } from '../repositories/user.repo'
 import { generateAdmin } from '../services/admin.service'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { generateTrainee } from '../services/trainee.service'
 import { generateTrainer } from '../services/trainer.service'
+import { generateMentor } from '../services/mentor.service'
 
 export const userResolver: GqlResolvers<AuthenticatedContext> = {
   UserInterface: {
@@ -36,6 +37,14 @@ export const userResolver: GqlResolvers<AuthenticatedContext> = {
       if (!isTrainee(currentUser) && type === 'Trainee') {
         newUser = {
           ...(await generateTrainer(currentUser)),
+          ...currentUser,
+          type,
+        }
+      }
+
+      if (!isMentor(currentUser) && type === 'Mentor') {
+        newUser = {
+          ...(await generateMentor(currentUser)),
           ...currentUser,
           type,
         }
