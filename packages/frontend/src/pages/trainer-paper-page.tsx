@@ -184,13 +184,13 @@ export const TrainerPaperPage: React.FC = () => {
                   <Spacer y="xl">
                     <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {paper.status === 'NotStarted' ? (
+                  {[PaperStatus.NotStarted, PaperStatus.InProgress].includes(paper?.status) && (
                     <Flex justifyContent={'flex-end'}>
                       <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
-                        {paper?.briefing.length > 0 ? strings.edit : strings.start}
+                        {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
                       </PrimaryButton>
                     </Flex>
-                  ) : null}
+                  )}
                   <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal(undefined)}>
                     <Flex flexDirection={'row'} alignItems={'center'}>
                       <Box width={1 / 3}>
