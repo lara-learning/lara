@@ -19,7 +19,9 @@ query ArchivePageData {
       entries {
         id
         time
+        time_split
         text
+        text_split
       }
     }
     __typename

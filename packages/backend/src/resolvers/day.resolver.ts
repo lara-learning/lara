@@ -15,7 +15,7 @@ export const dayResolver: GqlResolvers<AuthenticatedContext> = {
 
 export const dayTraineeResolver: GqlResolvers<TraineeContext> = {
   Mutation: {
-    updateDay: async (_parent, { id, status }, { currentUser }) => {
+    updateDay: async (_parent, { id, status, status_split }, { currentUser }) => {
       const reports = await reportsWithinApprenticeship(currentUser)
 
       const { report, day } = reportDayByDayId(id, reports)
@@ -37,15 +37,13 @@ export const dayTraineeResolver: GqlResolvers<TraineeContext> = {
         throw new GraphQLError(t('errors.wrongDayStatus'))
       }
 
-      if (!status || !isDayStatus(status) || status === 'holiday') {
-        throw new GraphQLError(t('errors.wrongDayStatus'))
-      }
+      if (status && isDayStatus(status)) day.status = status
 
       if (status === 'vacation' || status === 'sick') {
         day.entries = []
       }
 
-      day.status = status
+      if (status_split && isDayStatus(status_split)) day.status_split = status_split
 
       await updateReport(report, { updateKeys: ['days'] })
 

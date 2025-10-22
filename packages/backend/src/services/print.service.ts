@@ -60,8 +60,8 @@ export const createPrintUserData = async (trainee: Trainee): Promise<PrintUserDa
  * @returns Entry for print
  */
 const transformEntry = (entry: Entry): PrintEntry => ({
-  text: entry.text,
-  time: entry.time,
+  text: entry.text ? entry.text : entry.text_split!,
+  time: entry.time ? entry.time : entry.time_split!,
   orderId: entry.orderId,
 })
 
