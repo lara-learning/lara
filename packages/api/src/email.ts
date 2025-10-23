@@ -9,7 +9,7 @@ export type BaseEmailPayload = {
 }
 
 export type TrainerMailPayload = BaseEmailPayload & {
-  emailType: 'acceptReport' | 'needChanges'
+  emailType: 'acceptReport' | 'needChangesComment' | 'needChangesNoComment'
   userData: BaseMailUserData & {
     trainer: string
   }
@@ -70,7 +70,8 @@ export type EmailTranslations = {
     error: string
     reportExport: string
     acceptReport: string
-    needChanges: string
+    needChangesComment: string
+    needChangesNoComment: string
     deleteYourTrainee: string
     deleteAccount: string
     deleteUser: string
@@ -80,7 +81,8 @@ export type EmailTranslations = {
   headline: {
     export: string
     accepted: string
-    needChanges: string
+    needChangesComment: string
+    needChangesNoComment: string
     deleteTrainee: string
     deleteAccount: string
     deleteUser: string
@@ -91,7 +93,8 @@ export type EmailTranslations = {
     error: string
     success: string
     accepted: string
-    needChanges: string
+    needChangesComment: string
+    needChangesNoComment: string
     deleteTrainee: string
     deleteAccount: string
     deleteUser: string
