@@ -30,6 +30,10 @@ export const commentResolver: GqlResolvers<AuthenticatedContext> = {
     },
   },
   Comment: {
+    published: (comment) => {
+      return comment.published || false
+    },
+
     user: async (model, _args, { currentUser }) => {
       const user = await userById(model.userId)
 
