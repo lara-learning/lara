@@ -1,37 +1,45 @@
+import { styled } from 'styled-components'
+
 interface highlighterProps {
   term: string
   children: string
 }
 
+const Text = styled.p`
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+`
+
 const Highlighter: React.FC<highlighterProps> = ({ term, children }) => {
   if (!term) {
-    return <>{children}</>
+    return <Text>{children}</Text>
   }
   const regex = new RegExp(`(${term})`, 'gi')
   const parts = children.split(regex)
 
   return (
     <>
-      <div>test</div>
-      {parts.map((part: string, index: number) =>
-        regex.test(part) ? (
-          <span
-            key={index}
-            style={{
-              margin: 0,
-              backgroundColor: 'rgb(84 198 247)',
-              padding: 0,
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word',
-              fontWeight: 'bold',
-            }}
-          >
-            {part}
-          </span>
-        ) : (
-          part
-        )
-      )}
+      <Text>
+        <>
+          {parts.map((part: string, index: number) =>
+            regex.test(part) ? (
+              <span
+                key={index}
+                style={{
+                  backgroundColor: 'rgb(84 198 247)',
+                  fontWeight: 'bold',
+                }}
+              >
+                {part}
+              </span>
+            ) : (
+              part
+            )
+          )}
+        </>
+      </Text>
     </>
   )
 }

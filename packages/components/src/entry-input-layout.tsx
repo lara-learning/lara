@@ -111,6 +111,7 @@ const ValueBase = styled.div`
   font-size: ${FontSizes.copy};
   padding: ${Spacings.m} ${Spacings.l};
 `
+
 const TextWrapper = styled(ValueBase)`
   position: relative;
   flex: 1;
