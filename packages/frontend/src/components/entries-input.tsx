@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Spacer } from '@lara/components'
-
 import {
   Comment,
   Day,
@@ -53,16 +51,17 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
   const [createEntryMutation] = useCreateEntryMutation()
   const { addToast } = useToastContext()
   const [showContextMenu, setShowContextMenu] = React.useState('')
-
   const { isValidTimeUpdate } = useDayHelper()
 
-  if (!day) {
-    return null
-  }
+  if (!day) return null
 
   const createEntry = (entry: EntryInputType) => {
     if (!isValidTimeUpdate(day, entry.time)) {
-      addToast({ title: strings.errors.error, text: strings.entryStatus.dayLimitError, type: 'error' })
+      addToast({
+        title: strings.errors.error,
+        text: strings.entryStatus.dayLimitError,
+        type: 'error',
+      })
       return
     }
 
@@ -101,14 +100,14 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
   }
 
   return (
-    <Spacer top="s">
+    <>
       {day.entries
         .slice()
         .sort((a, b) => a.orderId - b.orderId)
         .map((entry) => (
           <EntryInput
-            handleStatusChange={handleStatusChange}
             key={entry.id}
+            handleStatusChange={handleStatusChange}
             disabled={disabled}
             entry={entry}
             day={day}
@@ -119,8 +118,8 @@ const EntriesInput: React.FC<EntriesInputProps> = ({
             updateMessage={updateMessage ? (msg, commentId) => updateMessage(msg, commentId, entry) : undefined}
           />
         ))}
-      {!disabled && <TextTimeInput clearOnSave={true} onSave={createEntry} />}
-    </Spacer>
+      {!disabled && <TextTimeInput clearOnSave onSave={createEntry} />}
+    </>
   )
 }
 
