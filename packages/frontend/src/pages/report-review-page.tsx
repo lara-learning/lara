@@ -396,6 +396,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                       <>
                         {day.entries
                           .filter((entry) => entry.text !== null)
+                          .filter((entry) => entry.text !== '')
                           .map((entry, entryIndex) => (
                             <EntryInput
                               term=""
@@ -425,6 +426,7 @@ const ReportReviewPage: React.FunctionComponent = () => {
                         </Flex>
                         {day.entries
                           .filter((entry) => entry.text_split !== null)
+                          .filter((entry) => entry.text_split !== '')
                           .map((entry, entryIndex) => (
                             <EntryInput
                               term=""

@@ -99,10 +99,10 @@ export const entryTraineeResolver: GqlResolvers<TraineeContext> = {
 
       validateEntryUpdate(report, day, entry, currentUser.language)
 
-      entry.text = input.text
-      entry.time = input.time
-      entry.text_split = input.text_split
-      entry.time_split = input.time_split
+      entry.text = input.text ? input.text : ''
+      entry.time = input.time ? input.time : 0
+      entry.text_split = input.text_split ? input.text_split : ''
+      entry.time_split = input.time_split ? input.time_split : 0
 
       await updateReport(report, { updateKeys: ['days'] })
 
