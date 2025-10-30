@@ -82,6 +82,7 @@ const englishTranslation: Translation = {
     handoverNotificationText: 'Your report was handed over and is now being checked.',
     accept: 'Approve this report',
     decline: 'Hand back to trainee',
+    halfDays: 'Half Days',
     archived: 'Archived',
     department: {
       title: 'Department',

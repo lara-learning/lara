@@ -80,6 +80,7 @@ export default interface Translation {
     decline: string
     archived: string
     unarchive: string
+    halfDays: string
     department: {
       title: string
       departmentAddedTitle: string

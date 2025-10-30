@@ -3,7 +3,6 @@ import React from 'react'
 export const IconCheckboxSquare: React.FC = () => {
   return (
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-      <title>checkboxSquare</title>
       <path
         d="M15.9997 7.33325H7.99967C7.63101 7.33325 7.33301 7.63125 7.33301 7.99992V15.9999C7.33301 16.3686 7.63101 16.6666 7.99967 16.6666H15.9997C16.3683 16.6666 16.6663 16.3686 16.6663 15.9999V7.99992C16.6663 7.63125 16.3683 7.33325 15.9997 7.33325ZM15.333 15.3333H8.66634V8.66659H15.333V15.3333Z"
         id="box"

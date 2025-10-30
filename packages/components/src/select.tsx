@@ -20,6 +20,7 @@ export interface SelectWithIconContainerProps {
 }
 
 export const StyledSelectLabel = styled.label`
+  justify-self: end;
   color: ${(props) => props.theme.mediumFont};
   font-size: ${FontSizes.copy};
   font-weight: 600;

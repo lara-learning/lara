@@ -33,6 +33,21 @@ const SecondaryWrapper = styled.div`
   align-items: center;
 `
 
+const Text = styled.p`
+  letter-spacing: 0.9px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: pre-wrap;
+  word-break: break-word;
+`
+
+const CBWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 export interface EntryStatusType {
   message?: string
   type: string
@@ -244,7 +259,10 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       inputHeader={
         <>
           <InputHeading noMargin>{getHeading()}</InputHeading>
-          <CheckBox disabled={!!disabled} iconName={'Checkbox'} checked={halfDays} onClick={checkBox} />
+          <CBWrapper>
+            <CheckBox disabled={!!disabled} iconName={'Checkbox'} checked={halfDays} onClick={checkBox} />
+            <Text>{strings.report.halfDays}</Text>
+          </CBWrapper>
           {day && <DayStatusSelect disabled={disabled} day={day} secondary={false} />}
         </>
       }

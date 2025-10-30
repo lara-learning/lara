@@ -84,6 +84,7 @@ const germanTranslation: Translation = {
     handoverTitle: 'Bericht übergeben',
     handoverNotificationText: 'Dein Bericht wurde übergeben und wird jetzt geprüft.',
     accept: 'Bericht genehmigen',
+    halfDays: 'Halbe Tage',
     decline: 'Bericht zurückgeben',
     archived: 'Archiviert',
     department: {
