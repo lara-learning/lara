@@ -4,13 +4,17 @@ import { Box, PaperH2, PaperLayout, Spacer } from '@lara/components'
 import NavigationButtonLink from '../components/navigation-button-link'
 import { Template } from '../templates/template'
 import strings from '../locales/localization'
-import {
-  useTraineePaperPageDataQuery,
-  useMentorPaperPageDataQuery,
-  FeedbackEntryProps,
-  PaperFormData,
-} from '../graphql'
+
+import { PaperFormData, useUpdatePaperMutation, useFeedbackDiscussionPageDataQuery } from '../graphql'
+import { omitDeep } from '@apollo/client/utilities'
 import CommentSection from '../components/comment-section'
+
+interface FeedbackEntryProps {
+  entry: PaperFormData
+  comments: string[]
+  onSubmit: (comment: string) => void
+  displayTextInput: boolean
+}
 
 // FeedbackEntryProps already declares:
 // { entry: PaperFormData; comments: string[]; onSubmit: (comment: string) => void; displayTextInput: boolean }
@@ -28,6 +32,8 @@ export const FeedbackEntry: React.FC<FeedbackEntryProps> = ({ entry, comments, o
     },
   }))
 
+  console.log('here')
+
   return (
     <Box mb="4" p="4">
       <Box mb="3">
@@ -40,26 +46,28 @@ export const FeedbackEntry: React.FC<FeedbackEntryProps> = ({ entry, comments, o
   )
 }
 
-type PaperWithFeedback = {
-  id: string
-  feedbackTrainee?: PaperFormData[]
-  feedbackMentor?: PaperFormData[]
-}
-
 /**
  * Keep minimal changes: type the currentUser->papers access so we can call .map
  * with concrete PaperFormData elements instead of `any`.
  */
 export const PaperFeedbackDiscussionPage: React.FC = () => {
   const { paperId } = useParams<{ paperId: string }>()
-  const traineePaperData = useTraineePaperPageDataQuery()
-  const mentorPaperData = useMentorPaperPageDataQuery()
+  const data = useFeedbackDiscussionPageDataQuery()
 
-  const currentUser = traineePaperData.data?.currentUser || mentorPaperData.data?.currentUser
+  const currentUser =
+    data.data?.currentUser?.__typename === 'Mentor' || data.data?.currentUser?.__typename === 'Trainee'
+      ? data.data.currentUser
+      : undefined
 
-  // Narrow `papers` to a known shape (no `any`)
-  const papers = (currentUser as unknown as { papers?: PaperWithFeedback[] })?.papers
-  const paper = papers?.find((p) => p.id === paperId)
+  const papers = currentUser?.papers
+
+  const paper = papers?.find((p) => String(p?.id) === String(paperId))
+
+  const [updatePaper] = useUpdatePaperMutation()
+
+  console.log('current user: ', currentUser)
+  console.log('paper: ', paper)
+  console.log('papers: ', papers)
 
   if (!paper || !currentUser) {
     return (
@@ -69,14 +77,49 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
     )
   }
 
-  // keep returning string[] as per FeedbackEntryProps
-  const getCommentsForEntry = (_entryId: string): string[] => {
-    return []
+  // read comments from entry if present, else empty
+  const getCommentsForEntry = (entry: PaperFormData): string[] => {
+    return (entry.comments as string[]) || []
   }
 
-  // prefix unused args with _ to satisfy eslint no-unused-vars rule
-  const handleCommentSubmit = (_entryId: string, _text: string) => {
-    // TODO: Implement mutation to save comment for entry
+  // Save a new comment into the correct side and persist via updatePaperMutation
+  const handleCommentSubmit = async (side: 'trainee' | 'mentor', entryId: string, text: string) => {
+    const t = text?.trim()
+    if (!t) return
+
+    const nextTrainee: PaperFormData[] = (paper.feedbackTrainee ?? []).map((e) =>
+      e.id === entryId && side === 'trainee' ? { ...e, comments: [...(e.comments ?? []), t] } : { ...e, comments: [] }
+    )
+
+    const nextMentor: PaperFormData[] = (paper.feedbackMentor ?? []).map((e) =>
+      e.id === entryId && side === 'mentor' ? { ...e, comments: [...(e.comments ?? []), t] } : { ...e, comments: [] }
+    )
+
+    console.log('mentor and trainee: ')
+    console.log(nextTrainee)
+    console.log(nextMentor)
+
+    await updatePaper({
+      variables: {
+        input: {
+          id: paper.id,
+          traineeId: paper.traineeId ?? '',
+          mentorId: paper.mentorId ?? '',
+          trainerId: paper.trainerId ?? '',
+          client: paper.client ?? '',
+          subject: paper.subject ?? '',
+          periodStart: paper.periodStart,
+          periodEnd: paper.periodEnd,
+          schoolPeriodStart: paper.schoolPeriodStart,
+          schoolPeriodEnd: paper.schoolPeriodEnd,
+          status: paper.status,
+          briefing: omitDeep(paper.briefing ?? [], '__typename'),
+          feedbackTrainee: omitDeep(nextTrainee, '__typename'),
+          feedbackMentor: omitDeep(nextMentor, '__typename'),
+        },
+      },
+      refetchQueries: ['TraineePaperPageData', 'MentorPaperPageData'],
+    })
   }
 
   return (
@@ -100,8 +143,8 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
               <FeedbackEntry
                 key={entry.id}
                 entry={entry}
-                comments={getCommentsForEntry(entry.id)}
-                onSubmit={(text) => handleCommentSubmit(entry.id, text)}
+                comments={getCommentsForEntry(entry)}
+                onSubmit={(text) => handleCommentSubmit('trainee', entry.id, text)}
                 displayTextInput={true}
               />
             ))}
@@ -113,8 +156,8 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
               <FeedbackEntry
                 key={entry.id}
                 entry={entry}
-                comments={getCommentsForEntry(entry.id)}
-                onSubmit={(text) => handleCommentSubmit(entry.id, text)}
+                comments={getCommentsForEntry(entry)}
+                onSubmit={(text) => handleCommentSubmit('mentor', entry.id, text)}
                 displayTextInput={true}
               />
             ))}

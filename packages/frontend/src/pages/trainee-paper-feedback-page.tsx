@@ -149,6 +149,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
                   questionId: index.toString(),
                   hint: h,
                   answer: '',
+                  comments: [],
                 }}
                 forceActive={filteredQAs.length === 1 || index.toString() === '0'}
                 key={q}

@@ -125,6 +125,7 @@ input PaperEntryInput {
   question: String!
   answer: String
   hint: String
+  comments: [String!]!
 }
 
 type MutatePaperPayload {
@@ -729,6 +730,7 @@ type PaperFormData {
   question: String!
   answer: String
   hint: String
+  comments: [String!]!
 }
 
 type Paper {

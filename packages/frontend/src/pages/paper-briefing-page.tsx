@@ -178,6 +178,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
                 questionId: index.toString(),
                 hint: h,
                 answer: '',
+                comments: [],
               }}
               forceActive={filteredQAs.length === 1}
               key={q}

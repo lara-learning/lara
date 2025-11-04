@@ -564,6 +564,7 @@ export type GqlPaper = {
 
 export type GqlPaperEntryInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
+  comments: Array<Scalars['String']['input']>;
   hint?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   question: Scalars['String']['input'];
@@ -573,6 +574,7 @@ export type GqlPaperEntryInput = {
 export type GqlPaperFormData = {
   __typename?: 'PaperFormData';
   answer?: Maybe<Scalars['String']['output']>;
+  comments: Array<Scalars['String']['output']>;
   hint?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   question: Scalars['String']['output'];
@@ -1231,6 +1233,7 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
 
 export type GqlPaperFormDataResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PaperFormData'] = GqlResolversParentTypes['PaperFormData']> = ResolversObject<{
   answer?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  comments?: Resolver<Array<GqlResolversTypes['String']>, ParentType, ContextType>;
   hint?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   question?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
