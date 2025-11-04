@@ -66,15 +66,57 @@ export const commentResolver: GqlResolvers<AuthenticatedContext> = {
     createCommentOnReport: async (_parent, { id, text, traineeId }, { currentUser }) => {
       const report = await reportById(id)
 
-      if (report?.traineeId !== traineeId) {
+      const reportCleaned = report
+        ? {
+            ...report,
+            comments: report?.comments.map((com) => {
+              if (com.published === false) {
+                return com
+              } else {
+                return {
+                  ...com,
+                  published: true,
+                }
+              }
+            }),
+            days: report?.days.map((day) => ({
+              ...day,
+              entries: day.entries.map((entry) => ({
+                ...entry,
+                comments: entry.comments.map((com) => {
+                  if (com.published === false) {
+                    return com
+                  } else {
+                    return {
+                      ...com,
+                      published: true,
+                    }
+                  }
+                }),
+              })),
+              comments: day.comments.map((com) => {
+                if (com.published === false) {
+                  return com
+                } else {
+                  return {
+                    ...com,
+                    published: true,
+                  }
+                }
+              }),
+            })),
+          }
+        : undefined
+
+      if (reportCleaned?.traineeId !== traineeId) {
         throw new GraphQLError(t('errors.missingReport', currentUser.language))
       }
 
       return createCommentOnCommentable({
-        commentable: report,
+        commentable: reportCleaned,
         text,
         currentUser,
-        report,
+        report: reportCleaned,
       })
     },
     updateCommentOnDay: async (_parent, { id, text, traineeId, commentId }, { currentUser }) => {
