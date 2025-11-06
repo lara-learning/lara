@@ -404,7 +404,7 @@ resources:
                 Ref: OAC
               S3OriginConfig:
                 OriginAccessIdentity: ''
-          HttpVersion: http2
+          HttpVersion: http2and3
           DefaultRootObject: index.html
           DefaultCacheBehavior:
             AllowedMethods:
@@ -448,7 +448,7 @@ resources:
                 OriginSSLProtocols:
                   - TLSv1.2
               OriginPath: '/${self:custom.stage}'
-          HttpVersion: http2
+          HttpVersion: http2and3
           DefaultCacheBehavior:
             AllowedMethods:
               - DELETE
