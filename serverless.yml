@@ -428,7 +428,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.FRONTEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2021
+                MinimumProtocolVersion: TLSv1.3_2025
               - Ref: AWS::NoValue
 
     BackendDistribution:
@@ -471,7 +471,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.BACKEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2021
+                MinimumProtocolVersion: TLSv1.3_2025
               - Ref: AWS::NoValue
 
     FrontendAliasRecord:
