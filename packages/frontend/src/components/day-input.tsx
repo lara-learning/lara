@@ -41,6 +41,7 @@ const Text = styled.p`
   font-weight: bold;
   white-space: pre-wrap;
   word-break: break-word;
+  color: ${(props) => props.theme.lightFont};
 `
 
 const CBWrapper = styled.div`
