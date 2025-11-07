@@ -13,6 +13,7 @@ import {
   StyledPrintDaySubHeadline,
   StyledPrintEntry,
   StyledPrintEntryText,
+  PrintText,
   StyledPrintFooter,
   StyledPrintFooterTotalWrapper,
   StyledPrintHeader,
@@ -111,7 +112,9 @@ export const Template: React.FC<TemplateProps> = ({
                   .sort((a, b) => a.orderId - b.orderId)
                   .map((entry, entryIndex) => (
                     <StyledPrintEntry key={entryIndex}>
-                      <StyledPrintEntryText>{entry.text}</StyledPrintEntryText>
+                      <StyledPrintEntryText>
+                        <PrintText>{entry.text}</PrintText>
+                      </StyledPrintEntryText>
                       <StyledPrintEntryText>{minutesToString(entry.time)}</StyledPrintEntryText>
                     </StyledPrintEntry>
                   ))
