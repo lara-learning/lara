@@ -40,6 +40,29 @@ export const MentorPaperPage: React.FC = () => {
     )
   }
 
+  const getContinueButtonText = (paperStatus: PaperStatus) => {
+    switch (paperStatus) {
+      case PaperStatus.NotStarted:
+        return strings.start
+        break
+      case PaperStatus.InProgress:
+        return strings.edit
+        break
+      case PaperStatus.TraineeDone:
+        return strings.start
+        break
+      case PaperStatus.MentorDone:
+        return strings.start
+        break
+      case PaperStatus.InReview:
+        return strings.edit
+        break
+      case PaperStatus.Archived:
+        return 'You should not be able to see this, report as a bug'
+        break
+    }
+  }
+
   return (
     <Template type="Main">
       {loading && <Loader />}
@@ -121,7 +144,7 @@ export const MentorPaperPage: React.FC = () => {
                             : navigateToPaperFeedbackPage(paper.id)
                         }
                       >
-                        {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
+                        {getContinueButtonText(paper.status)}
                       </PrimaryButton>
                     </Flex>
                   )}

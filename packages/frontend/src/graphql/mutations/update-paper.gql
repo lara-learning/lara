@@ -22,14 +22,20 @@ mutation updatePaper($input: PaperUpdateInput!) {
       questionId
       answer
       hint
-      comments
+      comments {
+        text
+        userId
+      }
     }
     feedbackMentor {
       id
       questionId
       answer
       hint
-      comments
+      comments {
+        text
+        userId
+      }
     }
   }
 }

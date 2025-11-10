@@ -1,6 +1,8 @@
 query FeedbackDiscussionPageData {
   currentUser {
     id
+    firstName
+    lastName
     ... on Mentor {
       papers {
         id
@@ -20,7 +22,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            lastName
+            firstName
+            userId
+            published
+          }
         }
         feedbackTrainee {
           id
@@ -28,7 +36,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackMentor {
           id
@@ -36,7 +50,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
       }
     }
@@ -59,7 +79,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackTrainee {
           id
@@ -67,7 +93,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackMentor {
           id
@@ -75,7 +107,13 @@ query FeedbackDiscussionPageData {
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
       }
     }

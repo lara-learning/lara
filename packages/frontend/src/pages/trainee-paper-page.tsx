@@ -72,7 +72,7 @@ export const TraineePaperPage: React.FC = () => {
                     </Box>
                     <Box width={3 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        {[PaperStatus.TraineeDone, PaperStatus.MentorDone].includes(paper?.status) ? (
+                        {[PaperStatus.MentorDone].includes(paper?.status) ? (
                           <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                         ) : (
                           <StyledIcon name={'X'} size="24px" color={'errorRed'} />

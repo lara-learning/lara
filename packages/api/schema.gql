@@ -6,6 +6,14 @@ type Comment {
   published: Boolean!
 }
 
+type PaperComment {
+  text: String!
+  userId: ID!
+  lastName: String!
+  firstName: String!
+  published: Boolean!
+}
+
 """
 An object that can have comments
 """
@@ -125,7 +133,7 @@ input PaperEntryInput {
   question: String!
   answer: String
   hint: String
-  comments: [String!]!
+  comments: [PaperCommentInput!]!
 }
 
 type MutatePaperPayload {
@@ -503,6 +511,14 @@ type Report implements CommentableInterface {
   nextReportLink: String
 }
 
+input PaperCommentInput {
+  text: String!
+  userId: ID!
+  firstName: String!
+  lastName: String!
+  published: Boolean!
+}
+
 """
 Represents the current state of the report
 """
@@ -730,7 +746,7 @@ type PaperFormData {
   question: String!
   answer: String
   hint: String
-  comments: [String!]!
+  comments: [PaperComment!]!
 }
 
 type Paper {

@@ -561,9 +561,26 @@ export type Paper = {
   trainerId: Scalars['ID']['output'];
 };
 
+export type PaperComment = {
+  __typename?: 'PaperComment';
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  published: Scalars['Boolean']['output'];
+  text: Scalars['String']['output'];
+  userId: Scalars['ID']['output'];
+};
+
+export type PaperCommentInput = {
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  published: Scalars['Boolean']['input'];
+  text: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 export type PaperEntryInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
-  comments: Array<Scalars['String']['input']>;
+  comments: Array<PaperCommentInput>;
   hint?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   question: Scalars['String']['input'];
@@ -573,7 +590,7 @@ export type PaperEntryInput = {
 export type PaperFormData = {
   __typename?: 'PaperFormData';
   answer?: Maybe<Scalars['String']['output']>;
-  comments: Array<Scalars['String']['output']>;
+  comments: Array<PaperComment>;
   hint?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   question: Scalars['String']['output'];
@@ -1161,7 +1178,7 @@ export type UpdatePaperMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }> } };
+export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string }> }> } };
 
 export type UpdateReportReportReviewPageMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1297,7 +1314,7 @@ export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?: { __
 export type FeedbackDiscussionPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedbackDiscussionPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<string> }> } | undefined> | undefined } | { __typename?: 'Trainer', id: string } | undefined };
+export type FeedbackDiscussionPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, lastName: string, firstName: string, userId: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined };
 
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -2240,14 +2257,20 @@ export const UpdatePaperDocument = gql`
       questionId
       answer
       hint
-      comments
+      comments {
+        text
+        userId
+      }
     }
     feedbackMentor {
       id
       questionId
       answer
       hint
-      comments
+      comments {
+        text
+        userId
+      }
     }
   }
 }
@@ -2947,6 +2970,8 @@ export const FeedbackDiscussionPageDataDocument = gql`
     query FeedbackDiscussionPageData {
   currentUser {
     id
+    firstName
+    lastName
     ... on Mentor {
       papers {
         id
@@ -2966,7 +2991,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            lastName
+            firstName
+            userId
+            published
+          }
         }
         feedbackTrainee {
           id
@@ -2974,7 +3005,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackMentor {
           id
@@ -2982,7 +3019,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
       }
     }
@@ -3005,7 +3048,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackTrainee {
           id
@@ -3013,7 +3062,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
         feedbackMentor {
           id
@@ -3021,7 +3076,13 @@ export const FeedbackDiscussionPageDataDocument = gql`
           question
           answer
           hint
-          comments
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
         }
       }
     }
