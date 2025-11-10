@@ -63,7 +63,12 @@ export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
           subject: paper?.subject ?? '',
           status: PaperStatus.TraineeDone,
           briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
-          feedbackTrainee: paper?.feedbackTrainee ? omitDeep(paper.feedbackTrainee, '__typename') : [],
+          feedbackTrainee: paper?.feedbackTrainee
+            ? omitDeep(paper.feedbackTrainee, '__typename').map((trainee) => ({
+                ...trainee,
+                comments: trainee.comments ? trainee.comments : [],
+              }))
+            : [],
           feedbackMentor: omitDeep(feedback, '__typename'),
         },
       },
@@ -91,7 +96,12 @@ export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
           subject: paper?.subject ?? '',
           status: PaperStatus.MentorDone,
           briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
-          feedbackTrainee: paper?.feedbackTrainee ? omitDeep(paper.feedbackTrainee, '__typename') : [],
+          feedbackTrainee: paper?.feedbackTrainee
+            ? omitDeep(paper.feedbackTrainee, '__typename').map((trainee) => ({
+                ...trainee,
+                comments: trainee.comments ? trainee.comments : [],
+              }))
+            : [],
           feedbackMentor: omitDeep(feedback, '__typename'),
         },
       },
@@ -130,6 +140,7 @@ export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
                   questionId: index.toString(),
                   hint: h,
                   answer: '',
+                  comments: [],
                 }}
                 forceActive={filteredQAs.length === 1 || index.toString() === '0'}
                 key={q}

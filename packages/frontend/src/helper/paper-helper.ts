@@ -7,9 +7,9 @@ export const mapStatusToProgess = (status: PaperStatus): number => {
     case 'NotStarted':
       return 0
     case 'InProgress':
-      return 0.3
+      return 0.2
     case 'TraineeDone':
-      return 0.6
+      return 0.4
     case 'MentorDone':
       return 0.6
     default:

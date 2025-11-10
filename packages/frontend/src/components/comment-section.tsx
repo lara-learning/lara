@@ -3,17 +3,24 @@ import { useForm } from 'react-hook-form'
 
 import { ErrorText, Input, Spacer, StyledTextInputLabel } from '@lara/components'
 
-import { Comment, UserInterface } from '../graphql'
+import { Comment, PaperComment, UserInterface } from '../graphql'
 import strings from '../locales/localization'
 import CommentBox from './comment-box'
 
+type TransformedCommentArray =
+  | Array<
+      Pick<Comment, 'id' | 'text' | 'published'> & {
+        user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
+      }
+    >
+  | Array<Pick<PaperComment, 'text' | 'published' | 'lastName' | 'firstName' | 'userId'>>
+
 interface CommentSectionProps {
-  comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
-    user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
-  })[]
+  comments: TransformedCommentArray
   onSubmit: onSubmitType
   displayTextInput: boolean
   bottomSpace?: boolean
+  spacingM?: boolean
   updateMessage?: (message: string, commentId: string) => void
 }
 
@@ -23,6 +30,7 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
   comments,
   bottomSpace,
   displayTextInput,
+  spacingM,
   onSubmit: submit,
   updateMessage,
 }) => {
@@ -43,7 +51,7 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
     <>
       <CommentBox comments={comments} updateMessage={updateMessage} />
       {displayTextInput && (
-        <Spacer x="l" bottom={bottomSpace ? 'l' : undefined}>
+        <Spacer x={spacingM ? 'm' : 'l'} bottom={bottomSpace ? 'l' : undefined}>
           <form onSubmit={onSubmit} onBlur={onSubmit}>
             <StyledTextInputLabel valid={!errors.comment}>{strings.report.comments.addComment}</StyledTextInputLabel>
             <Input

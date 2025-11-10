@@ -561,8 +561,26 @@ export type Paper = {
   trainerId: Scalars['ID']['output'];
 };
 
+export type PaperComment = {
+  __typename?: 'PaperComment';
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  published: Scalars['Boolean']['output'];
+  text: Scalars['String']['output'];
+  userId: Scalars['ID']['output'];
+};
+
+export type PaperCommentInput = {
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  published: Scalars['Boolean']['input'];
+  text: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 export type PaperEntryInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
+  comments: Array<PaperCommentInput>;
   hint?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   question: Scalars['String']['input'];
@@ -572,6 +590,7 @@ export type PaperEntryInput = {
 export type PaperFormData = {
   __typename?: 'PaperFormData';
   answer?: Maybe<Scalars['String']['output']>;
+  comments: Array<PaperComment>;
   hint?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   question: Scalars['String']['output'];
@@ -1159,7 +1178,7 @@ export type UpdatePaperMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }> } };
+export type UpdatePaperMutation = { __typename?: 'Mutation', updatePaper: { __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string }> }> } };
 
 export type UpdateReportReportReviewPageMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1280,7 +1299,7 @@ export type MentorsPageQuery = { __typename?: 'Query', mentors: Array<{ __typena
 export type MentorPaperPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MentorPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Mentor', id: string, theme?: string | undefined, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined };
+export type MentorPaperPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1291,6 +1310,11 @@ export type OnboardingPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string } | { __typename?: 'Mentor', id: string, firstName: string } | { __typename?: 'Trainee', id: string, firstName: string } | { __typename?: 'Trainer', id: string, firstName: string } | undefined };
+
+export type FeedbackDiscussionPageDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeedbackDiscussionPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, lastName: string, firstName: string, userId: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined };
 
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -2233,12 +2257,20 @@ export const UpdatePaperDocument = gql`
       questionId
       answer
       hint
+      comments {
+        text
+        userId
+      }
     }
     feedbackMentor {
       id
       questionId
       answer
       hint
+      comments {
+        text
+        userId
+      }
     }
   }
 }
@@ -2831,7 +2863,6 @@ export const MentorPaperPageDataDocument = gql`
     query MentorPaperPageData {
   currentUser {
     id
-    theme
     ... on Mentor {
       papers {
         id
@@ -2935,6 +2966,144 @@ export function useOnboardingPageDataSuspenseQuery(baseOptions?: Apollo.SkipToke
 export type OnboardingPageDataQueryHookResult = ReturnType<typeof useOnboardingPageDataQuery>;
 export type OnboardingPageDataLazyQueryHookResult = ReturnType<typeof useOnboardingPageDataLazyQuery>;
 export type OnboardingPageDataSuspenseQueryHookResult = ReturnType<typeof useOnboardingPageDataSuspenseQuery>;
+export const FeedbackDiscussionPageDataDocument = gql`
+    query FeedbackDiscussionPageData {
+  currentUser {
+    id
+    firstName
+    lastName
+    ... on Mentor {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            lastName
+            firstName
+            userId
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+      }
+    }
+    ... on Trainee {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export function useFeedbackDiscussionPageDataQuery(baseOptions?: Apollo.QueryHookOptions<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>(FeedbackDiscussionPageDataDocument, options);
+      }
+export function useFeedbackDiscussionPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>(FeedbackDiscussionPageDataDocument, options);
+        }
+export function useFeedbackDiscussionPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FeedbackDiscussionPageDataQuery, FeedbackDiscussionPageDataQueryVariables>(FeedbackDiscussionPageDataDocument, options);
+        }
+export type FeedbackDiscussionPageDataQueryHookResult = ReturnType<typeof useFeedbackDiscussionPageDataQuery>;
+export type FeedbackDiscussionPageDataLazyQueryHookResult = ReturnType<typeof useFeedbackDiscussionPageDataLazyQuery>;
+export type FeedbackDiscussionPageDataSuspenseQueryHookResult = ReturnType<typeof useFeedbackDiscussionPageDataSuspenseQuery>;
 export const PrintDataDocument = gql`
     query PrintData($ids: [ID!]!) {
   print(ids: $ids) {

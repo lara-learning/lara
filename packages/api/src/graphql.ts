@@ -562,8 +562,26 @@ export type GqlPaper = {
   trainerId: Scalars['ID']['output'];
 };
 
+export type GqlPaperComment = {
+  __typename?: 'PaperComment';
+  firstName: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  published: Scalars['Boolean']['output'];
+  text: Scalars['String']['output'];
+  userId: Scalars['ID']['output'];
+};
+
+export type GqlPaperCommentInput = {
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  published: Scalars['Boolean']['input'];
+  text: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 export type GqlPaperEntryInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
+  comments: Array<GqlPaperCommentInput>;
   hint?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   question: Scalars['String']['input'];
@@ -573,6 +591,7 @@ export type GqlPaperEntryInput = {
 export type GqlPaperFormData = {
   __typename?: 'PaperFormData';
   answer?: Maybe<Scalars['String']['output']>;
+  comments: Array<GqlPaperComment>;
   hint?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   question: Scalars['String']['output'];
@@ -957,6 +976,8 @@ export type GqlResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   OAuthPayload: ResolverTypeWrapper<GqlOAuthPayload>;
   Paper: ResolverTypeWrapper<Paper>;
+  PaperComment: ResolverTypeWrapper<GqlPaperComment>;
+  PaperCommentInput: GqlPaperCommentInput;
   PaperEntryInput: GqlPaperEntryInput;
   PaperFormData: ResolverTypeWrapper<GqlPaperFormData>;
   PaperInput: GqlPaperInput;
@@ -1012,6 +1033,8 @@ export type GqlResolversParentTypes = ResolversObject<{
   Mutation: {};
   OAuthPayload: GqlOAuthPayload;
   Paper: Paper;
+  PaperComment: GqlPaperComment;
+  PaperCommentInput: GqlPaperCommentInput;
   PaperEntryInput: GqlPaperEntryInput;
   PaperFormData: GqlPaperFormData;
   PaperInput: GqlPaperInput;
@@ -1229,8 +1252,18 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GqlPaperCommentResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PaperComment'] = GqlResolversParentTypes['PaperComment']> = ResolversObject<{
+  firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  published?: Resolver<GqlResolversTypes['Boolean'], ParentType, ContextType>;
+  text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  userId?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type GqlPaperFormDataResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PaperFormData'] = GqlResolversParentTypes['PaperFormData']> = ResolversObject<{
   answer?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  comments?: Resolver<Array<GqlResolversTypes['PaperComment']>, ParentType, ContextType>;
   hint?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   question?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -1384,6 +1417,7 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   Mutation?: GqlMutationResolvers<ContextType>;
   OAuthPayload?: GqlOAuthPayloadResolvers<ContextType>;
   Paper?: GqlPaperResolvers<ContextType>;
+  PaperComment?: GqlPaperCommentResolvers<ContextType>;
   PaperFormData?: GqlPaperFormDataResolvers<ContextType>;
   PrintPayload?: GqlPrintPayloadResolvers<ContextType>;
   PublishCommentsPayload?: GqlPublishCommentsPayloadResolvers<ContextType>;

@@ -14,6 +14,14 @@ export const MentorPaperPage: React.FC = () => {
   const { loading, data } = useMentorPaperPageDataQuery()
   const navigate = useNavigate()
 
+  const navigateToPaperFeedbackPage = (paperId: string) => {
+    navigate('/paper/feedback/' + paperId)
+  }
+
+  const navigateToPaperDiscussionPage = (paperId: string) => {
+    navigate('/paper/feedback/discussion/' + paperId)
+  }
+
   if (!data) {
     return (
       <Template type="Main">
@@ -30,6 +38,29 @@ export const MentorPaperPage: React.FC = () => {
         <Loader />
       </Template>
     )
+  }
+
+  const getContinueButtonText = (paperStatus: PaperStatus) => {
+    switch (paperStatus) {
+      case PaperStatus.NotStarted:
+        return strings.start
+        break
+      case PaperStatus.InProgress:
+        return strings.edit
+        break
+      case PaperStatus.TraineeDone:
+        return strings.start
+        break
+      case PaperStatus.MentorDone:
+        return strings.start
+        break
+      case PaperStatus.InReview:
+        return strings.edit
+        break
+      case PaperStatus.Archived:
+        return 'You should not be able to see this, report as a bug'
+        break
+    }
   }
 
   return (
@@ -98,13 +129,25 @@ export const MentorPaperPage: React.FC = () => {
                   <Spacer y="xl">
                     <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {paper?.status === PaperStatus.TraineeDone ? (
+                  {[
+                    PaperStatus.NotStarted,
+                    PaperStatus.InProgress,
+                    PaperStatus.TraineeDone,
+                    PaperStatus.Archived,
+                    PaperStatus.MentorDone,
+                  ].includes(paper?.status) && (
                     <Flex justifyContent={'flex-end'}>
-                      <PrimaryButton onClick={() => navigate(`/paper/feedback/${paper?.id}`)}>
-                        {paper.feedbackMentor.length > 0 ? strings.edit : strings.start}
+                      <PrimaryButton
+                        onClick={() =>
+                          (paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0
+                            ? navigateToPaperDiscussionPage(paper.id)
+                            : navigateToPaperFeedbackPage(paper.id)
+                        }
+                      >
+                        {getContinueButtonText(paper.status)}
                       </PrimaryButton>
                     </Flex>
-                  ) : null}
+                  )}
                 </Container>
               </Spacer>
             ) : null

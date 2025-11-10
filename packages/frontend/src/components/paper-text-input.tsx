@@ -74,6 +74,7 @@ const PaperTextInput: React.FC<PaperTextInputProps> = ({
       question: entry.question,
       id: entry.id,
       hint: entry.hint ? entry.hint : '',
+      comments: [],
     })
   }
 
