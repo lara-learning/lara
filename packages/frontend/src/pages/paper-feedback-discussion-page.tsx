@@ -72,7 +72,9 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
   const data = useFeedbackDiscussionPageDataQuery()
 
   const currentUser =
-    data.data?.currentUser?.__typename === 'Mentor' || data.data?.currentUser?.__typename === 'Trainee'
+    data.data?.currentUser?.__typename === 'Mentor' ||
+    data.data?.currentUser?.__typename === 'Trainee' ||
+    data.data?.currentUser?.__typename === 'Trainer'
       ? data.data.currentUser
       : undefined
 
@@ -81,10 +83,6 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
   const paper = papers?.find((p) => String(p?.id) === String(paperId))
 
   const [updatePaper] = useUpdatePaperMutation()
-
-  console.log('current user: ', currentUser)
-  console.log('paper: ', paper)
-  console.log('papers: ', papers)
 
   if (!paper || !currentUser) {
     return (

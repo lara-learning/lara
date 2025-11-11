@@ -45,6 +45,7 @@ describe('createPaperData', () => {
           answer: 'TestAnswer',
           question: 'TestQuestion',
           hint: 'TestHint',
+          comments: [],
         },
       ],
       feedbackTrainee: [],

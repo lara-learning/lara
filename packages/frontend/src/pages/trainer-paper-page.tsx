@@ -100,6 +100,10 @@ export const TrainerPaperPage: React.FC = () => {
     navigate('/paper/briefing/' + paperId)
   }
 
+  const navigateToPaperDiscussionPage = (paperId: string) => {
+    navigate('/paper/feedback/discussion/' + paperId)
+  }
+
   return (
     <Template type="Main">
       {loading && <Loader />}
@@ -149,7 +153,7 @@ export const TrainerPaperPage: React.FC = () => {
                           </Box>
                           <Box width={3 / 5}>
                             <Flex flexDirection={'row'} alignItems={'center'}>
-                              {paper?.status === PaperStatus.TraineeDone ? (
+                              {[PaperStatus.MentorDone].includes(paper?.status) ? (
                                 <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                               ) : (
                                 <StyledIcon name={'X'} size="24px" color={'errorRed'} />
@@ -184,10 +188,16 @@ export const TrainerPaperPage: React.FC = () => {
                   <Spacer y="xl">
                     <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {[PaperStatus.NotStarted, PaperStatus.InProgress].includes(paper?.status) && (
+                  {[PaperStatus.NotStarted].includes(paper?.status) ? (
                     <Flex justifyContent={'flex-end'}>
                       <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
                         {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
+                      </PrimaryButton>
+                    </Flex>
+                  ) : (
+                    <Flex justifyContent={'flex-end'}>
+                      <PrimaryButton onClick={() => navigateToPaperDiscussionPage(paper.id)}>
+                        {strings.comment}
                       </PrimaryButton>
                     </Flex>
                   )}

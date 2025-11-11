@@ -118,6 +118,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/paper" element={<TrainerPaperPage />} />
                 <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
                 <Route path="/paper/briefing/:paperId" element={<PaperBriefingPage />} />
+                <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
               </>
             )}
           </>

@@ -14,6 +14,7 @@ export default interface Translation {
   cancel: string
   edit: string
   done: string
+  comment: string
   markDelete: string
   unmarkDelete: string
   deleteAt: string
