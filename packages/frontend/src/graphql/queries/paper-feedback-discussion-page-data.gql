@@ -117,5 +117,62 @@ query FeedbackDiscussionPageData {
         }
       }
     }
+    ... on Trainer {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+      }
+    }
   }
 }

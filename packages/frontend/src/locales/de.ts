@@ -15,6 +15,7 @@ const germanTranslation: Translation = {
   save: 'Speichern',
   edit: 'Bearbeiten',
   done: 'Fertig',
+  comment: 'Kommentiere',
   markDelete: 'für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
   deleteAt: 'Löschen nach',

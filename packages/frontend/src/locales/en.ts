@@ -16,6 +16,7 @@ const englishTranslation: Translation = {
   cancel: 'Cancel',
   edit: 'edit',
   done: 'done',
+  comment: 'Comment',
   markDelete: 'mark for deletion',
   unmarkDelete: 'remove deletion mark',
   deleteAt: 'delete at',

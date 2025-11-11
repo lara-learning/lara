@@ -1314,7 +1314,7 @@ export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?: { __
 export type FeedbackDiscussionPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedbackDiscussionPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, lastName: string, firstName: string, userId: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined };
+export type FeedbackDiscussionPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Mentor', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, lastName: string, firstName: string, userId: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, papers?: Array<{ __typename?: 'Paper', id: string, traineeId: string, trainerId: string, client: string, mentorId: string, periodStart?: string | undefined, periodEnd?: string | undefined, schoolPeriodStart?: string | undefined, schoolPeriodEnd?: string | undefined, subject: string, status: PaperStatus, briefing: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackTrainee: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }>, feedbackMentor: Array<{ __typename?: 'PaperFormData', id: string, questionId: string, question: string, answer?: string | undefined, hint?: string | undefined, comments: Array<{ __typename?: 'PaperComment', text: string, userId: string, lastName: string, firstName: string, published: boolean }> }> } | undefined> | undefined } | undefined };
 
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -3030,6 +3030,63 @@ export const FeedbackDiscussionPageDataDocument = gql`
       }
     }
     ... on Trainee {
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            text
+            userId
+            lastName
+            firstName
+            published
+          }
+        }
+      }
+    }
+    ... on Trainer {
       papers {
         id
         traineeId
