@@ -101,6 +101,17 @@ export type GqlCreateTrainerInput = {
   lastName: Scalars['String']['input'];
 };
 
+export type GqlCursor = {
+  __typename?: 'Cursor';
+  owner: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
+};
+
+export type GqlCursorInput = {
+  owner: Scalars['String']['input'];
+  position: Scalars['Int']['input'];
+};
+
 export type GqlDay = GqlCommentableInterface & {
   __typename?: 'Day';
   comments: Array<GqlComment>;
@@ -148,6 +159,27 @@ export type GqlEntry = GqlCommentableInterface & {
 export type GqlEntryInput = {
   text: Scalars['String']['input'];
   time: Scalars['Int']['input'];
+};
+
+export type GqlFazit = {
+  __typename?: 'Fazit';
+  content: Scalars['String']['output'];
+  cursorPositions: Array<GqlCursor>;
+  id: Scalars['ID']['output'];
+  version: Scalars['Int']['output'];
+};
+
+export type GqlFazitUpdateInput = {
+  content: Scalars['String']['input'];
+  cursorPositions: Array<GqlCursorInput>;
+  id: Scalars['ID']['input'];
+  version: Scalars['Int']['input'];
+};
+
+export type GqlFazitUpdateResponse = {
+  __typename?: 'FazitUpdateResponse';
+  newFazit: GqlFazit;
+  success: Scalars['Boolean']['output'];
 };
 
 export type GqlLaraConfig = {
@@ -275,6 +307,8 @@ export type GqlMutation = {
   updateDay?: Maybe<GqlDay>;
   updateEntry: GqlMutateEntryPayload;
   updateEntryOrder: GqlMutateEntryPayload;
+  updateFazit: GqlFazitUpdateResponse;
+  updateFazitCursorPos?: Maybe<GqlCursor>;
   /** Updates Mentor. */
   updateMentor?: Maybe<GqlMentor>;
   /** Update Paper */
@@ -499,6 +533,20 @@ export type GqlMutationUpdateEntryOrderArgs = {
 };
 
 
+export type GqlMutationUpdateFazitArgs = {
+  content: Scalars['String']['input'];
+  cursorPosition: GqlCursorInput;
+  id: Scalars['ID']['input'];
+  version: Scalars['Int']['input'];
+};
+
+
+export type GqlMutationUpdateFazitCursorPosArgs = {
+  cursorPosition: GqlCursorInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type GqlMutationUpdateMentorArgs = {
   id: Scalars['ID']['input'];
   input: GqlUpdateMentorInput;
@@ -548,6 +596,7 @@ export type GqlPaper = {
   client: Scalars['String']['output'];
   conclusion?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  fazit?: Maybe<GqlFazit>;
   feedbackMentor: Array<GqlPaperFormData>;
   feedbackTrainee: Array<GqlPaperFormData>;
   id: Scalars['ID']['output'];
@@ -625,6 +674,7 @@ export type GqlPaperStatus =
 export type GqlPaperUpdateInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String']['input'];
+  fazit?: InputMaybe<GqlFazitUpdateInput>;
   feedbackMentor: Array<GqlPaperEntryInput>;
   feedbackTrainee: Array<GqlPaperEntryInput>;
   id: Scalars['ID']['input'];
@@ -661,6 +711,8 @@ export type GqlQuery = {
   config: GqlLaraConfig;
   /** Returns the logged in user. This user can be either a Trainee or a Trainer. */
   currentUser?: Maybe<GqlUserInterface>;
+  /** Get the fazit with Id */
+  getFazit?: Maybe<GqlFazit>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
   /** Get all Mentors */
@@ -681,6 +733,11 @@ export type GqlQuery = {
   trainees: Array<GqlTrainee>;
   /** Get all Trainers */
   trainers: Array<GqlTrainer>;
+};
+
+
+export type GqlQueryGetFazitArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -960,12 +1017,17 @@ export type GqlResolversTypes = ResolversObject<{
   CreateMentorInput: GqlCreateMentorInput;
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
+  Cursor: ResolverTypeWrapper<GqlCursor>;
+  CursorInput: GqlCursorInput;
   Day: ResolverTypeWrapper<Day>;
   DayStatusEnum: GqlDayStatusEnum;
   DeleteCommentPayload: ResolverTypeWrapper<Omit<GqlDeleteCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversTypes['Comment'], commentable: GqlResolversTypes['CommentableInterface'] }>;
   DevSetUserPayload: ResolverTypeWrapper<Omit<GqlDevSetUserPayload, 'user'> & { user?: Maybe<GqlResolversTypes['UserInterface']> }>;
   Entry: ResolverTypeWrapper<Entry>;
   EntryInput: GqlEntryInput;
+  Fazit: ResolverTypeWrapper<GqlFazit>;
+  FazitUpdateInput: GqlFazitUpdateInput;
+  FazitUpdateResponse: ResolverTypeWrapper<GqlFazitUpdateResponse>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   LaraConfig: ResolverTypeWrapper<GqlLaraConfig>;
@@ -1018,11 +1080,16 @@ export type GqlResolversParentTypes = ResolversObject<{
   CreateMentorInput: GqlCreateMentorInput;
   CreateTraineeInput: GqlCreateTraineeInput;
   CreateTrainerInput: GqlCreateTrainerInput;
+  Cursor: GqlCursor;
+  CursorInput: GqlCursorInput;
   Day: Day;
   DeleteCommentPayload: Omit<GqlDeleteCommentPayload, 'comment' | 'commentable'> & { comment: GqlResolversParentTypes['Comment'], commentable: GqlResolversParentTypes['CommentableInterface'] };
   DevSetUserPayload: Omit<GqlDevSetUserPayload, 'user'> & { user?: Maybe<GqlResolversParentTypes['UserInterface']> };
   Entry: Entry;
   EntryInput: GqlEntryInput;
+  Fazit: GqlFazit;
+  FazitUpdateInput: GqlFazitUpdateInput;
+  FazitUpdateResponse: GqlFazitUpdateResponse;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   LaraConfig: GqlLaraConfig;
@@ -1103,6 +1170,12 @@ export type GqlCreateCommentPayloadResolvers<ContextType = Context, ParentType e
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type GqlCursorResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Cursor'] = GqlResolversParentTypes['Cursor']> = ResolversObject<{
+  owner?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  position?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type GqlDayResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Day'] = GqlResolversParentTypes['Day']> = ResolversObject<{
   comments?: Resolver<Array<GqlResolversTypes['Comment']>, ParentType, ContextType>;
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
@@ -1131,6 +1204,20 @@ export type GqlEntryResolvers<ContextType = Context, ParentType extends GqlResol
   orderId?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   time?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlFazitResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Fazit'] = GqlResolversParentTypes['Fazit']> = ResolversObject<{
+  content?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  cursorPositions?: Resolver<Array<GqlResolversTypes['Cursor']>, ParentType, ContextType>;
+  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  version?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlFazitUpdateResponseResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['FazitUpdateResponse'] = GqlResolversParentTypes['FazitUpdateResponse']> = ResolversObject<{
+  newFazit?: Resolver<GqlResolversTypes['Fazit'], ParentType, ContextType>;
+  success?: Resolver<GqlResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1216,6 +1303,8 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   updateDay?: Resolver<Maybe<GqlResolversTypes['Day']>, ParentType, ContextType, RequireFields<GqlMutationUpdateDayArgs, 'id'>>;
   updateEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryArgs, 'id' | 'input'>>;
   updateEntryOrder?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationUpdateEntryOrderArgs, 'dayId' | 'entryId' | 'orderId'>>;
+  updateFazit?: Resolver<GqlResolversTypes['FazitUpdateResponse'], ParentType, ContextType, RequireFields<GqlMutationUpdateFazitArgs, 'content' | 'cursorPosition' | 'id' | 'version'>>;
+  updateFazitCursorPos?: Resolver<Maybe<GqlResolversTypes['Cursor']>, ParentType, ContextType, RequireFields<GqlMutationUpdateFazitCursorPosArgs, 'cursorPosition' | 'id'>>;
   updateMentor?: Resolver<Maybe<GqlResolversTypes['Mentor']>, ParentType, ContextType, RequireFields<GqlMutationUpdateMentorArgs, 'id' | 'input'>>;
   updatePaper?: Resolver<GqlResolversTypes['Paper'], ParentType, ContextType, RequireFields<GqlMutationUpdatePaperArgs, 'input'>>;
   updatePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationUpdatePaperEntryArgs, 'input'>>;
@@ -1237,6 +1326,7 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   client?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  fazit?: Resolver<Maybe<GqlResolversTypes['Fazit']>, ParentType, ContextType>;
   feedbackMentor?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
   feedbackTrainee?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
@@ -1288,6 +1378,7 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   companies?: Resolver<Maybe<Array<GqlResolversTypes['Company']>>, ParentType, ContextType>;
   config?: Resolver<GqlResolversTypes['LaraConfig'], ParentType, ContextType>;
   currentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
+  getFazit?: Resolver<Maybe<GqlResolversTypes['Fazit']>, ParentType, ContextType, RequireFields<GqlQueryGetFazitArgs, 'id'>>;
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
@@ -1406,10 +1497,13 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   CommentableInterface?: GqlCommentableInterfaceResolvers<ContextType>;
   Company?: GqlCompanyResolvers<ContextType>;
   CreateCommentPayload?: GqlCreateCommentPayloadResolvers<ContextType>;
+  Cursor?: GqlCursorResolvers<ContextType>;
   Day?: GqlDayResolvers<ContextType>;
   DeleteCommentPayload?: GqlDeleteCommentPayloadResolvers<ContextType>;
   DevSetUserPayload?: GqlDevSetUserPayloadResolvers<ContextType>;
   Entry?: GqlEntryResolvers<ContextType>;
+  Fazit?: GqlFazitResolvers<ContextType>;
+  FazitUpdateResponse?: GqlFazitUpdateResponseResolvers<ContextType>;
   LaraConfig?: GqlLaraConfigResolvers<ContextType>;
   Mentor?: GqlMentorResolvers<ContextType>;
   MutateEntryPayload?: GqlMutateEntryPayloadResolvers<ContextType>;

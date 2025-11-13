@@ -171,6 +171,7 @@ input PaperUpdateInput {
   briefing: [PaperEntryInput!]!
   feedbackTrainee: [PaperEntryInput!]!
   feedbackMentor: [PaperEntryInput!]!
+  fazit: FazitUpdateInput
 }
 
 input AnswerPaperInput {
@@ -393,6 +394,10 @@ type Mutation {
   Deletes Entry for Lara Paper
   """
   deletePaperEntry(id: ID!): PaperFormData!
+
+  updateFazit(id: ID! content: String! version: Int! cursorPosition: CursorInput!): FazitUpdateResponse!
+
+  updateFazitCursorPos(id: ID!, cursorPosition: CursorInput!): Cursor
 }
 
 type LaraConfig {
@@ -489,6 +494,11 @@ type Query {
   Get the alexa account linking url
   """
   alexaLinkingUrl: String
+
+  """
+  Get the fazit with Id
+  """
+  getFazit(id: ID!): Fazit
 }
 
 type PrintPayload {
@@ -619,6 +629,35 @@ input UpdateMentorInput {
   lastName: String
   startDate: String
   endDate: String
+}
+
+type Cursor {
+  position: Int!
+  owner: String!
+}
+
+input CursorInput {
+  position: Int!
+  owner: String!
+}
+
+type Fazit {
+  id: ID!
+  content: String!
+  version: Int!
+  cursorPositions: [Cursor!]!
+}
+
+type FazitUpdateResponse {
+  success: Boolean!
+  newFazit: Fazit!
+}
+
+input FazitUpdateInput {
+  id: ID!
+  content: String!
+  version: Int!
+  cursorPositions: [CursorInput!]!
 }
 
 type Trainer implements UserInterface {
@@ -767,4 +806,5 @@ type Paper {
   schoolPeriodStart: String
   schoolPeriodEnd: String
   subject: String!
+  fazit: Fazit
 }

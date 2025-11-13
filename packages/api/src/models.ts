@@ -4,6 +4,7 @@ import {
   GqlCommentableInterface,
   GqlDay,
   GqlEntry,
+  GqlFazit,
   GqlMentor,
   GqlPaper,
   GqlPaperFormData,
@@ -75,6 +76,8 @@ export type Paper = Omit<GqlPaper, 'briefing' | 'feedbackTrainee' | 'feedbackMen
   feedbackTrainee: GqlPaperFormData[]
   feedbackMentor: GqlPaperFormData[]
 }
+
+export type Fazit = GqlFazit
 
 export type PaperFormData = Omit<GqlPaperFormData, 'answer' | 'question' | 'questionId' | 'hint' | 'id'> & {
   answer?: string

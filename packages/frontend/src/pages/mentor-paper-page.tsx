@@ -1,7 +1,7 @@
 import { Container, H1, Paragraph, Spacer, StyledIcon, Text } from '@lara/components'
 import React from 'react'
 import { Template } from '../templates/template'
-import { Mentor, PaperStatus, useMentorPaperPageDataQuery } from '../graphql'
+import { Mentor, Paper, PaperStatus, useMentorPaperPageDataQuery } from '../graphql'
 import { Box, Flex } from '@lara/components'
 import strings from '../locales/localization'
 import ProgressBar from '../components/progress-bar'
@@ -20,6 +20,10 @@ export const MentorPaperPage: React.FC = () => {
 
   const navigateToPaperDiscussionPage = (paperId: string) => {
     navigate('/paper/feedback/discussion/' + paperId)
+  }
+
+  const navigateToFazitPage = (paperId: string) => {
+    navigate('/paper/fazit/' + paperId)
   }
 
   if (!data) {
@@ -61,6 +65,29 @@ export const MentorPaperPage: React.FC = () => {
         return 'You should not be able to see this, report as a bug'
         break
     }
+  }
+
+  const hasCommented = (paper: Paper) => {
+    const foundUserIds: Array<string> = []
+    paper.feedbackMentor.forEach((feedback) => {
+      feedback.comments?.forEach((comment) => {
+        if (!foundUserIds.includes(comment.userId)) {
+          foundUserIds.push(comment.userId)
+        }
+      })
+    })
+    paper.feedbackTrainee.forEach((feedback) => {
+      feedback.comments?.forEach((comment) => {
+        if (!foundUserIds.includes(comment.userId)) {
+          foundUserIds.push(comment.userId)
+        }
+      })
+    })
+
+    if (foundUserIds.length >= 2) {
+      return true
+    }
+    return false
   }
 
   return (
@@ -140,7 +167,9 @@ export const MentorPaperPage: React.FC = () => {
                       <PrimaryButton
                         onClick={() =>
                           (paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0
-                            ? navigateToPaperDiscussionPage(paper.id)
+                            ? hasCommented(paper)
+                              ? navigateToPaperDiscussionPage(paper.id)
+                              : navigateToFazitPage(paper.id)
                             : navigateToPaperFeedbackPage(paper.id)
                         }
                       >

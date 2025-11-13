@@ -99,6 +99,17 @@ export type CreateTrainerInput = {
   lastName: Scalars['String']['input'];
 };
 
+export type Cursor = {
+  __typename?: 'Cursor';
+  owner: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
+};
+
+export type CursorInput = {
+  owner: Scalars['String']['input'];
+  position: Scalars['Int']['input'];
+};
+
 export type Day = CommentableInterface & {
   __typename?: 'Day';
   comments: Array<Comment>;
@@ -147,6 +158,27 @@ export type Entry = CommentableInterface & {
 export type EntryInput = {
   text: Scalars['String']['input'];
   time: Scalars['Int']['input'];
+};
+
+export type Fazit = {
+  __typename?: 'Fazit';
+  content: Scalars['String']['output'];
+  cursorPositions: Array<Cursor>;
+  id: Scalars['ID']['output'];
+  version: Scalars['Int']['output'];
+};
+
+export type FazitUpdateInput = {
+  content: Scalars['String']['input'];
+  cursorPositions: Array<CursorInput>;
+  id: Scalars['ID']['input'];
+  version: Scalars['Int']['input'];
+};
+
+export type FazitUpdateResponse = {
+  __typename?: 'FazitUpdateResponse';
+  newFazit: Fazit;
+  success: Scalars['Boolean']['output'];
 };
 
 export type LaraConfig = {
@@ -274,6 +306,8 @@ export type Mutation = {
   updateDay?: Maybe<Day>;
   updateEntry: MutateEntryPayload;
   updateEntryOrder: MutateEntryPayload;
+  updateFazit: FazitUpdateResponse;
+  updateFazitCursorPos?: Maybe<Cursor>;
   /** Updates Mentor. */
   updateMentor?: Maybe<Mentor>;
   /** Update Paper */
@@ -498,6 +532,20 @@ export type MutationUpdateEntryOrderArgs = {
 };
 
 
+export type MutationUpdateFazitArgs = {
+  content: Scalars['String']['input'];
+  cursorPosition: CursorInput;
+  id: Scalars['ID']['input'];
+  version: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateFazitCursorPosArgs = {
+  cursorPosition: CursorInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateMentorArgs = {
   id: Scalars['ID']['input'];
   input: UpdateMentorInput;
@@ -547,6 +595,7 @@ export type Paper = {
   client: Scalars['String']['output'];
   conclusion?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  fazit?: Maybe<Fazit>;
   feedbackMentor: Array<PaperFormData>;
   feedbackTrainee: Array<PaperFormData>;
   id: Scalars['ID']['output'];
@@ -625,6 +674,7 @@ export enum PaperStatus {
 export type PaperUpdateInput = {
   briefing: Array<PaperEntryInput>;
   client: Scalars['String']['input'];
+  fazit?: InputMaybe<FazitUpdateInput>;
   feedbackMentor: Array<PaperEntryInput>;
   feedbackTrainee: Array<PaperEntryInput>;
   id: Scalars['ID']['input'];
@@ -661,6 +711,8 @@ export type Query = {
   config: LaraConfig;
   /** Returns the logged in user. This user can be either a Trainee or a Trainer. */
   currentUser?: Maybe<UserInterface>;
+  /** Get the fazit with Id */
+  getFazit?: Maybe<Fazit>;
   /** Get a User by ID */
   getUser?: Maybe<UserInterface>;
   /** Get all Mentors */
@@ -681,6 +733,11 @@ export type Query = {
   trainees: Array<Trainee>;
   /** Get all Trainers */
   trainers: Array<Trainer>;
+};
+
+
+export type QueryGetFazitArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1165,6 +1222,24 @@ export type UpdateEntryMutationVariables = Exact<{
 
 export type UpdateEntryMutation = { __typename?: 'Mutation', updateEntry: { __typename?: 'MutateEntryPayload', entry?: { __typename?: 'Entry', id: string, time: number, text: string } | undefined } };
 
+export type UpdateFazitCursorPosMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  cursorPosition: CursorInput;
+}>;
+
+
+export type UpdateFazitCursorPosMutation = { __typename?: 'Mutation', updateFazitCursorPos?: { __typename?: 'Cursor', position: number, owner: string } | undefined };
+
+export type FazitUpdateMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  content: Scalars['String']['input'];
+  version: Scalars['Int']['input'];
+  cursorPosition: CursorInput;
+}>;
+
+
+export type FazitUpdateMutation = { __typename?: 'Mutation', updateFazit: { __typename?: 'FazitUpdateResponse', success: boolean, newFazit: { __typename?: 'Fazit', id: string, content: string, version: number, cursorPositions: Array<{ __typename?: 'Cursor', position: number, owner: string }> } } };
+
 export type UpdateMentorMutationVariables = Exact<{
   input: UpdateMentorInput;
   id: Scalars['ID']['input'];
@@ -1290,6 +1365,13 @@ export type UserPageQueryVariables = Exact<{
 
 
 export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Mentor', deleteAt?: string | undefined, startDate?: string | undefined, endDate?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Mentor', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+
+export type GetFazitQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetFazitQuery = { __typename?: 'Query', getFazit?: { __typename?: 'Fazit', id: string, content: string, version: number, cursorPositions: Array<{ __typename?: 'Cursor', owner: string, position: number }> } | undefined };
 
 export type MentorsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2214,6 +2296,45 @@ export function useUpdateEntryMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<UpdateEntryMutation, UpdateEntryMutationVariables>(UpdateEntryDocument, options);
       }
 export type UpdateEntryMutationHookResult = ReturnType<typeof useUpdateEntryMutation>;
+export const UpdateFazitCursorPosDocument = gql`
+    mutation updateFazitCursorPos($id: ID!, $cursorPosition: CursorInput!) {
+  updateFazitCursorPos(id: $id, cursorPosition: $cursorPosition) {
+    position
+    owner
+  }
+}
+    `;
+export function useUpdateFazitCursorPosMutation(baseOptions?: Apollo.MutationHookOptions<UpdateFazitCursorPosMutation, UpdateFazitCursorPosMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateFazitCursorPosMutation, UpdateFazitCursorPosMutationVariables>(UpdateFazitCursorPosDocument, options);
+      }
+export type UpdateFazitCursorPosMutationHookResult = ReturnType<typeof useUpdateFazitCursorPosMutation>;
+export const FazitUpdateDocument = gql`
+    mutation FazitUpdate($id: ID!, $content: String!, $version: Int!, $cursorPosition: CursorInput!) {
+  updateFazit(
+    id: $id
+    content: $content
+    version: $version
+    cursorPosition: $cursorPosition
+  ) {
+    success
+    newFazit {
+      id
+      content
+      version
+      cursorPositions {
+        position
+        owner
+      }
+    }
+  }
+}
+    `;
+export function useFazitUpdateMutation(baseOptions?: Apollo.MutationHookOptions<FazitUpdateMutation, FazitUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FazitUpdateMutation, FazitUpdateMutationVariables>(FazitUpdateDocument, options);
+      }
+export type FazitUpdateMutationHookResult = ReturnType<typeof useFazitUpdateMutation>;
 export const UpdateMentorDocument = gql`
     mutation UpdateMentor($input: UpdateMentorInput!, $id: ID!) {
   updateMentor(input: $input, id: $id) {
@@ -2833,6 +2954,34 @@ export function useUserPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo
 export type UserPageQueryHookResult = ReturnType<typeof useUserPageQuery>;
 export type UserPageLazyQueryHookResult = ReturnType<typeof useUserPageLazyQuery>;
 export type UserPageSuspenseQueryHookResult = ReturnType<typeof useUserPageSuspenseQuery>;
+export const GetFazitDocument = gql`
+    query GetFazit($id: ID!) {
+  getFazit(id: $id) {
+    id
+    content
+    version
+    cursorPositions {
+      owner
+      position
+    }
+  }
+}
+    `;
+export function useGetFazitQuery(baseOptions: Apollo.QueryHookOptions<GetFazitQuery, GetFazitQueryVariables> & ({ variables: GetFazitQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFazitQuery, GetFazitQueryVariables>(GetFazitDocument, options);
+      }
+export function useGetFazitLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFazitQuery, GetFazitQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFazitQuery, GetFazitQueryVariables>(GetFazitDocument, options);
+        }
+export function useGetFazitSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetFazitQuery, GetFazitQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFazitQuery, GetFazitQueryVariables>(GetFazitDocument, options);
+        }
+export type GetFazitQueryHookResult = ReturnType<typeof useGetFazitQuery>;
+export type GetFazitLazyQueryHookResult = ReturnType<typeof useGetFazitLazyQuery>;
+export type GetFazitSuspenseQueryHookResult = ReturnType<typeof useGetFazitSuspenseQuery>;
 export const MentorsPageDocument = gql`
     query MentorsPage {
   mentors {

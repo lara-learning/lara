@@ -1,0 +1,14 @@
+mutation FazitUpdate($id: ID! $content: String! $version: Int! $cursorPosition: CursorInput!) {
+  updateFazit(id: $id content: $content version: $version cursorPosition: $cursorPosition) {
+    success
+    newFazit {
+      id
+      content
+      version
+      cursorPositions {
+        position
+        owner
+      }
+    }
+  }
+}
