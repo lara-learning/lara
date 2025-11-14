@@ -51,7 +51,7 @@ import { styled } from 'styled-components'
 
 const SecondaryWrapper = styled.div`
   display: flex;
-  padding: 24px 24px;
+  padding: 24px 24px 0px;
   justify-content: end;
   align-items: center;
 `
