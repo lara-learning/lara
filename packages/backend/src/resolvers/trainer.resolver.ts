@@ -35,7 +35,6 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         ? {
             ...report,
             comments: report?.comments.map((com) => {
-              if (com.published == null) com.published = true
               if (com.published === false) {
                 return com
               } else {
