@@ -31,53 +31,11 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       const report = await reportByYearAndWeek(year, week, trainee.id)
 
-      const reportCleaned = report
-        ? {
-            ...report,
-            comments: report?.comments.map((com) => {
-              if (com.published === false) {
-                return com
-              } else {
-                return {
-                  ...com,
-                  published: true,
-                }
-              }
-            }),
-            days: report?.days.map((day) => ({
-              ...day,
-              entries: day.entries.map((entry) => ({
-                ...entry,
-                comments: entry.comments.map((com) => {
-                  if (com.published === false) {
-                    return com
-                  } else {
-                    return {
-                      ...com,
-                      published: true,
-                    }
-                  }
-                }),
-              })),
-              comments: day.comments.map((com) => {
-                if (com.published === false) {
-                  return com
-                } else {
-                  return {
-                    ...com,
-                    published: true,
-                  }
-                }
-              }),
-            })),
-          }
-        : undefined
-
-      if (!reportCleaned || reportCleaned.traineeId !== trainee.id) {
+      if (!report || report.traineeId !== trainee.id) {
         throw new GraphQLError(t('errors.missingReport'))
       }
 
-      return reportCleaned
+      return report
     },
   },
   Mutation: {
