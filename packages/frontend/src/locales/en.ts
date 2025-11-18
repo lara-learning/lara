@@ -12,6 +12,8 @@ const englishTranslation: Translation = {
   company: 'Company',
   companyPick: 'Please choose your company:',
   continue: 'Continue',
+  create: 'Create',
+  delete: 'Delete',
   save: 'Save',
   cancel: 'Cancel',
   edit: 'edit',
