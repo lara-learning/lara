@@ -23,7 +23,6 @@ import strings from '../locales/localization'
 import Avatar from './avatar'
 import Badge from './badge'
 import Loader from './loader'
-
 interface TraineeRowProps {
   active?: boolean
   trainee: Pick<Trainee, 'startDate' | 'id' | 'firstName' | 'lastName' | 'course'> & {
@@ -52,7 +51,6 @@ const getTraineeshipYear = (startDateString: string) => {
 const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
   const [claimTrainee] = useClaimTraineeMutation()
   const [unclaimTrainee] = useUnclaimTraineeMutation()
-
   const [loading, setLoading] = React.useState(false)
 
   const claim = async () => {
@@ -80,6 +78,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
   }
 
   const { active, trainee, trainerId } = props
+
   const headerDestination = active ? '/trainees/' : `/trainees/${trainee.id}`
   return (
     <StyledWrapper>
@@ -125,6 +124,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
           </StyledHeader>
         </StyledControls>
       </Flex>
+
       <motion.div
         animate={{ height: active ? 'auto' : 0 }}
         transition={{ duration: 0.5 }}
