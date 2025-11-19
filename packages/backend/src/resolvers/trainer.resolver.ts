@@ -4,9 +4,12 @@ import { GqlResolvers, TrainerContext } from '@lara/api'
 
 import { reportByYearAndWeek } from '../repositories/report.repo'
 import { allTrainees, traineeById, traineesByTrainerId } from '../repositories/trainee.repo'
-import { updateUser } from '../repositories/user.repo'
+import { updateUser, userById } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { createT } from '../i18n'
+import { addMonths } from 'date-fns'
+import { isTrainee } from '../permissions'
+import { sendDeletionMail } from '../services/email.service'
 
 export const trainerResolver: GqlResolvers<TrainerContext> = {
   Trainer: {
@@ -78,7 +81,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         throw new GraphQLError(t('errors.missingReport'))
       }
 
-      return reportCleaned
+      return report
     },
   },
   Mutation: {
@@ -119,6 +122,56 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         trainee: await updateUser(trainee, { removeKeys: ['trainerId'] }),
         trainer: currentUser,
       }
+    },
+
+    trainerMarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
+      const user = await userById(id)
+      const t = createT(currentUser.language)
+
+      if (!user) {
+        throw new GraphQLError(t('errors.missingUser'))
+      }
+
+      if (user.id === currentUser.id) {
+        throw new GraphQLError(t('errors.cantDeleteYourself'))
+      }
+
+      if (!isTrainee(user)) {
+        throw new GraphQLError(t('errors.insufficientPermissions'))
+      }
+
+      // // Prüfe ob der Trainer der Trainer des Trainees ist
+      // if (user.trainerId !== currentUser.id) {
+      //   throw new GraphQLError(t('errors.cantDeleteOtherTrainersTrainee'))
+      // }
+
+      user.deleteAt = addMonths(new Date(), 3).toISOString()
+
+      await updateUser(user, { updateKeys: ['deleteAt'] })
+
+      await sendDeletionMail(user)
+
+      return user
+    },
+
+    trainerUnMarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
+      const user = await userById(id)
+      const t = createT(currentUser.language)
+
+      if (!user) {
+        throw new GraphQLError(t('errors.missingUser'))
+      }
+
+      if (!isTrainee(user)) {
+        throw new GraphQLError(t('errors.insufficientPermissions'))
+      }
+
+      // // Prüfe ob der Trainer der Trainer des Trainees ist
+      // if (user.trainerId !== currentUser.id) {
+      //   throw new GraphQLError(t('errors.cantUnmarkOtherTrainersTrainee'))
+      // }
+
+      return updateUser(user, { removeKeys: ['deleteAt'] })
     },
   },
 }

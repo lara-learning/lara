@@ -1,4 +1,4 @@
-import React, { JSX } from 'react'
+import React, { JSX, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { Container } from './container'
@@ -7,7 +7,7 @@ import { UnstyledLink } from './unstyled-link'
 
 type EditUserLayoutProps = {
   backButton: JSX.Element
-  content: JSX.Element
+  content?: ReactNode
   actions: JSX.Element
 }
 
