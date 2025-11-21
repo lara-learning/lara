@@ -1,14 +1,15 @@
 import React from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { Box, Container, PaperH2, PaperLayout, Spacer, Spacings } from '@lara/components'
 import NavigationButtonLink from '../components/navigation-button-link'
 import { Template } from '../templates/template'
 import strings from '../locales/localization'
 
-import { PaperFormData, useUpdatePaperMutation, useFeedbackDiscussionPageDataQuery } from '../graphql'
+import { PaperFormData, useUpdatePaperMutation, useFeedbackDiscussionPageDataQuery, PaperStatus } from '../graphql'
 import { omitDeep } from '@apollo/client/utilities'
 import CommentSection from '../components/comment-section'
 import { styled } from 'styled-components'
+import { PrimaryButton } from '../components/button'
 
 export const PaperTextQuestion = styled.p`
   margin: 0;
@@ -70,6 +71,7 @@ export const FeedbackEntry: React.FC<FeedbackEntryProps> = ({ entry, onSubmit, d
 export const PaperFeedbackDiscussionPage: React.FC = () => {
   const { paperId } = useParams<{ paperId: string }>()
   const data = useFeedbackDiscussionPageDataQuery()
+  const navigate = useNavigate()
 
   const currentUser =
     data.data?.currentUser?.__typename === 'Mentor' ||
@@ -133,6 +135,7 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
           subject: paper.subject ?? '',
           periodStart: paper.periodStart,
           periodEnd: paper.periodEnd,
+          didSendEmail: false,
           schoolPeriodStart: paper.schoolPeriodStart,
           schoolPeriodEnd: paper.schoolPeriodEnd,
           status: paper.status,
@@ -143,6 +146,30 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
       },
       refetchQueries: ['TraineePaperPageData', 'MentorPaperPageData'],
     })
+  }
+
+  const finish = () => {
+    updatePaper({
+      variables: {
+        input: {
+          id: paper.id,
+          traineeId: paper.traineeId ?? '',
+          mentorId: paper.mentorId ?? '',
+          trainerId: paper.trainerId ?? '',
+          client: paper.client ?? '',
+          subject: paper.subject ?? '',
+          periodStart: paper.periodStart,
+          periodEnd: paper.periodEnd,
+          didSendEmail: false,
+          schoolPeriodStart: paper.schoolPeriodStart,
+          schoolPeriodEnd: paper.schoolPeriodEnd,
+          status: PaperStatus.InReview,
+          briefing: omitDeep(paper.briefing ?? [], '__typename'),
+          feedbackTrainee: omitDeep(paper.feedbackTrainee, '__typename'),
+          feedbackMentor: omitDeep(paper.feedbackMentor, '__typename'),
+        },
+      },
+    }).then(() => navigate('/paper'))
   }
 
   return (
@@ -189,6 +216,11 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
           </div>
         </PaperLayout>
       </Container>
+      <Spacer top="l" bottom="xxl">
+        <PrimaryButton style={{ float: 'right' }} onClick={finish}>
+          {strings.continue}
+        </PrimaryButton>
+      </Spacer>
     </Template>
   )
 }

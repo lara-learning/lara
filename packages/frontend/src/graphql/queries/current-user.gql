@@ -11,11 +11,179 @@ query CurrentUser {
       startDate
       endDate
       course
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            text
+            firstName
+            lastName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            lastName
+            text
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            text
+            firstName
+            lastName
+            published
+          }
+        }
+      }
     }
     ... on Trainer {
       id
       trainees {
         id
+      }
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            text
+            lastName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            text
+            lastName
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            text
+            lastName
+            published
+          }
+        }
+      }
+    }
+    ... on Mentor {
+      id
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            text
+            firstName
+            lastName
+            published
+          }
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            lastName
+            text
+            published
+          }
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+          comments {
+            userId
+            firstName
+            text
+            lastName
+            published
+          }
+        }
       }
     }
   }

@@ -15,5 +15,6 @@ export const generatePaper = (paperInput: GqlPaperInput): GqlPaper => {
     briefing: paperInput.briefing.map((entry) => generatePaperEntry(entry)),
     feedbackTrainee: paperInput.feedbackTrainee.map((entry) => generatePaperEntry(entry)),
     feedbackMentor: paperInput.feedbackMentor.map((entry) => generatePaperEntry(entry)),
+    didSendEmail: false,
   }
 }

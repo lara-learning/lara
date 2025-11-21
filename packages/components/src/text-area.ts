@@ -23,3 +23,24 @@ export const StyledTextArea = styled.textarea`
     color: ${(props) => props.theme.lightFont};
   }
 `
+
+export const StyledTextFazitArea = styled.textarea`
+  margin: ${Spacings.l};
+  box-sizing: border-box;
+  width: 90%;
+  min-height: auto;
+  font-family: ${Fonts.primary};
+  font-size: ${FontSizes.copy};
+  border: none;
+  outline: none;
+  resize: vertical;
+  border-bottom: 1px solid #b8b8b8;
+  color: ${(props) => props.theme.mediumFont};
+  background-color: ${(props) => props.theme.surface};
+  :focus {
+    color: ${(props) => props.theme.darkFont};
+  }
+  ::placeholder {
+    color: ${(props) => props.theme.lightFont};
+  }
+`

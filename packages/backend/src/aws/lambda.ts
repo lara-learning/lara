@@ -24,6 +24,7 @@ const functionNameMapping: Record<FunctionName, string> = {
 }
 
 type LambdaOptions = { functionName: 'email'; payload: EmailPayload } | { functionName: 'print'; payload: PrintPayload }
+type LambdaOutput = undefined | { success: 'error' | 'success'; filename: string | undefined }
 
 /**
  * Invokes a lambda and doesn't wait for a response.
@@ -36,4 +37,19 @@ export const invokeLambda = async ({ functionName, payload }: LambdaOptions): Pr
     InvocationType: 'Event',
     Payload: JSON.stringify(payload),
   })
+}
+
+/**
+ * Invokes a lambda and returns a response
+ * @param payload Lambda Payload
+ * @param functionName Defines between print and email Lambda
+ */
+export const invokeLambdaWithOutput = async ({ functionName, payload }: LambdaOptions): Promise<LambdaOutput> => {
+  const result = await lambda.invoke({
+    FunctionName: functionNameMapping[functionName],
+    InvocationType: 'RequestResponse',
+    Payload: JSON.stringify(payload),
+  })
+
+  return JSON.parse(new TextDecoder().decode(result.Payload))
 }

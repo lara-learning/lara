@@ -273,6 +273,8 @@ export type GqlMutation = {
   deletePaper: Array<Maybe<GqlPaper>>;
   /** Deletes Entry for Lara Paper */
   deletePaperEntry: GqlPaperFormData;
+  /** Updates if the pdf email was already sent */
+  didSendEmail?: Maybe<GqlDidSendEmailResponse>;
   /** Get Avatar Bucket Upload URL */
   getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Get a User by Email */
@@ -307,7 +309,9 @@ export type GqlMutation = {
   updateDay?: Maybe<GqlDay>;
   updateEntry: GqlMutateEntryPayload;
   updateEntryOrder: GqlMutateEntryPayload;
+  /** Updates a Fazit */
   updateFazit: GqlFazitUpdateResponse;
+  /** Update Fazit cursor position */
   updateFazitCursorPos?: Maybe<GqlCursor>;
   /** Updates Mentor. */
   updateMentor?: Maybe<GqlMentor>;
@@ -428,6 +432,12 @@ export type GqlMutationDeletePaperArgs = {
 
 
 export type GqlMutationDeletePaperEntryArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationDidSendEmailArgs = {
+  didSendEmail: Scalars['Boolean']['input'];
   id: Scalars['ID']['input'];
 };
 
@@ -596,6 +606,7 @@ export type GqlPaper = {
   client: Scalars['String']['output'];
   conclusion?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  didSendEmail: Scalars['Boolean']['output'];
   fazit?: Maybe<GqlFazit>;
   feedbackMentor: Array<GqlPaperFormData>;
   feedbackTrainee: Array<GqlPaperFormData>;
@@ -669,11 +680,13 @@ export type GqlPaperStatus =
   | 'InReview'
   | 'MentorDone'
   | 'NotStarted'
+  | 'ReviewDone'
   | 'TraineeDone';
 
 export type GqlPaperUpdateInput = {
   briefing: Array<GqlPaperEntryInput>;
   client: Scalars['String']['input'];
+  didSendEmail: Scalars['Boolean']['input'];
   fazit?: InputMaybe<GqlFazitUpdateInput>;
   feedbackMentor: Array<GqlPaperEntryInput>;
   feedbackTrainee: Array<GqlPaperEntryInput>;
@@ -692,6 +705,7 @@ export type GqlPaperUpdateInput = {
 export type GqlPrintPayload = {
   __typename?: 'PrintPayload';
   estimatedWaitingTime: Scalars['Int']['output'];
+  pdfUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type GqlPublishCommentsPayload = {
@@ -713,6 +727,8 @@ export type GqlQuery = {
   currentUser?: Maybe<GqlUserInterface>;
   /** Get the fazit with Id */
   getFazit?: Maybe<GqlFazit>;
+  /** Get Paper with Id */
+  getPaper?: Maybe<GqlPaper>;
   /** Get a User by ID */
   getUser?: Maybe<GqlUserInterface>;
   /** Get all Mentors */
@@ -741,6 +757,11 @@ export type GqlQueryGetFazitArgs = {
 };
 
 
+export type GqlQueryGetPaperArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type GqlQueryGetUserArgs = {
   id: Scalars['ID']['input'];
 };
@@ -753,6 +774,7 @@ export type GqlQueryPrintArgs = {
 
 export type GqlQueryPrintPaperArgs = {
   ids: Array<Scalars['ID']['input']>;
+  userType: GqlUserTypeEnum;
 };
 
 
@@ -934,6 +956,11 @@ export type GqlUserTypeEnum =
   /** User is a Trainer */
   | 'Trainer';
 
+export type GqlDidSendEmailResponse = {
+  __typename?: 'didSendEmailResponse';
+  didSendEmail?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -1065,6 +1092,7 @@ export type GqlResolversTypes = ResolversObject<{
   UserInput: GqlUserInput;
   UserInterface: ResolverTypeWrapper<UserInterface>;
   UserTypeEnum: GqlUserTypeEnum;
+  didSendEmailResponse: ResolverTypeWrapper<GqlDidSendEmailResponse>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1124,6 +1152,7 @@ export type GqlResolversParentTypes = ResolversObject<{
   UpdateTrainerInput: GqlUpdateTrainerInput;
   UserInput: GqlUserInput;
   UserInterface: UserInterface;
+  didSendEmailResponse: GqlDidSendEmailResponse;
 }>;
 
 export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Admin'] = GqlResolversParentTypes['Admin']> = ResolversObject<{
@@ -1285,6 +1314,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
   deletePaper?: Resolver<Array<Maybe<GqlResolversTypes['Paper']>>, ParentType, ContextType, RequireFields<GqlMutationDeletePaperArgs, 'paperId'>>;
   deletePaperEntry?: Resolver<GqlResolversTypes['PaperFormData'], ParentType, ContextType, RequireFields<GqlMutationDeletePaperEntryArgs, 'id'>>;
+  didSendEmail?: Resolver<Maybe<GqlResolversTypes['didSendEmailResponse']>, ParentType, ContextType, RequireFields<GqlMutationDidSendEmailArgs, 'didSendEmail' | 'id'>>;
   getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
   getUserByEmail?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationGetUserByEmailArgs, 'email'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
@@ -1326,6 +1356,7 @@ export type GqlPaperResolvers<ContextType = Context, ParentType extends GqlResol
   client?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   conclusion?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  didSendEmail?: Resolver<GqlResolversTypes['Boolean'], ParentType, ContextType>;
   fazit?: Resolver<Maybe<GqlResolversTypes['Fazit']>, ParentType, ContextType>;
   feedbackMentor?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
   feedbackTrainee?: Resolver<Array<GqlResolversTypes['PaperFormData']>, ParentType, ContextType>;
@@ -1363,6 +1394,7 @@ export type GqlPaperFormDataResolvers<ContextType = Context, ParentType extends 
 
 export type GqlPrintPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PrintPayload'] = GqlResolversParentTypes['PrintPayload']> = ResolversObject<{
   estimatedWaitingTime?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  pdfUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1379,10 +1411,11 @@ export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResol
   config?: Resolver<GqlResolversTypes['LaraConfig'], ParentType, ContextType>;
   currentUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
   getFazit?: Resolver<Maybe<GqlResolversTypes['Fazit']>, ParentType, ContextType, RequireFields<GqlQueryGetFazitArgs, 'id'>>;
+  getPaper?: Resolver<Maybe<GqlResolversTypes['Paper']>, ParentType, ContextType, RequireFields<GqlQueryGetPaperArgs, 'id'>>;
   getUser?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlQueryGetUserArgs, 'id'>>;
   mentors?: Resolver<Array<GqlResolversTypes['Mentor']>, ParentType, ContextType>;
   print?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintArgs, 'ids'>>;
-  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'ids'>>;
+  printPaper?: Resolver<GqlResolversTypes['PrintPayload'], ParentType, ContextType, RequireFields<GqlQueryPrintPaperArgs, 'ids' | 'userType'>>;
   reportForTrainee?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForTraineeArgs, 'id' | 'week' | 'year'>>;
   reportForYearAndWeek?: Resolver<Maybe<GqlResolversTypes['Report']>, ParentType, ContextType, RequireFields<GqlQueryReportForYearAndWeekArgs, 'week' | 'year'>>;
   reports?: Resolver<Array<Maybe<GqlResolversTypes['Report']>>, ParentType, ContextType, Partial<GqlQueryReportsArgs>>;
@@ -1491,6 +1524,11 @@ export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends 
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
 }>;
 
+export type GqlDidSendEmailResponseResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['didSendEmailResponse'] = GqlResolversParentTypes['didSendEmailResponse']> = ResolversObject<{
+  didSendEmail?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type GqlResolvers<ContextType = Context> = ResolversObject<{
   Admin?: GqlAdminResolvers<ContextType>;
   Comment?: GqlCommentResolvers<ContextType>;
@@ -1524,5 +1562,6 @@ export type GqlResolvers<ContextType = Context> = ResolversObject<{
   UpdateCommentPayload?: GqlUpdateCommentPayloadResolvers<ContextType>;
   UpdateReportPayload?: GqlUpdateReportPayloadResolvers<ContextType>;
   UserInterface?: GqlUserInterfaceResolvers<ContextType>;
+  didSendEmailResponse?: GqlDidSendEmailResponseResolvers<ContextType>;
 }>;
 

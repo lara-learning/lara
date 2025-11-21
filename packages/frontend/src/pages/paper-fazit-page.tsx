@@ -1,6 +1,6 @@
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { Template } from '../templates/template'
-import { Spacer, StyledInputTextArea } from '@lara/components'
+import { Container, Flex, Spacer, Spacings, StyledTextFazitArea } from '@lara/components'
 import NavigationButtonLink from '../components/navigation-button-link'
 import strings from '../locales/localization'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -9,19 +9,63 @@ import {
   CursorInput,
   GetFazitDocument,
   GetFazitQuery,
+  PaperStatus,
   useCurrentUserQuery,
   useFazitUpdateMutation,
   useUpdateFazitCursorPosMutation,
+  useUpdatePaperMutation,
 } from '../graphql'
+import { styled } from 'styled-components'
+import { PrimaryButton, SecondaryButton } from '../components/button'
+import { omitDeep } from '@apollo/client/utilities'
+
+export const PaperFazitHeadline = styled.p`
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-weight: 600;
+  text-align: center;
+  padding: ${Spacings.m};
+  font-size: 20px;
+  color: ${(props) => props.theme.mediumFont};
+  line-height: 1.2;
+`
+
+export const PaperFazitSubline = styled.p`
+  margin: 0;
+  white-space: pre-wrap;
+  font-weight: 500;
+  word-break: break-word;
+  text-align: center;
+  padding-top: ${Spacings.m};
+  padding-left: ${Spacings.m};
+  font-size: 16px;
+  color: ${(props) => props.theme.mediumFont};
+  line-height: 100%;
+`
+
+export const PaperSecondarySubline = styled.p`
+  margin: ${Spacings.m};
+  align-content: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-weight: 400;
+  font-size: 12px;
+  color: #757575;
+  line-height: 100%;
+`
 
 export const PaperFazitPage: React.FC = () => {
   const { paperId } = useParams<{ paperId: string }>()
+  const navigate = useNavigate()
 
   const [localContent, setLocalContent] = useState('')
   const [localVersion, setLocalVersion] = useState(0)
 
   const [updateFazit] = useFazitUpdateMutation()
   const [updateCursorPosition] = useUpdateFazitCursorPosMutation()
+
+  const [updatePaperMutation] = useUpdatePaperMutation()
 
   const { data: currentUser } = useCurrentUserQuery()
 
@@ -35,24 +79,31 @@ export const PaperFazitPage: React.FC = () => {
 
   useEffect(() => {
     const fazit: GetFazitQuery | undefined = data as GetFazitQuery
-    if (fazit) {
-      console.log(fazit)
-      if (fazit.getFazit && fazit.getFazit?.version >= localVersion) {
-        const remote = fazit.getFazit
-        console.log('remote: ', remote)
+    if (fazit?.getFazit && fazit.getFazit.version > localVersion) {
+      const remote = fazit.getFazit
+
+      if (remote.content !== localContent) {
+        const cp = textArea.current?.selectionStart || 0
 
         setLocalContent(remote.content)
         setLocalVersion(remote.version)
+
+        requestAnimationFrame(() => {
+          if (textArea.current) {
+            textArea.current.selectionStart = cp
+            textArea.current.selectionEnd = cp
+          }
+        })
+      } else {
+        setLocalVersion(remote.version)
       }
     }
-  }, [data, localVersion, paperId])
+  }, [data, localVersion, localContent])
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newContent = e.target.value
       const cursorPos = e.target.selectionStart
-
-      console.log('handle change, nc: ', newContent)
 
       setLocalContent(newContent)
       setLocalVersion(localVersion + 1)
@@ -64,15 +115,46 @@ export const PaperFazitPage: React.FC = () => {
 
       updateFazit({
         variables: { id: paperId ?? '', content: newContent, version: localVersion + 1, cursorPosition: newCursorPos },
-      }).then((newFazit) => {
-        if (newFazit.data?.updateFazit.success) {
-          setLocalContent(newFazit.data.updateFazit.newFazit.content)
-          setLocalVersion(newFazit.data.updateFazit.newFazit.version)
-        }
       })
     },
-    [paperId, updateFazit]
+    [paperId, updateFazit, localVersion, localContent]
   )
+
+  const syncFinal = () => {
+    const newCursorPos: CursorInput = {
+      position: textArea.current?.selectionStart ?? 0,
+      owner: currentUser?.currentUser?.id ?? '',
+    }
+    updateFazit({
+      variables: { id: paperId ?? '', content: localContent, version: localVersion + 1, cursorPosition: newCursorPos },
+    }).then(() => {
+      if (
+        currentUser?.currentUser?.__typename === 'Trainee' ||
+        currentUser?.currentUser?.__typename === 'Trainer' ||
+        currentUser?.currentUser?.__typename === 'Mentor'
+      ) {
+        const paper = currentUser.currentUser.papers?.filter((paper) => paper?.id === paperId)[0]
+        console.log(paper)
+        updatePaperMutation({
+          variables: {
+            input: {
+              briefing: omitDeep(paper?.briefing ?? [], '__typename'),
+              client: paper?.client ?? '',
+              didSendEmail: false,
+              feedbackMentor: omitDeep(paper?.feedbackMentor ?? [], '__typename'),
+              feedbackTrainee: omitDeep(paper?.feedbackTrainee ?? [], '__typename'),
+              id: paperId ?? '',
+              mentorId: paper?.mentorId ?? '',
+              status: PaperStatus.ReviewDone,
+              subject: paper?.subject ?? '',
+              traineeId: paper?.traineeId ?? '',
+              trainerId: paper?.trainerId ?? '',
+            },
+          },
+        }).then(() => navigate('/paper'))
+      }
+    })
+  }
 
   const handleCursorMove = useCallback(() => {
     const cursorPos = textArea.current?.selectionStart || 0
@@ -96,15 +178,41 @@ export const PaperFazitPage: React.FC = () => {
           iconColor="iconLightGrey"
         />
       </Spacer>
-      {paperId}
-
-      <StyledInputTextArea
-        ref={textArea}
-        value={localContent}
-        onClick={handleCursorMove}
-        onKeyUp={handleCursorMove}
-        onChange={handleChange}
-      ></StyledInputTextArea>
+      <Container>
+        <PaperSecondarySubline style={{ color: '#000000' }}>{strings.paper.fazit.info}</PaperSecondarySubline>
+      </Container>
+      <Spacer bottom="l">
+        <div></div>
+      </Spacer>
+      <Container>
+        <PaperFazitHeadline>{strings.paper.fazit.headline}</PaperFazitHeadline>
+        <PaperFazitSubline>{strings.paper.fazit.subline}</PaperFazitSubline>
+        <PaperSecondarySubline>{strings.paper.fazit.secondarySubline}</PaperSecondarySubline>
+        <StyledTextFazitArea
+          placeholder={strings.paper.fazit.placeholder}
+          ref={textArea}
+          value={localContent}
+          onClick={handleCursorMove}
+          onKeyUp={handleCursorMove}
+          onChange={handleChange}
+        ></StyledTextFazitArea>
+        <Spacer bottom="l">
+          <div></div>
+        </Spacer>
+      </Container>
+      <Spacer bottom="xl">
+        <div></div>
+      </Spacer>
+      <Flex style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <SecondaryButton onClick={() => window.location.reload()}>{strings.paper.fazit.reloadPage}</SecondaryButton>
+        <PrimaryButton
+          onClick={() => {
+            syncFinal()
+          }}
+        >
+          {strings.paper.fazit.completeFeedback}
+        </PrimaryButton>
+      </Flex>
     </Template>
   )
 }

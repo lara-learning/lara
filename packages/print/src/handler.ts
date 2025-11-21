@@ -36,21 +36,24 @@ const generateBatch = async ({ userData, data, printTranslations }: PrintData, p
   return zip.toBuffer()
 }
 
-export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payload) => {
+export const handler: Handler<PrintPayload, { success: 'error' | 'success'; filename: string | undefined }> = async (
+  payload
+): Promise<{ success: 'error' | 'success'; filename: string | undefined }> => {
   if (!payload || !payload.printDataHash) {
-    return 'error'
+    return { success: 'error', filename: undefined }
   }
 
   const exportData = await getExport(payload.printDataHash)
 
   if (!exportData || exportData.data.length === 0) {
-    return 'error'
+    return { success: 'error', filename: undefined }
   }
 
   let browser: Browser | undefined
   const { data, userData, printTranslations, emailTranslations } = exportData
 
   const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
+  let filename = ''
 
   try {
     browser = await launch({
@@ -66,7 +69,6 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
     const isSingleExport = data.length === 1
 
     let outputFile: Buffer | undefined
-    let filename = ''
     let emailType: EmailType = 'reportExport'
     let isPaper = false
     if (isSingleExport) {
@@ -126,26 +128,26 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
           Payload: JSON.stringify(emailMentorPayload),
         })
       }
+    } else {
+      const emailPayload: EmailPayload = {
+        emailType,
+        attachments: [{ filename }],
+        userData: {
+          receiverEmail: userData.receiverEmail,
+          receiverName: userData.firstName,
+          buttonLink: `${FRONTEND_URL}/archive`,
+        },
+        translations: emailTranslations,
+      }
+
+      await lambda.invoke({
+        FunctionName: EMAIL_FUNCTION,
+        InvocationType: 'RequestResponse',
+        Payload: JSON.stringify(emailPayload),
+      })
     }
 
-    const emailPayload: EmailPayload = {
-      emailType,
-      attachments: [{ filename }],
-      userData: {
-        receiverEmail: userData.receiverEmail,
-        receiverName: userData.firstName,
-        buttonLink: `${FRONTEND_URL}/archive`,
-      },
-      translations: emailTranslations,
-    }
-
-    await lambda.invoke({
-      FunctionName: EMAIL_FUNCTION,
-      InvocationType: 'RequestResponse',
-      Payload: JSON.stringify(emailPayload),
-    })
-
-    return 'success'
+    return { success: 'success', filename: filename }
   } catch (e) {
     console.error('Error while rendering PDF: ', e)
 
@@ -159,7 +161,7 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
       }),
     })
 
-    return 'error'
+    return { success: 'error', filename: undefined }
   } finally {
     await browser?.close()
   }

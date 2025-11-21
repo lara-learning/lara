@@ -1,0 +1,70 @@
+query PaperFazitPage($id: ID!) {
+  getPaper(id: $id) {
+    id
+    traineeId
+    trainerId
+    status
+    briefing {
+      id
+      questionId
+      question
+      answer
+      hint
+      comments {
+        text
+        userId
+        lastName
+        firstName
+        published
+      }
+    }
+    feedbackTrainee {
+      id
+      questionId
+      question
+      answer
+      hint
+      comments {
+        text
+        userId
+        lastName
+        firstName
+        published
+      }
+    }
+    feedbackMentor {
+      id
+      questionId
+      question
+      answer
+      hint
+      comments {
+        text
+        userId
+        lastName
+        firstName
+        published
+      }
+    }
+    conclusion
+    archivedAt
+    createdAt
+    client
+    mentorId
+    didSendEmail
+    periodStart
+    periodEnd
+    schoolPeriodStart
+    schoolPeriodEnd
+    subject
+    fazit {
+      id
+      content
+      version
+      cursorPositions {
+        position
+        owner
+      }
+    }
+  }
+}

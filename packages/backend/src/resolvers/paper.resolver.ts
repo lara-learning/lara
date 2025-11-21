@@ -3,39 +3,6 @@ import { generatePaper, generatePaperEntry } from '../services/paper.service'
 import { deletePaper, paperById, papersByTrainer, savePaper, updatePaper } from '../repositories/paper.repo'
 import { GraphQLError } from 'graphql'
 
-function merge(str1: string, str2: string): string {
-  if (!str1) return str2
-  if (!str2) return str1
-
-  let longestCommon = ''
-  let positionInStr1 = 0
-
-  for (let i = 0; i < str1.length; i++) {
-    for (let j = 0; j < str2.length; j++) {
-      let k = 0
-      while (i + k < str1.length && j + k < str2.length && str1[i + k] === str2[j + k]) {
-        k++
-      }
-
-      if (k > longestCommon.length) {
-        longestCommon = str1.substring(i, i + k)
-        positionInStr1 = i
-      }
-    }
-  }
-
-  if (longestCommon === '') {
-    return str1 + str2
-  }
-
-  const positionInStr2 = str2.indexOf(longestCommon)
-
-  const prefixFromStr1 = str1.substring(0, positionInStr1)
-  const suffixFromStr2 = str2.substring(positionInStr2 + longestCommon.length)
-
-  return prefixFromStr1 + longestCommon + suffixFromStr2
-}
-
 export const paperResolver: GqlResolvers<AuthenticatedContext> = {
   Query: {
     getFazit: async (_parent, { id }) => {
@@ -43,19 +10,29 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
       if (!paper) {
         throw new GraphQLError('Paper does not exist')
       }
-      const newFazit: Fazit = {
-        id,
-        content: '',
-        version: 0,
-        cursorPositions: [],
-      }
-      const newPaper = await updatePaper(
-        { ...paper, fazit: newFazit },
-        {
-          updateKeys: ['fazit'],
+      if (!paper.fazit) {
+        const newFazit: Fazit = {
+          id,
+          content: '',
+          version: 0,
+          cursorPositions: [],
         }
-      )
-      return newPaper.fazit
+        const newPaper = await updatePaper(
+          { ...paper, fazit: newFazit },
+          {
+            updateKeys: ['fazit'],
+          }
+        )
+        return newPaper.fazit
+      }
+      return paper.fazit
+    },
+    getPaper: async (_parent, { id }) => {
+      const paper = await paperById(id)
+      if (!paper) {
+        throw new GraphQLError('Paper does not exist')
+      }
+      return paper
     },
   },
   Mutation: {
@@ -87,6 +64,22 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
       }
 
       return papers.filter((paper) => paper.id !== paperId)
+    },
+    didSendEmail: async (_parent, { id, didSendEmail }) => {
+      const paper = await paperById(id)
+      if (paper) {
+        await updatePaper(
+          {
+            ...paper,
+            didSendEmail,
+          },
+          { updateKeys: ['didSendEmail'] }
+        )
+
+        return { didSendEmail: true }
+      }
+
+      return { didSendEmail: false }
     },
     updateFazitCursorPos: async (_parent, { id, cursorPosition }) => {
       const paper = await paperById(id)
@@ -155,7 +148,8 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
         return { newFazit: newPaper.fazit!, success: true }
       } else {
         if (version >= fazit.version) {
-          const newContent = merge(fazit.content, content)
+          //const newContent = merge(fazit.content, content)
+          const newContent = content
           newFazit.content = newContent
           fazit.cursorPositions.forEach((cp) => {
             cursorMap.set(cp.owner, cp.position)

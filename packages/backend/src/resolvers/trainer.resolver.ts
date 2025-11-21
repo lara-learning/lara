@@ -8,7 +8,13 @@ import { updateUser } from '../repositories/user.repo'
 import { alexaSkillLinked } from '../services/alexa.service'
 import { createT, t } from '../i18n'
 import { paperById, papersByMentor, papersByTrainer } from '../repositories/paper.repo'
-import { createPrintPaperData, createPrintUserData, invokePrintLambda, savePrintData } from '../services/print.service'
+import {
+  createPrintPaperData,
+  createPrintUserData,
+  getPrintData,
+  invokePrintLambdaResponse,
+  savePrintData,
+} from '../services/print.service'
 import { mentorById } from '../repositories/mentor.repo'
 import { trainerById } from '../repositories/trainer.repo'
 
@@ -53,7 +59,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       return report
     },
-    printPaper: async (_parent, { ids }, { currentUser }) => {
+    printPaper: async (_parent, { ids, userType }, { currentUser }) => {
       const paper = await paperById(ids[0])
       const data = []
       let trainee: Trainee | undefined
@@ -75,9 +81,11 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         emailTranslations,
       })
 
-      await invokePrintLambda({
+      const filenameTrainee = await invokePrintLambdaResponse({
         printDataHash: traineeHash,
       })
+
+      const traineeURL = await getPrintData(filenameTrainee?.filename ?? '')
 
       userData = await createPrintUserData(mentor!)
 
@@ -88,9 +96,11 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         emailTranslations,
       })
 
-      await invokePrintLambda({
+      const filenameMentor = await invokePrintLambdaResponse({
         printDataHash: mentorHash,
       })
+
+      const mentorURL = await getPrintData(filenameMentor?.filename ?? '')
 
       userData = await createPrintUserData(currentUser)
 
@@ -101,12 +111,17 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         emailTranslations,
       })
 
-      await invokePrintLambda({
+      const filenameTrainer = await invokePrintLambdaResponse({
         printDataHash: trainerHash,
       })
 
+      const trainerURL = await getPrintData(filenameTrainer?.filename ?? '')
+
+      const url = userType === 'Trainee' ? traineeURL : userType === 'Trainer' ? trainerURL : mentorURL
+
       return {
         estimatedWaitingTime: Math.round(1.5 + 5),
+        pdfUrl: url,
       }
     },
   },

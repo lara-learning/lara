@@ -37,6 +37,7 @@ import { MentorPaperFeedbackPage } from './pages/mentor-paper-feedback-page'
 import PaperFeedbackDiscussionPage from './pages/paper-feedback-discussion-page'
 import { isPaperFeatureEnabled } from './helper/paper-helper'
 import { PaperFazitPage } from './pages/paper-fazit-page'
+import { PaperFeedbackDone } from './pages/feedback-done'
 
 type RoutesProps = {
   currentUser?:
@@ -96,6 +97,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                     <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
                     <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
                     <Route path="/paper/fazit/:paperId" element={<PaperFazitPage />} />
+                    <Route path="paper/fazit/done/:paperId" element={<PaperFeedbackDone />} />
                   </>
                 )}
               </>
@@ -134,6 +136,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/paper/feedback/:paperId" element={<MentorPaperFeedbackPage />} />
             <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
             <Route path="/paper/fazit/:paperId" element={<PaperFazitPage />} />
+            <Route path="paper/fazit/done/:paperId" element={<PaperFeedbackDone />} />
           </>
         )}
 

@@ -63,6 +63,7 @@ export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
           subject: paper?.subject ?? '',
           status: PaperStatus.TraineeDone,
           briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
+          didSendEmail: false,
           feedbackTrainee: paper?.feedbackTrainee
             ? omitDeep(paper.feedbackTrainee, '__typename').map((trainee) => ({
                 ...trainee,
@@ -95,6 +96,7 @@ export const MentorPaperFeedbackPage: React.FunctionComponent = () => {
           schoolPeriodStart: paper?.schoolPeriodStart,
           subject: paper?.subject ?? '',
           status: PaperStatus.MentorDone,
+          didSendEmail: false,
           briefing: paper ? omitDeep(paper.briefing, '__typename') : [],
           feedbackTrainee: paper?.feedbackTrainee
             ? omitDeep(paper.feedbackTrainee, '__typename').map((trainee) => ({

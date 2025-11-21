@@ -1,4 +1,5 @@
-import { S3Client, PutObjectCommand, PutObjectCommandOutput } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand, PutObjectCommandOutput, GetObjectCommand } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 const { IS_OFFLINE, EXPORT_BUCKET } = process.env
 
@@ -27,4 +28,16 @@ export const saveExport = async (key: string, body: string): Promise<PutObjectCo
   })
 
   return await s3Client.send(command)
+}
+
+export const getExport = async (key: string): Promise<string> => {
+  const command = new GetObjectCommand({
+    Bucket: EXPORT_BUCKET,
+    Key: key,
+  })
+
+  const url = await getSignedUrl(s3Client, command, { expiresIn: 60 * 10 })
+  if (!url) throw new Error('Could not generate signed URL')
+
+  return url
 }

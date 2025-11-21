@@ -20,6 +20,9 @@ query TraineePaperPageData {
           question
           answer
           hint
+          comments {
+            userId
+          }
         }
         feedbackTrainee {
           id
@@ -27,6 +30,9 @@ query TraineePaperPageData {
           question
           answer
           hint
+          comments {
+            userId
+          }
         }
         feedbackMentor {
           id
@@ -34,6 +40,9 @@ query TraineePaperPageData {
           question
           answer
           hint
+          comments {
+            userId
+          }
         }
       }
     }

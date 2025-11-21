@@ -167,6 +167,7 @@ input PaperUpdateInput {
   schoolPeriodStart: String
   schoolPeriodEnd: String
   subject: String!
+  didSendEmail: Boolean!
   status: PaperStatus!
   briefing: [PaperEntryInput!]!
   feedbackTrainee: [PaperEntryInput!]!
@@ -395,9 +396,24 @@ type Mutation {
   """
   deletePaperEntry(id: ID!): PaperFormData!
 
+  """
+  Updates a Fazit
+  """
   updateFazit(id: ID! content: String! version: Int! cursorPosition: CursorInput!): FazitUpdateResponse!
 
+  """
+  Update Fazit cursor position
+  """
   updateFazitCursorPos(id: ID!, cursorPosition: CursorInput!): Cursor
+
+  """
+  Updates if the pdf email was already sent
+  """
+  didSendEmail(id: ID!, didSendEmail: Boolean!): didSendEmailResponse
+}
+
+type didSendEmailResponse {
+  didSendEmail: Boolean
 }
 
 type LaraConfig {
@@ -478,7 +494,7 @@ type Query {
   """
   Print single paper
   """
-  printPaper(ids: [ID!]!): PrintPayload!
+  printPaper(ids: [ID!]! userType: UserTypeEnum!): PrintPayload!
 
   """
   Get a User by ID
@@ -499,10 +515,16 @@ type Query {
   Get the fazit with Id
   """
   getFazit(id: ID!): Fazit
+
+  """
+  Get Paper with Id
+  """
+  getPaper(id: ID!): Paper
 }
 
 type PrintPayload {
   estimatedWaitingTime: Int!
+  pdfUrl: String
 }
 
 type Report implements CommentableInterface {
@@ -776,6 +798,7 @@ enum PaperStatus {
   TraineeDone
   MentorDone
   InReview
+  ReviewDone
   Archived
 }
 
@@ -801,6 +824,7 @@ type Paper {
   createdAt: String
   client: String!
   mentorId: ID!
+  didSendEmail: Boolean!
   periodStart: String
   periodEnd: String
   schoolPeriodStart: String

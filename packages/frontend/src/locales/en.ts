@@ -200,6 +200,22 @@ const englishTranslation: Translation = {
         hint: 'Was the trainee able to acquire the previously agreed learning content and skills? These are listed here again automatically.',
       },
     },
+    fazit: {
+      headline: 'Common conclusion',
+      subline: 'Which optimization fields have you identified and what is being done/agreed to optimize?',
+      secondarySubline:
+        'What is the plan for this? What needs to be done for it? What would be good support? Please describe specifically.',
+      placeholder: 'Type something',
+      info: 'The conclusion is carried out in multiplayer mode. This means that you and your trainee can make changes at the same time. However, it is recommended that one of you fill it out so that no overwriting occurs.',
+      completeFeedback: 'Complete Feedback',
+      reloadPage: 'Reload page',
+    },
+    fazitDone: {
+      headline: 'Yeah, your feedback was successfully submitted!',
+      info: 'The link to this feedback is invalid as soon as you close the window!',
+      downloadPDF: 'Download PDF',
+      text: 'You have successfully completed the feedback session on the station. \n You can download the PDF for your feedback here or later from the E-Mail you will recive.',
+    },
   },
   archivePage: {
     header: 'Archive',

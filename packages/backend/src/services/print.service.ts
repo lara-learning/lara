@@ -22,8 +22,8 @@ import {
   User,
 } from '@lara/api'
 
-import { invokeLambda } from '../aws/lambda'
-import { saveExport } from '../aws/s3'
+import { invokeLambda, invokeLambdaWithOutput } from '../aws/lambda'
+import { getExport, saveExport } from '../aws/s3'
 import { trainerById } from '../repositories/trainer.repo'
 import { parseISODateString } from '../utils/date'
 import { dayStatus } from './day.service'
@@ -194,9 +194,23 @@ export const savePrintData = async (printData: PrintData): Promise<string> => {
   return generatedKey
 }
 
+export const getPrintData = async (key: string): Promise<string> => {
+  return await getExport(key)
+}
+
 /**
  * Calls the print lambda and doesn't wait for a response.
  * @param payload Print data
  */
 export const invokePrintLambda = async (payload: PrintPayload): Promise<void> =>
   await invokeLambda({ payload, functionName: 'print' })
+
+type LambdaOutput = undefined | { success: 'error' | 'success'; filename: string | undefined }
+
+/**
+ * Calls the print lambda and returns a response.
+ * @param payload Print data
+ * @returns Returns the filename and wether or not it was successful
+ */
+export const invokePrintLambdaResponse = async (payload: PrintPayload): Promise<LambdaOutput> =>
+  await invokeLambdaWithOutput({ payload, functionName: 'print' })

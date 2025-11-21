@@ -56,9 +56,13 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
     return null
   }
 
-  console.log(paperFeedback)
-
   const savePaper = async (paperFeedback: PaperFormData[]) => {
+    paperFeedback = paperFeedback.map((feedback) => {
+      if (!feedback.comments) {
+        return { ...feedback, comments: [] }
+      }
+      return feedback
+    })
     await updatePaperMutation({
       variables: {
         input: {
@@ -68,6 +72,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
           client: paper?.client ?? '',
           id: paperId ?? '',
           mentorId: paper?.mentorId ?? '',
+          didSendEmail: false,
           periodEnd: paper?.periodEnd,
           periodStart: paper?.periodStart,
           schoolPeriodEnd: paper?.schoolPeriodEnd,
@@ -91,6 +96,12 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
   }
 
   const submitPaper = async (paperFeedback: PaperFormData[]) => {
+    paperFeedback = paperFeedback.map((feedback) => {
+      if (!feedback.comments) {
+        return { ...feedback, comments: [] }
+      }
+      return feedback
+    })
     await updatePaperMutation({
       variables: {
         input: {
@@ -108,6 +119,7 @@ export const TraineePaperFeedbackPage: React.FunctionComponent = () => {
           subject: paper?.subject ?? '',
           traineeId: paper?.traineeId ?? '',
           trainerId: currentUser.id,
+          didSendEmail: false,
         },
       },
       updateQueries: {

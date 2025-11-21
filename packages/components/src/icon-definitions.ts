@@ -50,6 +50,7 @@ import { IconX } from './icons/x'
 import { IconOptions } from './icons/options'
 import { IconCheckMark } from './icons/checkMark'
 import { IconBlank } from './icons/blank'
+import { IconInfo } from './icons/info'
 
 export const Icons = {
   Arrow: IconArrow,
@@ -104,4 +105,5 @@ export const Icons = {
   Alexa: Alexa,
   QuestionMark: QuestionMark,
   Options: IconOptions,
+  Info: IconInfo,
 }

@@ -47,6 +47,21 @@ export default interface Translation {
     reportToArciveAddedSuccess: string
   }
   paper: {
+    fazit: {
+      headline: string
+      subline: string
+      secondarySubline: string
+      placeholder: string
+      info: string
+      completeFeedback: string
+      reloadPage: string
+    }
+    fazitDone: {
+      headline: string
+      info: string
+      downloadPDF: string
+      text: string
+    }
     empty: {
       headline: string
       description: string

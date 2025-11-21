@@ -1,11 +1,18 @@
 import { useState } from 'react'
 
-import { Paper, Report, usePrintDataLazyQuery, usePrintPaperDataLazyQuery } from '../graphql'
+import {
+  Paper,
+  Report,
+  useCurrentUserLazyQuery,
+  usePrintDataLazyQuery,
+  usePrintPaperDataLazyQuery,
+  UserTypeEnum,
+} from '../graphql'
 import strings from '../locales/localization'
 import { useToastContext } from './use-toast-context'
 
 type UseFetchPdfPayload = [(reports: Pick<Report, 'id'>[]) => void, boolean]
-type UseFetchPaperPdfPayload = [(paper: Pick<Paper, 'id'>) => void, boolean]
+type UseFetchPaperPdfPayload = [(paper: Pick<Paper, 'id'>) => Promise<string | undefined>, boolean]
 
 export const useFetchPdf = (): UseFetchPdfPayload => {
   const [loading, setLoading] = useState(false)
@@ -32,6 +39,7 @@ export const useFetchPdf = (): UseFetchPdfPayload => {
 }
 
 export const useFetchPaperPdf = (): UseFetchPaperPdfPayload => {
+  const [fetchCurrentUser] = useCurrentUserLazyQuery()
   const [loading, setLoading] = useState(false)
   const { addToast } = useToastContext()
   const [fetchPrintPaperData] = usePrintPaperDataLazyQuery({
@@ -45,11 +53,20 @@ export const useFetchPaperPdf = (): UseFetchPaperPdfPayload => {
   })
 
   return [
-    (paper) => {
+    async (paper) => {
       setLoading(true)
-      fetchPrintPaperData({ variables: { ids: [paper.id] } }).catch((error) => {
+      const v = await fetchCurrentUser()
+      const userData = v.data
+      try {
+        const data = await fetchPrintPaperData({
+          variables: { ids: [paper.id], userType: userData?.currentUser?.type ?? UserTypeEnum.Trainee },
+        })
+
+        return data.data?.printPaper.pdfUrl
+      } catch (error) {
         console.log(error)
-      })
+        return undefined
+      }
     },
     loading,
   ]

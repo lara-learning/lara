@@ -27,6 +27,10 @@ export const TraineePaperPage: React.FC = () => {
     navigate('/paper/fazit/' + paperId)
   }
 
+  const naviateToFazitDonePAge = (paperId: string) => {
+    navigate('/paper/fazit/done/' + paperId)
+  }
+
   if (!data) {
     return (
       <Template type="Main">
@@ -54,6 +58,13 @@ export const TraineePaperPage: React.FC = () => {
       })
     })
     paper.feedbackTrainee.forEach((feedback) => {
+      feedback.comments?.forEach((comment) => {
+        if (!foundUserIds.includes(comment.userId)) {
+          foundUserIds.push(comment.userId)
+        }
+      })
+    })
+    paper.briefing.forEach((feedback) => {
       feedback.comments?.forEach((comment) => {
         if (!foundUserIds.includes(comment.userId)) {
           foundUserIds.push(comment.userId)
@@ -99,7 +110,7 @@ export const TraineePaperPage: React.FC = () => {
                     </Box>
                     <Box width={3 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        {[PaperStatus.MentorDone].includes(paper?.status) ? (
+                        {[PaperStatus.InReview, PaperStatus.ReviewDone].includes(paper?.status) ? (
                           <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
                         ) : (
                           <StyledIcon name={'X'} size="24px" color={'errorRed'} />
@@ -113,7 +124,11 @@ export const TraineePaperPage: React.FC = () => {
                   <Flex alignItems={'center'} width={'100%'}>
                     <Box width={2 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                        {[PaperStatus.ReviewDone].includes(paper?.status) ? (
+                          <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                        ) : (
+                          <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                        )}
                         <Spacer left="xs">
                           <Text>{strings.paper.dashboard.conclusion}</Text>
                         </Spacer>
@@ -121,7 +136,11 @@ export const TraineePaperPage: React.FC = () => {
                     </Box>
                     <Box width={3 / 5}>
                       <Flex flexDirection={'row'} alignItems={'center'}>
-                        <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                        {[PaperStatus.Archived].includes(paper?.status) ? (
+                          <StyledIcon name={'CheckMark'} size="24px" color={'successGreen'} />
+                        ) : (
+                          <StyledIcon name={'X'} size="24px" color={'errorRed'} />
+                        )}
                         <Spacer left="xs">
                           <Text>{strings.paper.dashboard.pdfFeedback}</Text>
                         </Spacer>
@@ -136,16 +155,19 @@ export const TraineePaperPage: React.FC = () => {
                   PaperStatus.NotStarted,
                   PaperStatus.InProgress,
                   PaperStatus.TraineeDone,
-                  PaperStatus.Archived,
+                  PaperStatus.InReview,
+                  PaperStatus.ReviewDone,
                   PaperStatus.MentorDone,
                 ].includes(paper?.status) && (
                   <Flex justifyContent={'flex-end'}>
                     <PrimaryButton
                       onClick={() =>
                         (paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0
-                          ? hasCommented(paper)
+                          ? !hasCommented(paper)
                             ? navigateToPaperDiscussionPage(paper.id)
-                            : navigateToFazitPage(paper.id)
+                            : paper.status == PaperStatus.ReviewDone
+                              ? naviateToFazitDonePAge(paper.id)
+                              : navigateToFazitPage(paper.id)
                           : navigateToPaperFeedbackPage(paper.id)
                       }
                     >

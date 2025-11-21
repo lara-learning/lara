@@ -206,6 +206,23 @@ const germanTranslation: Translation = {
       toastTitle: 'Lara Paper Briefing wird erstellt',
       toastDescription: 'Das Briefing wird jetzt erstellt und wird den Teilnehmern per Mail als PDF verschickt',
     },
+    fazit: {
+      headline: 'Gemeinsames Fazit',
+      subline:
+        'Welche Optimierungsbereiche haben Sie identifiziert und was wird zur Optimierung unternommen/vereinbart?',
+      secondarySubline:
+        'Wie sieht der Plan dafür aus? Was muss dafür getan werden? Was wäre eine gute Unterstützung? Bitte beschreiben Sie dies konkret.',
+      placeholder: 'Schreibe etwas',
+      info: 'Der Abschluss erfolgt im Mehrspielermodus. Das bedeutet, dass Sie und Ihr Auszubildender gleichzeitig Änderungen vornehmen können. Es wird jedoch empfohlen, dass einer von Ihnen das Formular ausfüllt, damit es nicht zu Überschreibungen kommt.',
+      completeFeedback: 'Vervollständige Feedback',
+      reloadPage: 'Seite neu laden',
+    },
+    fazitDone: {
+      downloadPDF: 'Downloade PDF',
+      text: 'Sie haben die Feedback-Sitzung an der Station erfolgreich abgeschlossen. \n Sie können das PDF mit Ihrem Feedback hier oder später aus der E-Mail, die Sie erhalten werden, herunterladen.',
+      headline: 'Yeah, Ihr Feedback wurde erfolgreich übermittelt!',
+      info: 'Der Link zu diesem Feedback wird ungültig, sobald Sie das Fenster schließen!',
+    },
   },
   archivePage: {
     header: 'Archiv',
