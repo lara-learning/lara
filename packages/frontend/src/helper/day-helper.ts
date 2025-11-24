@@ -24,7 +24,7 @@ export const useDayHelper = (): UseDayHelper => {
     }
 
     if (!maxTime) {
-      maxTime = 840
+      maxTime = 600
     }
 
     return getTotalMinutes(day) + newTime <= maxTime
