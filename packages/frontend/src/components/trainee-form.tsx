@@ -225,7 +225,7 @@ export const TraineeForm: React.FC<EditTraineeFormProps> = ({ trainee, companies
                 {strings.cancel}
               </SecondaryButton>
               <PrimaryButton type="submit" onClick={onSubmit}>
-                {strings.continue}
+                {strings.create}
               </PrimaryButton>
             </>
           ) : undefined

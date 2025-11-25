@@ -23,12 +23,15 @@ query reportReviewPageData($year: Int!, $week: Int!, $trainee: ID!) {
     }
     days {
       status
+      status_split
       date
       id
       entries {
         id
         text
         time
+        text_split
+        time_split
         orderId
         comments {
           id

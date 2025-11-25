@@ -456,7 +456,7 @@ resources:
                 Ref: OAC
               S3OriginConfig:
                 OriginAccessIdentity: ''
-          HttpVersion: http2
+          HttpVersion: http2and3
           DefaultRootObject: index.html
           DefaultCacheBehavior:
             AllowedMethods:
@@ -480,7 +480,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.FRONTEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2021
+                MinimumProtocolVersion: TLSv1.3_2025
               - Ref: AWS::NoValue
 
     BackendDistribution:
@@ -500,7 +500,7 @@ resources:
                 OriginSSLProtocols:
                   - TLSv1.2
               OriginPath: '/${self:custom.stage}'
-          HttpVersion: http2
+          HttpVersion: http2and3
           DefaultCacheBehavior:
             AllowedMethods:
               - DELETE
@@ -523,7 +523,7 @@ resources:
               - IsProductionOrStaging
               - AcmCertificateArn: ${self:provider.environment.BACKEND_CERTIFICATE_ARN}
                 SslSupportMethod: sni-only
-                MinimumProtocolVersion: TLSv1.2_2021
+                MinimumProtocolVersion: TLSv1.3_2025
               - Ref: AWS::NoValue
 
     FrontendAliasRecord:

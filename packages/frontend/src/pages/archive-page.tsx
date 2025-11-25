@@ -75,8 +75,10 @@ const searchFilter =
             entries: {
               __typename?: 'Entry' | undefined
               id: string
-              time: number
-              text: string
+              time?: number | undefined
+              text?: string | undefined
+              text_split?: string | undefined
+              time_split?: number | undefined
             }[]
           }[]
         }
@@ -97,7 +99,9 @@ const searchFilter =
     let textMatch = true
     if (searchText) {
       textMatch = report.days.some((day) =>
-        day.entries.some((entry) => entry.text.toLowerCase().includes(searchText.toLowerCase()))
+        day.entries.some((entry) =>
+          (entry.text ? entry.text : entry.text_split!).toLowerCase().includes(searchText.toLowerCase())
+        )
       )
       if (!textMatch && report.summary) {
         textMatch = report.summary.toLowerCase().includes(searchText.toLowerCase())
@@ -123,6 +127,7 @@ const ArchivePage: React.FunctionComponent = () => {
 
   const [allChecked, setAllChecked] = React.useState(false)
   const [selectedTrainee, setSelectedTrainee] = React.useState<string | undefined>(undefined)
+  const [term, setTerm] = React.useState<string | undefined>(undefined)
 
   const getArchivedReports = React.useCallback(() => {
     if (!data) return []
@@ -214,6 +219,8 @@ const ArchivePage: React.FunctionComponent = () => {
     let yearEnd: number | undefined = undefined
     let weekEnd: number | undefined = undefined
     let searchText: string | undefined = undefined
+
+    setTerm(value)
 
     const yearMatch = yearMonthRegex.exec(value)
     if (yearMonthRegex.test(value) && yearMatch) {
@@ -319,7 +326,12 @@ const ArchivePage: React.FunctionComponent = () => {
                   {filteredReports.length !== 0 && (
                     <tr>
                       <td>
-                        <CheckBox iconName={'SelectAll'} checked={allChecked} onClick={checkAllBoxes} />
+                        <CheckBox
+                          disabled={false}
+                          iconName={'SelectAll'}
+                          checked={allChecked}
+                          onClick={checkAllBoxes}
+                        />
                       </td>
                       <td>
                         <StyledTableHeadText>{strings.archivePage.tableHead.calendarWeek}</StyledTableHeadText>
@@ -346,14 +358,15 @@ const ArchivePage: React.FunctionComponent = () => {
 
                     const link =
                       data?.currentUser?.__typename === UserTypeEnum.Trainer
-                        ? `/report/${traineeId}/${year}/${week}`
-                        : `/report/${year}/${week}`
+                        ? `/report/${traineeId}/${year}/${week}/${term ? term : ''}`
+                        : `/report/${year}/${week}/${term ? term : ''}`
 
                     return (
                       <StyledArchiveTableRow key={report.id}>
                         <td>
                           <CheckBox
                             iconName={'Checkbox'}
+                            disabled={false}
                             checked={getCheckState(report.id)}
                             onClick={() => checkBoxUpdate(report.id, !getCheckState(report.id))}
                           />

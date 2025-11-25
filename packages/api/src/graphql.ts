@@ -120,6 +120,7 @@ export type GqlDay = GqlCommentableInterface & {
   entries: Array<GqlEntry>;
   id: Scalars['ID']['output'];
   status?: Maybe<GqlDayStatusEnum>;
+  status_split?: Maybe<GqlDayStatusEnum>;
 };
 
 export type GqlDayStatusEnum =
@@ -152,13 +153,17 @@ export type GqlEntry = GqlCommentableInterface & {
   createdAt: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   orderId: Scalars['Int']['output'];
-  text: Scalars['String']['output'];
-  time: Scalars['Int']['output'];
+  text?: Maybe<Scalars['String']['output']>;
+  text_split?: Maybe<Scalars['String']['output']>;
+  time?: Maybe<Scalars['Int']['output']>;
+  time_split?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GqlEntryInput = {
-  text: Scalars['String']['input'];
-  time: Scalars['Int']['input'];
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_split?: InputMaybe<Scalars['String']['input']>;
+  time?: InputMaybe<Scalars['Int']['input']>;
+  time_split?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type GqlFazit = {
@@ -531,6 +536,7 @@ export type GqlMutationUpdateCurrentUserArgs = {
 export type GqlMutationUpdateDayArgs = {
   id: Scalars['ID']['input'];
   status?: InputMaybe<Scalars['String']['input']>;
+  status_split?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1218,6 +1224,7 @@ export type GqlDayResolvers<ContextType = Context, ParentType extends GqlResolve
   entries?: Resolver<Array<GqlResolversTypes['Entry']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   status?: Resolver<Maybe<GqlResolversTypes['DayStatusEnum']>, ParentType, ContextType>;
+  status_split?: Resolver<Maybe<GqlResolversTypes['DayStatusEnum']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1237,8 +1244,10 @@ export type GqlEntryResolvers<ContextType = Context, ParentType extends GqlResol
   createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   orderId?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
-  text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  time?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
+  text?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  text_split?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
+  time?: Resolver<Maybe<GqlResolversTypes['Int']>, ParentType, ContextType>;
+  time_split?: Resolver<Maybe<GqlResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

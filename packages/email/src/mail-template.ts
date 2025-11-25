@@ -59,13 +59,23 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
         BUTTONTEXT: link.report,
       }
       break
-    case 'needChanges':
+    case 'needChangesComment':
       emailVariables = {
         ...emailVariables,
         DEFAULTBACKGROUND: createBase64UrlfromPng('background_1.png'),
-        HEADLINE: headline.needChanges,
+        HEADLINE: headline.needChangesComment,
         HEADLINEIMAGE: createBase64UrlfromPng('tablet.png'),
-        MAINTEXT: message.needChanges,
+        MAINTEXT: message.needChangesComment,
+        BUTTONTEXT: link.report,
+      }
+      break
+    case 'needChangesNoComment':
+      emailVariables = {
+        ...emailVariables,
+        DEFAULTBACKGROUND: createBase64UrlfromPng('background_1.png'),
+        HEADLINE: headline.needChangesNoComment,
+        HEADLINEIMAGE: createBase64UrlfromPng('tablet.png'),
+        MAINTEXT: message.needChangesNoComment,
         BUTTONTEXT: link.report,
       }
       break

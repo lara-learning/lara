@@ -118,6 +118,7 @@ export type Day = CommentableInterface & {
   entries: Array<Entry>;
   id: Scalars['ID']['output'];
   status?: Maybe<DayStatusEnum>;
+  status_split?: Maybe<DayStatusEnum>;
 };
 
 export enum DayStatusEnum {
@@ -151,13 +152,17 @@ export type Entry = CommentableInterface & {
   createdAt: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   orderId: Scalars['Int']['output'];
-  text: Scalars['String']['output'];
-  time: Scalars['Int']['output'];
+  text?: Maybe<Scalars['String']['output']>;
+  text_split?: Maybe<Scalars['String']['output']>;
+  time?: Maybe<Scalars['Int']['output']>;
+  time_split?: Maybe<Scalars['Int']['output']>;
 };
 
 export type EntryInput = {
-  text: Scalars['String']['input'];
-  time: Scalars['Int']['input'];
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_split?: InputMaybe<Scalars['String']['input']>;
+  time?: InputMaybe<Scalars['Int']['input']>;
+  time_split?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Fazit = {
@@ -526,6 +531,7 @@ export type MutationUpdateCurrentUserArgs = {
 export type MutationUpdateDayArgs = {
   id: Scalars['ID']['input'];
   status?: InputMaybe<Scalars['String']['input']>;
+  status_split?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1026,7 +1032,7 @@ export type CreateEntryMutationVariables = Exact<{
 }>;
 
 
-export type CreateEntryMutation = { __typename?: 'Mutation', createEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string, text: string, time: number, orderId: number, comments: Array<{ __typename?: 'Comment', id: string }> }> } } };
+export type CreateEntryMutation = { __typename?: 'Mutation', createEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string }> }> } } };
 
 export type CreateMentorMutationVariables = Exact<{
   input: CreateMentorInput;
@@ -1064,10 +1070,11 @@ export type CreateTrainerMutation = { __typename?: 'Mutation', createTrainer?: {
 export type DayStatusSelectUpdateDayMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   status?: InputMaybe<Scalars['String']['input']>;
+  status_split?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DayStatusSelectUpdateDayMutation = { __typename?: 'Mutation', updateDay?: { __typename: 'Day', id: string, status?: DayStatusEnum | undefined } | undefined };
+export type DayStatusSelectUpdateDayMutation = { __typename?: 'Mutation', updateDay?: { __typename: 'Day', id: string, status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined } | undefined };
 
 export type DebugLoginMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1255,7 +1262,7 @@ export type UpdateEntryMutationVariables = Exact<{
 }>;
 
 
-export type UpdateEntryMutation = { __typename?: 'Mutation', updateEntry: { __typename?: 'MutateEntryPayload', entry?: { __typename?: 'Entry', id: string, time: number, text: string } | undefined } };
+export type UpdateEntryMutation = { __typename?: 'Mutation', updateEntry: { __typename?: 'MutateEntryPayload', entry?: { __typename?: 'Entry', id: string, time?: number | undefined, text?: string | undefined, time_split?: number | undefined, text_split?: string | undefined } | undefined } };
 
 export type UpdateFazitCursorPosMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1833,10 +1840,11 @@ export function useCreateTrainerMutation(baseOptions?: Apollo.MutationHookOption
 }
 export type CreateTrainerMutationHookResult = ReturnType<typeof useCreateTrainerMutation>;
 export const DayStatusSelectUpdateDayDocument = gql`
-    mutation DayStatusSelectUpdateDay($id: ID!, $status: String) {
-  updateDay(id: $id, status: $status) {
+    mutation DayStatusSelectUpdateDay($id: ID!, $status: String, $status_split: String) {
+  updateDay(id: $id, status: $status, status_split: $status_split) {
     id
     status
+    status_split
     __typename
   }
 }
@@ -2370,6 +2378,8 @@ export const UpdateEntryDocument = gql`
       id
       time
       text
+      time_split
+      text_split
     }
   }
 }
@@ -2723,7 +2733,9 @@ export const ArchivePageDataDocument = gql`
       entries {
         id
         time
+        time_split
         text
+        text_split
       }
     }
     __typename
@@ -3784,6 +3796,7 @@ export const ReportPageDataDocument = gql`
     }
     days {
       status
+      status_split
       date
       id
       comments {
@@ -3800,6 +3813,8 @@ export const ReportPageDataDocument = gql`
         id
         text
         time
+        text_split
+        time_split
         orderId
         comments {
           id
@@ -3857,12 +3872,15 @@ export const ReportReviewPageDataDocument = gql`
     }
     days {
       status
+      status_split
       date
       id
       entries {
         id
         text
         time
+        text_split
+        time_split
         orderId
         comments {
           id
@@ -4058,6 +4076,10 @@ export const TraineePageDataDocument = gql`
   }
   currentUser {
     id
+  }
+  companies {
+    id
+    name
   }
 }
     `;

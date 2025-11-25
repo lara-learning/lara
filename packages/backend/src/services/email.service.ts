@@ -33,8 +33,19 @@ const trainerNotificationMailPayload = (receiver: Trainer, sender: Trainee, repo
   translations: translations(receiver),
 })
 
+const hasComments = (report: Report) => {
+  let hasComments = report.comments.length > 0
+  report.days.forEach((day) => {
+    if (day.comments.length > 0) {
+      hasComments = true
+    }
+  })
+  return hasComments
+}
+
 const traineeNoficationMailPayload = (receiver: Trainee, sender: Trainer, report: Report): EmailPayload => ({
-  emailType: report.status === 'archived' ? 'acceptReport' : 'needChanges',
+  emailType:
+    report.status === 'archived' ? 'acceptReport' : hasComments(report) ? 'needChangesComment' : 'needChangesNoComment',
   userData: {
     receiverEmail: receiver.email,
     receiverName: receiver.firstName,

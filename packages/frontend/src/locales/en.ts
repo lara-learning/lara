@@ -12,6 +12,8 @@ const englishTranslation: Translation = {
   company: 'Company',
   companyPick: 'Please choose your company:',
   continue: 'Continue',
+  create: 'Create',
+  delete: 'Delete',
   save: 'Save',
   cancel: 'Cancel',
   edit: 'edit',
@@ -254,6 +256,7 @@ const englishTranslation: Translation = {
     handoverNotificationText: 'Your report was handed over and is now being checked.',
     accept: 'Approve this report',
     decline: 'Hand back to trainee',
+    halfDays: 'Half Days',
     archived: 'Archived',
     department: {
       title: 'Department',

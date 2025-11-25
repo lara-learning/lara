@@ -45,7 +45,7 @@ import { useReportHelper } from '../helper/report-helper'
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { getFinishedDays } = useReportHelper()
-  const { trainee, year, week } = useParams()
+  const { trainee, year, week, term } = useParams()
 
   const variables: ReportPageDataQueryVariables = {
     year: parseInt(year ?? '', 10),
@@ -282,6 +282,7 @@ const ReportPage: React.FunctionComponent = () => {
           {report?.days.map((day) => (
             <StyledTopBorderWrapper key={day.id}>
               <DayInput
+                term={term ? term : ''}
                 day={day}
                 disabled={reportArchived || reportReview || day.status === DayStatusEnum.Holiday}
                 reportStatus={report.status}

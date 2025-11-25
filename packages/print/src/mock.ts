@@ -134,7 +134,8 @@ export const DUMMY_DATA: PrintData = {
       error: 'Fehler bei der pdf Generierung',
       reportExport: 'Dein Lara Export',
       acceptReport: 'Dein Bericht wurde genehmigt',
-      needChanges: 'Bericht zurückgegeben',
+      needChangesNoComment: 'Bericht zurückgegeben',
+      needChangesComment: 'Bericht zurückgegeben',
       deleteYourTrainee: 'Dein Azubi wird bald gelöscht',
       deleteAccount: 'Dein Account wird bald gelöscht',
       deleteUser: 'Ein Benutzer wird bald gelöscht',
@@ -146,7 +147,8 @@ export const DUMMY_DATA: PrintData = {
     headline: {
       export: 'Dein Lara-Export!',
       accepted: 'Report genehmigt!',
-      needChanges: 'Änderungen erforderlich!',
+      needChangesNoComment: 'Änderungen erforderlich!',
+      needChangesComment: 'Änderungen erforderlich!',
       deleteTrainee: 'Dein Azubi wird bald gelöscht',
       deleteAccount: 'Dein Account wird bald gelöscht',
       deleteUser: 'Ein Benutzer wird bald gelöscht',
@@ -158,8 +160,9 @@ export const DUMMY_DATA: PrintData = {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
       success: 'im Anhang findest du deinen Lara-Export. Wir wünschen dir ganz viel Spaß damit.',
       accepted: '{{ trainer }} hat dein Berichtsheft erhalten und genehmigt',
-      needChanges:
+      needChangesComment:
         '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben. Zu dieser Woche gibt es einen Kommentar.',
+      needChangesNoComment: '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben.',
       deleteTrainee:
         'Dein Auszubildener {{ trainee }} wird in 3 Monaten gelöscht. Sollte dies ein Fehler sein kannst du dich mit deinem Admin in Verbindung setzen, damit er die Löschung abbricht.',
       deleteAccount:

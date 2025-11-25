@@ -10,6 +10,8 @@ export default interface Translation {
   company: string
   companyPick: string
   continue: string
+  create: string
+  delete: string
   save: string
   cancel: string
   edit: string
@@ -245,6 +247,7 @@ export default interface Translation {
     decline: string
     archived: string
     unarchive: string
+    halfDays: string
     department: {
       title: string
       departmentAddedTitle: string

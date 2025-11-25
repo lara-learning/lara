@@ -11,6 +11,7 @@ export const StyledSearch = styled.input`
   border: none;
   transition: width 0.3s;
   background-color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.lightFont};
   ::placeholder {
     color: ${(props) => props.theme.lightFont};
   }

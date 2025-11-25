@@ -1,7 +1,8 @@
-mutation DayStatusSelectUpdateDay($id: ID!, $status: String) {
-  updateDay(id: $id, status: $status) {
+mutation DayStatusSelectUpdateDay($id: ID!, $status: String, $status_split: String) {
+  updateDay(id: $id, status: $status, status_split: $status_split) {
     id
     status
+    status_split
     __typename
   }
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Spacings } from './spacing'
 import { FontSizes } from './font-size'
 import { BorderRadii } from './border-radius'
+import Highlighter from './highlighter'
 
 const ActionWrapper = styled.div`
   display: flex;
@@ -110,19 +111,13 @@ const ValueBase = styled.div`
   font-size: ${FontSizes.copy};
   padding: ${Spacings.m} ${Spacings.l};
 `
+
 const TextWrapper = styled(ValueBase)`
   position: relative;
   flex: 1;
   overflow: hidden;
   line-height: 1.4;
   padding-left: 0;
-`
-
-const Text = styled.p`
-  margin: 0;
-  padding: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
 `
 
 const Time = styled(ValueBase)`
@@ -193,17 +188,25 @@ interface EntryInputLayoutProps extends HTMLAttributes<HTMLElement>, EntryContai
   text: string
   time: string
   actions: JSX.Element
+  term: string
   clickHandler: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const EntryInputLayout: React.FC<EntryInputLayoutProps> = ({ text, time, actions, clickHandler, ...rest }) => {
+export const EntryInputLayout: React.FC<EntryInputLayoutProps> = ({
+  text,
+  time,
+  actions,
+  term,
+  clickHandler,
+  ...rest
+}) => {
   return (
     <>
       <StyledEntryContainer {...rest}>
         <StyledEntryValueWrapper>
           <StyledInputWrapper onClick={() => clickHandler(true)}>
             <TextWrapper>
-              <Text>{text}</Text>
+              <Highlighter term={term}>{text}</Highlighter>
             </TextWrapper>
             <Time>{time}</Time>
           </StyledInputWrapper>

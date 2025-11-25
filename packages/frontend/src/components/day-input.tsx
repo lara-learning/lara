@@ -10,6 +10,7 @@ import {
   ReportStatus,
   useCreateCommentOnDayMutation,
   useDayInputDataQuery,
+  useDayStatusSelectUpdateDayMutation,
   UserInterface,
   UserTypeEnum,
 } from '../graphql'
@@ -22,6 +23,31 @@ import Loader from './loader'
 import Total from './total'
 import { useDayHelper } from '../helper/day-helper'
 import { useToastContext } from '../hooks/use-toast-context'
+import { CheckBox } from './checkbox'
+import styled from 'styled-components'
+
+const SecondaryWrapper = styled.div`
+  display: flex;
+  padding: 24px 24px;
+  justify-content: end;
+  align-items: center;
+`
+
+const Text = styled.p`
+  letter-spacing: 0.9px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: ${(props) => props.theme.lightFont};
+`
+
+const CBWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export interface EntryStatusType {
   message?: string
@@ -51,12 +77,12 @@ export const StatusTypes = {
 }
 
 interface DayInputProps {
-  day?: Pick<Day, 'id' | 'date' | 'status'> & {
+  day: Pick<Day, 'id' | 'date' | 'status'> & {
     comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
   } & {
-    entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+    entries: (Pick<Entry, 'id' | 'text' | 'time' | 'orderId' | 'text_split'> & {
       comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
         user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
@@ -66,6 +92,7 @@ interface DayInputProps {
   disabled?: boolean
   reportStatus?: ReportStatus
   primary?: boolean
+  term: string
   updateMessageDay?: (message: string, commentId: string) => void
   updateMessageEntry?: (
     message: string,
@@ -86,8 +113,10 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
   primary,
   updateMessageDay,
   updateMessageEntry,
+  term,
 }) => {
   const { getTotalMinutes } = useDayHelper()
+  const [mutate] = useDayStatusSelectUpdateDayMutation()
   const { addToast } = useToastContext()
 
   const { loading, data } = useDayInputDataQuery()
@@ -99,6 +128,11 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
     icon: 'Loader',
   })
 
+  const check_initial = () => day?.entries.reduce((acc, current) => (acc ? true : !!current.text_split), false)
+
+  const initial: boolean = check_initial() === true
+
+  const [halfDays, setHalfDays] = React.useState<boolean>(initial)
   const [statusVisible, setStatusVisible] = React.useState(false)
   const [statusTimeout, setStatusTimeout] = React.useState<number>()
 
@@ -198,6 +232,26 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
     return null
   }
 
+  const checkBox = () => {
+    setHalfDays(!halfDays)
+    const value = !halfDays ? 'work' : 'undefined'
+    const id = day.id
+    const status_split = value as DayStatusEnum
+    void mutate({
+      variables: {
+        id,
+        status_split,
+      },
+      optimisticResponse: {
+        updateDay: {
+          __typename: 'Day',
+          id,
+          status_split,
+        },
+      },
+    })
+  }
+
   const InputHeading = primary ? H1 : H2
 
   return (
@@ -206,7 +260,11 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       inputHeader={
         <>
           <InputHeading noMargin>{getHeading()}</InputHeading>
-          {day && <DayStatusSelect disabled={disabled} day={day} />}
+          <CBWrapper>
+            <CheckBox disabled={!!disabled} iconName={'Checkbox'} checked={halfDays} onClick={checkBox} />
+            <Text>{strings.report.halfDays}</Text>
+          </CBWrapper>
+          {day && <DayStatusSelect disabled={disabled} day={day} secondary={false} />}
         </>
       }
       statusVisibility={statusVisible}
@@ -232,13 +290,32 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       }
     >
       <EntriesInput
+        term={term}
         handleStatusChange={handleStatusChange}
         day={day}
         reportStatus={reportStatus ?? ReportStatus.Todo}
         disabled={Boolean(disabled)}
         trainee={data.currentUser}
+        secondary={false}
         updateMessage={updateMessageEntry}
       />
+      {halfDays && (
+        <>
+          <SecondaryWrapper>
+            {day && halfDays === true && <DayStatusSelect disabled={disabled} day={day} secondary={true} />}
+          </SecondaryWrapper>
+          <EntriesInput
+            term={term}
+            handleStatusChange={handleStatusChange}
+            day={day}
+            secondary={true}
+            reportStatus={reportStatus ?? ReportStatus.Todo}
+            disabled={Boolean(disabled)}
+            trainee={data.currentUser}
+            updateMessage={updateMessageEntry}
+          />
+        </>
+      )}
     </DayInputLayout>
   )
 }

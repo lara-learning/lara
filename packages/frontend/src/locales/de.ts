@@ -12,6 +12,8 @@ const germanTranslation: Translation = {
   company: 'Firma',
   companyPick: 'Bitte wähle deine Firma:',
   continue: 'Weiter',
+  create: 'Anlegen',
+  delete: 'Löschen',
   save: 'Speichern',
   edit: 'Bearbeiten',
   done: 'Fertig',
@@ -30,8 +32,7 @@ const germanTranslation: Translation = {
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
-      description:
-        'Leider sind Sie noch nicht registriert. Bitte wenden Sie sich an den Administrator oder Ihren Ausbilder.',
+      description: 'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder.',
     },
   },
   modal: {
@@ -261,6 +262,7 @@ const germanTranslation: Translation = {
     handoverTitle: 'Bericht übergeben',
     handoverNotificationText: 'Dein Bericht wurde übergeben und wird jetzt geprüft.',
     accept: 'Bericht genehmigen',
+    halfDays: 'Halbe Tage',
     decline: 'Bericht zurückgeben',
     archived: 'Archiviert',
     department: {
@@ -332,10 +334,10 @@ const germanTranslation: Translation = {
     firstname: 'Vorname',
     lastname: 'Nachname',
     email: 'E-Mail',
-    startOfToolusage: 'Start der Laranutzung',
+    startOfToolusage: 'Start der Lara-Nutzung',
     associatedTrainer: 'Zugeordnete Ausbildende',
     associatedTrainees: 'Zugeordnete Auszubildende',
-    notAssociated: 'noch nicht zugeordnet',
+    notAssociated: 'Noch nicht zugeordnet',
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
@@ -454,7 +456,7 @@ const germanTranslation: Translation = {
       features: {
         question: 'Was kann das Berichtsheft Tool?',
         answer:
-          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können sie von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
+          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
       },
       timetable: {
         question: 'Kann ich meinen Stundenplan hochladen?',

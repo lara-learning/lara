@@ -30,6 +30,10 @@ export const commentResolver: GqlResolvers<AuthenticatedContext> = {
     },
   },
   Comment: {
+    published: (comment) => {
+      return comment.published || false
+    },
+
     user: async (model, _args, { currentUser }) => {
       const user = await userById(model.userId)
 
@@ -74,7 +78,7 @@ export const commentResolver: GqlResolvers<AuthenticatedContext> = {
         commentable: report,
         text,
         currentUser,
-        report,
+        report: report,
       })
     },
     updateCommentOnDay: async (_parent, { id, text, traineeId, commentId }, { currentUser }) => {

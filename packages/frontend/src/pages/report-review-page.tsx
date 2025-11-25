@@ -47,6 +47,14 @@ import strings from '../locales/localization'
 import { useToastContext } from '../hooks/use-toast-context'
 import { Template } from '../templates/template'
 import { useDayHelper } from '../helper/day-helper'
+import { styled } from 'styled-components'
+
+const SecondaryWrapper = styled.div`
+  display: flex;
+  padding: 24px 24px;
+  justify-content: end;
+  align-items: center;
+`
 
 interface ReportReviewPageState {
   showApproveConfimationModal: boolean
@@ -380,23 +388,58 @@ const ReportReviewPage: React.FunctionComponent = () => {
                           <H2>{getHeading(day)}</H2>
                         </Box>
                         <Box width={[2 / 5, 1 / 5]}>
-                          <DayStatusSelect disabled={true} day={day} />
+                          <DayStatusSelect disabled={true} day={day} secondary={false} />
                         </Box>
                       </Flex>
                     </Spacer>
-                    {day.status === 'work' || day.status === 'education' ? (
+                    {(day.status && day.status === 'work') || day.status === 'education' ? (
                       <>
-                        {day.entries.map((entry, entryIndex) => (
-                          <EntryInput
-                            key={entryIndex}
-                            entry={entry}
-                            day={day}
-                            disabled={true}
-                            reportStatus={report.status}
-                            trainee={{ id: variables.trainee }}
-                            updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
-                          />
-                        ))}
+                        {day.entries
+                          .filter((entry) => entry.text !== null)
+                          .filter((entry) => entry.text !== '')
+                          .map((entry, entryIndex) => (
+                            <EntryInput
+                              term=""
+                              key={entryIndex}
+                              entry={entry}
+                              day={day}
+                              secondary={false}
+                              disabled={true}
+                              reportStatus={report.status}
+                              trainee={{ id: variables.trainee }}
+                              updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
+                            />
+                          ))}
+                        {!day.status_split && (
+                          <StyledTotalContainer>
+                            <Total minutes={getTotalMinutes(day)} />
+                          </StyledTotalContainer>
+                        )}
+                      </>
+                    ) : null}
+                    {(day.status_split && day.status_split === 'work') || day.status_split === 'education' ? (
+                      <>
+                        <Flex alignItems="center" justifyContent="flex-end">
+                          <SecondaryWrapper>
+                            <DayStatusSelect disabled={true} day={day} secondary={true} />
+                          </SecondaryWrapper>
+                        </Flex>
+                        {day.entries
+                          .filter((entry) => entry.text_split !== null)
+                          .filter((entry) => entry.text_split !== '')
+                          .map((entry, entryIndex) => (
+                            <EntryInput
+                              term=""
+                              key={entryIndex}
+                              entry={entry}
+                              day={day}
+                              secondary={true}
+                              disabled={true}
+                              reportStatus={report.status}
+                              trainee={{ id: variables.trainee }}
+                              updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
+                            />
+                          ))}
                         <StyledTotalContainer>
                           <Total minutes={getTotalMinutes(day)} />
                         </StyledTotalContainer>

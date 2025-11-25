@@ -12,9 +12,10 @@ const DayInputContainer = styled.div.withConfig({
 
 const DayInputHeaderContainer = styled.div`
   padding: 0 ${Spacings.l};
-  display: flex;
+  display: grid;
   justify-content: space-between;
   align-items: center;
+  grid-template-columns: 40% 26% 33%;
 `
 
 const DayStatusContainer = styled.div`

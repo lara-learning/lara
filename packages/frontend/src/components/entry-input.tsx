@@ -39,9 +39,9 @@ import { useDayHelper } from '../helper/day-helper'
 
 interface EntryDisplayFieldProps {
   day: Pick<Day, 'id' | 'date'> & {
-    entries: Pick<Entry, 'id' | 'text' | 'time'>[]
+    entries: Pick<Entry, 'id' | 'text' | 'time' | 'time_split' | 'text_split'>[]
   }
-  entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId'> & {
+  entry: Pick<Entry, 'id' | 'text' | 'time' | 'orderId' | 'time_split' | 'text_split'> & {
     comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
@@ -49,10 +49,12 @@ interface EntryDisplayFieldProps {
   trainee: Pick<Trainee, 'id'>
   disabled: boolean
   reportStatus?: ReportStatus
+  secondary: boolean
   handleStatusChange?: (status: EntryStatusType) => void
   showContextMenu?: string
   setShowContextMenu?: React.Dispatch<React.SetStateAction<string>>
   updateMessage?: (message: string, commentId: string) => void
+  term: string
 }
 
 const EntryInput: React.FC<EntryDisplayFieldProps> = ({
@@ -63,8 +65,10 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   handleStatusChange,
   trainee,
   showContextMenu,
+  secondary,
   setShowContextMenu,
   updateMessage,
+  term,
 }) => {
   const { loading, data } = useEntryInputDataQuery()
 
@@ -183,7 +187,9 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   const handleSave = (newEntry: EntryInputType) => {
     setEditing(false)
 
-    if (!isValidTimeUpdate(day, newEntry.time - entry.time)) {
+    if (
+      !isValidTimeUpdate(day, newEntry.time ? newEntry.time - entry.time! : newEntry.time_split! - entry.time_split!)
+    ) {
       addToast({ text: strings.entryStatus.changeError, type: 'error' })
       return
     }
@@ -193,27 +199,51 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
     }
 
     statusChange(StatusTypes.loading)
-    updateEntryMutation({
-      variables: {
-        id: entry.id,
-        input: {
-          text: newEntry.text,
-          time: newEntry.time,
-        },
-      },
-      optimisticResponse: {
-        updateEntry: {
-          __typename: 'MutateEntryPayload',
-          entry: {
-            __typename: 'Entry',
-            id: entry.id,
-            ...newEntry,
+    if (!secondary) {
+      updateEntryMutation({
+        variables: {
+          id: entry.id,
+          input: {
+            text: newEntry.text,
+            time: newEntry.time,
           },
         },
-      },
-    })
-      .then(() => statusChange(StatusTypes.change.success))
-      .catch(() => statusChange(StatusTypes.change.error))
+        optimisticResponse: {
+          updateEntry: {
+            __typename: 'MutateEntryPayload',
+            entry: {
+              __typename: 'Entry',
+              id: entry.id,
+              ...newEntry,
+            },
+          },
+        },
+      })
+        .then(() => statusChange(StatusTypes.change.success))
+        .catch(() => statusChange(StatusTypes.change.error))
+    } else {
+      updateEntryMutation({
+        variables: {
+          id: entry.id,
+          input: {
+            text_split: newEntry.text_split,
+            time_split: newEntry.time_split,
+          },
+        },
+        optimisticResponse: {
+          updateEntry: {
+            __typename: 'MutateEntryPayload',
+            entry: {
+              __typename: 'Entry',
+              id: entry.id,
+              ...newEntry,
+            },
+          },
+        },
+      })
+        .then(() => statusChange(StatusTypes.change.success))
+        .catch(() => statusChange(StatusTypes.change.error))
+    }
   }
 
   const handleDelete = (e?: React.MouseEvent<HTMLAnchorElement>) => {
@@ -298,9 +328,10 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   return (
     <>
       {editing && !disabled ? (
-        <TextTimeInput autoFocus entry={entry} onDelete={handleDelete} onSave={handleSave} />
+        <TextTimeInput autoFocus entry={entry} onDelete={handleDelete} onSave={handleSave} secondary={secondary} />
       ) : (
         <EntryInputLayout
+          term={term}
           clickable
           disabled={disabled}
           draggable={!disabled}
@@ -312,12 +343,12 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
           onDragEnter={onDragEnter}
           onDragEnd={onDragEnd}
           onDragStart={onDragStart}
-          text={entry.text}
-          time={TimeConversion.minutesToString(entry.time)}
+          text={!secondary ? entry.text! : entry.text_split!}
+          time={TimeConversion.minutesToString(!secondary ? entry.time! : entry.time_split!)}
           clickHandler={setEditing}
           actions={
             <>
-              {!disabled && !isCommentable() && (
+              {!disabled && (entry.text || entry.text_split) && !isCommentable() && (
                 <StyledAction onClick={() => handleDelete()} danger>
                   <StyledIcon name={'Trash'} size={'30px'} color={'errorRed'} />
                 </StyledAction>

@@ -80,11 +80,17 @@ export const validateEntryUpdate = (report: Report, day: Day, newEntry: Entry, l
     entries: day.entries.filter((d) => d.id !== newEntry.id),
   })
 
-  if (day.status === 'work' && minutes + newEntry.time > LaraConfig.maxWorkDayMinutes) {
+  if (
+    day.status === 'work' &&
+    minutes + (newEntry.time ? newEntry.time : newEntry.time_split!) > LaraConfig.maxWorkDayMinutes
+  ) {
     throw new GraphQLError(t('errors.dayTimeLimit'))
   }
 
-  if (day.status === 'education' && minutes + newEntry.time > LaraConfig.maxEducationDayMinutes) {
+  if (
+    day.status === 'education' &&
+    minutes + (newEntry.time ? newEntry.time : newEntry.time_split!) > LaraConfig.maxEducationDayMinutes
+  ) {
     throw new GraphQLError(t('errors.dayTimeLimit'))
   }
 

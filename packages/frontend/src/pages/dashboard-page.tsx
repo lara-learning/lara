@@ -61,13 +61,16 @@ const DashboardPage: React.FunctionComponent = () => {
         <>
           {showDayInput && (
             <Container overflow={'visible'}>
-              <DayInput
-                primary
-                heading={getTodayHeading()}
-                reportStatus={reportForYearAndWeek?.status}
-                day={day}
-                disabled={day?.status === DayStatusEnum.Holiday}
-              />
+              {day && (
+                <DayInput
+                  primary
+                  term=""
+                  heading={getTodayHeading()}
+                  reportStatus={reportForYearAndWeek?.status}
+                  day={day}
+                  disabled={day?.status === DayStatusEnum.Holiday}
+                />
+              )}
             </Container>
           )}
           <StyledDashboardWeeks>

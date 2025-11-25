@@ -84,6 +84,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
               <>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/archive" element={<ArchivePage />} />
+                <Route path="/report/:year/:week/:term" element={<ReportPage />} />
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
 
@@ -114,6 +115,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/archive" element={<ArchivePage />} />
             <Route path="/reports/:trainee?" element={<TrainerReportsPage />} />
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
+            <Route path="/report/:trainee/:year/:week/:term" element={<ReportPage />} />
             <Route path="/report/:trainee/:year/:week" element={<ReportPage />} />
 
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
