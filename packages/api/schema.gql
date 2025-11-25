@@ -399,7 +399,7 @@ type Mutation {
   """
   Updates a Fazit
   """
-  updateFazit(id: ID! content: String! version: Int! cursorPosition: CursorInput!): FazitUpdateResponse!
+  updateFazit(id: ID! content: String! version: Int! cursorPosition: CursorInput! mentorDone: Boolean traineeDone: Boolean): FazitUpdateResponse!
 
   """
   Update Fazit cursor position
@@ -668,6 +668,8 @@ type Fazit {
   content: String!
   version: Int!
   cursorPositions: [Cursor!]!
+  mentorDone: Boolean
+  traineeDone: Boolean
 }
 
 type FazitUpdateResponse {
@@ -680,6 +682,8 @@ input FazitUpdateInput {
   content: String!
   version: Int!
   cursorPositions: [CursorInput!]!
+  mentorDone: Boolean
+  traineeDone: Boolean
 }
 
 type Trainer implements UserInterface {

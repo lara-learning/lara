@@ -27,7 +27,7 @@ export const TraineePaperPage: React.FC = () => {
     navigate('/paper/fazit/' + paperId)
   }
 
-  const naviateToFazitDonePAge = (paperId: string) => {
+  const navigateToFazitDonePage = (paperId: string) => {
     navigate('/paper/fazit/done/' + paperId)
   }
 
@@ -166,7 +166,7 @@ export const TraineePaperPage: React.FC = () => {
                           ? !hasCommented(paper)
                             ? navigateToPaperDiscussionPage(paper.id)
                             : paper.status == PaperStatus.ReviewDone
-                              ? naviateToFazitDonePAge(paper.id)
+                              ? navigateToFazitDonePage(paper.id)
                               : navigateToFazitPage(paper.id)
                           : navigateToPaperFeedbackPage(paper.id)
                       }
