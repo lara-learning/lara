@@ -166,6 +166,8 @@ export type GqlFazit = {
   content: Scalars['String']['output'];
   cursorPositions: Array<GqlCursor>;
   id: Scalars['ID']['output'];
+  mentorDone?: Maybe<Scalars['Boolean']['output']>;
+  traineeDone?: Maybe<Scalars['Boolean']['output']>;
   version: Scalars['Int']['output'];
 };
 
@@ -173,6 +175,8 @@ export type GqlFazitUpdateInput = {
   content: Scalars['String']['input'];
   cursorPositions: Array<GqlCursorInput>;
   id: Scalars['ID']['input'];
+  mentorDone?: InputMaybe<Scalars['Boolean']['input']>;
+  traineeDone?: InputMaybe<Scalars['Boolean']['input']>;
   version: Scalars['Int']['input'];
 };
 
@@ -547,6 +551,8 @@ export type GqlMutationUpdateFazitArgs = {
   content: Scalars['String']['input'];
   cursorPosition: GqlCursorInput;
   id: Scalars['ID']['input'];
+  mentorDone?: InputMaybe<Scalars['Boolean']['input']>;
+  traineeDone?: InputMaybe<Scalars['Boolean']['input']>;
   version: Scalars['Int']['input'];
 };
 
@@ -1240,6 +1246,8 @@ export type GqlFazitResolvers<ContextType = Context, ParentType extends GqlResol
   content?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   cursorPositions?: Resolver<Array<GqlResolversTypes['Cursor']>, ParentType, ContextType>;
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
+  mentorDone?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
+  traineeDone?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   version?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

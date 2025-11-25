@@ -26,7 +26,7 @@ export const MentorPaperPage: React.FC = () => {
     navigate('/paper/fazit/' + paperId)
   }
 
-  const naviateToFazitDonePAge = (paperId: string) => {
+  const navigateToFazitDonePage = (paperId: string) => {
     navigate('/paper/fazit/done/' + paperId)
   }
 
@@ -90,7 +90,6 @@ export const MentorPaperPage: React.FC = () => {
         }
       })
     })
-
     if (foundUserIds.length >= 2) {
       return true
     }
@@ -183,15 +182,30 @@ export const MentorPaperPage: React.FC = () => {
                   ].includes(paper?.status) && (
                     <Flex justifyContent={'flex-end'}>
                       <PrimaryButton
-                        onClick={() =>
-                          (paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0
-                            ? !hasCommented(paper)
-                              ? navigateToPaperDiscussionPage(paper.id)
-                              : paper.status == PaperStatus.ReviewDone
-                                ? naviateToFazitDonePAge(paper.id)
-                                : navigateToFazitPage(paper.id)
-                            : navigateToPaperFeedbackPage(paper.id)
-                        }
+                        onClick={() => {
+                          console.log('Paper object:', JSON.stringify(paper, null, 2))
+                          console.log('Paper:', paper)
+                          console.log('FeedbackTrainee length:', paper?.feedbackTrainee?.length)
+                          console.log('FeedbackMentor length:', paper?.feedbackMentor?.length)
+                          console.log('Has commented:', hasCommented(paper))
+                          console.log('Paper status:', paper.status)
+
+                          if ((paper?.feedbackTrainee?.length ?? 0) > 0 && (paper?.feedbackMentor?.length ?? 0) > 0) {
+                            if (!hasCommented(paper)) {
+                              console.log('Navigating to Discussion Page')
+                              navigateToPaperDiscussionPage(paper.id)
+                            } else if (paper.status == PaperStatus.ReviewDone) {
+                              console.log('Navigating to Fazit Done Page')
+                              navigateToFazitDonePage(paper.id)
+                            } else {
+                              console.log('Navigating to Fazit Page')
+                              navigateToFazitPage(paper.id)
+                            }
+                          } else {
+                            console.log('Navigating to Feedback Page')
+                            navigateToPaperFeedbackPage(paper.id)
+                          }
+                        }}
                       >
                         {getContinueButtonText(paper.status)}
                       </PrimaryButton>

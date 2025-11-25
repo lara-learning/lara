@@ -77,6 +77,9 @@ export const PaperFazitPage: React.FC = () => {
     fetchPolicy: 'cache-and-network',
   })
 
+  const fazit = data?.getFazit
+  const bothDone = fazit?.mentorDone && fazit?.traineeDone
+
   useEffect(() => {
     const fazit: GetFazitQuery | undefined = data as GetFazitQuery
     if (fazit?.getFazit && fazit.getFazit.version > localVersion) {
@@ -117,7 +120,7 @@ export const PaperFazitPage: React.FC = () => {
         variables: { id: paperId ?? '', content: newContent, version: localVersion + 1, cursorPosition: newCursorPos },
       })
     },
-    [paperId, updateFazit, localVersion, localContent]
+    [paperId, updateFazit, localVersion, currentUser?.currentUser?.id]
   )
 
   const syncFinal = () => {
@@ -164,7 +167,7 @@ export const PaperFazitPage: React.FC = () => {
         cursorPosition: { owner: currentUser?.currentUser?.id ?? '', position: cursorPos },
       },
     })
-  }, [paperId, updateCursorPosition])
+  }, [paperId, updateCursorPosition, currentUser?.currentUser?.id])
 
   return (
     <Template type="Main">
@@ -206,6 +209,7 @@ export const PaperFazitPage: React.FC = () => {
       <Flex style={{ display: 'flex', justifyContent: 'space-between' }}>
         <SecondaryButton onClick={() => window.location.reload()}>{strings.paper.fazit.reloadPage}</SecondaryButton>
         <PrimaryButton
+          disabled={!bothDone}
           onClick={() => {
             syncFinal()
           }}
