@@ -81,6 +81,7 @@ export type EmailTranslations = {
     error: string
     reportExport: string
     acceptReport: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteYourTrainee: string
@@ -94,6 +95,7 @@ export type EmailTranslations = {
   headline: {
     export: string
     accepted: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteTrainee: string
@@ -107,6 +109,7 @@ export type EmailTranslations = {
     error: string
     success: string
     accepted: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteTrainee: string
