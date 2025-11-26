@@ -37,6 +37,7 @@ export const EnglishTranslations: Translations = {
       error: 'Error while generating reports.',
       reportExport: 'Your Lara export',
       acceptReport: 'Your report got accepted',
+      needChanges: 'Your report got handed back',
       needChangesComment: 'Your report got handed back',
       needChangesNoComment: 'Your report got handed back',
       deleteYourTrainee: 'Your Trainee will be deleted soon',
@@ -50,6 +51,7 @@ export const EnglishTranslations: Translations = {
     headline: {
       export: 'Your Lara export!',
       accepted: 'Report accepted!',
+      needChanges: 'Changes necessary!',
       needChangesNoComment: 'Changes necessary!',
       needChangesComment: 'Changes necessary!',
       deleteTrainee: 'Your trainee will be delted soon',
@@ -63,6 +65,7 @@ export const EnglishTranslations: Translations = {
       error: 'Something went wring. Please conteact your Lara admin.',
       success: 'Your lara report is attached to this mail. Good luck with it.',
       accepted: '{{ trainer }} received your report and approved it',
+      needChanges: '{{ trainer }} received your report and handed it back.',
       needChangesComment: '{{ trainer }} received your report and handed it back. There are comments to your report.',
       needChangesNoComment: '{{ trainer }} received your report and handed it back.',
       deleteTrainee:

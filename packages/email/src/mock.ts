@@ -19,6 +19,7 @@ export const DUMMY_DATA: EmailPayload = {
       error: 'Fehler bei der pdf Generierung',
       reportExport: 'Dein Lara Export',
       acceptReport: 'Dein Bericht wurde genehmigt',
+      needChanges: 'Bericht zurückgegeben',
       needChangesNoComment: 'Bericht zurückgegeben',
       needChangesComment: 'Bericht zurückgegeben',
       deleteYourTrainee: 'Dein Azubi wird bald gelöscht',
@@ -32,6 +33,7 @@ export const DUMMY_DATA: EmailPayload = {
     headline: {
       export: 'Dein Lara-Export!',
       accepted: 'Report genehmigt!',
+      needChanges: 'Änderungen erforderlich!',
       needChangesNoComment: 'Änderungen erforderlich!',
       needChangesComment: 'Änderungen erforderlich!',
       deleteTrainee: 'Dein Azubi wird bald gelöscht',
@@ -45,6 +47,7 @@ export const DUMMY_DATA: EmailPayload = {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
       success: 'im Anhang findest du deinen Lara-Export. Wir wünschen dir ganz viel Spaß damit.',
       accepted: '{{ trainer }} hat dein Berichtsheft erhalten und genehmigt',
+      needChanges: '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben.',
       needChangesComment:
         '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben. Zu dieser Woche gibt es Rückmeldungen.',
       needChangesNoComment: '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben.',
