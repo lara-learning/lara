@@ -1,0 +1,46 @@
+query TrainerPaperPageData {
+  currentUser {
+    id
+    ... on Trainer {
+      trainees {
+        firstName
+        lastName
+        id
+      }
+      papers {
+        id
+        traineeId
+        trainerId
+        client
+        mentorId
+        periodStart
+        periodEnd
+        schoolPeriodStart
+        schoolPeriodEnd
+        subject
+        status
+        briefing {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
+        feedbackTrainee {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
+        feedbackMentor {
+          id
+          questionId
+          question
+          answer
+          hint
+        }
+      }
+    }
+  }
+}

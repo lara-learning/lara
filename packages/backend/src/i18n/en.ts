@@ -37,6 +37,7 @@ export const EnglishTranslations: Translations = {
       error: 'Error while generating reports.',
       reportExport: 'Your Lara export',
       acceptReport: 'Your report got accepted',
+      needChanges: 'Your report got handed back',
       needChangesComment: 'Your report got handed back',
       needChangesNoComment: 'Your report got handed back',
       deleteYourTrainee: 'Your Trainee will be deleted soon',
@@ -44,10 +45,13 @@ export const EnglishTranslations: Translations = {
       deleteUser: 'A User will be deleted soon',
       reportInReview: 'A new report was handed in',
       alexa: 'Your Account have been linked',
+      paperBriefing: 'Your Paper Briefing',
+      paperBriefingMail: 'Your Paper Briefing',
     },
     headline: {
       export: 'Your Lara export!',
       accepted: 'Report accepted!',
+      needChanges: 'Changes necessary!',
       needChangesNoComment: 'Changes necessary!',
       needChangesComment: 'Changes necessary!',
       deleteTrainee: 'Your trainee will be delted soon',
@@ -55,11 +59,13 @@ export const EnglishTranslations: Translations = {
       deleteUser: 'A User will be deleted soon',
       handOver: 'A new report was handed in',
       alexa: 'Lara has been linked with Amazon Alexa!',
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'Something went wring. Please conteact your Lara admin.',
       success: 'Your lara report is attached to this mail. Good luck with it.',
       accepted: '{{ trainer }} received your report and approved it',
+      needChanges: '{{ trainer }} received your report and handed it back.',
       needChangesComment: '{{ trainer }} received your report and handed it back. There are comments to your report.',
       needChangesNoComment: '{{ trainer }} received your report and handed it back.',
       deleteTrainee:
@@ -71,9 +77,12 @@ export const EnglishTranslations: Translations = {
       handOver: 'your Trainee {{ trainee }} handed in week {{ week }} report for review.',
       alexa:
         "Your Lara Account has been linked to your Amazon Alexa Account. If you didn't initiate the Account Linking please open you Lara Settings and remove the Amazon Account. You should also change you Password for Lara.",
+      paperBriefing:
+        "attached you will find the briefing PDF for Anna's training station. We hope you have a lot of fun with it.",
     },
     link: {
       archive: 'Archive',
+      paperBriefing: 'Paper',
       report: 'Report',
       lara: 'Lara',
       settings: 'Settings',
@@ -101,5 +110,10 @@ export const EnglishTranslations: Translations = {
     thursday: 'Thursday',
     friday: 'Friday',
     hello: 'Hello',
+    client: 'Client',
+    mentor: 'Mentor',
+    trainer: 'Trainer',
+    trainee: 'Trainee',
+    briefing: 'Briefing',
   },
 }

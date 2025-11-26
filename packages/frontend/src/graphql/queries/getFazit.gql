@@ -1,0 +1,11 @@
+query GetFazit($id: ID!) {
+  getFazit(id: $id) {
+    id
+    content
+    version
+    cursorPositions {
+      owner
+      position
+    }
+  }
+}

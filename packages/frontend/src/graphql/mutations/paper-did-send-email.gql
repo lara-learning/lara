@@ -1,0 +1,5 @@
+mutation DidSendEmail($id: ID!, $didSendEmail: Boolean!) {
+  didSendEmail(id: $id, didSendEmail: $didSendEmail) {
+    didSendEmail
+  }
+}

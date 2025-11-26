@@ -15,10 +15,12 @@ const germanTranslation: Translation = {
   create: 'Anlegen',
   delete: 'Löschen',
   save: 'Speichern',
-  edit: 'bearbeiten',
-  done: 'fertig',
+  edit: 'Bearbeiten',
+  done: 'Fertig',
+  comment: 'Kommentiere',
   markDelete: 'für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
+  deleteAt: 'Löschen nach',
   cancel: 'Abbrechen',
   deactivate: 'Deaktivieren',
   traineeShipYear: 'Jahr der Ausbildung',
@@ -26,6 +28,7 @@ const germanTranslation: Translation = {
   back: 'zurück',
   on: 'an',
   off: 'aus',
+  start: 'Starten',
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
@@ -48,6 +51,179 @@ const germanTranslation: Translation = {
     reportToArciveAddedSuccessTitle: 'Neuer Bericht im Archiv',
     reportToArciveAddedSuccess:
       'Dein Bericht über {0}{1} wurde von {name} genehmigt und befindet sich jetzt in deinem Archiv.',
+  },
+  paper: {
+    empty: {
+      headline: 'Briefing/Kick-Off Gespräch',
+      description:
+        'Dein Azubi kommt auf eine neue Station und es steht das Kick-Off Gespräch an? Hier kannst du das Briefing für die Station ausfüllen und vorbereiten. Damit kannst du einene Rahmen über den Umfang und die Themen der Ausbildungssation deines Azubis festlegen.',
+      createBriefing: 'Briefing erstellen',
+    },
+    emptyTrainee: {
+      headline: 'Hier gibt es noch nichts',
+      description:
+        'Nach deinem Ersten Kick-Off/Briefing Gespräch für eine Station, wirst du dieses hier finden und herunterladen können und dein Stationsfeedback zu dieser geben können.',
+    },
+    createBriefing: {
+      title: 'Briefing',
+      firstnameMentor: 'Vorname Ausbildungsbeauftragten',
+      lastnameMentor: 'Nachname Ausbildungsbeauftragten',
+      emailMentor: 'Email Ausbildungsbeauftragten',
+      trainee: 'Auszubildender',
+      department: 'Abteilung',
+      customer: 'Kunde',
+      projectPeriod: 'Stationszeitraum',
+      schoolPeriod: 'Schulzeitraum',
+    },
+    briefingQuestions: {
+      objectOfTheWork: {
+        question: 'Gegenstand der Arbeit',
+        hint: 'Nenne hier bitte die allgemeine Tätigkeit/Aufgabe, die Inhalt der Projektstation ist.',
+      },
+      procedure: {
+        question: 'Vorgehen',
+        hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
+      },
+      learningContent: {
+        question: 'Lerninhalte Station',
+        hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.',
+      },
+      frameworkPlan: {
+        question: 'Rahmenplan Lerninhalte',
+        hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
+      },
+      tasksAndDutiesTrainee: {
+        question: 'Aufgaben und Pflichten des Azubis',
+        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten dein Azubi zu erfüllen hat. ',
+      },
+      tasksAndDutiesMentor: {
+        question: 'Aufgaben und Pflichten des Ausbildungsbeauftragten',
+        hint: 'Nenne hier (falls gewollt), welche Aufgaben und Pflichten der Ausbildungsbeauftragte zu erfüllen hat.',
+      },
+      primeBlueAntMyTe: {
+        question: 'Prime / BlueAnt',
+        hint: 'Fasse hier kurz zusammen auf welchen Posten der Azubi seine Stunden/Aufwände buchen kann/soll.',
+      },
+      feedback: {
+        question: 'Feedback',
+        hint: 'Hier ist im Briefing einmal kurz zusammenefasst, was unter Feedback zu verstehen ist. Du kannst den Vorlagen Text bei Bedarf natürlich noch ergänzen.',
+      },
+      otherRemarks: {
+        question: 'Sonstige Anmerkungen',
+        hint: 'Falls du noch zusätzliche Punkte hast, welche ins Breifing aufgenommen werden sollen, kannst du diese hier festhalten.',
+      },
+    },
+    feedback: {
+      headlineEvaluationByTrainee: 'Bewertung durch den Auszubildenden',
+      headlineEvaluationByMentor: 'Bewertung durch den Ausbildungsbeauftragten',
+    },
+    feedbackQuestions: {
+      descriptionOfActivities: {
+        question: 'Berschreibung der Tätigkeiten',
+        hint: 'Nenne hier bitte die Tätigkeiten oder Aufgaben, die du in der Station gemacht hast.',
+      },
+      feedbackOnProjectTeam: {
+        question: 'Feedback zu deinem Projekt Team ',
+        hint: 'Bitte beschreibe hier wie du dich ins Team aufgenommen gefühlt hast und wie der Einstieg und die Zusammenarbeit lief.',
+      },
+      feedbackOnTasksAndProject: {
+        question: 'Feedaback zu deinen Aufgaben und Projekt',
+        hint: 'Was lief gut? Was war herausfordernd? Welche Aufgaben hast du mit besonderem Interesse und Erfolg ausgeübt? Was hat dich weitergebracht? Was war weniger erfolgreich? Was macht zufrieden? Was erzeugt Frust? Hierbei beschreibe möglichst an konkreten Beispielen vornehmlich dich und nicht dein Umfeld.',
+      },
+      periodOfTime: {
+        question: 'Zeitumfang',
+        hint: 'Damit ist gemeint, ob die Dauer der Ausbildungsstation angemessen war, zu kurz oder zu lang.',
+      },
+      learningContent: {
+        question: 'Lerninhalte',
+        hint: 'Wurden die zu Beginn deiner Station vereinbarten Lerninhalte behandelt?Diese sind hier nochmal automatisch aufgeführt. Ergänze hier, ob du ausreichend Gelegenheit hattest, die Inhalte zu lernen.',
+      },
+    },
+    mentorFeedbackQuestions: {
+      integrationIntoTeam: {
+        question: 'Integration ins Team',
+        hint: 'Bitte beschreibe das Sozialverhalten des Azubis gegenüber den Kollegen und ggf. externen Mitarbeitern.',
+      },
+      communicationWithCustomers: {
+        question: 'Kommunikation mit Kunden oder Dienstleistern',
+        hint: 'Bitte beschreibe, wie sich der Azubi gegenüber Kunden oder Dienstleistern verhalten hat.',
+      },
+      willingnessToWork: {
+        question: 'Arbeitsbereitschaft/Arbeitsweise',
+        hint: 'Bitte beschreibe die Arbeitsbereitschaft und Arbeitsweise des Azubis im Projekt- und Teamkontext.',
+      },
+      abilities: {
+        question: 'Arbeitsbefähigung/Können',
+        hint: 'Welche Kompetenzen (Hard- und Softskills) hast du besonders wahrgenommen? \n Welche Aufgaben werden mit Interesse und Erfolg ausgeübt? \n Bitte beschreibe die Fähigkeiten und Kompetenzen konkret anhand von Beobachtungen.',
+      },
+      goalAchieved: {
+        question: 'Lerninhalte',
+        hint: 'Hat der Azubi die vorher vereinbarten Lerninhalte und Kompetenzen erwerben können? Diese sind hier nochmal automatisiert aufgeführt.',
+      },
+    },
+    modal: {
+      title: 'Bist du sicher, dass du das Briefing beenden möchtest?',
+      description:
+        '' +
+        'Wenn du auf “Briefing erstellen” drückst, kannst du das Briefing nicht mehr bearbeiten. Das Briefing wird daraufhin als PDF an deinen Azubi und den Ausbildungsbeauftragten per E-Mail gesendet.\n' +
+        '\n' +
+        'Du kannst das Briefing stattdessen speichern, damit du es später nochmal bearbeiten kannst.',
+      createBriefing: 'Briefing erstellen',
+      backToPaperTitle: 'Briefing wird exportiert',
+      backToPaperDescription:
+        'Das Lara Paper Briefing wird exportiert und anschließend als PDF an alle Teilnehmer verschickt. Es kann sein, dass du später Lara neuladen musst, um das neu erstellte Paper sehen zu. \n' +
+        'Hab jetzt etwas Geduld während das Briefing exportiert wird.',
+      backToPaperButton: 'Züruck zur Paper Übersicht',
+      deletePaperTitle: 'Paper löschen für {kunde}',
+      deletePaperDescription:
+        'Bist du sicher, dass du das Paper für den Kunden {kunde} löschen willst? Es kann nicht mehr rückgängig gemacht werden.',
+      deletePaperButtonAgree: 'bestätigen',
+      deletePaperButtonDisagree: 'abbrechen',
+    },
+    dashboard: {
+      title: 'Station',
+      description: 'Für die Station von ihrem Azubi steht das Stationsfeedbackgespräch an. Du kannst es hier starten.',
+      traineeDiscription: {
+        a: 'Für deine Station ',
+        b: ' liegt ein Briefing vor, mit allen Eckdaten zu deiner Station. Falls dein Stationsfeedbackgespräch ansteht, kannst du dies hier starten.',
+      },
+      briefing: 'Briefing',
+      feedback: 'Stationsfeedback',
+      conclusion: 'Fazit',
+      pdfFeedback: 'PDF Stationsfeedback',
+      trainee: 'Auszubildender',
+      trainer: 'Ausbilder',
+      editPaper: 'Paper bearbeiten',
+    },
+    createPaper: {
+      title: 'Briefing erstellt',
+      text: 'Das Briefing wurde erstellt',
+    },
+    deletePaper: {
+      title: 'Paper gelöscht',
+      text: 'Das Lara Paper wurde gelöscht',
+    },
+    briefing: {
+      toastTitle: 'Lara Paper Briefing wird erstellt',
+      toastDescription: 'Das Briefing wird jetzt erstellt und wird den Teilnehmern per Mail als PDF verschickt',
+    },
+    fazit: {
+      headline: 'Gemeinsames Fazit',
+      subline:
+        'Welche Optimierungsbereiche haben Sie identifiziert und was wird zur Optimierung unternommen/vereinbart?',
+      secondarySubline:
+        'Wie sieht der Plan dafür aus? Was muss dafür getan werden? Was wäre eine gute Unterstützung? Bitte beschreiben Sie dies konkret.',
+      placeholder: 'Schreibe etwas',
+      info: 'Der Abschluss erfolgt im Mehrspielermodus. Das bedeutet, dass Sie und Ihr Auszubildender gleichzeitig Änderungen vornehmen können. Es wird jedoch empfohlen, dass einer von Ihnen das Formular ausfüllt, damit es nicht zu Überschreibungen kommt.',
+      completeFeedback: 'Vervollständige Feedback',
+      reloadPage: 'Seite neu laden',
+    },
+    fazitDone: {
+      downloadPDF: 'Downloade PDF',
+      text: 'Sie haben die Feedback-Sitzung an der Station erfolgreich abgeschlossen. \n Sie können das PDF mit Ihrem Feedback hier oder später aus der E-Mail, die Sie erhalten werden, herunterladen.',
+      headline: 'Yeah, Ihr Feedback wurde erfolgreich übermittelt!',
+      info: 'Der Link zu diesem Feedback wird ungültig, sobald Sie das Fenster schließen!',
+    },
   },
   archivePage: {
     header: 'Archiv',
@@ -332,7 +508,9 @@ const germanTranslation: Translation = {
     trainees: 'Auszubildende',
     trainer: 'Ausbilder',
     admin: 'Admins',
+    mentor: 'Ausbildungsbeauftragte',
     dashhboard: 'Dashboard',
+    paper: 'Paper',
     archive: 'Archiv',
     settings: 'Einstellungen',
     wiki: 'Wiki',
@@ -414,7 +592,19 @@ const germanTranslation: Translation = {
       'Trage hier die Daten des neuen Admins ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Admin {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
+  createMentor: {
+    title: 'Neuer Ausbildungsbeauftragte',
+    description:
+      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+  },
   deleteTrainer: {
+    title: '{0} wirklich löschen?',
+    description:
+      'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',
+    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+  },
+  deleteMentor: {
     title: '{0} wirklich löschen?',
     description:
       'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',

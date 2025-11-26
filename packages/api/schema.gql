@@ -6,6 +6,14 @@ type Comment {
   published: Boolean!
 }
 
+type PaperComment {
+  text: String!
+  userId: ID!
+  lastName: String!
+  firstName: String!
+  published: Boolean!
+}
+
 """
 An object that can have comments
 """
@@ -116,6 +124,68 @@ type MutateEntryPayload {
 type UpdateReportPayload {
   trainee: Trainee!
   report: Report!
+}
+
+input MentorInput {
+  name: String
+  email: String
+  signature: String
+}
+
+input PaperEntryInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+  comments: [PaperCommentInput!]!
+}
+
+type MutatePaperPayload {
+  papers: [Paper]
+}
+
+input PaperInput {
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+  feedbackTrainee: [PaperEntryInput!]!
+  feedbackMentor: [PaperEntryInput!]!
+}
+
+input PaperUpdateInput {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  client: String!
+  mentorId: ID!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  didSendEmail: Boolean!
+  status: PaperStatus!
+  briefing: [PaperEntryInput!]!
+  feedbackTrainee: [PaperEntryInput!]!
+  feedbackMentor: [PaperEntryInput!]!
+  fazit: FazitUpdateInput
+}
+
+input AnswerPaperInput {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String!
+  hint: String!
 }
 
 type Mutation {
@@ -242,6 +312,16 @@ type Mutation {
   createAdmin(input: CreateAdminInput!): Admin
 
   """
+  Creates Mentor.
+  """
+  createMentor(input: CreateMentorInput!): Mentor
+
+  """
+  Get a User by Email
+  """
+  getUserByEmail(email: String!): UserInterface
+
+  """
   Marks User to be deleted
   """
   markUserForDeletion(id: ID!): UserInterface
@@ -267,6 +347,11 @@ type Mutation {
   updateAdmin(input: UpdateAdminInput!, id: ID!): Admin
 
   """
+  Updates Mentor.
+  """
+  updateMentor(input: UpdateMentorInput!, id: ID!): Mentor
+
+  """
   Link Alexa account
   """
   linkAlexa(code: String!, state: String!): UserInterface
@@ -285,6 +370,55 @@ type Mutation {
   Get Avatar Bucket Upload URL
   """
   getAvatarSignedUrl(id: String!): String
+
+  """
+  Create Paper
+  """
+  createPaper(input: PaperInput!): Paper!
+
+  """
+  Update Paper
+  """
+  updatePaper(input: PaperUpdateInput!): Paper!
+
+  """
+  Delete Paper
+  """
+  deletePaper(paperId: ID!): [Paper]!
+
+  """
+  Updates Entry for Lara Paper
+  """
+  updatePaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Creates Entry for Lara Paper
+  """
+  createPaperEntry(input: AnswerPaperInput!): PaperFormData!
+
+  """
+  Deletes Entry for Lara Paper
+  """
+  deletePaperEntry(id: ID!): PaperFormData!
+
+  """
+  Updates a Fazit
+  """
+  updateFazit(id: ID! content: String! version: Int! cursorPosition: CursorInput! mentorDone: Boolean traineeDone: Boolean): FazitUpdateResponse!
+
+  """
+  Update Fazit cursor position
+  """
+  updateFazitCursorPos(id: ID!, cursorPosition: CursorInput!): Cursor
+
+  """
+  Updates if the pdf email was already sent
+  """
+  didSendEmail(id: ID!, didSendEmail: Boolean!): didSendEmailResponse
+}
+
+type didSendEmailResponse {
+  didSendEmail: Boolean
 }
 
 type LaraConfig {
@@ -353,9 +487,19 @@ type Query {
   admins: [Admin!]!
 
   """
+  Get all Mentors
+  """
+  mentors: [Mentor!]!
+
+  """
   Print single report or report batch
   """
   print(ids: [ID!]!): PrintPayload!
+
+  """
+  Print single paper
+  """
+  printPaper(ids: [ID!]! userType: UserTypeEnum!): PrintPayload!
 
   """
   Get a User by ID
@@ -371,10 +515,21 @@ type Query {
   Get the alexa account linking url
   """
   alexaLinkingUrl: String
+
+  """
+  Get the fazit with Id
+  """
+  getFazit(id: ID!): Fazit
+
+  """
+  Get Paper with Id
+  """
+  getPaper(id: ID!): Paper
 }
 
 type PrintPayload {
   estimatedWaitingTime: Int!
+  pdfUrl: String
 }
 
 type Report implements CommentableInterface {
@@ -391,6 +546,14 @@ type Report implements CommentableInterface {
   reportAccepted: String
   previousReportLink: String
   nextReportLink: String
+}
+
+input PaperCommentInput {
+  text: String!
+  userId: ID!
+  firstName: String!
+  lastName: String!
+  published: Boolean!
 }
 
 """
@@ -430,6 +593,7 @@ type Trainee implements UserInterface {
   lastName: String!
   notification: Boolean
   reports: [Report!]!
+  papers: [Paper]
   signature: String
   startDate: String
   startOfToolUsage: String
@@ -472,10 +636,59 @@ input CreateTrainerInput {
   lastName: String!
 }
 
+input CreateMentorInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  startDate: String
+  endDate: String
+}
+
 input UpdateTrainerInput {
   email: String
   firstName: String
   lastName: String
+}
+
+input UpdateMentorInput {
+  email: String
+  firstName: String
+  lastName: String
+  startDate: String
+  endDate: String
+}
+
+type Cursor {
+  position: Int!
+  owner: String!
+}
+
+input CursorInput {
+  position: Int!
+  owner: String!
+}
+
+type Fazit {
+  id: ID!
+  content: String!
+  version: Int!
+  cursorPositions: [Cursor!]!
+  mentorDone: Boolean
+  traineeDone: Boolean
+}
+
+type FazitUpdateResponse {
+  success: Boolean!
+  newFazit: Fazit!
+}
+
+input FazitUpdateInput {
+  id: ID!
+  content: String!
+  version: Int!
+  cursorPositions: [CursorInput!]!
+  mentorDone: Boolean
+  traineeDone: Boolean
 }
 
 type Trainer implements UserInterface {
@@ -485,6 +698,7 @@ type Trainer implements UserInterface {
   language: String
   lastName: String!
   notification: Boolean
+  papers: [Paper]
   signature: String
   theme: String
   trainees: [Trainee!]!
@@ -504,6 +718,24 @@ input UpdateAdminInput {
   email: String
   firstName: String
   lastName: String
+}
+
+type Mentor implements UserInterface {
+  createdAt: String!
+  firstName: String!
+  id: ID!
+  language: String
+  lastName: String!
+  notification: Boolean
+  signature: String
+  theme: String
+  type: UserTypeEnum!
+  papers: [Paper]
+  startDate: String
+  endDate: String
+  email: String!
+  deleteAt: String
+  alexaSkillLinked: Boolean
 }
 
 type Admin implements UserInterface {
@@ -559,7 +791,53 @@ enum UserTypeEnum {
   Trainer
 
   """
+  User is a Mentor
+  """
+  Mentor
+
+  """
   User is an Admin
   """
   Admin
+}
+
+enum PaperStatus {
+  NotStarted
+  InProgress
+  TraineeDone
+  MentorDone
+  InReview
+  ReviewDone
+  Archived
+}
+
+type PaperFormData {
+  id: ID!
+  questionId: ID!
+  question: String!
+  answer: String
+  hint: String
+  comments: [PaperComment!]!
+}
+
+type Paper {
+  id: ID!
+  traineeId: ID!
+  trainerId: ID!
+  status: PaperStatus!
+  briefing: [PaperFormData!]!
+  feedbackTrainee: [PaperFormData!]!
+  feedbackMentor: [PaperFormData!]!
+  conclusion: String
+  archivedAt: String
+  createdAt: String
+  client: String!
+  mentorId: ID!
+  didSendEmail: Boolean!
+  periodStart: String
+  periodEnd: String
+  schoolPeriodStart: String
+  schoolPeriodEnd: String
+  subject: String!
+  fazit: Fazit
 }

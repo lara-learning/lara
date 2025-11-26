@@ -98,7 +98,7 @@ export const CommentBubbleLayout: React.FC<CommentBubbleLayoutProps> = ({
   return (
     <MessageContainer right={right}>
       <Bubble right={right}>
-        <Author>{author}:</Author>
+        <Author>{author}</Author>
         {updateMessage ? (
           <MessageInput
             value={msg}

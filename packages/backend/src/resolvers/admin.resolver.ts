@@ -1,11 +1,11 @@
 import { addMonths, isFuture, isToday, subWeeks } from 'date-fns'
 import { GraphQLError } from 'graphql'
 
-import { Admin, AdminContext, GqlResolvers, Trainee, Trainer, User } from '@lara/api'
+import { Admin, AdminContext, GqlResolvers, Mentor, Trainee, Trainer, User } from '@lara/api'
 
-import { isAdmin, isTrainee, isTrainer } from '../permissions'
-import { traineeById } from '../repositories/trainee.repo'
-import { trainerById, allTrainers } from '../repositories/trainer.repo'
+import { isAdmin, isMentor, isTrainee, isTrainer } from '../permissions'
+import { allTrainees, traineeById } from '../repositories/trainee.repo'
+import { allTrainers, trainerById } from '../repositories/trainer.repo'
 import { allAdmins } from '../repositories/admin.repo'
 import { deleteAdmin, generateAdmin, validateAdmin } from '../services/admin.service'
 import { allUsers, saveUser, updateUser, userByEmail, userById } from '../repositories/user.repo'
@@ -14,17 +14,27 @@ import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from
 import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
 import { parseISODateString } from '../utils/date'
 import { t } from '../i18n'
+import { deleteMentor, generateMentor, validateMentor } from '../services/mentor.service'
+import { allMentors, mentorById } from '../repositories/mentor.repo'
+import { papersByMentor } from '../repositories/paper.repo'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {},
   Query: {
     admins: allAdmins,
+    mentors: allMentors,
     trainers: allTrainers,
+    trainees: allTrainees,
     async cleanup() {
       const users = await allUsers()
 
       await Promise.all(
         users.map(async (user) => {
+          if (isMentor(user)) {
+            const papers = await papersByMentor(user.id)
+            if (!papers || papers.filter((paper) => paper.status !== 'Archived').length === 0) await deleteMentor(user)
+          }
+
           if (!user.deleteAt) {
             return
           }
@@ -49,6 +59,10 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
           if (isAdmin(user)) {
             await deleteAdmin(user)
+          }
+
+          if (isMentor(user)) {
+            await deleteMentor(user)
           }
         })
       )
@@ -128,6 +142,43 @@ export const trainerAdminResolver: GqlResolvers<AdminContext> = {
       // because we don't know what exactly changed
       // if we use update DDB would throw an error
       return saveUser(updatedTrainer)
+    },
+    getUserByEmail: async (_parent, { email }) => {
+      return userByEmail(email)
+    },
+  },
+}
+export const mentorAdminResolver: GqlResolvers<AdminContext> = {
+  Mutation: {
+    createMentor: async (_parent, { input }, { currentUser }) => {
+      const existingUser = await userByEmail(input.email)
+
+      if (existingUser) {
+        throw new GraphQLError(t('errors.userAlreadyExists', currentUser.language))
+      }
+
+      const newMentor = await generateMentor(input)
+
+      return saveUser(newMentor)
+    },
+    updateMentor: async (_parent, { input, id }, { currentUser }) => {
+      const mentor = await mentorById(id)
+
+      if (!mentor) {
+        throw new GraphQLError(t('errors.missingUser', currentUser.language))
+      }
+
+      const updatedMentor: Mentor = {
+        ...mentor,
+        ...input,
+      }
+
+      await validateMentor(updatedMentor)
+
+      // we need to save the user and not update it
+      // because we don't know what exactly changed
+      // if we use update DDB would throw an error
+      return saveUser(updatedMentor)
     },
   },
 }

@@ -1,15 +1,23 @@
 import { alexaResolver } from './alexa.resolver'
-import { adminAdminResolver, adminResolver, traineeAdminResolver, trainerAdminResolver } from './admin.resolver'
+import {
+  adminAdminResolver,
+  adminResolver,
+  traineeAdminResolver,
+  trainerAdminResolver,
+  mentorAdminResolver,
+} from './admin.resolver'
 import { authResolver } from './auth.resolver'
 import { commentResolver } from './comment.resolver'
 import { configResolver } from './config.resolver'
 import { dayResolver, dayTraineeResolver } from './day.resolver'
 import { entryTraineeResolver } from './entry.resolver'
+import { paperResolver } from './paper.resolver'
 import { reportResolver, reportTraineeResolver } from './report.resolver'
 import { traineeResolver, traineeTraineeResolver } from './trainee.resolver'
 import { trainerResolver } from './trainer.resolver'
 import { userResolver } from './user.resolver'
 import { avatarResolver } from './avatar.resolver'
+import { mentorResolver } from './mentor.resolver'
 
 export const resolvers = [
   configResolver,
@@ -29,6 +37,8 @@ export const resolvers = [
 
   trainerResolver,
 
+  mentorResolver,
+
   userResolver,
   authResolver,
 
@@ -36,8 +46,10 @@ export const resolvers = [
   traineeAdminResolver,
   trainerAdminResolver,
   adminAdminResolver,
+  mentorAdminResolver,
 
   alexaResolver,
 
   avatarResolver,
+  paperResolver,
 ]

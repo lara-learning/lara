@@ -47,6 +47,10 @@ custom:
         sources:
           - table: ${self:custom.config.table.report}
             sources: [packages/backend/seeds/reports.json]
+      papers:
+        sources:
+          - table: ${self:custom.config.table.paper}
+            sources: [packages/backend/seeds/papers.json]
   jetpack:
     preInclude:
       - '!**'
@@ -65,6 +69,7 @@ custom:
       user: ${self:custom.stage}-lara-user-table
       report: ${self:custom.stage}-lara-report-table
       company: ${self:custom.stage}-lara-company-table
+      paper: ${self:custom.stage}-lara-paper-table
     lambda:
       print: ${self:service}-${self:custom.stage}-print
       email: ${self:service}-${self:custom.stage}-email
@@ -73,6 +78,9 @@ custom:
       reportTraineeIdStatus: reportGSI2
       userType: userGSI1
       userEmail: userGSI4
+      paperTraineeId: paperGSI1
+      paperTrainerId: paperGSI2
+      paperMentorId: paperGSI3
       userTrainerId: userGSI6
       userOAuthCode: userOAuthCode
     s3:
@@ -136,6 +144,8 @@ functions:
         Resource:
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.company}/index/*'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.paper}'
+          - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.paper}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.user}/index/*'
           - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.config.table.report}'
@@ -153,12 +163,16 @@ functions:
       USER_TABLE: ${self:custom.config.table.user}
       REPORT_TABLE: ${self:custom.config.table.report}
       COMPANY_TABLE: ${self:custom.config.table.company}
+      PAPER_TABLE: ${self:custom.config.table.paper}
       PRINT_FUNCTION: ${self:custom.config.lambda.print}
       EMAIL_FUNCTION: ${self:custom.config.lambda.email}
       REPORT_WEEK_TRAINEEID_INDEX: ${self:custom.config.gsi.reportWeekTraineeId}
       REPORT_TRAINEEID_STATUS_INDEX: ${self:custom.config.gsi.reportTraineeIdStatus}
       USER_TYPE_INDEX: ${self:custom.config.gsi.userType}
       USER_EMAIL_INDEX: ${self:custom.config.gsi.userEmail}
+      PAPER_TRAINEE_ID_INDEX: ${self:custom.config.gsi.paperTraineeId}
+      PAPER_TRAINER_ID_INDEX: ${self:custom.config.gsi.paperTrainerId}
+      PAPER_MENTOR_ID_INDEX: ${self:custom.config.gsi.paperMentorId}
       USER_TRAINER_ID_INDEX: ${self:custom.config.gsi.userTrainerId}
       USER_OAUTH_CODE_INDEX: ${self:custom.config.gsi.userOAuthCode}
       EXPORT_BUCKET: ${self:custom.config.s3.export}
@@ -359,6 +373,44 @@ resources:
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.config.table.company}
+
+    PaperTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: traineeId
+            AttributeType: S
+          - AttributeName: trainerId
+            AttributeType: S
+          - AttributeName: mentorId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:custom.config.gsi.paperTraineeId}
+            KeySchema:
+              - AttributeName: traineeId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.paperTrainerId}
+            KeySchema:
+              - AttributeName: trainerId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+          - IndexName: ${self:custom.config.gsi.paperMentorId}
+            KeySchema:
+              - AttributeName: mentorId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.config.table.paper}
 
     AttachmentsBucket:
       Type: AWS::S3::Bucket

@@ -48,10 +48,14 @@ import { IconVaccation } from './icons/vacation'
 import { IconWork } from './icons/work'
 import { IconX } from './icons/x'
 import { IconOptions } from './icons/options'
+import { IconCheckMark } from './icons/checkMark'
+import { IconBlank } from './icons/blank'
+import { IconInfo } from './icons/info'
 
 export const Icons = {
   Arrow: IconArrow,
   Archive: IconArchive,
+  Blank: IconBlank,
   Bulb: IconBulb,
   BurgerMenu: IconMenu,
   Camera: IconCamera,
@@ -62,6 +66,7 @@ export const Icons = {
   ChevronLeft: IconChevronLeft,
   ChevronRight: IconChevronRight,
   CircleLoader: IconCircleLoader,
+  CheckMark: IconCheckMark,
   Claim: IconClaim,
   CloudUpload: IconCloudUpload,
   Comment: IconMessageDetails,
@@ -100,4 +105,5 @@ export const Icons = {
   Alexa: Alexa,
   QuestionMark: QuestionMark,
   Options: IconOptions,
+  Info: IconInfo,
 }

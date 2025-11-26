@@ -1,0 +1,6 @@
+query PrintPaperData($ids: [ID!]! $userType: UserTypeEnum!) {
+  printPaper(ids: $ids userType: $userType) {
+    estimatedWaitingTime
+    pdfUrl
+  }
+}

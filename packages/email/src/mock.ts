@@ -19,6 +19,7 @@ export const DUMMY_DATA: EmailPayload = {
       error: 'Fehler bei der pdf Generierung',
       reportExport: 'Dein Lara Export',
       acceptReport: 'Dein Bericht wurde genehmigt',
+      needChanges: 'Bericht zurückgegeben',
       needChangesNoComment: 'Bericht zurückgegeben',
       needChangesComment: 'Bericht zurückgegeben',
       deleteYourTrainee: 'Dein Azubi wird bald gelöscht',
@@ -26,10 +27,13 @@ export const DUMMY_DATA: EmailPayload = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       reportInReview: 'Ein Bericht wurde abgegeben',
       alexa: 'Deine Accounts wurden verknüpft',
+      paperBriefing: 'Dein Paper Briefing',
+      paperBriefingMail: 'Dein Paper Briefing',
     },
     headline: {
       export: 'Dein Lara-Export!',
       accepted: 'Report genehmigt!',
+      needChanges: 'Änderungen erforderlich!',
       needChangesNoComment: 'Änderungen erforderlich!',
       needChangesComment: 'Änderungen erforderlich!',
       deleteTrainee: 'Dein Azubi wird bald gelöscht',
@@ -37,11 +41,13 @@ export const DUMMY_DATA: EmailPayload = {
       deleteUser: 'Ein Benutzer wird bald gelöscht',
       handOver: 'Ein Bericht wurde übergeben',
       alexa: 'Lara wurde mit Amazon Alexa verknüpft!',
+      paperBriefing: 'Paper Briefing',
     },
     message: {
       error: 'etwas ist schiefgegangen. Bitte wende dich an einen Lara Admin oder Entwickler.',
       success: 'im Anhang findest du deinen Lara-Export. Wir wünschen dir ganz viel Spaß damit.',
       accepted: '{{ trainer }} hat dein Berichtsheft erhalten und genehmigt',
+      needChanges: '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben.',
       needChangesComment:
         '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben. Zu dieser Woche gibt es Rückmeldungen.',
       needChangesNoComment: '{{ trainer }} hat dein Berichtsheft erhalten und es zurückgegeben.',
@@ -54,10 +60,13 @@ export const DUMMY_DATA: EmailPayload = {
       handOver: 'dein Azubi {{ trainee }} hat KW {{ week }} seines Berichtsheft zur Überprüfung abgegeben.',
       alexa:
         'Dein Lara Account wurde mit deinem Amazon Alexa Account verknüpft. Sollte dies ein Fehler sein bitte öffne deine Lara Einstellungen und löse die Verknüpfung wieder auf. Außerdem solltest du dein Passwort ändern.',
+      paperBriefing:
+        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation. Wir wünschen dir ganz viel Spaß damit.',
     },
     link: {
       archive: 'Zum Archive',
       report: 'Zum Report',
+      paperBriefing: 'Zum Briefing',
       lara: 'Lara',
       settings: 'Einstellungen',
     },
@@ -104,6 +113,10 @@ const requestListener: RequestListener = (_req, res) => {
       res.writeHead(200)
       res.end(generateEmailTemplate('reportInReview', translations))
       break
+    case '/paperBriefing':
+      res.writeHead(200)
+      res.end(generateEmailTemplate('paperBriefing', translations))
+      break
     default:
       res.writeHead(200)
       res.end(`<html>
@@ -118,6 +131,7 @@ const requestListener: RequestListener = (_req, res) => {
                   <li><a href="/deleteAccount">deleteAccount</a></li>
                   <li><a href="/deleteUser">deleteUser</a></li>
                   <li><a href="/reportInReview">reportInReview</a></li>
+                  <li><a href="/paperBriefing">paperBriefing</a></li>
                 </ul>
               </html>`)
       break

@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 
-import { Admin, Trainee, Trainer, UserTypeEnum } from './graphql'
+import { Admin, Trainee, Trainer, Mentor, UserTypeEnum } from './graphql'
 import { useAuthentication } from './hooks/use-authentication'
 import strings from './locales/localization'
 import { AdminEditUserPage } from './pages/admin-edit-user-page'
 import { AdminTraineesPage } from './pages/admin-trainees-page'
 import { AdminTrainerPage } from './pages/admin-trainer-page'
+import { AdminMentorPage } from './pages/admin-mentor-page'
 import { AlexaPage } from './pages/alexa-page'
 import ArchivePage from './pages/archive-page'
 import DashboardPage from './pages/dashboard-page'
@@ -21,17 +22,29 @@ import ReportPage from './pages/report-page'
 import ReportReviewPage from './pages/report-review-page'
 import SettingsPage from './pages/settings-page'
 import SupportPage from './pages/support-page'
+import { TrainerPaperPage } from './pages/trainer-paper-page'
 import TraineePage from './pages/trainee-page'
 import TrainerReportsPage from './pages/trainer-reports-page'
+import { PaperCreateBriefingPage } from './pages/paper-create-briefing-page'
+import { PaperBriefingPage } from './pages/paper-briefing-page'
+import { TraineePaperPage } from './pages/trainee-paper-page'
+import { MentorPaperPage } from './pages/mentor-paper-page'
 import AzubiWikiPage from './pages/azubi-wiki-page'
 import { isWikiFeatureEnabled } from './helper/wiki-helper'
 import { AdminAdminsPage } from './pages/admin-admins-page'
+import { TraineePaperFeedbackPage } from './pages/trainee-paper-feedback-page'
+import { MentorPaperFeedbackPage } from './pages/mentor-paper-feedback-page'
+import PaperFeedbackDiscussionPage from './pages/paper-feedback-discussion-page'
+import { isPaperFeatureEnabled } from './helper/paper-helper'
+import { PaperFazitPage } from './pages/paper-fazit-page'
+import { PaperFeedbackDone } from './pages/feedback-done'
 
 type RoutesProps = {
   currentUser?:
     | Pick<Trainee, 'language' | 'type' | 'course' | '__typename'>
     | (Pick<Trainer, 'type' | 'language' | '__typename'> & { trainees: Pick<Trainee, 'id'>[] })
     | Pick<Admin, 'type' | 'language' | '__typename'>
+    | Pick<Mentor, 'type' | 'language' | '__typename'>
 }
 
 const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
@@ -74,8 +87,20 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
                 <Route path="/report/:year/:week/:term" element={<ReportPage />} />
                 <Route path="/report/:year/:week" element={<ReportPage />} />
                 <Route path="/report/missing" element={<MissingPage />} />
+
                 <Route path="/alexa" element={<AlexaPage />} />
+
                 {isWikiFeatureEnabled() && <Route path="/wiki" element={<AzubiWikiPage />} />}
+
+                {isPaperFeatureEnabled() && (
+                  <>
+                    <Route path="/paper" element={<TraineePaperPage />} />
+                    <Route path="/paper/feedback/:paperId" element={<TraineePaperFeedbackPage />} />
+                    <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
+                    <Route path="/paper/fazit/:paperId" element={<PaperFazitPage />} />
+                    <Route path="paper/fazit/done/:paperId" element={<PaperFeedbackDone />} />
+                  </>
+                )}
               </>
             ) : (
               <Route path="/" element={<OnboardingPage />} />
@@ -92,7 +117,28 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/reports/:trainee/:year/:week" element={<ReportReviewPage />} />
             <Route path="/report/:trainee/:year/:week/:term" element={<ReportPage />} />
             <Route path="/report/:trainee/:year/:week" element={<ReportPage />} />
+
             <Route path="/trainees/:trainee?" element={<TraineePage />} />
+            {isPaperFeatureEnabled() && (
+              <>
+                <Route path="/paper" element={<TrainerPaperPage />} />
+                <Route path="/paper/createBriefing" element={<PaperCreateBriefingPage />} />
+                <Route path="/paper/briefing/:paperId" element={<PaperBriefingPage />} />
+                <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
+              </>
+            )}
+          </>
+        )}
+
+        {/* Mentor Routes */}
+        {currentUser.type === UserTypeEnum.Mentor && currentUser.__typename === 'Mentor' && (
+          <>
+            <Route path="/" element={<MentorPaperPage />} />
+            <Route path="/paper" element={<MentorPaperPage />} />
+            <Route path="/paper/feedback/:paperId" element={<MentorPaperFeedbackPage />} />
+            <Route path="/paper/feedback/discussion/:paperId" element={<PaperFeedbackDiscussionPage />} />
+            <Route path="/paper/fazit/:paperId" element={<PaperFazitPage />} />
+            <Route path="paper/fazit/done/:paperId" element={<PaperFeedbackDone />} />
           </>
         )}
 
@@ -106,6 +152,12 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
             <Route path="/trainees/:id" element={<AdminEditUserPage />} />
             <Route path="/admins" element={<AdminAdminsPage />} />
             <Route path="/admins/:id" element={<AdminEditUserPage />} />
+            {isPaperFeatureEnabled() && (
+              <>
+                <Route path="/mentor/" element={<AdminMentorPage />} />
+                <Route path="/mentor/:id" element={<AdminEditUserPage />} />
+              </>
+            )}
           </>
         )}
 

@@ -47,6 +47,16 @@ export type ExportMailPayload = BaseEmailPayload & {
   ]
 }
 
+export type PaperBriefingMailPayload = BaseEmailPayload & {
+  emailType: 'paperBriefing'
+  userData: BaseMailUserData
+  attachments: [
+    {
+      filename: string
+    },
+  ]
+}
+
 export type SimpleMailPayload = BaseEmailPayload & {
   emailType: 'deleteAccount' | 'error' | 'alexa'
   userData: BaseMailUserData
@@ -59,6 +69,7 @@ export type EmailPayload =
   | SimpleMailPayload
   | ExportMailPayload
   | ReportInReviewPayload
+  | PaperBriefingMailPayload
 
 export type EmailType = EmailPayload['emailType']
 
@@ -70,6 +81,7 @@ export type EmailTranslations = {
     error: string
     reportExport: string
     acceptReport: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteYourTrainee: string
@@ -77,10 +89,13 @@ export type EmailTranslations = {
     deleteUser: string
     reportInReview: string
     alexa: string
+    paperBriefing: string
+    paperBriefingMail: string
   }
   headline: {
     export: string
     accepted: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteTrainee: string
@@ -88,11 +103,13 @@ export type EmailTranslations = {
     deleteUser: string
     handOver: string
     alexa: string
+    paperBriefing: string
   }
   message: {
     error: string
     success: string
     accepted: string
+    needChanges: string
     needChangesComment: string
     needChangesNoComment: string
     deleteTrainee: string
@@ -100,10 +117,12 @@ export type EmailTranslations = {
     deleteUser: string
     handOver: string
     alexa: string
+    paperBriefing: string
   }
   link: {
     archive: string
     report: string
+    paperBriefing: string
     lara: string
     settings: string
   }

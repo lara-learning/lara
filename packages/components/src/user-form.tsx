@@ -112,3 +112,42 @@ export const TrainerFormLayout: React.FC<TrainerFormLayoutProps> = ({
     </StyledFormContainer>
   )
 }
+
+type MentorFormLayoutProps = {
+  firstNameInput: JSX.Element
+  lastNameInput: JSX.Element
+  emailInput: JSX.Element
+  startDateInput: JSX.Element
+  endDateInput: JSX.Element
+  periodSpacer: JSX.Element
+  buttonControls?: JSX.Element
+}
+export const MentorFormLayout: React.FC<MentorFormLayoutProps> = ({
+  firstNameInput,
+  lastNameInput,
+  emailInput,
+  startDateInput,
+  endDateInput,
+  periodSpacer,
+  buttonControls,
+}) => {
+  return (
+    <StyledFormContainer>
+      <StyledFormGrid>
+        <StyledFormGridItem>{firstNameInput}</StyledFormGridItem>
+
+        <StyledFormGridItem>{lastNameInput}</StyledFormGridItem>
+
+        <StyledFormGridItem>{emailInput}</StyledFormGridItem>
+
+        <StyledFormGridDateItem>
+          <StyledFormGridItem>{startDateInput}</StyledFormGridItem>
+          {periodSpacer}
+          <div>{endDateInput}</div>
+        </StyledFormGridDateItem>
+      </StyledFormGrid>
+
+      {buttonControls && <StyledButtonControls>{buttonControls}</StyledButtonControls>}
+    </StyledFormContainer>
+  )
+}

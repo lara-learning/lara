@@ -1,0 +1,6 @@
+mutation updateFazitCursorPos($id: ID! $cursorPosition: CursorInput!) {
+  updateFazitCursorPos(id: $id cursorPosition: $cursorPosition) {
+    position
+    owner
+  }
+}
