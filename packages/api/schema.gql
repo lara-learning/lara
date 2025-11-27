@@ -173,6 +173,8 @@ input PaperUpdateInput {
   feedbackTrainee: [PaperEntryInput!]!
   feedbackMentor: [PaperEntryInput!]!
   fazit: FazitUpdateInput
+  mentorDone: Boolean
+  traineeDone: Boolean
 }
 
 input AnswerPaperInput {

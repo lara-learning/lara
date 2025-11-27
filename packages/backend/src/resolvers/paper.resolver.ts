@@ -16,6 +16,8 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
           content: '',
           version: 0,
           cursorPositions: [],
+          mentorDone: false,
+          traineeDone: false,
         }
         const newPaper = await updatePaper(
           { ...paper, fazit: newFazit },
@@ -94,7 +96,10 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
         content: fazit?.content ?? '',
         version: fazit?.version ?? 0,
         cursorPositions: [...(fazit?.cursorPositions ?? []), cursorPosition],
+        mentorDone: fazit?.mentorDone ?? false,
+        traineeDone: fazit?.traineeDone ?? false,
       }
+      console.log('Updating Fazit before DB save:', newFazit)
 
       const cursorMap: Map<string, number> = new Map()
       fazit?.cursorPositions.forEach((cp) => {
@@ -121,7 +126,7 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
 
       return newPaper.fazit?.cursorPositions.filter((cp) => cp.owner !== cursorPosition.owner)[0]
     },
-    updateFazit: async (_parent, { id, content, version, cursorPosition }) => {
+    updateFazit: async (_parent, { id, content, version, cursorPosition, mentorDone, traineeDone }) => {
       const paper = await paperById(id)
       if (!paper) {
         throw new GraphQLError('Paper does not exist')
@@ -133,7 +138,9 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
         id,
         content,
         version,
-        cursorPositions: [],
+        cursorPositions: fazit?.cursorPositions ?? [],
+        mentorDone: mentorDone ?? fazit?.mentorDone ?? false,
+        traineeDone: traineeDone ?? fazit?.traineeDone ?? false,
       }
 
       const cursorMap: Map<string, number> = new Map()
@@ -173,7 +180,7 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
             }
           )
 
-          return { newFazit: newPaper.fazit ?? fazit, success: true }
+          return { success: true, newFazit: newPaper.fazit! }
         } else {
           return {
             success: false,

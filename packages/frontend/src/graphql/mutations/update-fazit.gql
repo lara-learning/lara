@@ -1,10 +1,12 @@
-mutation FazitUpdate($id: ID! $content: String! $version: Int! $cursorPosition: CursorInput!) {
-  updateFazit(id: $id content: $content version: $version cursorPosition: $cursorPosition) {
+mutation FazitUpdate($id: ID! $content: String! $version: Int! $cursorPosition: CursorInput! $mentorDone: Boolean, $traineeDone: Boolean) {
+  updateFazit(id: $id content: $content version: $version cursorPosition: $cursorPosition mentorDone: $mentorDone traineeDone: $traineeDone) {
     success
     newFazit {
       id
       content
       version
+      mentorDone
+      traineeDone
       cursorPositions {
         position
         owner

@@ -1270,10 +1270,12 @@ export type FazitUpdateMutationVariables = Exact<{
   content: Scalars['String']['input'];
   version: Scalars['Int']['input'];
   cursorPosition: CursorInput;
+  mentorDone?: InputMaybe<Scalars['Boolean']['input']>;
+  traineeDone?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type FazitUpdateMutation = { __typename?: 'Mutation', updateFazit: { __typename?: 'FazitUpdateResponse', success: boolean, newFazit: { __typename?: 'Fazit', id: string, content: string, version: number, cursorPositions: Array<{ __typename?: 'Cursor', position: number, owner: string }> } } };
+export type FazitUpdateMutation = { __typename?: 'Mutation', updateFazit: { __typename?: 'FazitUpdateResponse', success: boolean, newFazit: { __typename?: 'Fazit', id: string, content: string, version: number, mentorDone: boolean, traineeDone: boolean, cursorPositions: Array<{ __typename?: 'Cursor', position: number, owner: string }> } } };
 
 export type UpdateMentorMutationVariables = Exact<{
   input: UpdateMentorInput;

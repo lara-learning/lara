@@ -18,6 +18,8 @@ import {
 import { styled } from 'styled-components'
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import { omitDeep } from '@apollo/client/utilities'
+import { CheckBox } from '../components/checkbox'
+import { useBothDone } from '../hooks/use-both-done'
 
 export const PaperFazitHeadline = styled.p`
   margin: 0;
@@ -64,10 +66,10 @@ export const PaperFazitPage: React.FC = () => {
 
   const [updateFazit] = useFazitUpdateMutation()
   const [updateCursorPosition] = useUpdateFazitCursorPosMutation()
-
   const [updatePaperMutation] = useUpdatePaperMutation()
 
   const { data: currentUser } = useCurrentUserQuery()
+  const currentRole = currentUser?.currentUser?.__typename as 'Mentor' | 'Trainee'
 
   const textArea = useRef<HTMLTextAreaElement>(null)
 
@@ -75,10 +77,23 @@ export const PaperFazitPage: React.FC = () => {
     variables: { id: paperId },
     pollInterval: 500,
     fetchPolicy: 'cache-and-network',
+    skip: !paperId,
   })
 
   const fazit = data?.getFazit
-  const bothDone = fazit?.mentorDone && fazit?.traineeDone
+
+  const { bothDone, currentRoleDone, handleToggleDone } = useBothDone({
+    fazit: {
+      mentorDone: fazit?.mentorDone ?? false,
+      traineeDone: fazit?.traineeDone ?? false,
+    },
+    currentRole,
+    paperId: paperId!,
+    localContent,
+    localVersion,
+    currentUserId: currentUser?.currentUser?.id ?? '',
+    updateFazit,
+  })
 
   useEffect(() => {
     const fazit: GetFazitQuery | undefined = data as GetFazitQuery
@@ -171,52 +186,74 @@ export const PaperFazitPage: React.FC = () => {
 
   return (
     <Template type="Main">
-      <Spacer bottom="m">
-        <NavigationButtonLink
-          label={strings.back}
-          to="/paper"
-          icon="ChevronLeft"
-          isLeft
-          alignLeft
-          iconColor="iconLightGrey"
-        />
-      </Spacer>
-      <Container>
-        <PaperSecondarySubline style={{ color: '#000000' }}>{strings.paper.fazit.info}</PaperSecondarySubline>
-      </Container>
-      <Spacer bottom="l">
-        <div></div>
-      </Spacer>
-      <Container>
-        <PaperFazitHeadline>{strings.paper.fazit.headline}</PaperFazitHeadline>
-        <PaperFazitSubline>{strings.paper.fazit.subline}</PaperFazitSubline>
-        <PaperSecondarySubline>{strings.paper.fazit.secondarySubline}</PaperSecondarySubline>
-        <StyledTextFazitArea
-          placeholder={strings.paper.fazit.placeholder}
-          ref={textArea}
-          value={localContent}
-          onClick={handleCursorMove}
-          onKeyUp={handleCursorMove}
-          onChange={handleChange}
-        ></StyledTextFazitArea>
-        <Spacer bottom="l">
-          <div></div>
-        </Spacer>
-      </Container>
-      <Spacer bottom="xl">
-        <div></div>
-      </Spacer>
-      <Flex style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <SecondaryButton onClick={() => window.location.reload()}>{strings.paper.fazit.reloadPage}</SecondaryButton>
-        <PrimaryButton
-          disabled={!bothDone}
-          onClick={() => {
-            syncFinal()
-          }}
-        >
-          {strings.paper.fazit.completeFeedback}
-        </PrimaryButton>
-      </Flex>
+      {!paperId || !fazit ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <Spacer bottom="m">
+            <NavigationButtonLink
+              label={strings.back}
+              to="/paper"
+              icon="ChevronLeft"
+              isLeft
+              alignLeft
+              iconColor="iconLightGrey"
+            />
+          </Spacer>
+          <Container>
+            <PaperSecondarySubline style={{ color: '#000000' }}>{strings.paper.fazit.info}</PaperSecondarySubline>
+          </Container>
+          <Spacer bottom="l">
+            <div></div>
+          </Spacer>
+          <Container>
+            <PaperFazitHeadline>{strings.paper.fazit.headline}</PaperFazitHeadline>
+            <PaperFazitSubline>{strings.paper.fazit.subline}</PaperFazitSubline>
+            <PaperSecondarySubline>{strings.paper.fazit.secondarySubline}</PaperSecondarySubline>
+            <StyledTextFazitArea
+              placeholder={strings.paper.fazit.placeholder}
+              ref={textArea}
+              value={localContent}
+              onClick={handleCursorMove}
+              onKeyUp={handleCursorMove}
+              onChange={handleChange}
+            />
+            <Spacer bottom="m">
+              <div></div>
+            </Spacer>
+            <CheckBox
+              iconName="Checkbox"
+              checked={currentRoleDone}
+              onClick={() => {
+                console.log(
+                  'Checkbox clicked:',
+                  JSON.stringify({
+                    currentRole,
+                    isDoneBeforeClick: currentRoleDone,
+                    mentorDone: fazit?.mentorDone,
+                    traineeDone: fazit?.traineeDone,
+                    bothDone,
+                  })
+                )
+                handleToggleDone()
+              }}
+            />
+
+            <Spacer bottom="m">
+              <div></div>
+            </Spacer>
+          </Container>
+          <Spacer bottom="xl">
+            <div></div>
+          </Spacer>
+          <Flex style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <SecondaryButton onClick={() => window.location.reload()}>{strings.paper.fazit.reloadPage}</SecondaryButton>
+            <PrimaryButton disabled={!bothDone} onClick={syncFinal}>
+              {strings.paper.fazit.completeFeedback}
+            </PrimaryButton>
+          </Flex>
+        </>
+      )}
     </Template>
   )
 }
