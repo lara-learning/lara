@@ -48,6 +48,32 @@ export const TraineePaperPage: React.FC = () => {
     )
   }
 
+  const getContinueButtonText = (paperStatus: PaperStatus) => {
+    switch (paperStatus) {
+      case PaperStatus.NotStarted:
+        return strings.start
+        break
+      case PaperStatus.InProgress:
+        return strings.edit
+        break
+      case PaperStatus.TraineeDone:
+        return strings.start
+        break
+      case PaperStatus.MentorDone:
+        return strings.start
+        break
+      case PaperStatus.InReview:
+        return strings.edit
+        break
+      case PaperStatus.ReviewDone:
+        return strings.continue
+        break
+      case PaperStatus.Archived:
+        return 'You should not be able to see this, report as a bug'
+        break
+    }
+  }
+
   const hasCommented = (paper: Paper) => {
     const foundUserIds: Array<string> = []
     paper.feedbackMentor.forEach((feedback) => {
@@ -171,7 +197,7 @@ export const TraineePaperPage: React.FC = () => {
                           : navigateToPaperFeedbackPage(paper.id)
                       }
                     >
-                      {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
+                      {getContinueButtonText(paper.status)}
                     </PrimaryButton>
                   </Flex>
                 )}
