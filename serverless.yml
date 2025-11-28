@@ -614,3 +614,6 @@ resources:
               - Header: Cache-Control
                 Value: 'no-store'
                 Override: true
+              - Header: Content-Security-Policy
+                Value: "default-src 'self'"
+                Override: true
