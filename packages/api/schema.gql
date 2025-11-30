@@ -244,12 +244,14 @@ type Mutation {
   """
   Marks User to be deleted
   """
-  markUserForDeletion(id: ID!): UserInterface
+  adminMarkUserForDeletion(id: ID!): UserInterface
+  trainerMarkUserForDeletion(id: ID!): UserInterface
 
   """
   Unmarks User from deletion
   """
-  unmarkUserForDeletion(id: ID!): UserInterface
+  adminUnMarkUserForDeletion(id: ID!): UserInterface
+  trainerUnMarkUserForDeletion(id: ID!): UserInterface
 
   """
   Updates Trainee.
