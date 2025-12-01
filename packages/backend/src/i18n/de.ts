@@ -73,7 +73,7 @@ export const GermanTranslations: Translations = {
       alexa:
         'Dein Lara Account wurde mit deinem Amazon Alexa Account verknüpft. Sollte dies ein Fehler sein bitte öffne deine Lara Einstellungen und löse die Verknüpfung wieder auf. Außerdem solltest du dein Lara Passwort ändern.',
       paperBriefing:
-        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation. Wir wünschen dir ganz viel Spaß damit.',
+        'im Anhang findest du das Briefing-PDF zu der Ausbildungsstation. Der Link ist 10 Minuten gültig. Wir wünschen dir ganz viel Spaß damit.',
     },
     link: {
       archive: 'zum Archiv',

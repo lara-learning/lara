@@ -72,7 +72,7 @@ export const EnglishTranslations: Translations = {
       alexa:
         "Your Lara Account has been linked to your Amazon Alexa Account. If you didn't initiate the Account Linking please open you Lara Settings and remove the Amazon Account. You should also change you Password for Lara.",
       paperBriefing:
-        "attached you will find the briefing PDF for Anna's training station. We hope you have a lot of fun with it.",
+        "attached you will find the briefing PDF for Anna's training station. The link is valid for 10 minutes. We hope you have a lot of fun with it.",
     },
     link: {
       archive: 'Archive',
