@@ -73,7 +73,14 @@ const Suggestions: React.FC<SuggestionProps> = ({ submitTextSuggestion, submitTi
         case 'Enter':
           // submit the suggestion if shift isn't pressed
           if (!event.shiftKey && focusIndex > -1) {
-            setWaitingForBlur(suggestions[focusIndex])
+            event.preventDefault()
+            const suggestionsTextWithTime = suggestionsWithTimes[focusIndex]
+            if (suggestionsTextWithTime) {
+              setWaitingForBlur(suggestionsTextWithTime.text)
+              setWaitingForBlurTimeSuggestion(suggestionsTextWithTime.time)
+            } else {
+              setWaitingForBlur(suggestions[focusIndex])
+            }
           }
           break
         case 'ArrowUp':
@@ -104,7 +111,7 @@ const Suggestions: React.FC<SuggestionProps> = ({ submitTextSuggestion, submitTi
           break
       }
     },
-    [setWaitingForBlur, focusIndex, inputRef, suggestions]
+    [setWaitingForBlur, focusIndex, inputRef, suggestions, suggestionsWithTimes]
   )
 
   React.useEffect(() => {
