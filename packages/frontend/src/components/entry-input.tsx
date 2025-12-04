@@ -187,14 +187,19 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   const handleSave = (newEntry: EntryInputType) => {
     setEditing(false)
 
-    if (
-      !isValidTimeUpdate(day, newEntry.time ? newEntry.time - entry.time! : newEntry.time_split! - entry.time_split!)
-    ) {
+    const previousTime = !secondary ? (entry.time ?? 0) : (entry.time_split ?? 0)
+    const nextTime = !secondary ? (newEntry.time ?? 0) : (newEntry.time_split ?? 0)
+
+    if (!isValidTimeUpdate(day, nextTime - previousTime)) {
       addToast({ text: strings.entryStatus.changeError, type: 'error' })
       return
     }
 
-    if (newEntry.text === entry.text && newEntry.time === entry.time) {
+    const isUnchanged = !secondary
+      ? newEntry.text === entry.text && newEntry.time === entry.time
+      : newEntry.text_split === entry.text_split && newEntry.time_split === entry.time_split
+
+    if (isUnchanged) {
       return
     }
 
