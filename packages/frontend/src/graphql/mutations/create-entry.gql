@@ -7,6 +7,9 @@ mutation createEntry($dayId: String!, $input: EntryInput!) {
         id
         text
         time
+        text_split
+        time_split
+        text_split
         orderId
         comments {
           id
