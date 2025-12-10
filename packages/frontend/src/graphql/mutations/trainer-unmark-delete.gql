@@ -1,0 +1,9 @@
+mutation TrainerUnmarkUserForDelete($id: ID!) {
+  trainerUnMarkUserForDeletion(id: $id) {
+    id
+
+    ... on Trainee {
+      deleteAt
+    }
+  }
+}
