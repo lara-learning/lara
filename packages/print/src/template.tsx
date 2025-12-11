@@ -75,7 +75,7 @@ export const Template: React.FC<TemplateProps> = ({
         <LaraLogo />
       </StyledPrintHeader>
       <StyledPrintUserInfo>
-        <StyledPrintUserInfoRow fullsize>
+        <StyledPrintUserInfoRow $fullsize>
           <StyledPrintUserInfoRowHeadline> {i18n.name}: </StyledPrintUserInfoRowHeadline>
           {firstName} {lastName}
         </StyledPrintUserInfoRow>
@@ -163,7 +163,7 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
         <LaraLogo />
       </StyledPrintHeader>
       <StyledPrintUserInfo>
-        <StyledPrintUserInfoRow fullsize>
+        <StyledPrintUserInfoRow $fullsize>
           <StyledPrintUserInfoRowHeadline> {i18n.trainee}: </StyledPrintUserInfoRowHeadline>
           {firstName} {lastName}
         </StyledPrintUserInfoRow>

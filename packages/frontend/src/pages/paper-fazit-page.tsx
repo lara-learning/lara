@@ -169,7 +169,7 @@ export const PaperFazitPage: React.FC = () => {
               trainerId: paper?.trainerId ?? '',
             },
           },
-        }).then(() => navigate('/paper'))
+        }).then(() => navigate('/paper/fazit/done/' + paperId))
       }
     })
   }

@@ -11,10 +11,10 @@ export const StyledPrintUserInfo = styled.div`
   margin-bottom: ${Spacings.xxl};
 `
 
-export const StyledPrintUserInfoRow = styled.span<{ fullsize?: boolean }>`
+export const StyledPrintUserInfoRow = styled.span<{ $fullsize?: boolean }>`
   color: ${(props) => props.theme.darkFont};
   font-size: ${FontSizes.copy};
-  ${(props) => props.fullsize && 'grid-column: 1/3'};
+  ${(props) => props.$fullsize && 'grid-column: 1/3'};
 `
 export const StyledPrintUserInfoRowHeadline = styled.span`
   font-weight: bold;

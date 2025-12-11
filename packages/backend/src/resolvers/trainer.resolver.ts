@@ -83,6 +83,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       const filenameTrainee = await invokePrintLambdaResponse({
         printDataHash: traineeHash,
+        action: 'pageLoad',
       })
 
       const traineeURL = await getPrintData(filenameTrainee?.filename ?? '')
@@ -98,6 +99,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       const filenameMentor = await invokePrintLambdaResponse({
         printDataHash: mentorHash,
+        action: 'pageLoad',
       })
 
       const mentorURL = await getPrintData(filenameMentor?.filename ?? '')
@@ -113,6 +115,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       const filenameTrainer = await invokePrintLambdaResponse({
         printDataHash: trainerHash,
+        action: 'download',
       })
 
       const trainerURL = await getPrintData(filenameTrainer?.filename ?? '')

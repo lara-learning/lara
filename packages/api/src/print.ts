@@ -94,6 +94,9 @@ export type PrintTranslations = {
 
 export type PrintPayload = {
   printDataHash: string
+  action?: 'pageLoad' | 'download'
+  mentorName?: string
+  mentorEmail?: string
 }
 
 export type PrintData = {

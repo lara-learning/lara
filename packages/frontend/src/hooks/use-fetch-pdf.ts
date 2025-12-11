@@ -47,7 +47,6 @@ export const useFetchPaperPdf = (): UseFetchPaperPdfPayload => {
     onCompleted: async ({ printPaper }) => {
       const text = strings.formatString(strings.archivePage.export, printPaper.estimatedWaitingTime) as string
       addToast({ icon: 'Export', title: strings.archivePage.exportTitle, text, type: 'success' })
-
       setLoading(false)
     },
   })
