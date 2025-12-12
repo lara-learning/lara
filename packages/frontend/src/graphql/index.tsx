@@ -718,7 +718,7 @@ export type CreateEntryMutationVariables = Exact<{
 }>;
 
 
-export type CreateEntryMutation = { __typename?: 'Mutation', createEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string }> }> } } };
+export type CreateEntryMutation = { __typename?: 'Mutation', createEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, text_split?: string | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string }> }> } } };
 
 export type CreateOAuthCodeMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -973,7 +973,7 @@ export type AlexaLinkingUrlQuery = { __typename?: 'Query', alexaLinkingUrl?: str
 export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined, text_split?: string | undefined }> }> } | undefined> };
+export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined }> }> } | undefined> };
 
 export type AvatarSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1001,7 +1001,7 @@ export type DashboardPageDataQueryVariables = Exact<{
 }>;
 
 
-export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
+export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
 
 export type DayInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1245,6 +1245,9 @@ export const CreateEntryDocument = gql`
         id
         text
         time
+        text_split
+        time_split
+        text_split
         orderId
         comments {
           id
@@ -1971,7 +1974,7 @@ export const ArchivePageDataDocument = gql`
         time
         time_split
         text
-        text_split
+        time_split
       }
     }
     __typename
@@ -2122,6 +2125,7 @@ export const DashboardPageDataDocument = gql`
       entries {
         id
         time
+        time_split
       }
     }
     __typename
@@ -2137,6 +2141,7 @@ export const DashboardPageDataDocument = gql`
         id
         text
         time
+        time_split
         orderId
         comments {
           id
