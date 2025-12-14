@@ -32,6 +32,7 @@ const query = gql`
         entries {
           id
           time
+          time_split
         }
       }
     }

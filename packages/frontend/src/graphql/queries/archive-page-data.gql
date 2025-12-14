@@ -21,7 +21,7 @@ query ArchivePageData {
         time
         time_split
         text
-        text_split
+        time_split
       }
     }
     __typename
