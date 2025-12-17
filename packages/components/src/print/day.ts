@@ -4,7 +4,7 @@ import { FontSizes } from '../font-size'
 import { Spacings } from '../spacing'
 
 export const StyledPrintDay = styled.div`
-  break-inside: avoid;
+  break-inside: auto;
   border-bottom: 1px solid ${(props) => props.theme.inputBorderEmpty};
   margin-bottom: ${Spacings.l};
 

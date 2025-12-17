@@ -125,6 +125,9 @@ export const DUMMY_DATA: PrintData = {
     trainer: 'Ausbilder',
     trainee: 'Auszubildender',
     briefing: 'Briefing',
+    feedbackTrainee: 'Azubi Feedback',
+    feedbackMentor: 'Mentor Feedback',
+    fazit: 'Fazit',
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',
@@ -186,8 +189,13 @@ export const DUMMY_PAPER_DATA: PrintData = {
   data: [
     {
       filename: 'paperBriefingFile.pdf',
+
       paper: {
         status: 'InProgress',
+        mentorFirstName: 'Men',
+        mentorLastName: 'Tor',
+        traineeFirstName: 'Trainee',
+        traineeLastName: 'Traineeson',
         briefing: [
           {
             id: '1',
@@ -198,53 +206,13 @@ export const DUMMY_PAPER_DATA: PrintData = {
           },
           {
             id: '2',
-            questionId: '1',
-            answer: 'Test Antwort',
-            question: 'Gegenstand der Arbeit',
-            hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.',
-          },
-          {
-            id: '3',
-            questionId: '1',
-            answer: 'Test Antwort',
-            question: 'Gegenstand der Arbeit',
-            hint: 'Nenne hier bitte kurz die allgemeine Tätigkeit/Aufgabe, welche Inhalt der Projektstation ist.',
-          },
-          {
-            id: '1',
             questionId: '2',
             answer: 'Test Antwort',
             question: 'Vorgehen',
             hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
           },
-          {
-            id: '2',
-            questionId: '2',
-            answer: 'Test Antwort',
-            question: 'Vorgehen',
-            hint: 'Nenne hier bitte unter welchen Rahmenbedingungen die Projektstation für den Azubi aufgebaut sein soll.',
-          },
-          {
-            id: '1',
-            questionId: '3',
-            answer: 'Test Antwort',
-            question: 'Lerninhalte Station',
-            hint: 'Nenne hier welche allgemeinen Inhalte dem Azubi während dem Projekt Zeitraum vermittelt werden sollen.',
-          },
-          {
-            id: '1',
-            questionId: '4',
-            answer: 'Test Antwort',
-            question: 'Rahmenplan Lerninhalte',
-            hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
-          },
-          {
-            id: '2',
-            questionId: '4',
-            answer: 'Test Antwort',
-            question: 'Rahmenplan Lerninhalte',
-            hint: 'Ergänze hier (falls gewollt) zusätzliche Punkte aus dem Rahmenplan, welche du als besonders wichtig erachtest, dass diese im Briefing erwähnt werden.',
-          },
+        ],
+        feedbackTrainee: [
           {
             id: '3',
             questionId: '4',
@@ -253,15 +221,16 @@ export const DUMMY_PAPER_DATA: PrintData = {
             hint: 'Test Hinweis',
           },
         ],
-        feedback: [
+        feedbackMentor: [
           {
-            id: '3',
-            questionId: '4',
-            answer: 'Test Antwort',
-            question: 'Test Frage',
-            hint: 'Test Hinweis',
+            id: '4',
+            questionId: '5',
+            answer: 'Mentor Antwort',
+            question: 'Mentor Frage',
+            hint: 'Mentor Hinweis',
           },
         ],
+        fazit: 'Das ist das Fazit',
         client: 'Kunde',
         periodStart: '2022-08-07T05:14:28.000Z',
         periodEnd: '2025-08-07T05:14:28.000Z',
@@ -275,7 +244,7 @@ export const DUMMY_PAPER_DATA: PrintData = {
     receiverEmail: 'test@test.com',
     firstName: 'testName',
     course: 'Mediengestalter Digital und Print',
-    lastName: 'Trainee Trainee',
+    lastName: 'Trai nee Trainee',
     traineeSignature: 'TRAINEE',
     trainerSignature: 'TRAINER',
   },
@@ -306,6 +275,9 @@ export const DUMMY_PAPER_DATA: PrintData = {
     trainer: 'Ausbilder',
     trainee: 'Auszubildender',
     briefing: 'Briefing',
+    feedbackTrainee: 'Azubi Feedback',
+    feedbackMentor: 'Mentor Feedback',
+    fazit: 'Fazit',
   },
   emailTranslations: {
     hello: 'Hallo {{ USER }},',

@@ -22,13 +22,19 @@ export type PrintReport = {
 export type PrintPaper = {
   status: string
   briefing: PrintForm[]
-  feedback: PrintForm[]
+  feedbackTrainee: PrintForm[]
+  feedbackMentor: PrintForm[]
+  fazit: string
   client: string
   periodStart: string
   periodEnd: string
   schoolPeriodStart: string
   schoolPeriodEnd: string
   subject: string
+  mentorFirstName: string
+  mentorLastName: string
+  traineeFirstName: string
+  traineeLastName: string
   //department: string
 }
 
@@ -90,6 +96,9 @@ export type PrintTranslations = {
   trainer: string
   trainee: string
   briefing: string
+  feedbackTrainee: string
+  feedbackMentor: string
+  fazit: string
 }
 
 export type PrintPayload = {

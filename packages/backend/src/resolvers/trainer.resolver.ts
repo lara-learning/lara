@@ -65,7 +65,20 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       let trainee: Trainee | undefined
       let mentor: Mentor | Trainer | undefined
       if (paper) {
-        data.push(createPrintPaperData(paper))
+        trainee = await traineeById(paper?.traineeId)
+        mentor = (await mentorById(paper?.mentorId)) ?? (await trainerById(paper?.mentorId))
+
+        const mentorName = {
+          firstName: mentor?.firstName ?? '',
+          lastName: mentor?.lastName ?? '',
+        }
+
+        const traineeName = {
+          firstName: trainee?.firstName ?? '',
+          lastName: trainee?.lastName ?? '',
+        }
+
+        data.push(createPrintPaperData(paper, mentorName, traineeName))
         trainee = await traineeById(paper?.traineeId)
         mentor = (await mentorById(paper?.mentorId)) ?? (await trainerById(paper?.mentorId))
       }

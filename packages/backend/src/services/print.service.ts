@@ -132,11 +132,22 @@ const transformPaperForm = (paperForm: PaperFormData[]): PrintForm[] => {
  * @returns Paper for print
  * @param paper
  */
-const transformPaper = (paper: Paper): PrintPaper => {
+const transformPaper = (
+  paper: Paper,
+  mentorName: { firstName: string; lastName: string },
+  traineeName: { firstName: string; lastName: string }
+): PrintPaper => {
   return {
     status: paper.status,
+    mentorFirstName: mentorName.firstName,
+    mentorLastName: mentorName.lastName,
+    traineeFirstName: traineeName.firstName,
+    traineeLastName: traineeName.lastName,
     briefing: transformPaperForm(paper.briefing),
-    feedback: transformPaperForm(paper.feedbackTrainee),
+    feedbackTrainee: transformPaperForm(paper.feedbackTrainee),
+    feedbackMentor: transformPaperForm(paper.feedbackMentor),
+    fazit: typeof paper.fazit === 'string' ? paper.fazit : (paper.fazit?.content ?? ''),
+
     client: paper.client,
     periodStart: paper.periodStart ?? '',
     periodEnd: paper.periodEnd ?? '',
@@ -179,10 +190,14 @@ export const createPrintReportData = (report: Report, trainee: Trainee): PrintRe
  * @returns Paperdata
  * @param paper
  */
-export const createPrintPaperData = (paper: Paper): PrintPaperData => {
+export const createPrintPaperData = (
+  paper: Paper,
+  mentorName: { firstName: string; lastName: string },
+  traineeName: { firstName: string; lastName: string }
+): PrintPaperData => {
   return {
     filename: createPaperPDFName(paper),
-    paper: transformPaper(paper),
+    paper: transformPaper(paper, mentorName, traineeName),
   }
 }
 

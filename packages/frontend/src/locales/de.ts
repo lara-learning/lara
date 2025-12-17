@@ -118,7 +118,7 @@ const germanTranslation: Translation = {
     },
     feedbackQuestions: {
       descriptionOfActivities: {
-        question: 'Berschreibung der Tätigkeiten',
+        question: 'Beschreibung der Tätigkeiten',
         hint: 'Nenne hier bitte die Tätigkeiten oder Aufgaben, die du in der Station gemacht hast.',
       },
       feedbackOnProjectTeam: {
@@ -126,7 +126,7 @@ const germanTranslation: Translation = {
         hint: 'Bitte beschreibe hier wie du dich ins Team aufgenommen gefühlt hast und wie der Einstieg und die Zusammenarbeit lief.',
       },
       feedbackOnTasksAndProject: {
-        question: 'Feedaback zu deinen Aufgaben und Projekt',
+        question: 'Feedback zu deinen Aufgaben und Projekt',
         hint: 'Was lief gut? Was war herausfordernd? Welche Aufgaben hast du mit besonderem Interesse und Erfolg ausgeübt? Was hat dich weitergebracht? Was war weniger erfolgreich? Was macht zufrieden? Was erzeugt Frust? Hierbei beschreibe möglichst an konkreten Beispielen vornehmlich dich und nicht dein Umfeld.',
       },
       periodOfTime: {

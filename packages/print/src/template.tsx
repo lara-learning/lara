@@ -151,11 +151,7 @@ export const Template: React.FC<TemplateProps> = ({
   )
 }
 
-export const PaperTemplate: React.FC<PaperTemplateProps> = ({
-  userData: { firstName, lastName, course },
-  paper,
-  i18n,
-}) => {
+export const PaperTemplate: React.FC<PaperTemplateProps> = ({ paper, i18n }) => {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
@@ -165,11 +161,11 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
       <StyledPrintUserInfo>
         <StyledPrintUserInfoRow $fullsize>
           <StyledPrintUserInfoRowHeadline> {i18n.trainee}: </StyledPrintUserInfoRowHeadline>
-          {firstName} {lastName}
+          {paper.traineeFirstName} {paper.traineeLastName}
         </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
-          <StyledPrintUserInfoRowHeadline> {i18n.apprenticeCourse}: </StyledPrintUserInfoRowHeadline>
-          {course}
+          <StyledPrintUserInfoRowHeadline> {i18n.mentor}: </StyledPrintUserInfoRowHeadline>
+          {paper.mentorFirstName} {paper.mentorLastName}
         </StyledPrintUserInfoRow>
         <StyledPrintUserInfoRow>
           <StyledPrintUserInfoRowHeadline> {i18n.department}: </StyledPrintUserInfoRowHeadline>
@@ -206,6 +202,53 @@ export const PaperTemplate: React.FC<PaperTemplateProps> = ({
             </StyledPrintDay>
           )
         })}
+
+        {paper.feedbackTrainee.length > 0 && (
+          <StyledPrintDay>
+            <StyledPrintDayHeadline>{i18n.feedbackTrainee}</StyledPrintDayHeadline>
+
+            {paper.feedbackTrainee.map((feedback: PrintForm, index: number) => {
+              return (
+                <div key={index} style={{ marginBottom: '1rem' }}>
+                  <StyledPrintPaperEntry>
+                    <strong>{feedback.question} </strong>
+                  </StyledPrintPaperEntry>
+                  <StyledPrintPaperEntry>
+                    <em>{feedback.hint}</em>
+                  </StyledPrintPaperEntry>
+                  <StyledPrintPaperEntry>{feedback.answer}</StyledPrintPaperEntry>
+                </div>
+              )
+            })}
+          </StyledPrintDay>
+        )}
+
+        {paper.feedbackMentor && paper.feedbackMentor.length > 0 && (
+          <StyledPrintDay>
+            <StyledPrintDayHeadline>{i18n.feedbackMentor}</StyledPrintDayHeadline>
+
+            {paper.feedbackMentor.map((feedback: PrintForm, index: number) => {
+              return (
+                <div key={index} style={{ marginBottom: '1rem' }}>
+                  <StyledPrintPaperEntry>
+                    <strong>{feedback.question} </strong>
+                  </StyledPrintPaperEntry>
+                  <StyledPrintPaperEntry>
+                    <em>{feedback.hint}</em>
+                  </StyledPrintPaperEntry>
+                  <StyledPrintPaperEntry>{feedback.answer}</StyledPrintPaperEntry>
+                </div>
+              )
+            })}
+          </StyledPrintDay>
+        )}
+
+        {paper.fazit && (
+          <StyledPrintDay>
+            <StyledPrintDayHeadline>{i18n.fazit}</StyledPrintDayHeadline>
+            <StyledPrintPaperEntry>{paper.fazit}</StyledPrintPaperEntry>
+          </StyledPrintDay>
+        )}
       </div>
     </ThemeProvider>
   )
