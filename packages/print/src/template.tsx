@@ -152,6 +152,7 @@ export const Template: React.FC<TemplateProps> = ({
 }
 
 export const PaperTemplate: React.FC<PaperTemplateProps> = ({ paper, i18n }) => {
+  console.log(paper.briefing)
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />

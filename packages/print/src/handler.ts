@@ -3,8 +3,8 @@ import AdmZip from 'adm-zip'
 import { Handler } from 'aws-lambda'
 import { launch, Browser, Page } from 'puppeteer-core'
 
-import { EmailPayload, EmailType, PrintData, PrintPaperData, PrintPayload, PrintReportData } from '@lara/api'
-import { getExport, saveAttachments, fileExists } from './s3'
+import { EmailPayload, PrintData, PrintPaperData, PrintPayload, PrintReportData } from '@lara/api'
+import { getExport, saveAttachments } from './s3'
 import { createPaperPDF, createPDF } from './create-pdf'
 
 const { IS_OFFLINE, EMAIL_FUNCTION, FRONTEND_URL } = process.env
@@ -51,13 +51,13 @@ export const handler: Handler<PrintPayload, { success: 'error' | 'success'; file
   const isSingleExport = data.length === 1
 
   let filename = ''
-  let emailType: EmailType = 'reportExport'
   let isPaper = false
 
   if (isSingleExport) {
     isPaper = data[0].filename.includes('Paper')
     if (isPaper) {
-      emailType = 'paperBriefing'
+      const emailType = 'paperBriefing'
+      console.log(emailType)
       filename = (data[0] as PrintPaperData).filename
     } else {
       filename = (data[0] as PrintReportData).filename
@@ -110,57 +110,33 @@ export const handler: Handler<PrintPayload, { success: 'error' | 'success'; file
       return { success: 'success', filename }
     }
 
-    const alreadyExists = await fileExists(filename)
-
-    if (!alreadyExists) {
-      browser = await launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-        headless: false,
-        acceptInsecureCerts: true,
-      })
-
-      const page = await browser.newPage()
-      await new Promise((res) => setTimeout(res, 300))
-      await page.createCDPSession()
-
-      let outputFile: Buffer | undefined
-
-      if (isSingleExport) {
-        if (isPaper) {
-          const [paperData] = data as PrintPaperData[]
-          outputFile = await createPaperPDF(paperData, userData, printTranslations, page)
-        } else {
-          const [reportData] = data as PrintReportData[]
-          outputFile = await createPDF(reportData, userData, printTranslations, page)
-        }
-      } else {
-        outputFile = await generateBatch(exportData, page)
-      }
-
-      if (!outputFile) throw new Error('"generatedReport" is undefined')
-      await saveAttachments(filename, outputFile)
-    } else {
-      console.log(`Attachment "${filename}" already exists. Skipping PDF generation.`)
-    }
-
-    console.log('download-email payload')
-    const downloadEmailPayload: EmailPayload = {
-      emailType,
-      attachments: [{ filename }],
-      userData: {
-        receiverEmail: userData.receiverEmail,
-        receiverName: userData.firstName,
-        buttonLink: `${FRONTEND_URL}/archive`,
-      },
-      translations: emailTranslations,
-    }
-
-    await lambda.invoke({
-      FunctionName: EMAIL_FUNCTION,
-      InvocationType: 'Event',
-      Payload: JSON.stringify(downloadEmailPayload),
+    browser = await launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      headless: false,
+      acceptInsecureCerts: true,
     })
+
+    const page = await browser.newPage()
+    await new Promise((res) => setTimeout(res, 300))
+    await page.createCDPSession()
+
+    let outputFile: Buffer | undefined
+
+    if (isSingleExport) {
+      if (isPaper) {
+        const [paperData] = data as PrintPaperData[]
+        outputFile = await createPaperPDF(paperData, userData, printTranslations, page)
+      } else {
+        const [reportData] = data as PrintReportData[]
+        outputFile = await createPDF(reportData, userData, printTranslations, page)
+      }
+    } else {
+      outputFile = await generateBatch(exportData, page)
+    }
+
+    if (!outputFile) throw new Error('"generatedReport" is undefined')
+    await saveAttachments(filename, outputFile)
 
     return { success: 'success', filename }
   } catch (e) {

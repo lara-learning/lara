@@ -4,7 +4,6 @@ import {
   PutObjectCommand,
   GetObjectCommandOutput,
   PutObjectCommandOutput,
-  HeadObjectCommand,
 } from '@aws-sdk/client-s3'
 import { Readable } from 'stream'
 
@@ -66,23 +65,5 @@ export const saveAttachments = async (key: string, body: Buffer): Promise<PutObj
   } catch (e) {
     console.error('Error while saving attachment to S3: ', e)
     return undefined
-  }
-}
-
-export const fileExists = async (key: string): Promise<boolean> => {
-  try {
-    await s3Client.send(new HeadObjectCommand({ Bucket: EXPORT_BUCKET, Key: key }))
-    return true
-  } catch (err: unknown) {
-    if (
-      typeof err === 'object' &&
-      err !== null &&
-      ((err as { name?: string }).name === 'NotFound' ||
-        (err as { $metadata?: { httpStatusCode?: number } }).$metadata?.httpStatusCode === 404)
-    ) {
-      return false
-    }
-    console.error('Error while checking file existence in S3:', err)
-    throw err instanceof Error ? err : new Error('Unknown error')
   }
 }
