@@ -86,6 +86,7 @@ jobs:
         run: |
           echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
+          echo "BACKEND_DOMAIN_NAME=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///; s/\/backend//')" >> $GITHUB_ENV
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
