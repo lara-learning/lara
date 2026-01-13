@@ -17,6 +17,7 @@ const englishTranslation: Translation = {
   save: 'Save',
   cancel: 'Cancel',
   edit: 'edit',
+  createUser: 'Create',
   done: 'done',
   markDelete: 'mark for deletion',
   unmarkDelete: 'remove deletion mark',
@@ -410,10 +411,10 @@ const englishTranslation: Translation = {
     success: 'The admin {0} has been created',
   },
   deleteTrainer: {
-    title: 'Delete {0}?',
+    title: 'Deactivate {0}?',
     description:
       'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',
-    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+    success: 'You will shortly receive an email with the option to delete the user.',
   },
   userDelete: {
     title: 'User deactivated',

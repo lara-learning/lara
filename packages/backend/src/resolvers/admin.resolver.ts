@@ -66,7 +66,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
     },
   },
   Mutation: {
-    markUserForDeletion: async (_parent, { id }, { currentUser }) => {
+    adminMarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
 
       if (!user) {
@@ -85,7 +85,7 @@ export const adminResolver: GqlResolvers<AdminContext> = {
 
       return user
     },
-    unmarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
+    adminUnmarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
 
       if (!user) {

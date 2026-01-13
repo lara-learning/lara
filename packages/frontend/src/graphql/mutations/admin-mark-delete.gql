@@ -1,5 +1,5 @@
-mutation MarkUserForDelete($id: ID!) {
-  markUserForDeletion(id: $id) {
+mutation AdminMarkUserForDelete($id: ID!) {
+  adminMarkUserForDeletion(id: $id) {
     id
 
     ... on Trainee {

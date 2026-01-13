@@ -17,9 +17,10 @@ const germanTranslation: Translation = {
   save: 'Speichern',
   edit: 'bearbeiten',
   done: 'fertig',
-  markDelete: 'für Löschung markieren',
+  markDelete: 'Für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
   cancel: 'Abbrechen',
+  createUser: 'Anlegen',
   deactivate: 'Deaktivieren',
   traineeShipYear: 'Jahr der Ausbildung',
   claimed: 'Ausgewählt',
@@ -415,7 +416,7 @@ const germanTranslation: Translation = {
     success: 'Admin {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   deleteTrainer: {
-    title: '{0} wirklich löschen?',
+    title: '{0} wirklich deaktivieren?',
     description:
       'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',
     success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
