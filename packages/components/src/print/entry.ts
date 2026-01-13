@@ -18,3 +18,10 @@ export const StyledPrintEntryText = styled.span`
   font-size: ${FontSizes.copy};
   padding-right: ${Spacings.s};
 `
+
+export const PrintText = styled.p`
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+`
