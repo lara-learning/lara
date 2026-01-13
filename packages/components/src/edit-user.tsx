@@ -6,7 +6,7 @@ import { Spacings } from './spacing'
 import { UnstyledLink } from './unstyled-link'
 
 type EditUserLayoutProps = {
-  backButton: JSX.Element
+  backButton?: JSX.Element
   content?: ReactNode
   actions: JSX.Element
 }
@@ -25,8 +25,8 @@ const StyledActions = styled.div`
 export const EditUserLayout: React.FC<EditUserLayoutProps> = ({ backButton, content, actions }) => {
   return (
     <div>
-      <StyledHeader>{backButton}</StyledHeader>
-      <Container padding="l">{content}</Container>
+      {backButton && <StyledHeader>{backButton}</StyledHeader>}
+      {content && <Container padding="l">{content}</Container>}
       <StyledActions>{actions}</StyledActions>
     </div>
   )

@@ -1,5 +1,5 @@
 mutation AdminUnmarkUserForDelete($id: ID!) {
-  adminUnMarkUserForDeletion(id: $id) {
+  adminUnmarkUserForDeletion(id: $id) {
     id
 
     ... on Trainee {

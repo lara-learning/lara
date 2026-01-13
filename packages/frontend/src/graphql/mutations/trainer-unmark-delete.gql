@@ -1,5 +1,5 @@
-mutation TrainerUnmarkUserForDelete($id: ID!) {
-  trainerUnMarkUserForDeletion(id: $id) {
+mutation TrainerUnmarkTraineeForDelete($id: ID!) {
+  trainerUnmarkTraineeForDeletion(id: $id) {
     id
 
     ... on Trainee {

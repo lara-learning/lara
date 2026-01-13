@@ -123,8 +123,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         trainer: currentUser,
       }
     },
-
-    trainerMarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
+    trainerMarkTraineeForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
       const t = createT(currentUser.language)
 
@@ -153,8 +152,7 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
 
       return user
     },
-
-    trainerUnMarkUserForDeletion: async (_parent, { id }, { currentUser }) => {
+    trainerUnmarkTraineeForDeletion: async (_parent, { id }, { currentUser }) => {
       const user = await userById(id)
       const t = createT(currentUser.language)
 
@@ -165,11 +163,6 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       if (!isTrainee(user)) {
         throw new GraphQLError(t('errors.insufficientPermissions'))
       }
-
-      // // Prüfe ob der Trainer der Trainer des Trainees ist
-      // if (user.trainerId !== currentUser.id) {
-      //   throw new GraphQLError(t('errors.cantUnmarkOtherTrainersTrainee'))
-      // }
 
       return updateUser(user, { removeKeys: ['deleteAt'] })
     },

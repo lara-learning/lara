@@ -4,18 +4,15 @@ import { useParams } from 'react-router'
 import { EditUserLayout } from '@lara/components'
 
 import { EditTraineeContent } from '../components/edit-trainee-content'
-//import { EditTrainer } from '../components/edit-trainer-content'
 import Loader from '../components/loader'
 import NavigationButtonLink from '../components/navigation-button-link'
 import { useUserPageQuery } from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
-//import { EditAdmin } from '../components/edit-admin-content'
-import { useDeleteActions } from '../components/renderDeleteAction'
+import { useDeleteActions } from '../components/render-delete-action'
 import { EditAdmin } from '../components/edit-admin-content'
 import { EditTrainer } from '../components/edit-trainer-content'
-import { DeletionModal } from '../components/DeletionModal'
-//import { DeletionModal } from '../components/DeletionModal'
+import { DeletionModal } from '../components/deletion-modal'
 
 type AdminEditUserPageParams = {
   id: string
@@ -27,7 +24,7 @@ export const AdminEditUserPage: React.FunctionComponent = () => {
   const { data, loading } = useUserPageQuery(vars)
 
   const { renderDeleteAction, showDeletionModal, toggleDeletionModal, markForDeleteAdmin } = useDeleteActions({
-    currentUserId: data?.currentUser?.id ?? '',
+    currentUser: data?.currentUser ?? undefined,
     id: id ?? '',
   })
 

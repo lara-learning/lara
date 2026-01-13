@@ -13,9 +13,8 @@ import Modal from '../components/modal'
 import { EditTraineeFormData, TraineeForm } from '../components/trainee-form'
 import { useToastContext } from '../hooks/use-toast-context'
 import { GraphQLError } from 'graphql'
-import { DeletionModal } from '../components/DeletionModal'
-import NavigationButtonLink from '../components/navigation-button-link'
-import { useDeleteActions } from '../components/renderDeleteAction'
+import { DeletionModal } from '../components/deletion-modal'
+import { useDeleteActions } from '../components/render-delete-action'
 
 const TraineePage: React.FunctionComponent = () => {
   const { trainee } = useParams()
@@ -31,7 +30,7 @@ const TraineePage: React.FunctionComponent = () => {
   }
 
   const { renderDeleteAction, showDeletionModal, toggleDeletionModal, markForDeleteTrainer } = useDeleteActions({
-    currentUserId: dataPageQuery?.currentUser?.id,
+    currentUser: dataPageQuery?.currentUser,
     id: trainee,
   })
 
@@ -77,18 +76,7 @@ const TraineePage: React.FunctionComponent = () => {
       {activeTrainee && (
         <div>
           {!pagequeryloading && dataPageQuery?.companies && dataPageQuery?.getUser?.__typename === 'Trainee' && (
-            <EditUserLayout
-              backButton={
-                <NavigationButtonLink
-                  label={strings.back}
-                  to="/trainees"
-                  icon="ChevronLeft"
-                  isLeft
-                  iconColor="iconLightGrey"
-                />
-              }
-              actions={renderDeleteAction(dataPageQuery?.getUser?.deleteAt)}
-            />
+            <EditUserLayout actions={renderDeleteAction(dataPageQuery?.getUser?.deleteAt)} />
           )}
           {!loading && (
             <DeletionModal

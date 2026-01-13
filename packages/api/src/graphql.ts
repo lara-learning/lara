@@ -71,6 +71,7 @@ export type GqlCreateCommentPayload = {
 
 export type GqlCreateTraineeInput = {
   companyId: Scalars['String']['input'];
+  course: Scalars['String']['input'];
   email: Scalars['String']['input'];
   endDate: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
@@ -167,7 +168,7 @@ export type GqlMutation = {
   /** Marks User to be deleted */
   adminMarkUserForDeletion?: Maybe<GqlUserInterface>;
   /** Unmarks User from deletion */
-  adminUnMarkUserForDeletion?: Maybe<GqlUserInterface>;
+  adminUnmarkUserForDeletion?: Maybe<GqlUserInterface>;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<GqlTrainerTraineePayload>;
   /** Creates Admin. */
@@ -202,8 +203,8 @@ export type GqlMutation = {
   login?: Maybe<GqlOAuthPayload>;
   /** Publishes all comments on a report which is identified by the id argument. */
   publishAllComments: GqlPublishCommentsPayload;
-  trainerMarkUserForDeletion?: Maybe<GqlUserInterface>;
-  trainerUnMarkUserForDeletion?: Maybe<GqlUserInterface>;
+  trainerMarkTraineeForDeletion?: Maybe<GqlUserInterface>;
+  trainerUnmarkTraineeForDeletion?: Maybe<GqlUserInterface>;
   /** Unclaims a Trainee by the current Trainer */
   unclaimTrainee?: Maybe<GqlTrainerTraineePayload>;
   /** Unlink Alexa account */
@@ -248,7 +249,7 @@ export type GqlMutationAdminMarkUserForDeletionArgs = {
 };
 
 
-export type GqlMutationAdminUnMarkUserForDeletionArgs = {
+export type GqlMutationAdminUnmarkUserForDeletionArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -348,12 +349,12 @@ export type GqlMutationPublishAllCommentsArgs = {
 };
 
 
-export type GqlMutationTrainerMarkUserForDeletionArgs = {
+export type GqlMutationTrainerMarkTraineeForDeletionArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type GqlMutationTrainerUnMarkUserForDeletionArgs = {
+export type GqlMutationTrainerUnmarkTraineeForDeletionArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -922,7 +923,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   _devloginuser?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutation_DevloginuserArgs, 'id'>>;
   _devsetusertype?: Resolver<GqlResolversTypes['DevSetUserPayload'], ParentType, ContextType, RequireFields<GqlMutation_DevsetusertypeArgs, 'type'>>;
   adminMarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationAdminMarkUserForDeletionArgs, 'id'>>;
-  adminUnMarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationAdminUnMarkUserForDeletionArgs, 'id'>>;
+  adminUnmarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationAdminUnmarkUserForDeletionArgs, 'id'>>;
   claimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationClaimTraineeArgs, 'id'>>;
   createAdmin?: Resolver<Maybe<GqlResolversTypes['Admin']>, ParentType, ContextType, RequireFields<GqlMutationCreateAdminArgs, 'input'>>;
   createCommentOnDay?: Resolver<GqlResolversTypes['CreateCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationCreateCommentOnDayArgs, 'id' | 'text' | 'traineeId'>>;
@@ -940,8 +941,8 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
   publishAllComments?: Resolver<GqlResolversTypes['PublishCommentsPayload'], ParentType, ContextType, RequireFields<GqlMutationPublishAllCommentsArgs, 'id' | 'traineeId'>>;
-  trainerMarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationTrainerMarkUserForDeletionArgs, 'id'>>;
-  trainerUnMarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationTrainerUnMarkUserForDeletionArgs, 'id'>>;
+  trainerMarkTraineeForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationTrainerMarkTraineeForDeletionArgs, 'id'>>;
+  trainerUnmarkTraineeForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationTrainerUnmarkTraineeForDeletionArgs, 'id'>>;
   unclaimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationUnclaimTraineeArgs, 'id'>>;
   unlinkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
   updateAdmin?: Resolver<Maybe<GqlResolversTypes['Admin']>, ParentType, ContextType, RequireFields<GqlMutationUpdateAdminArgs, 'id' | 'input'>>;

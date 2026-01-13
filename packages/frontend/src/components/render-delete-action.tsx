@@ -4,13 +4,17 @@ import React from 'react'
 import {
   useAdminMarkUserForDeleteMutation,
   useAdminUnmarkUserForDeleteMutation,
-  useTrainerMarkUserForDeleteMutation,
-  useTrainerUnmarkUserForDeleteMutation,
+  UserTypeEnum,
+  useTrainerMarkTraineeForDeleteMutation,
+  useTrainerUnmarkTraineeForDeleteMutation,
 } from '../graphql'
 interface UseDeleteActionsProps {
-  //id = routesId
   id: string | undefined
-  currentUserId: string | undefined
+  currentUser:
+    | { __typename?: 'Admin' | undefined; id: string }
+    | { __typename?: 'Trainee' | undefined; id: string }
+    | { __typename?: 'Trainer' | undefined; id: string }
+    | undefined
 }
 
 interface MutationVariables {
@@ -19,20 +23,20 @@ interface MutationVariables {
   }
 }
 
-export const useDeleteActions = ({ currentUserId, id }: UseDeleteActionsProps) => {
+export const useDeleteActions = ({ currentUser, id }: UseDeleteActionsProps) => {
   const vars = { variables: { id: id ?? '' } }
 
-  const [markForDeleteAdmin, { loading: deleteLoadingAdmin }] = useTrainerMarkUserForDeleteMutation()
-  const [unmarkDeleteAdmin, { loading: undeleteLoadingAdmin }] = useTrainerUnmarkUserForDeleteMutation()
-  const [markForDeleteTrainer, { loading: deleteLoadingTrainer }] = useAdminMarkUserForDeleteMutation()
-  const [unmarkDeleteTrainer, { loading: undeleteLoadingTrainer }] = useAdminUnmarkUserForDeleteMutation()
+  const [markForDeleteAdmin, { loading: deleteLoadingAdmin }] = useAdminMarkUserForDeleteMutation()
+  const [unmarkDeleteAdmin, { loading: undeleteLoadingAdmin }] = useAdminUnmarkUserForDeleteMutation()
+  const [markForDeleteTrainer, { loading: deleteLoadingTrainer }] = useTrainerMarkTraineeForDeleteMutation()
+  const [unmarkDeleteTrainer, { loading: undeleteLoadingTrainer }] = useTrainerUnmarkTraineeForDeleteMutation()
 
-  const isTrainer = currentUserId === '456'
-  const isAdmin = currentUserId === '789'
+  const isTrainer = currentUser?.__typename === UserTypeEnum.Trainer
+  const isAdmin = currentUser?.__typename === UserTypeEnum.Admin
 
   const deleteActionLoading = isTrainer
-    ? deleteLoadingTrainer || undeleteLoadingTrainer
-    : deleteLoadingAdmin || undeleteLoadingAdmin
+    ? deleteLoadingTrainer && undeleteLoadingTrainer
+    : deleteLoadingAdmin && undeleteLoadingAdmin
 
   const [showDeletionModal, setShowDeletionModal] = React.useState(false)
 
@@ -49,7 +53,7 @@ export const useDeleteActions = ({ currentUserId, id }: UseDeleteActionsProps) =
   }
 
   const renderDeleteAction = (deleteAt?: string) => {
-    if (currentUserId === id) return <></>
+    if (currentUser?.id === id) return <></>
     if (deleteAt) {
       return (
         <SecondaryButton disabled={deleteActionLoading} onClick={() => selectQueryForType(vars)}>

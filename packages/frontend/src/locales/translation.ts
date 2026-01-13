@@ -16,6 +16,7 @@ export default interface Translation {
   done: string
   markDelete: string
   unmarkDelete: string
+  createUser: string
   deactivate: string
   traineeShipYear: string
   claimed: string

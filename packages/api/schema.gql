@@ -245,13 +245,13 @@ type Mutation {
   Marks User to be deleted
   """
   adminMarkUserForDeletion(id: ID!): UserInterface
-  trainerMarkUserForDeletion(id: ID!): UserInterface
+  trainerMarkTraineeForDeletion(id: ID!): UserInterface
 
   """
   Unmarks User from deletion
   """
-  adminUnMarkUserForDeletion(id: ID!): UserInterface
-  trainerUnMarkUserForDeletion(id: ID!): UserInterface
+  adminUnmarkUserForDeletion(id: ID!): UserInterface
+  trainerUnmarkTraineeForDeletion(id: ID!): UserInterface
 
   """
   Updates Trainee.
@@ -446,6 +446,7 @@ type Trainee implements UserInterface {
 
 input CreateTraineeInput {
   firstName: String!
+  course: String!
   lastName: String!
   email: String!
   startDate: String!

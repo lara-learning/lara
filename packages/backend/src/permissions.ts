@@ -86,8 +86,8 @@ export const permissions = shield<unknown, Context>(
       // Trainer mutations
       claimTrainee: and(authenticated, trainer),
       unclaimTrainee: and(authenticated, trainer),
-      trainerMarkUserForDeletion: and(authenticated, trainer),
-      trainerUnMarkUserForDeletion: and(authenticated, trainer),
+      trainerMarkTraineeForDeletion: and(authenticated, trainer),
+      trainerUnmarkTraineeForDeletion: and(authenticated, trainer),
 
       // Trainer and Admin mutations
       createTrainee: and(authenticated, or(admin, trainer)),
@@ -97,7 +97,7 @@ export const permissions = shield<unknown, Context>(
       createTrainer: and(authenticated, admin),
       updateTrainer: and(authenticated, admin),
       adminMarkUserForDeletion: and(authenticated, admin),
-      adminUnMarkUserForDeletion: and(authenticated, admin),
+      adminUnmarkUserForDeletion: and(authenticated, admin),
     },
   },
   { allowExternalErrors: true }
