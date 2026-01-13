@@ -31,6 +31,7 @@ export interface EditTraineeFormData {
   endDate: string
   startOfToolUsage: string
   companyId: string
+  course: string
 }
 
 const inputLabelProps: TextProps = {
@@ -213,9 +214,13 @@ export const TraineeForm: React.FC<EditTraineeFormProps> = ({ trainee, companies
                 {strings.course}
               </Text>
             </Spacer>
-            <Text size="copy" color="darkFont">
-              {trainee?.course ? trainee.course : strings.settings.notAssociated}
-            </Text>
+            <Input
+              {...register('course', { required: false })}
+              defaultValue={trainee?.course}
+              disabled={updating}
+              error={Boolean(errors.course)}
+              onBlur={blurSubmit ? onSubmit : undefined}
+            />
           </>
         }
         buttonControls={
@@ -225,7 +230,7 @@ export const TraineeForm: React.FC<EditTraineeFormProps> = ({ trainee, companies
                 {strings.cancel}
               </SecondaryButton>
               <PrimaryButton type="submit" onClick={onSubmit}>
-                {strings.create}
+                {strings.createUser}
               </PrimaryButton>
             </>
           ) : undefined

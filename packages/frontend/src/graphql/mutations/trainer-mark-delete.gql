@@ -1,0 +1,8 @@
+mutation TrainerMarkTraineeForDelete($id: ID!) {
+  trainerMarkTraineeForDeletion(id: $id) {
+    id
+    ... on Trainee {
+      deleteAt
+    }
+  }
+}

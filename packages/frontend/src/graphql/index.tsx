@@ -69,6 +69,7 @@ export type CreateCommentPayload = {
 
 export type CreateTraineeInput = {
   companyId: Scalars['String']['input'];
+  course: Scalars['String']['input'];
   email: Scalars['String']['input'];
   endDate: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
@@ -163,6 +164,10 @@ export type Mutation = {
   _devloginuser?: Maybe<OAuthPayload>;
   /** [DEV] Sets the users type. */
   _devsetusertype: DevSetUserPayload;
+  /** Marks User to be deleted */
+  adminMarkUserForDeletion?: Maybe<UserInterface>;
+  /** Unmarks User from deletion */
+  adminUnmarkUserForDeletion?: Maybe<UserInterface>;
   /** Claims a Trainee by the current Trainer */
   claimTrainee?: Maybe<TrainerTraineePayload>;
   /** Creates Admin. */
@@ -195,16 +200,14 @@ export type Mutation = {
   linkAlexa?: Maybe<UserInterface>;
   /** Login via microsoft */
   login?: Maybe<OAuthPayload>;
-  /** Marks User to be deleted */
-  markUserForDeletion?: Maybe<UserInterface>;
   /** Publishes all comments on a report which is identified by the id argument. */
   publishAllComments: PublishCommentsPayload;
+  trainerMarkTraineeForDeletion?: Maybe<UserInterface>;
+  trainerUnmarkTraineeForDeletion?: Maybe<UserInterface>;
   /** Unclaims a Trainee by the current Trainer */
   unclaimTrainee?: Maybe<TrainerTraineePayload>;
   /** Unlink Alexa account */
   unlinkAlexa?: Maybe<UserInterface>;
-  /** Unmarks User from deletion */
-  unmarkUserForDeletion?: Maybe<UserInterface>;
   /** Updates Admin. */
   updateAdmin?: Maybe<Admin>;
   /** Updates a comment on a Day which is identified by the id argument. */
@@ -237,6 +240,16 @@ export type Mutation_DevloginuserArgs = {
 
 export type Mutation_DevsetusertypeArgs = {
   type: Scalars['String']['input'];
+};
+
+
+export type MutationAdminMarkUserForDeletionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationAdminUnmarkUserForDeletionArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -329,23 +342,23 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationMarkUserForDeletionArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationPublishAllCommentsArgs = {
   id: Scalars['ID']['input'];
   traineeId: Scalars['ID']['input'];
 };
 
 
-export type MutationUnclaimTraineeArgs = {
+export type MutationTrainerMarkTraineeForDeletionArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationUnmarkUserForDeletionArgs = {
+export type MutationTrainerUnmarkTraineeForDeletionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUnclaimTraineeArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -655,6 +668,20 @@ export enum UserTypeEnum {
   Trainer = 'Trainer'
 }
 
+export type AdminMarkUserForDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type AdminMarkUserForDeleteMutation = { __typename?: 'Mutation', adminMarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+
+export type AdminUnmarkUserForDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type AdminUnmarkUserForDeleteMutation = { __typename?: 'Mutation', adminUnmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+
 export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
   language?: InputMaybe<Scalars['String']['input']>;
   theme?: InputMaybe<Scalars['String']['input']>;
@@ -811,13 +838,6 @@ export type LoginPageLoginMutationVariables = Exact<{
 
 export type LoginPageLoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'OAuthPayload', accessToken: string, refreshToken?: string | undefined, expiresIn: number } | undefined };
 
-export type MarkUserForDeleteMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type MarkUserForDeleteMutation = { __typename?: 'Mutation', markUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
-
 export type PublishAllCommentsMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   traineeId: Scalars['ID']['input'];
@@ -840,6 +860,20 @@ export type TraineeSettingsUpdateTraineeMutationVariables = Exact<{
 
 export type TraineeSettingsUpdateTraineeMutation = { __typename?: 'Mutation', updateCurrentTrainee?: { __typename?: 'Trainee', id: string, course?: string | undefined } | undefined };
 
+export type TrainerMarkTraineeForDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type TrainerMarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerMarkTraineeForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', id: string } | undefined };
+
+export type TrainerUnmarkTraineeForDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type TrainerUnmarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerUnmarkTraineeForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', id: string } | undefined };
+
 export type UnclaimTraineeMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -851,13 +885,6 @@ export type UnlinkAlexaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UnlinkAlexaMutation = { __typename?: 'Mutation', unlinkAlexa?: { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined } | undefined };
-
-export type UnmarkUserForDeleteMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type UnmarkUserForDeleteMutation = { __typename?: 'Mutation', unmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
 
 export type UpdateAdminMutationVariables = Exact<{
   input: UpdateAdminInput;
@@ -1090,6 +1117,48 @@ export type TrainersPageQueryVariables = Exact<{ [key: string]: never; }>;
 export type TrainersPageQuery = { __typename?: 'Query', trainers: Array<{ __typename?: 'Trainer', id: string, firstName: string, lastName: string }> };
 
 
+export const AdminMarkUserForDeleteDocument = gql`
+    mutation AdminMarkUserForDelete($id: ID!) {
+  adminMarkUserForDeletion(id: $id) {
+    id
+    ... on Trainee {
+      deleteAt
+    }
+    ... on Trainer {
+      deleteAt
+    }
+    ... on Admin {
+      deleteAt
+    }
+  }
+}
+    `;
+export function useAdminMarkUserForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<AdminMarkUserForDeleteMutation, AdminMarkUserForDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AdminMarkUserForDeleteMutation, AdminMarkUserForDeleteMutationVariables>(AdminMarkUserForDeleteDocument, options);
+      }
+export type AdminMarkUserForDeleteMutationHookResult = ReturnType<typeof useAdminMarkUserForDeleteMutation>;
+export const AdminUnmarkUserForDeleteDocument = gql`
+    mutation AdminUnmarkUserForDelete($id: ID!) {
+  adminUnmarkUserForDeletion(id: $id) {
+    id
+    ... on Trainee {
+      deleteAt
+    }
+    ... on Trainer {
+      deleteAt
+    }
+    ... on Admin {
+      deleteAt
+    }
+  }
+}
+    `;
+export function useAdminUnmarkUserForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<AdminUnmarkUserForDeleteMutation, AdminUnmarkUserForDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AdminUnmarkUserForDeleteMutation, AdminUnmarkUserForDeleteMutationVariables>(AdminUnmarkUserForDeleteDocument, options);
+      }
+export type AdminUnmarkUserForDeleteMutationHookResult = ReturnType<typeof useAdminUnmarkUserForDeleteMutation>;
 export const ApplicationSettingsUpdateUserDocument = gql`
     mutation ApplicationSettingsUpdateUser($language: String, $theme: String, $notification: Boolean) {
   updateCurrentUser(
@@ -1476,27 +1545,6 @@ export function useLoginPageLoginMutation(baseOptions?: Apollo.MutationHookOptio
         return Apollo.useMutation<LoginPageLoginMutation, LoginPageLoginMutationVariables>(LoginPageLoginDocument, options);
       }
 export type LoginPageLoginMutationHookResult = ReturnType<typeof useLoginPageLoginMutation>;
-export const MarkUserForDeleteDocument = gql`
-    mutation MarkUserForDelete($id: ID!) {
-  markUserForDeletion(id: $id) {
-    id
-    ... on Trainee {
-      deleteAt
-    }
-    ... on Trainer {
-      deleteAt
-    }
-    ... on Admin {
-      deleteAt
-    }
-  }
-}
-    `;
-export function useMarkUserForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<MarkUserForDeleteMutation, MarkUserForDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MarkUserForDeleteMutation, MarkUserForDeleteMutationVariables>(MarkUserForDeleteDocument, options);
-      }
-export type MarkUserForDeleteMutationHookResult = ReturnType<typeof useMarkUserForDeleteMutation>;
 export const PublishAllCommentsDocument = gql`
     mutation publishAllComments($id: ID!, $traineeId: ID!) {
   publishAllComments(id: $id, traineeId: $traineeId) {
@@ -1547,6 +1595,36 @@ export function useTraineeSettingsUpdateTraineeMutation(baseOptions?: Apollo.Mut
         return Apollo.useMutation<TraineeSettingsUpdateTraineeMutation, TraineeSettingsUpdateTraineeMutationVariables>(TraineeSettingsUpdateTraineeDocument, options);
       }
 export type TraineeSettingsUpdateTraineeMutationHookResult = ReturnType<typeof useTraineeSettingsUpdateTraineeMutation>;
+export const TrainerMarkTraineeForDeleteDocument = gql`
+    mutation TrainerMarkTraineeForDelete($id: ID!) {
+  trainerMarkTraineeForDeletion(id: $id) {
+    id
+    ... on Trainee {
+      deleteAt
+    }
+  }
+}
+    `;
+export function useTrainerMarkTraineeForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<TrainerMarkTraineeForDeleteMutation, TrainerMarkTraineeForDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TrainerMarkTraineeForDeleteMutation, TrainerMarkTraineeForDeleteMutationVariables>(TrainerMarkTraineeForDeleteDocument, options);
+      }
+export type TrainerMarkTraineeForDeleteMutationHookResult = ReturnType<typeof useTrainerMarkTraineeForDeleteMutation>;
+export const TrainerUnmarkTraineeForDeleteDocument = gql`
+    mutation TrainerUnmarkTraineeForDelete($id: ID!) {
+  trainerUnmarkTraineeForDeletion(id: $id) {
+    id
+    ... on Trainee {
+      deleteAt
+    }
+  }
+}
+    `;
+export function useTrainerUnmarkTraineeForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<TrainerUnmarkTraineeForDeleteMutation, TrainerUnmarkTraineeForDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TrainerUnmarkTraineeForDeleteMutation, TrainerUnmarkTraineeForDeleteMutationVariables>(TrainerUnmarkTraineeForDeleteDocument, options);
+      }
+export type TrainerUnmarkTraineeForDeleteMutationHookResult = ReturnType<typeof useTrainerUnmarkTraineeForDeleteMutation>;
 export const UnclaimTraineeDocument = gql`
     mutation unclaimTrainee($id: ID!) {
   unclaimTrainee(id: $id) {
@@ -1583,27 +1661,6 @@ export function useUnlinkAlexaMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<UnlinkAlexaMutation, UnlinkAlexaMutationVariables>(UnlinkAlexaDocument, options);
       }
 export type UnlinkAlexaMutationHookResult = ReturnType<typeof useUnlinkAlexaMutation>;
-export const UnmarkUserForDeleteDocument = gql`
-    mutation UnmarkUserForDelete($id: ID!) {
-  unmarkUserForDeletion(id: $id) {
-    id
-    ... on Trainee {
-      deleteAt
-    }
-    ... on Trainer {
-      deleteAt
-    }
-    ... on Admin {
-      deleteAt
-    }
-  }
-}
-    `;
-export function useUnmarkUserForDeleteMutation(baseOptions?: Apollo.MutationHookOptions<UnmarkUserForDeleteMutation, UnmarkUserForDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UnmarkUserForDeleteMutation, UnmarkUserForDeleteMutationVariables>(UnmarkUserForDeleteDocument, options);
-      }
-export type UnmarkUserForDeleteMutationHookResult = ReturnType<typeof useUnmarkUserForDeleteMutation>;
 export const UpdateAdminDocument = gql`
     mutation UpdateAdmin($input: UpdateAdminInput!, $id: ID!) {
   updateAdmin(input: $input, id: $id) {
