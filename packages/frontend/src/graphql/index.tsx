@@ -549,7 +549,7 @@ export enum ReportStatus {
 export type Suggestion = {
   __typename?: 'Suggestion';
   text: Scalars['String']['output'];
-  time: Scalars['String']['output'];
+  time: Scalars['Int']['output'];
 };
 
 export type Trainee = UserInterface & {

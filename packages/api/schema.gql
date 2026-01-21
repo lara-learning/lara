@@ -306,7 +306,7 @@ type LaraConfig {
 
 type Suggestion {
   text: String!
-  time: String!
+  time: Int!
 }
 
 type Query {
