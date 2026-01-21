@@ -1094,7 +1094,7 @@ export type SignatureSettingsDataQuery = { __typename?: 'Query', currentUser?: {
 export type SuggestionsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: string }> };
+export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: number }> };
 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
