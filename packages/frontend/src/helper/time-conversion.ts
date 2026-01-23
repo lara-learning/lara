@@ -19,7 +19,11 @@ class TimeConversion {
       return parseInt(input, 10)
     }
   }
-  public static minutesToString(minutes: number): string {
+  public static minutesToString(minutes: number | null | undefined): string {
+    if (minutes === null || minutes === undefined || Number.isNaN(minutes)) {
+      return ''
+    }
+
     const rest = minutes % 60
     const hours = (minutes - rest) / 60
     return `${hours}:${rest < 10 ? `0${rest}` : rest}`
