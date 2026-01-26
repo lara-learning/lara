@@ -49,6 +49,10 @@ jobs:
       HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
       FRONTEND_CERTIFICATE_ARN: ${{ secrets.FRONTEND_CERTIFICATE_ARN }}
       BACKEND_CERTIFICATE_ARN: ${{ secrets.BACKEND_CERTIFICATE_ARN }}
+      IMAGE_URL: ${{ secrets.IMAGE_URL }}
+      AVATAR_URL: ${{ secrets.AVATAR_URL }}
+      AVATAR_BUCKET_URL: ${{ secrets.AVATAR_BUCKET_URL }}
+      MICROSOFT_LOGIN_URL: ${{ secrets.MICROSOFT_LOGIN_URL }}
 
     steps:
       - uses: actions/checkout@v5
