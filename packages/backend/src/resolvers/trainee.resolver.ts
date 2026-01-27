@@ -55,9 +55,16 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
     suggestions: async (_parent, _args, { currentUser }) => {
       const textCountsWithTime = {} as Record<string, { count: number; duration: number; text: string }>
 
-      function convertToHours(minutes: number) {
+      function convertToTimeString(minutes: number): string {
         const hours = Math.floor(minutes / 60)
-        return hours
+        const restMinutes = minutes % 60
+
+        if (restMinutes === 0) {
+          return hours.toString()
+        }
+
+        const paddedMinutes = restMinutes.toString().padStart(2, '0')
+        return `${hours}:${paddedMinutes}`
       }
 
       const reports = await reportsWithinApprenticeship(currentUser)
@@ -95,10 +102,10 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
       const frequentTexts = getFrequentTexts()
 
       const sugg = Object.entries(frequentTexts).map(([text, data]) => {
-        const duration = convertToHours(data.duration)
+        const durationString = convertToTimeString(data.duration)
         return {
           text,
-          time: duration.toString(),
+          time: durationString,
         }
       })
 
