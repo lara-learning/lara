@@ -205,6 +205,11 @@ type Mutation {
   unclaimTrainee(id: ID!): TrainerTraineePayload
 
   """
+  Unclaims a Trainee by an Admin
+  """
+  adminUnclaimTrainee(id: ID!): AdminTraineePayload
+
+  """
   Updates the current trainee
   """
   updateCurrentTrainee(input: UpdateCurrentTraineeInput!): Trainee
@@ -527,6 +532,10 @@ type Admin implements UserInterface {
 type TrainerTraineePayload {
   trainee: Trainee!
   trainer: Trainer!
+}
+
+type AdminTraineePayload {
+  trainee: Trainee!
 }
 
 input UserInput {

@@ -13,7 +13,7 @@ import { sendDeletionMail } from '../services/email.service'
 import { deleteTrainee, generateReports, generateTrainee, validateTrainee } from '../services/trainee.service'
 import { deleteTrainer, generateTrainer, validateTrainer } from '../services/trainer.service'
 import { parseISODateString } from '../utils/date'
-import { t } from '../i18n'
+import { createT, t } from '../i18n'
 
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {},
@@ -209,6 +209,23 @@ export const adminAdminResolver: GqlResolvers<AdminContext> = {
       // because we don't know what exactly changed
       // if we use update DDB would throw an error
       return saveUser(updatedAdmin)
+    },
+    adminUnclaimTrainee: async (_parent, { id }, { currentUser }) => {
+      const trainee = await traineeById(id)
+      const t = createT(currentUser.language)
+
+      if (!trainee) {
+        throw new GraphQLError(t('errors.missingUser'))
+      }
+
+      if (!trainee.trainerId) {
+        throw new GraphQLError(t('errors.userNotClaimed'))
+      }
+
+      return {
+        trainee: await updateUser(trainee, { removeKeys: ['trainerId'] }),
+        trainer: currentUser,
+      }
     },
   },
 }

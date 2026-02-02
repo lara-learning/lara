@@ -1,0 +1,10 @@
+mutation adminUnclaimTrainee($id: ID!) {
+  adminUnclaimTrainee(id: $id) {
+    trainee {
+      id
+      trainer {
+        id
+      }
+    }
+  }
+}

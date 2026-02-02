@@ -33,6 +33,11 @@ export type Admin = UserInterface & {
   type: UserTypeEnum;
 };
 
+export type AdminTraineePayload = {
+  __typename?: 'AdminTraineePayload';
+  trainee: Trainee;
+};
+
 export type Comment = {
   __typename?: 'Comment';
   createdAt: Scalars['String']['output'];
@@ -166,6 +171,8 @@ export type Mutation = {
   _devsetusertype: DevSetUserPayload;
   /** Marks User to be deleted */
   adminMarkUserForDeletion?: Maybe<UserInterface>;
+  /** Unclaims a Trainee by an Admin */
+  adminUnclaimTrainee?: Maybe<AdminTraineePayload>;
   /** Unmarks User from deletion */
   adminUnmarkUserForDeletion?: Maybe<UserInterface>;
   /** Claims a Trainee by the current Trainer */
@@ -244,6 +251,11 @@ export type Mutation_DevsetusertypeArgs = {
 
 
 export type MutationAdminMarkUserForDeletionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationAdminUnclaimTraineeArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -674,6 +686,13 @@ export type AdminMarkUserForDeleteMutationVariables = Exact<{
 
 
 export type AdminMarkUserForDeleteMutation = { __typename?: 'Mutation', adminMarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+
+export type AdminUnclaimTraineeMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type AdminUnclaimTraineeMutation = { __typename?: 'Mutation', adminUnclaimTrainee?: { __typename?: 'AdminTraineePayload', trainee: { __typename?: 'Trainee', id: string, trainer?: { __typename?: 'Trainer', id: string } | undefined } } | undefined };
 
 export type AdminUnmarkUserForDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1138,6 +1157,23 @@ export function useAdminMarkUserForDeleteMutation(baseOptions?: Apollo.MutationH
         return Apollo.useMutation<AdminMarkUserForDeleteMutation, AdminMarkUserForDeleteMutationVariables>(AdminMarkUserForDeleteDocument, options);
       }
 export type AdminMarkUserForDeleteMutationHookResult = ReturnType<typeof useAdminMarkUserForDeleteMutation>;
+export const AdminUnclaimTraineeDocument = gql`
+    mutation adminUnclaimTrainee($id: ID!) {
+  adminUnclaimTrainee(id: $id) {
+    trainee {
+      id
+      trainer {
+        id
+      }
+    }
+  }
+}
+    `;
+export function useAdminUnclaimTraineeMutation(baseOptions?: Apollo.MutationHookOptions<AdminUnclaimTraineeMutation, AdminUnclaimTraineeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AdminUnclaimTraineeMutation, AdminUnclaimTraineeMutationVariables>(AdminUnclaimTraineeDocument, options);
+      }
+export type AdminUnclaimTraineeMutationHookResult = ReturnType<typeof useAdminUnclaimTraineeMutation>;
 export const AdminUnmarkUserForDeleteDocument = gql`
     mutation AdminUnmarkUserForDelete($id: ID!) {
   adminUnmarkUserForDeletion(id: $id) {
