@@ -16,6 +16,7 @@ query ArchivePageData {
     traineeId
     days {
       status
+      status_split
       entries {
         id
         time

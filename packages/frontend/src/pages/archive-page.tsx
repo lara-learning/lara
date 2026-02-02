@@ -72,6 +72,7 @@ const searchFilter =
           days: {
             __typename?: 'Day' | undefined
             status?: DayStatusEnum | undefined
+            status_split?: DayStatusEnum | undefined
             entries: {
               __typename?: 'Entry' | undefined
               id: string

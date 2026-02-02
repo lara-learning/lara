@@ -90,6 +90,8 @@ export const EnglishTranslations: Translations = {
     holiday: 'Holiday',
     sick: 'Sick',
     vacation: 'Vacation',
+    work: 'Work',
+    education: 'Education',
     total: 'Total',
     totalWeek: 'Total of the week',
     date: 'DATE',

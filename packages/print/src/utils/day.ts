@@ -8,6 +8,10 @@ export const statusToString = (status: PrintDayStatusEnum, i18n: PrintTranslatio
       return i18n.sick
     case 'vacation':
       return i18n.vacation
+    case 'work':
+      return i18n.work
+    case 'education':
+      return i18n.education
   }
 
   return ''

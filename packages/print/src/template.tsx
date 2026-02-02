@@ -60,7 +60,12 @@ export const Template: React.FC<TemplateProps> = ({
   signatureDate,
 }) => {
   const totalTime = report.days.reduce(
-    (acc, day) => acc + (day.status !== 'work' ? workDayMinutes : entriesTotal(day.entries)),
+    (acc, day) =>
+      acc +
+      ((day.status === 'work' || day.status === 'education') &&
+      (!day.status_split || day.status_split === 'work' || day.status_split === 'education')
+        ? entriesTotal(day.entries)
+        : workDayMinutes),
     0
   )
   return (
@@ -93,7 +98,6 @@ export const Template: React.FC<TemplateProps> = ({
       </StyledPrintUserInfo>
       <div>
         {report.days.map((day, dayIndex) => {
-          const displayStatus = day.status === 'vacation' || day.status === 'sick' || day.status === 'holiday'
           return (
             <StyledPrintDay key={dayIndex}>
               <StyledPrintDayHeadline>{weekdayMapping(i18n)[dayIndex]}</StyledPrintDayHeadline>
@@ -102,25 +106,38 @@ export const Template: React.FC<TemplateProps> = ({
                 <StyledPrintDaySubHeadline>{i18n.duration}</StyledPrintDaySubHeadline>
               </StyledPrintDayHeader>
 
-              {displayStatus ? (
-                <StyledPrintEntry>
-                  <StyledPrintDayStatus>{statusToString(day.status, i18n)}</StyledPrintDayStatus>
-                  <StyledPrintEntryText>{'-'}</StyledPrintEntryText>
-                </StyledPrintEntry>
-              ) : (
-                day.entries
-                  .sort((a, b) => a.orderId - b.orderId)
-                  .map((entry, entryIndex) => (
-                    <StyledPrintEntry key={entryIndex}>
-                      <StyledPrintEntryText>
-                        <PrintText>{entry.text}</PrintText>
-                      </StyledPrintEntryText>
-                      <StyledPrintEntryText>{minutesToString(entry.time)}</StyledPrintEntryText>
-                    </StyledPrintEntry>
-                  ))
-              )}
+              <StyledPrintEntry>
+                <StyledPrintDayStatus>
+                  {statusToString(day.status, i18n)}
+                  {day.status_split ? ` / ${statusToString(day.status_split, i18n)}` : ''}
+                </StyledPrintDayStatus>
+                <StyledPrintEntryText>{day.entries.length > 0 ? '' : '-'}</StyledPrintEntryText>
+              </StyledPrintEntry>
 
-              <Total label={i18n.total} time={displayStatus ? workDayMinutes : entriesTotal(day.entries)} />
+              {day.entries
+                .sort((a, b) => a.orderId - b.orderId)
+                .map((entry, entryIndex) => (
+                  <StyledPrintEntry key={entryIndex}>
+                    <StyledPrintEntryText>
+                      <PrintText>{entry.text}</PrintText>
+                    </StyledPrintEntryText>
+                    <StyledPrintEntryText>{minutesToString(entry.time)}</StyledPrintEntryText>
+                  </StyledPrintEntry>
+                ))}
+
+              <Total
+                label={i18n.total}
+                time={
+                  day.status === 'vacation' ||
+                  day.status === 'sick' ||
+                  day.status === 'holiday' ||
+                  day.status_split === 'vacation' ||
+                  day.status_split === 'sick' ||
+                  day.status_split === 'holiday'
+                    ? workDayMinutes
+                    : entriesTotal(day.entries)
+                }
+              />
             </StyledPrintDay>
           )
         })}

@@ -417,29 +417,33 @@ const ReportReviewPage: React.FunctionComponent = () => {
                         )}
                       </>
                     ) : null}
-                    {(day.status_split && day.status_split === 'work') || day.status_split === 'education' ? (
+                    {day.status_split ? (
                       <>
                         <Flex alignItems="center" justifyContent="flex-end">
                           <SecondaryWrapper>
                             <DayStatusSelect disabled={true} day={day} secondary={true} />
                           </SecondaryWrapper>
                         </Flex>
-                        {day.entries
-                          .filter((entry) => entry.text_split !== null)
-                          .filter((entry) => entry.text_split !== '')
-                          .map((entry, entryIndex) => (
-                            <EntryInput
-                              term=""
-                              key={entryIndex}
-                              entry={entry}
-                              day={day}
-                              secondary={true}
-                              disabled={true}
-                              reportStatus={report.status}
-                              trainee={{ id: variables.trainee }}
-                              updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
-                            />
-                          ))}
+                        {(day.status_split === 'work' || day.status_split === 'education') && (
+                          <>
+                            {day.entries
+                              .filter((entry) => entry.text_split !== null)
+                              .filter((entry) => entry.text_split !== '')
+                              .map((entry, entryIndex) => (
+                                <EntryInput
+                                  term=""
+                                  key={entryIndex}
+                                  entry={entry}
+                                  day={day}
+                                  secondary={true}
+                                  disabled={true}
+                                  reportStatus={report.status}
+                                  trainee={{ id: variables.trainee }}
+                                  updateMessage={(msg, commentId) => updateEntryComment(entry, msg, commentId)}
+                                />
+                              ))}
+                          </>
+                        )}
                         <StyledTotalContainer>
                           <Total minutes={getTotalMinutes(day)} />
                         </StyledTotalContainer>

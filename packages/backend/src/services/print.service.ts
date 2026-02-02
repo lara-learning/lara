@@ -72,6 +72,7 @@ const transformEntry = (entry: Entry): PrintEntry => ({
  */
 const transformDay = (day: Day): PrintDay => ({
   status: dayStatus(day),
+  status_split: day.status_split,
   entries: day.entries.map(transformEntry),
 })
 

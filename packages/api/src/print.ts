@@ -11,6 +11,7 @@ export type PrintDayStatusEnum = 'work' | 'vacation' | 'sick' | 'education' | 'h
 export type PrintDay = {
   entries: PrintEntry[]
   status: PrintDayStatusEnum
+  status_split?: PrintDayStatusEnum
 }
 
 export type PrintReport = {
@@ -52,6 +53,8 @@ export type PrintTranslations = {
   holiday: string
   sick: string
   vacation: string
+  work: string
+  education: string
   total: string
   totalWeek: string
   date: string
