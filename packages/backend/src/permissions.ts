@@ -98,6 +98,7 @@ export const permissions = shield<unknown, Context>(
       updateTrainer: and(authenticated, admin),
       adminMarkUserForDeletion: and(authenticated, admin),
       adminUnmarkUserForDeletion: and(authenticated, admin),
+      adminUnclaimTrainee: and(authenticated, admin),
     },
   },
   { allowExternalErrors: true }

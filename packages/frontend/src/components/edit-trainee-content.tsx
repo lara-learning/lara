@@ -1,13 +1,22 @@
 import { GraphQLError } from 'graphql'
 import React from 'react'
 
-import { EditUserContentLayout, RelatedUsersLayout, Text, UnstyledLink } from '@lara/components'
+import {
+  EditUserContentLayout,
+  Flex,
+  RelatedUsersLayout,
+  Spacer,
+  StyledUnclaimIcon,
+  Text,
+  UnstyledLink,
+} from '@lara/components'
 
-import { Company, Trainee, Trainer, useUpdateTraineeMutation } from '../graphql'
+import { Company, Trainee, Trainer, useAdminUnclaimTraineeMutation, useUpdateTraineeMutation } from '../graphql'
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
 import { TraineeForm, EditTraineeFormData } from './trainee-form'
 import { UserInfo } from './user-info'
+import Loader from './loader'
 
 interface EditTraineeProps {
   trainee: Pick<
@@ -23,6 +32,20 @@ interface EditTraineeProps {
 export const EditTraineeContent: React.FC<EditTraineeProps> = ({ trainee, companies }) => {
   const [mutate] = useUpdateTraineeMutation()
   const { addToast } = useToastContext()
+  const [loading, setLoading] = React.useState(false)
+  const [adminUnclaimTrainee] = useAdminUnclaimTraineeMutation()
+
+  const unclaim = async () => {
+    setLoading(true)
+
+    await adminUnclaimTrainee({
+      variables: {
+        id: trainee.id,
+      },
+    })
+
+    setLoading(false)
+  }
 
   const updateTrainee = async (data: EditTraineeFormData) => {
     await mutate({
@@ -69,14 +92,24 @@ export const EditTraineeContent: React.FC<EditTraineeProps> = ({ trainee, compan
           users={
             <>
               {trainee.trainer ? (
-                <UnstyledLink to={`/trainer/${trainee.trainer.id}`}>
-                  <UserInfo
-                    secondary
-                    id={trainee.trainer.id}
-                    firstName={trainee.trainer.firstName}
-                    lastName={trainee.trainer.lastName}
-                  />
-                </UnstyledLink>
+                <Flex>
+                  <UnstyledLink to={`/trainer/${trainee.trainer.id}`}>
+                    <UserInfo
+                      secondary
+                      id={trainee.trainer.id}
+                      firstName={trainee.trainer.firstName}
+                      lastName={trainee.trainer.lastName}
+                    />
+                  </UnstyledLink>
+
+                  {loading ? (
+                    <Loader size="24px" />
+                  ) : (
+                    <Spacer onClick={unclaim} xy="s">
+                      <StyledUnclaimIcon size={'24px'} name={'Unclaim'} color="iconBlue" />
+                    </Spacer>
+                  )}
+                </Flex>
               ) : (
                 <Text size="copy">{strings.settings.notAssociated}</Text>
               )}

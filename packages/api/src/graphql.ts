@@ -35,6 +35,11 @@ export type GqlAdmin = GqlUserInterface & {
   type: GqlUserTypeEnum;
 };
 
+export type GqlAdminTraineePayload = {
+  __typename?: 'AdminTraineePayload';
+  trainee: GqlTrainee;
+};
+
 export type GqlComment = {
   __typename?: 'Comment';
   createdAt: Scalars['String']['output'];
@@ -167,6 +172,8 @@ export type GqlMutation = {
   _devsetusertype: GqlDevSetUserPayload;
   /** Marks User to be deleted */
   adminMarkUserForDeletion?: Maybe<GqlUserInterface>;
+  /** Unclaims a Trainee by an Admin */
+  adminUnclaimTrainee?: Maybe<GqlAdminTraineePayload>;
   /** Unmarks User from deletion */
   adminUnmarkUserForDeletion?: Maybe<GqlUserInterface>;
   /** Claims a Trainee by the current Trainer */
@@ -245,6 +252,11 @@ export type GqlMutation_DevsetusertypeArgs = {
 
 
 export type GqlMutationAdminMarkUserForDeletionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationAdminUnclaimTraineeArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -740,6 +752,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type GqlResolversTypes = ResolversObject<{
   Admin: ResolverTypeWrapper<GqlAdmin>;
+  AdminTraineePayload: ResolverTypeWrapper<Omit<GqlAdminTraineePayload, 'trainee'> & { trainee: GqlResolversTypes['Trainee'] }>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
   CommentableInterface: ResolverTypeWrapper<CommentableInterface>;
@@ -784,6 +797,7 @@ export type GqlResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type GqlResolversParentTypes = ResolversObject<{
   Admin: GqlAdmin;
+  AdminTraineePayload: Omit<GqlAdminTraineePayload, 'trainee'> & { trainee: GqlResolversParentTypes['Trainee'] };
   Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
   CommentableInterface: CommentableInterface;
@@ -835,6 +849,11 @@ export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResol
   signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GqlAdminTraineePayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['AdminTraineePayload'] = GqlResolversParentTypes['AdminTraineePayload']> = ResolversObject<{
+  trainee?: Resolver<GqlResolversTypes['Trainee'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -923,6 +942,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   _devloginuser?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutation_DevloginuserArgs, 'id'>>;
   _devsetusertype?: Resolver<GqlResolversTypes['DevSetUserPayload'], ParentType, ContextType, RequireFields<GqlMutation_DevsetusertypeArgs, 'type'>>;
   adminMarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationAdminMarkUserForDeletionArgs, 'id'>>;
+  adminUnclaimTrainee?: Resolver<Maybe<GqlResolversTypes['AdminTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationAdminUnclaimTraineeArgs, 'id'>>;
   adminUnmarkUserForDeletion?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationAdminUnmarkUserForDeletionArgs, 'id'>>;
   claimTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationClaimTraineeArgs, 'id'>>;
   createAdmin?: Resolver<Maybe<GqlResolversTypes['Admin']>, ParentType, ContextType, RequireFields<GqlMutationCreateAdminArgs, 'input'>>;
@@ -1093,6 +1113,7 @@ export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends 
 
 export type GqlResolvers<ContextType = Context> = ResolversObject<{
   Admin?: GqlAdminResolvers<ContextType>;
+  AdminTraineePayload?: GqlAdminTraineePayloadResolvers<ContextType>;
   Comment?: GqlCommentResolvers<ContextType>;
   CommentableInterface?: GqlCommentableInterfaceResolvers<ContextType>;
   Company?: GqlCompanyResolvers<ContextType>;
