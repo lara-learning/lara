@@ -77,7 +77,7 @@ export const StatusTypes = {
 }
 
 interface DayInputProps {
-  day: Pick<Day, 'id' | 'date' | 'status'> & {
+  day: Pick<Day, 'id' | 'date' | 'status' | 'status_split'> & {
     comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
       user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
     })[]
@@ -128,7 +128,8 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
     icon: 'Loader',
   })
 
-  const check_initial = () => day?.entries.reduce((acc, current) => (acc ? true : !!current.text_split), false)
+  const check_initial = () =>
+    day?.entries.reduce((acc, current) => (acc ? true : !!current.text_split), false) || !!day?.status_split
 
   const initial: boolean = check_initial() === true
 
@@ -300,21 +301,19 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
         updateMessage={updateMessageEntry}
       />
       {halfDays && (
-        <>
-          <SecondaryWrapper>
-            {day && halfDays === true && <DayStatusSelect disabled={disabled} day={day} secondary={true} />}
-          </SecondaryWrapper>
-          <EntriesInput
-            term={term}
-            handleStatusChange={handleStatusChange}
-            day={day}
-            secondary={true}
-            reportStatus={reportStatus ?? ReportStatus.Todo}
-            disabled={Boolean(disabled)}
-            trainee={data.currentUser}
-            updateMessage={updateMessageEntry}
-          />
-        </>
+        <SecondaryWrapper>{day && <DayStatusSelect disabled={disabled} day={day} secondary={true} />}</SecondaryWrapper>
+      )}
+      {halfDays && day.status_split !== DayStatusEnum.Sick && (
+        <EntriesInput
+          term={term}
+          handleStatusChange={handleStatusChange}
+          day={day}
+          secondary={true}
+          reportStatus={reportStatus ?? ReportStatus.Todo}
+          disabled={Boolean(disabled)}
+          trainee={data.currentUser}
+          updateMessage={updateMessageEntry}
+        />
       )}
     </DayInputLayout>
   )

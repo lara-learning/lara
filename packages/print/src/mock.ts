@@ -109,6 +109,8 @@ export const DUMMY_DATA: PrintData = {
     holiday: 'Feiertag',
     sick: 'Krank',
     vacation: 'Urlaub',
+    work: 'Arbeit',
+    education: 'Schule',
     total: 'Gesamt',
     totalWeek: 'Wochenstunden',
     date: 'DATUM',

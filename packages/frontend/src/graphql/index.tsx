@@ -1019,7 +1019,7 @@ export type AlexaLinkingUrlQuery = { __typename?: 'Query', alexaLinkingUrl?: str
 export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined }> }> } | undefined> };
+export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined }> }> } | undefined> };
 
 export type AvatarSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2062,6 +2062,7 @@ export const ArchivePageDataDocument = gql`
     traineeId
     days {
       status
+      status_split
       entries {
         id
         time
