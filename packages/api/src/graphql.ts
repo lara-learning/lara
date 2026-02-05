@@ -561,7 +561,7 @@ export type GqlReportStatus =
 export type GqlSuggestion = {
   __typename?: 'Suggestion';
   text: Scalars['String']['output'];
-  time: Scalars['String']['output'];
+  time: Scalars['Int']['output'];
 };
 
 export type GqlTrainee = GqlUserInterface & {
@@ -1032,7 +1032,7 @@ export type GqlReportResolvers<ContextType = Context, ParentType extends GqlReso
 
 export type GqlSuggestionResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Suggestion'] = GqlResolversParentTypes['Suggestion']> = ResolversObject<{
   text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  time?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  time?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

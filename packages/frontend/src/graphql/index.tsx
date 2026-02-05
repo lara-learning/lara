@@ -561,7 +561,7 @@ export enum ReportStatus {
 export type Suggestion = {
   __typename?: 'Suggestion';
   text: Scalars['String']['output'];
-  time: Scalars['String']['output'];
+  time: Scalars['Int']['output'];
 };
 
 export type Trainee = UserInterface & {
@@ -1113,7 +1113,7 @@ export type SignatureSettingsDataQuery = { __typename?: 'Query', currentUser?: {
 export type SuggestionsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: string }> };
+export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: number }> };
 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
