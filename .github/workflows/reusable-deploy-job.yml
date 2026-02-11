@@ -55,7 +55,7 @@ jobs:
       MICROSOFT_LOGIN_URL: ${{ secrets.MICROSOFT_LOGIN_URL }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v5
         with:
