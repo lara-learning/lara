@@ -9,6 +9,7 @@ import {
   Entry,
   ReportStatus,
   useCreateCommentOnDayMutation,
+  useDeleteEntryMutation,
   useDayInputDataQuery,
   useDayStatusSelectUpdateDayMutation,
   UserInterface,
@@ -117,6 +118,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
 }) => {
   const { getTotalMinutes } = useDayHelper()
   const [mutate] = useDayStatusSelectUpdateDayMutation()
+  const [deleteEntryMutation] = useDeleteEntryMutation()
   const { addToast } = useToastContext()
 
   const { loading, data } = useDayInputDataQuery()
@@ -233,10 +235,35 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
   }
 
   const checkBox = () => {
-    setHalfDays(!halfDays)
-    const value = !halfDays ? 'work' : 'undefined'
+    const nextHalfDays = !halfDays
+    setHalfDays(nextHalfDays)
+
     const id = day.id
-    const status_split = value as DayStatusEnum
+    const status_split = nextHalfDays ? DayStatusEnum.Work : ''
+
+    if (!nextHalfDays) {
+      let nextEntries = day.entries
+      const splitEntryIds = day.entries.filter((entry) => Boolean(entry.text_split)).map((entry) => entry.id)
+
+      splitEntryIds.forEach((entryId) => {
+        nextEntries = nextEntries.filter((e) => e.id !== entryId)
+
+        void deleteEntryMutation({
+          variables: { id: entryId },
+          optimisticResponse: {
+            deleteEntry: {
+              __typename: 'MutateEntryPayload',
+              day: {
+                __typename: 'Day',
+                id: day.id,
+                entries: nextEntries.map((e) => ({ __typename: 'Entry', id: e.id })),
+              },
+            },
+          },
+        })
+      })
+    }
+
     void mutate({
       variables: {
         id,
@@ -246,7 +273,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
         updateDay: {
           __typename: 'Day',
           id,
-          status_split,
+          status_split: nextHalfDays ? DayStatusEnum.Work : undefined,
         },
       },
     })
