@@ -43,7 +43,14 @@ export const dayTraineeResolver: GqlResolvers<TraineeContext> = {
         day.entries = []
       }
 
-      if (status_split && isDayStatus(status_split)) day.status_split = status_split
+      if (status_split !== undefined) {
+        if (status_split === '') {
+          delete (day as Partial<typeof day>).status_split
+          day.entries = day.entries.filter((entry) => !entry.text_split && !entry.time_split)
+        } else if (status_split && isDayStatus(status_split)) {
+          day.status_split = status_split
+        }
+      }
 
       await updateReport(report, { updateKeys: ['days'] })
 
