@@ -51,7 +51,6 @@ jobs:
       BACKEND_CERTIFICATE_ARN: ${{ secrets.BACKEND_CERTIFICATE_ARN }}
       IMAGE_URL: ${{ secrets.IMAGE_URL }}
       AVATAR_URL: ${{ secrets.AVATAR_URL }}
-      AVATAR_BUCKET_URL: ${{ secrets.AVATAR_BUCKET_URL }}
       MICROSOFT_LOGIN_URL: ${{ secrets.MICROSOFT_LOGIN_URL }}
 
     steps:
@@ -90,7 +89,7 @@ jobs:
         run: |
           echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
-          echo "BACKEND_DOMAIN_NAME=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///; s/\/backend//')" >> $GITHUB_ENV
+          echo "STRIPPED_BACKEND_URL=$(echo "${{ secrets.BACKEND_URL }}" | sed -E 's#^(https?://[^/]+).*#\1#')" >> $GITHUB_ENV
 
       - name: Deploy Frontend
         run: serverless s3sync bucket --bucket ${{ secrets.COMPANY_ABBREVIATION }}-lara-frontend-${{ inputs.target }}
