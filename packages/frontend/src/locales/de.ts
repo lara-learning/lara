@@ -30,7 +30,8 @@ const germanTranslation: Translation = {
   login: {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
-      description: 'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder.',
+      description:
+        'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder:in.',
     },
   },
   modal: {
@@ -109,7 +110,7 @@ const germanTranslation: Translation = {
       forward: 'nächste',
     },
     modalTitle: {
-      handover: 'Bericht {0} {1} an Ausbilder übergeben?',
+      handover: 'Bericht {0} {1} an Ausbilder:in übergeben?',
       accept: 'Bericht {0} {1} genehmigen?',
       decline: 'Bericht {0} {1} an Auszubildenden zurückgeben',
       unarchive: 'Bericht {0} {1} aus dem Archiv holen?',
@@ -122,7 +123,7 @@ const germanTranslation: Translation = {
       decline:
         'Nachdem der Bericht zurückgegeben wurde, kann der Auszubildende weitere Änderungen vornehmen und ihn erneut übergeben.',
       unarchive:
-        'Nachdem der Bericht aus dem Archiv geholt wurde kann dieser nicht mehr exportiert werden und muss von deinem Ausbilder erneut überprüft werden.',
+        'Nachdem der Bericht aus dem Archiv geholt wurde kann dieser nicht mehr exportiert werden und muss von deinem/deiner Ausbilder:in erneut überprüft werden.',
     },
     comments: {
       addComment: 'Kommentar hinzufügen',
@@ -166,10 +167,10 @@ const germanTranslation: Translation = {
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
-    trainership: 'Ausbilder Einstellungen',
+    trainership: 'Ausbilder:in Einstellungen',
     contact: 'Ansprechpartner',
-    trainer: 'Ausbilder',
-    noTrainer: 'Von keinem Ausbilder ausgewählt',
+    trainer: 'Ausbilder:in',
+    noTrainer: 'Von keinem Ausbilder:in ausgewählt',
     saveError: 'Deine Einstellungen konnten nicht gespeichert werden!',
     saveSuccess: 'Deine Einstellungen sind jetzt auf dem neuesten Stand.',
     saveSuccessTitle: 'Einstellungen aktualisiert',
@@ -295,7 +296,7 @@ const germanTranslation: Translation = {
       handoverMistake: {
         question: 'Ich habe mein Berichtsheft versehentlich gesendet. Was dann?',
         answer:
-          'Setze dich mit deiner Ausbilderin/ deinem Ausbilder in Kontakt. Diese können dir das bereits abgesendete Berichtsheft wieder zurückgeben und du kannst erneut Änderungen vornehmen.',
+          'Setze dich mit deiner Ausbilderin / deinem Ausbilder in Kontakt. Diese können dir das bereits abgesendete Berichtsheft wieder zurückgeben und du kannst erneut Änderungen vornehmen.',
       },
       bug: {
         question: 'Wen kontaktiere ich bei Bugs, Problemen oder sonstigen Anregungen?',
@@ -331,7 +332,7 @@ const germanTranslation: Translation = {
   navigation: {
     reports: 'Berichte',
     trainees: 'Auszubildende',
-    trainer: 'Ausbilder',
+    trainer: 'Ausbilder:in',
     admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archiv',
@@ -374,7 +375,7 @@ const germanTranslation: Translation = {
     featureHandover: {
       title: 'Einfache Übergabe',
       description:
-        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
+        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder:in. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
     },
     featureReviews: {
       title: 'Stationsberichte',
