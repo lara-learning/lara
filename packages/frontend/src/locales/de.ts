@@ -31,18 +31,18 @@ const germanTranslation: Translation = {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
       description:
-        'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator / die Administratorin oder Ihre:n Ausbilder:in.',
+        'Leider bist du noch nicht registriert. Bitte wende dich an eine:n Administrator:in oder an deine:n Ausbilder:in',
     },
   },
   modal: {
     defaultClose: 'Schließen',
   },
   dashboard: {
-    weekend: "Genieß' dein Wochenende!",
+    weekend: 'Genieß dein Wochenende!',
     success: 'Du hast es geschafft!',
     noReport: {
       headline: 'Yeah, das sieht gut aus!',
-      description: 'Du hast gerade keine Berichtshefte zu erledigen, endlich Zeit zu arbeiten.',
+      description: 'Du hast gerade keine Berichtshefte zu erledigen – endlich Zeit zu arbeiten.',
     },
     declinedReportMessageTitle: 'Bericht zurückerhalten',
     declinedReportMessage:
@@ -74,7 +74,7 @@ const germanTranslation: Translation = {
       },
     },
     exportTitle: 'Export gestartet',
-    export: 'Du erhältst in Kürze eine E-mail mit den exportierten Berichten.',
+    export: 'Du erhältst in Kürze eine E-Mail mit den exportierten Berichten.',
     back: 'Zurück',
   },
   report: {
@@ -112,18 +112,18 @@ const germanTranslation: Translation = {
     modalTitle: {
       handover: 'Bericht {0} {1} an Ausbilder:in übergeben?',
       accept: 'Bericht {0} {1} genehmigen?',
-      decline: 'Bericht {0} {1} an Auszubildenden zurückgeben',
+      decline: 'Bericht {0} {1} an Auszubildende:n zurückgeben',
       unarchive: 'Bericht {0} {1} aus dem Archiv holen?',
     },
     modalCopy: {
       handover:
-        'Nachdem der Bericht übergeben wurde kannst du keine Änderungen mehr vornehmen. Sobald der Bericht akzeptiert wurde, kannst du ihn als PDF exportieren.',
+        'Nachdem der Bericht übergeben wurde, kannst du keine Änderungen mehr vornehmen. Sobald der Bericht akzeptiert wurde, kannst du ihn als PDF exportieren.',
       accept:
-        'Nach dem Genehmigen wird der Bericht elektronisch unterschrieben und der Auszubildende kann ihn exportieren.',
+        'Nach dem Genehmigen wird der Bericht elektronisch unterschrieben und die/der Auszubildende kann ihn exportieren.',
       decline:
-        'Nachdem der Bericht zurückgegeben wurde, kann der Auszubildende weitere Änderungen vornehmen und ihn erneut übergeben.',
+        'Nachdem der Bericht zurückgegeben wurde, kann die/der Auszubildende weitere Änderungen vornehmen und ihn erneut übergeben.',
       unarchive:
-        'Nachdem der Bericht aus dem Archiv geholt wurde kann dieser nicht mehr exportiert werden und muss von deinem/deiner Ausbilder:in erneut überprüft werden.',
+        'Nachdem der Bericht aus dem Archiv geholt wurde, kann dieser nicht mehr exportiert werden und muss von deinem/deiner Ausbilder:in erneut überprüft werden.',
     },
     comments: {
       addComment: 'Kommentar hinzufügen',
@@ -167,10 +167,10 @@ const germanTranslation: Translation = {
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
-    trainership: 'Ausbilder:in‑Einstellungen',
-    contact: 'Ansprechpartner',
+    trainership: 'Ausbilder:in‑Einstellungenn',
+    contact: 'Ansprechpartner:in',
     trainer: 'Ausbilder:in',
-    noTrainer: 'Von keinem / keiner Ausbilder:in ausgewählt',
+    noTrainer: 'Von keiner:m Ausbilder:in ausgewählt',
     saveError: 'Deine Einstellungen konnten nicht gespeichert werden!',
     saveSuccess: 'Deine Einstellungen sind jetzt auf dem neuesten Stand.',
     saveSuccessTitle: 'Einstellungen aktualisiert',
@@ -186,18 +186,18 @@ const germanTranslation: Translation = {
       dark: 'Dunkel',
     },
     other: 'Sonstiges',
-    notification: 'E-Mail Benachrichtigungen erhalten',
+    notification: 'E-Mail-Benachrichtigungen erhalten',
     avatar: {
       label: 'Profilbild',
       title: 'Füge ein Profilbild hinzu',
-      description: 'Lade ein eigenens Profilbild hoch.',
+      description: 'Lade ein eigenes Profilbild hoch.',
       addAvatar: 'Bild hochladen',
       removeAvatar: 'Bild entfernen',
       updateAvatar: 'Bild ändern',
       toasts: {
         success: {
           title: 'Bild hochgeladen',
-          description: 'Ihr Bild konnte erfolgreich hochgeladen werden.',
+          description: 'Dein Bild konnte erfolgreich hochgeladen werden.',
         },
         errorCompression: {
           title: 'Komprimieren fehlgeschlagen',
@@ -235,19 +235,19 @@ const germanTranslation: Translation = {
       headline: 'Dein Alexa-Gerät',
       linkTitle: 'Füge deine Alexa hinzu',
       unlinkTitle: 'Entferne deine Alexa',
-      linkInstructions: 'Melde dich mit deiner Amazon Email-Adresse an um Lara auf deinem Alexa Gerät zu benutzen.',
+      linkInstructions: 'Melde dich mit deiner Amazon Email-Adresse an um Lara auf deinem Alexa-Gerät zu benutzen.',
       linkButton: 'Anmelden mit Amazon',
-      unlinkInstructions: 'Entferne deine Alexa Gerät von deinem Lara Account.',
+      unlinkInstructions: 'Entferne dein Alexa-Gerät von deinem Lara-Account.',
       unlinkButton: 'Alexa entfernen',
-      linkSuccess: 'Dein Amazon account wurde erfolgreich mit dem Lara account verknüpft',
-      linkError: 'Dein Amazon account konnte nicht mit dem Lara account verknüpft werden. Versuche es später erneut',
-      unlinkSuccess: 'Dein Amazon account wurde erfolgreich entfernt',
-      unlinkError: 'Dein Amazon account konnte nicht entfernt werden. Versuche es später erneut',
+      linkSuccess: 'Dein Amazon-Account wurde erfolgreich mit dem Lara-Account verknüpft',
+      linkError: 'Dein Amazon-Account konnte nicht mit dem Lara-Account verknüpft werden. Versuche es später erneut',
+      unlinkSuccess: 'Dein Amazon-Account wurde erfolgreich entfernt',
+      unlinkError: 'Dein Amazon-Account konnte nicht entfernt werden. Versuche es später erneut',
       loading: 'Deine Accounts werden verknüpft. Bitte warte kurz...',
     },
   },
   onboarding: {
-    intro: 'Schön dich kennenzulernen. Bitte trage ein paar Informationen zu deiner Ausbildung ein.',
+    intro: 'Schön, dich kennenzulernen. Bitte trage ein paar Informationen zu deiner Ausbildung ein.',
     hello: 'Moin',
   },
   missing: {
@@ -261,7 +261,7 @@ const germanTranslation: Translation = {
     authenticationSubtext: `Solltest du dich in der Ausbildung befinden, wende dich bitte an ${ENVIRONMENT.supportMail}.`,
     networkError: 'Ein Netzwerkfehler ist aufgetreten',
     default: 'Ein unbekannter Fehler ist aufgetreten',
-    subtext: `Bitte versuche es in einigen Minuten erneut. Sollte das Problem weiterhin bestehen, melde dich bitte bei ${ENVIRONMENT.supportMail}`,
+    subtext: `Bitte versuche es in einigen Minuten erneut. Sollte das Problem weiterhin bestehen, melde dich bitte bei ${ENVIRONMENT.supportMail}.`,
   },
   support: {
     contactTitle: 'Kontakt',
@@ -280,18 +280,18 @@ const germanTranslation: Translation = {
           'Lara hat seinen Namen von dem schwedischen Wort lära [˅læːra] bekommen, was für lernen oder auch das “Dasein” eines Azubis steht.',
       },
       features: {
-        question: 'Was kann das Berichtsheft Tool?',
+        question: 'Was kann das Berichtsheft-Tool?',
         answer:
-          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deinen Ausbilder/ deine Ausbilderin übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
+          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deine:n Ausbilder:in übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
       },
       timetable: {
         question: 'Kann ich meinen Stundenplan hochladen?',
-        answer: 'Noch kannst du deinen Stundenplan nicht hochladen, das Feature ist allerdings  bereits geplant!',
+        answer: 'Noch kannst du deinen Stundenplan nicht hochladen, das Feature ist allerdings bereits geplant!',
       },
       schoolReport: {
         question: 'Kann ich meine Zeugnisse hochladen?',
         answer:
-          'Noch kannst du deine Zeugnisse nicht hochladen, diese Feature ist allerdings für die Zukunft von Lara geplant!',
+          'Noch kannst du deine Zeugnisse nicht hochladen, dieses Feature ist allerdings für die Zukunft von Lara geplant!',
       },
       handoverMistake: {
         question: 'Ich habe mein Berichtsheft versehentlich gesendet. Was dann?',
@@ -300,7 +300,7 @@ const germanTranslation: Translation = {
       },
       bug: {
         question: 'Wen kontaktiere ich bei Bugs, Problemen oder sonstigen Anregungen?',
-        answer: 'Sende uns gerne eine E-mail an {0} bei Problemen. Wir melden uns bei dir!',
+        answer: 'Sende uns gerne eine E-Mail an {0} bei Problemen. Wir melden uns bei dir!',
       },
       exportTime: {
         question: 'Wie lange dauert ein Massenexport?',
@@ -308,7 +308,7 @@ const germanTranslation: Translation = {
           'Grundsätzlich dauert ein Export nicht lange. Plane trotzdem genügend Zeit ein, wenn du mehrere Berichtshefte auf einmal exportieren möchtest.',
       },
       autoSave: {
-        question: 'Werden meine Einträge automatisch gespeichert?	',
+        question: 'Werden meine Einträge automatisch gespeichert?',
         answer:
           'Sobald du eine Tätigkeit eingetragen hast (und diese mit Enter bestätigst) ist dein Eintrag automatisch gespeichert und du kannst die Seite einfach verlassen ohne manuell speichern zu müssen.',
       },
@@ -350,7 +350,7 @@ const germanTranslation: Translation = {
     reportDeclinedSuccessTitle: 'Bericht zurückgegeben',
     reportDeclinedSuccess: 'Du hast den Bericht zurückgegeben und die gewünschten Änderungen weitergeleitet.',
     reportToArchiveSuccessTitle: 'Bericht ins Archiv verschoben',
-    reportToArchiveSuccess: 'Du hast den Bericht genehmigt und er befindet sich jetzt in dem Archiv.',
+    reportToArchiveSuccess: 'Du hast den Bericht genehmigt und er befindet sich jetzt im Archiv.',
   },
   numerals: {
     first: 'Erstes',
@@ -359,14 +359,14 @@ const germanTranslation: Translation = {
     fourth: 'Viertes',
   },
   traineePlaceholders: {
-    trainerPlaceholder: 'Auzubildender ist noch nicht zugeordnet',
+    trainerPlaceholder: 'Auszubildende:r ist noch nicht zugeordnet',
     companyPlaceholder: 'Firma wurde noch nicht gewählt',
     yearPlaceholder: 'Startdatum wurde noch nicht gewählt',
     coursePlaceholder: 'Ausbildungsgang wurde noch nicht gewählt',
   },
   noUserPage: {
     title: 'Über Lara',
-    description: 'Lara ermöglicht es Auszubildenden, Berichtshefte intuitiv und einfach zu schreiben.',
+    description: 'Lara ermöglicht es Auszubildende, Berichtshefte intuitiv und einfach zu schreiben.',
     featureReports: {
       title: 'Wochenberichte schreiben',
       description:
@@ -386,7 +386,7 @@ const germanTranslation: Translation = {
   trainerReportsPage: {
     emptyState: {
       title: 'Dir sind aktuell keine Auszubildenden zugewiesen',
-      caption: 'Du kannst dir welche auf der Auszubildenden Seite auswählen.',
+      caption: 'Du kannst dir welche auf der Auszubildenden-Seite auswählen.',
     },
   },
   validation: {
@@ -395,19 +395,19 @@ const germanTranslation: Translation = {
     required: 'Dieses Feld muss ausgefüllt sein',
     dateBefore: 'Das Datum muss vor dem Enddatum liegen',
     dateAfter: 'Das Datum muss nach dem Startdatum liegen',
-    startDateOutOfPeriod: 'Startdatum muss in den letzen 5 Jahren sein',
+    startDateOutOfPeriod: 'Startdatum muss in den letzten 5 Jahren sein',
     endDateOutOfPeriod: 'Enddatum muss in den nächsten 5 Jahren sein',
   },
   createTrainee: {
-    title: 'Neuer Auszubildender',
+    title: 'Neue:r Auszubildende:r',
     description:
-      'Trage hier die Daten des neuen Auszubildenden / der neuen Auszubildenden ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
-    success: 'Der/Die Auszubildende {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+      'Trage hier die Daten der/des neuen Auszubildenden ein, damit er:sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Auszubildende:r {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createTrainer: {
-    title: 'Neuer Ausbilder',
+    title: 'Neue:r Ausbilder:in',
     description:
-      'Trage hier die Daten des neuen Ausbilders / der neuen Ausbilderin ein, damit er/sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+      'Trage hier die Daten der/des neuen Ausbildenden ein, damit er:sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createAdmin: {
@@ -419,15 +419,15 @@ const germanTranslation: Translation = {
   deleteTrainer: {
     title: '{0} wirklich deaktivieren?',
     description:
-      'Wenn du den Benutzer löscht, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhälst du eine E-mail mit der Möglichkeit den Account entgültig zu löschen. ',
-    success: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen.',
+      'Wenn du den Benutzer löschst, wird der Account zunächst für 24 Stunden deaktiviert. Danach erhältst du eine E-Mail mit der Möglichkeit den Account endgültig zu löschen. ',
+    success: 'Du erhältst in Kürze eine E-Mail mit der Option den Nutzer zu Löschen.',
   },
   admin: {
     marking: 'Markiert zur Löschung',
   },
   userDelete: {
     title: 'Nutzer deaktiviert',
-    description: 'Du erhältst in Kürze eine E-mail mit der Option den Nutzer zu Löschen. ',
+    description: 'Du erhältst in Kürze eine E-Mail mit der Option den Nutzer zu Löschen. ',
   },
 }
 
