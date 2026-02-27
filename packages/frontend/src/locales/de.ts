@@ -31,7 +31,7 @@ const germanTranslation: Translation = {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
       description:
-        'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator oder Ihren Ausbilder:in.',
+        'Leider bist du noch nicht registriert. Bitte wende dich an den Administrator / die Administratorin oder Ihre:n Ausbilder:in.',
     },
   },
   modal: {
@@ -167,10 +167,10 @@ const germanTranslation: Translation = {
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
-    trainership: 'Ausbilder:in Einstellungen',
+    trainership: 'Ausbilder:in‑Einstellungen',
     contact: 'Ansprechpartner',
     trainer: 'Ausbilder:in',
-    noTrainer: 'Von keinem Ausbilder:in ausgewählt',
+    noTrainer: 'Von keinem / keiner Ausbilder:in ausgewählt',
     saveError: 'Deine Einstellungen konnten nicht gespeichert werden!',
     saveSuccess: 'Deine Einstellungen sind jetzt auf dem neuesten Stand.',
     saveSuccessTitle: 'Einstellungen aktualisiert',
