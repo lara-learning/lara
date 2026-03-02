@@ -167,10 +167,10 @@ const germanTranslation: Translation = {
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
-    trainership: 'Ausbilder:in‑Einstellungenn',
+    trainership: 'Ausbilder:in‑Einstellungen',
     contact: 'Ansprechpartner:in',
     trainer: 'Ausbilder:in',
-    noTrainer: 'Von keiner:m Ausbilder:in ausgewählt',
+    noTrainer: 'Von keiner/keinem Ausbilder:in ausgewählt',
     saveError: 'Deine Einstellungen konnten nicht gespeichert werden!',
     saveSuccess: 'Deine Einstellungen sind jetzt auf dem neuesten Stand.',
     saveSuccessTitle: 'Einstellungen aktualisiert',
@@ -366,7 +366,7 @@ const germanTranslation: Translation = {
   },
   noUserPage: {
     title: 'Über Lara',
-    description: 'Lara ermöglicht es Auszubildende, Berichtshefte intuitiv und einfach zu schreiben.',
+    description: 'Lara ermöglicht es Auszubildenden, Berichtshefte intuitiv und einfach zu schreiben.',
     featureReports: {
       title: 'Wochenberichte schreiben',
       description:
@@ -375,7 +375,7 @@ const germanTranslation: Translation = {
     featureHandover: {
       title: 'Einfache Übergabe',
       description:
-        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder:in. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
+        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder:innen. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
     },
     featureReviews: {
       title: 'Stationsberichte',
