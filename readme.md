@@ -194,6 +194,21 @@ The following variables can be added to your cloned version of Lara.
   - ID of test trainee on the stating environment for e2e tests. If not provided e2e tests are skipped.
 - TEST_TRAINER_ID
   - ID of test trainer on the staging environment for e2e tests. If not provided e2e tests are skipped.
+- IMAGE_URL
+  - fallback avatar image api URL. e.g. https://api.dicebear.com
+- AVATAR_URL
+  - URL for internal avatar server if it exists. e.g. https://<internal-wiki-domain>/rest/cas/1.0/avatar/server/
+- MICROSOFT_LOGIN_URL
+  - https://login.microsoftonline.com/
+
+The following secrets are set automatically during deployment by the GitHub Action, they're required locally in the .env, but do NOT need to be added as a GitHub secret.
+
+- FRONTEND_URL_WITHOUT_HTTPS
+  - e.g. localhost:8080
+- BACKEND_URL_WITHOUT_HTTPS
+  - e.g. localhost:3000/dev
+- STRIPPED_BACKEND_URL
+  - URL for backend without any path, used in serverless.yml cors policy. e.g. https://localhost:3000
 
 ### For local Environment variables (add these extra two lines)
 
