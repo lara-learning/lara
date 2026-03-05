@@ -375,7 +375,7 @@ const germanTranslation: Translation = {
     featureHandover: {
       title: 'Einfache Übergabe',
       description:
-        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilderinnen. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
+        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder*in. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
     },
     featureReviews: {
       title: 'Stationsberichte',
@@ -399,13 +399,13 @@ const germanTranslation: Translation = {
     endDateOutOfPeriod: 'Enddatum muss in den nächsten 5 Jahren sein',
   },
   createTrainee: {
-    title: 'Neue:r Auszubildende*r',
+    title: 'Neue*r Auszubildende*r',
     description:
       'Trage hier die Daten der/des neuen Auszubildenden ein, damit er*sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Auszubildende*r {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createTrainer: {
-    title: 'Neue:r Ausbilder*in',
+    title: 'Neue*r Ausbilder*in',
     description:
       'Trage hier die Daten der/des neuen Ausbildenden ein, damit er*sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
     success: 'Der/Die Ausbilder*in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
