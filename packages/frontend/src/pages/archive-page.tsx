@@ -101,7 +101,7 @@ const searchFilter =
     if (searchText) {
       textMatch = report.days.some((day) =>
         day.entries.some((entry) =>
-          (entry.text ? entry.text : entry.text_split!).toLowerCase().includes(searchText.toLowerCase())
+          ((entry.text ? entry.text : entry.text_split) ?? '').toLowerCase().includes(searchText.toLowerCase())
         )
       )
       if (!textMatch && report.summary) {
