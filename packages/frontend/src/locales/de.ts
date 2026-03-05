@@ -31,7 +31,7 @@ const germanTranslation: Translation = {
     userNotRegisteredError: {
       title: 'Fehler bei der Anmeldung',
       description:
-        'Leider bist du noch nicht registriert. Bitte wende dich an eine:n Administrator:in oder an deine:n Ausbilder:in',
+        'Leider bist du noch nicht registriert. Bitte wende dich an eine*n Administrator*in oder an deine*n Ausbilder*in',
     },
   },
   modal: {
@@ -110,9 +110,9 @@ const germanTranslation: Translation = {
       forward: 'nächste',
     },
     modalTitle: {
-      handover: 'Bericht {0} {1} an Ausbilder:in übergeben?',
+      handover: 'Bericht {0} {1} an Ausbilder*in übergeben?',
       accept: 'Bericht {0} {1} genehmigen?',
-      decline: 'Bericht {0} {1} an Auszubildende:n zurückgeben',
+      decline: 'Bericht {0} {1} an Auszubildende*n zurückgeben',
       unarchive: 'Bericht {0} {1} aus dem Archiv holen?',
     },
     modalCopy: {
@@ -123,7 +123,7 @@ const germanTranslation: Translation = {
       decline:
         'Nachdem der Bericht zurückgegeben wurde, kann die/der Auszubildende weitere Änderungen vornehmen und ihn erneut übergeben.',
       unarchive:
-        'Nachdem der Bericht aus dem Archiv geholt wurde, kann dieser nicht mehr exportiert werden und muss von deinem/deiner Ausbilder:in erneut überprüft werden.',
+        'Nachdem der Bericht aus dem Archiv geholt wurde, kann dieser nicht mehr exportiert werden und muss von deinem/deiner Ausbilder*in erneut überprüft werden.',
     },
     comments: {
       addComment: 'Kommentar hinzufügen',
@@ -167,10 +167,10 @@ const germanTranslation: Translation = {
     application: 'Anwendung',
     apprenticeship: 'Ausbildung',
     user: 'Benutzer',
-    trainership: 'Ausbilder:in‑Einstellungen',
-    contact: 'Ansprechpartner:in',
-    trainer: 'Ausbilder:in',
-    noTrainer: 'Von keiner/keinem Ausbilder:in ausgewählt',
+    trainership: 'Ausbilder*in‑Einstellungen',
+    contact: 'Ansprechpartner*in',
+    trainer: 'Ausbilder*in',
+    noTrainer: 'Von keiner/keinem Ausbilder*in ausgewählt',
     saveError: 'Deine Einstellungen konnten nicht gespeichert werden!',
     saveSuccess: 'Deine Einstellungen sind jetzt auf dem neuesten Stand.',
     saveSuccessTitle: 'Einstellungen aktualisiert',
@@ -282,7 +282,7 @@ const germanTranslation: Translation = {
       features: {
         question: 'Was kann das Berichtsheft-Tool?',
         answer:
-          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deine:n Ausbilder:in übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
+          'Mit Lara kannst du deine Berichtshefte, welche Teil der dualen Berufsausbildung sind, schreiben und digital an deine*n Ausbilder*in übergeben. Dann können diese von ihm/ihr überprüft werden und bei Änderungswünschen an dich zurückgegeben werden oder direkt in dein Archiv verschoben und gespeichert werden.',
       },
       timetable: {
         question: 'Kann ich meinen Stundenplan hochladen?',
@@ -332,7 +332,7 @@ const germanTranslation: Translation = {
   navigation: {
     reports: 'Berichte',
     trainees: 'Auszubildende',
-    trainer: 'Ausbilder:in',
+    trainer: 'Ausbilder*in',
     admin: 'Admins',
     dashhboard: 'Dashboard',
     archive: 'Archiv',
@@ -359,7 +359,7 @@ const germanTranslation: Translation = {
     fourth: 'Viertes',
   },
   traineePlaceholders: {
-    trainerPlaceholder: 'Auszubildende:r ist noch nicht zugeordnet',
+    trainerPlaceholder: 'Auszubildende*r ist noch nicht zugeordnet',
     companyPlaceholder: 'Firma wurde noch nicht gewählt',
     yearPlaceholder: 'Startdatum wurde noch nicht gewählt',
     coursePlaceholder: 'Ausbildungsgang wurde noch nicht gewählt',
@@ -375,7 +375,7 @@ const germanTranslation: Translation = {
     featureHandover: {
       title: 'Einfache Übergabe',
       description:
-        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilder:innen. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
+        'Reduziere den Aufwand für Feedbackprozesse durch eine einfache digitale Übermittlung an Ausbilderinnen. Genehmigte Dokumente werden automatisch unterschrieben und können am Ende der Ausbildung ausgedruckt werden.',
     },
     featureReviews: {
       title: 'Stationsberichte',
@@ -399,16 +399,16 @@ const germanTranslation: Translation = {
     endDateOutOfPeriod: 'Enddatum muss in den nächsten 5 Jahren sein',
   },
   createTrainee: {
-    title: 'Neue:r Auszubildende:r',
+    title: 'Neue:r Auszubildende*r',
     description:
-      'Trage hier die Daten der/des neuen Auszubildenden ein, damit er:sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
-    success: 'Auszubildende:r {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+      'Trage hier die Daten der/des neuen Auszubildenden ein, damit er*sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Auszubildende*r {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createTrainer: {
-    title: 'Neue:r Ausbilder:in',
+    title: 'Neue:r Ausbilder*in',
     description:
-      'Trage hier die Daten der/des neuen Ausbildenden ein, damit er:sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
-    success: 'Der/Die Ausbilder:in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
+      'Trage hier die Daten der/des neuen Ausbildenden ein, damit er*sie sich anmelden kann. Die Daten können später noch überarbeitet werden.',
+    success: 'Der/Die Ausbilder*in {0} wurde erfolgreich angelegt und kann den Account jetzt nutzen.',
   },
   createAdmin: {
     title: 'Neuer Admin',
