@@ -2,7 +2,7 @@ import Translation from './translation'
 
 const englishTranslation: Translation = {
   today: 'Today',
-  week: 'week',
+  week: 'Week',
   open: 'Open',
   total: 'Total',
   archive: 'Archive',
@@ -16,17 +16,17 @@ const englishTranslation: Translation = {
   delete: 'Delete',
   save: 'Save',
   cancel: 'Cancel',
-  edit: 'edit',
+  edit: 'Edit',
   createUser: 'Create',
-  done: 'done',
-  markDelete: 'mark for deletion',
-  unmarkDelete: 'remove deletion mark',
-  deactivate: 'deactivate',
+  done: 'Done',
+  markDelete: 'Mark for deletion',
+  unmarkDelete: 'Remove deletion mark',
+  deactivate: 'Deactivate',
   traineeShipYear: 'Year of Traineeship',
   claimed: 'Claimed',
-  back: 'back',
-  on: 'on',
-  off: 'off',
+  back: 'Back',
+  on: 'On',
+  off: 'Off',
   login: {
     userNotRegisteredError: {
       title: 'Login failed',
@@ -41,10 +41,10 @@ const englishTranslation: Translation = {
     success: 'You did it!',
     noReport: {
       headline: 'Yeah, looks great!',
-      description: "You don't have any reports to do right now, time to work.",
+      description: "You don't have any reports to do right now — time to work.",
     },
-    declinedReportMessageTitle: 'got report back',
-    declinedReportMessage: 'You got back your report about {0}{1}. Changes are requested.',
+    declinedReportMessageTitle: 'Got report back',
+    declinedReportMessage: 'You got your report about {0}{1} back. Changes are requested.',
     reportToArciveAddedSuccessTitle: 'New report in your archive',
     reportToArciveAddedSuccess: 'Your report about {0}{1} was approved by {name} and is now stored in your archive.',
   },
@@ -52,30 +52,30 @@ const englishTranslation: Translation = {
     header: 'Archive',
     tableHead: {
       calendarWeek: 'CW',
-      date: 'DATE',
-      department: 'DEPARTMENT',
+      date: 'Date',
+      department: 'Department',
     },
     searchPlaceholder: 'Search',
     selectAllLabel: 'Select all',
     emptyState: {
       noResult: {
-        title: "Sadly, I didn't find anything.",
+        title: 'Sadly, I didn’t find anything.',
         caption:
-          'Please check your search entry and try again. {0} With {1} you can search for a specific calendar week or with {2} for a time period, or with dep: for a Department.',
+          'Please check your search entry and try again. {0} With {1} you can search for a specific calendar week, or with {2} for a time period, or with dep: for a department.',
       },
       initial: {
-        title: "There's nothing here yet.",
+        title: 'There’s nothing here yet.',
         caption_trainee: 'Your reports appear here as soon as they have been accepted and are then ready for export.',
-        caption_trainer: 'You have no Trainees, their archives will appear here when available.',
+        caption_trainer: 'You have no trainees; their archives will appear here when available.',
       },
     },
-    exportTitle: 'export started',
+    exportTitle: 'Export started',
     export: 'Shortly you will receive an email with your exported reports.',
     back: 'Back',
   },
   report: {
     title: 'Report for',
-    remarks: 'Additional Remarks',
+    remarks: 'Additional remarks',
     remarksPlaceholder: 'Add additional remarks here...',
     reportSaveSuccess: 'Report saved!',
     textPlaceholder: 'Description',
@@ -85,11 +85,11 @@ const englishTranslation: Translation = {
     handoverNotificationText: 'Your report was handed over and is now being checked.',
     accept: 'Approve this report',
     decline: 'Hand back to trainee',
-    halfDays: 'Half Days',
+    halfDays: 'Half days',
     archived: 'Archived',
     department: {
       title: 'Department',
-      departmentAddedTitle: 'added department',
+      departmentAddedTitle: 'Added department',
       departmentAddedText: 'Your department was added and saved successfully.',
       departmentMissingTitle: 'Add department',
       departmentMissingText: 'You have to add a department to hand over your report.',
@@ -102,8 +102,8 @@ const englishTranslation: Translation = {
     total: 'Hours per week',
     headingContainer: {
       title: 'Calendar week',
-      back: 'previous',
-      forward: 'next',
+      back: 'Previous',
+      forward: 'Next',
     },
     modalTitle: {
       handover: 'Hand over report {0} {1}?',
@@ -113,19 +113,19 @@ const englishTranslation: Translation = {
     },
     modalCopy: {
       handover:
-        'After handing your report over, you will not be able to make changes while it is under review by your trainer. If accepted you will have to option to export as PDF.',
+        'After handing your report over, you will not be able to make changes while it is under review by your trainer. If accepted, you will have the option to export it as PDF.',
       accept:
-        'After approving the report, your signature will be applied and the trainee is going to be able to export the report.',
+        'After approving the report, your signature will be applied and the trainee will be able to export the report.',
       decline:
         'After handing back the report, the trainee has the option to make changes to the report and hand it over to you again.',
       unarchive:
-        'After unarchiving, you will not be able to export the report, unless it is approved by your trainer again.',
+        'After unarchiving, you will not be able to export the report unless it is approved by your trainer again.',
     },
     comments: {
       addComment: 'Add comment',
       addCommentToEntry: 'Add comment to entry',
     },
-    underReview: 'under review',
+    underReview: 'Under review',
   },
   dropdown: {
     help: 'Help',
@@ -140,8 +140,8 @@ const englishTranslation: Translation = {
   },
   weekOverview: {
     week: 'CW',
-    finishedDays: 'days finished',
-    commented: 'commented',
+    finishedDays: 'Days finished',
+    commented: 'Commented',
   },
   entryStatus: {
     saveSuccess: 'Entry has been created',
@@ -153,23 +153,23 @@ const englishTranslation: Translation = {
     dayLimitError: 'The entry time exceeds the day limit',
   },
   settings: {
-    firstname: 'Firstname',
-    lastname: 'Lastname',
+    firstname: 'First name',
+    lastname: 'Last name',
     email: 'E-Mail',
-    startOfToolusage: 'Start of lara usage',
-    associatedTrainer: 'Associated Trainer',
-    associatedTrainees: 'Associated Trainees',
-    notAssociated: 'not associated yet',
+    startOfToolusage: 'Start of Lara usage',
+    associatedTrainer: 'Associated trainer',
+    associatedTrainees: 'Associated trainees',
+    notAssociated: 'Not associated yet',
     application: 'Usage',
     apprenticeship: 'Apprenticeship',
     user: 'User',
-    trainership: 'Trainer Settings',
-    contact: 'Contact Person',
+    trainership: 'Trainer settings',
+    contact: 'Contact person',
     trainer: 'Trainer',
     noTrainer: 'You have not been claimed yet',
     saveSuccess: 'Your settings are now up to date.',
-    saveSuccessTitle: 'updated settings',
-    saveError: "Your settings could'nt be saved!",
+    saveSuccessTitle: 'Updated settings',
+    saveError: "Your settings couldn't be saved!",
     language: {
       title: 'Language',
       english: 'English',
@@ -177,14 +177,14 @@ const englishTranslation: Translation = {
     },
     theme: {
       title: 'Theme',
-      system: 'System Preference',
+      system: 'System preference',
       light: 'Light',
       dark: 'Dark',
     },
-    other: 'other',
-    notification: 'Get mail notifications',
+    other: 'Other',
+    notification: 'Get email notifications',
     avatar: {
-      label: 'profile picture',
+      label: 'Profile picture',
       title: 'Add a profile picture',
       description: 'Upload your own profile picture.',
       addAvatar: 'Add image',
@@ -197,7 +197,7 @@ const englishTranslation: Translation = {
         },
         errorCompression: {
           title: 'Compression failed',
-          description: 'Could not compress file to below 250 KB.',
+          description: 'Could not compress the file below 250 KB.',
         },
         errorFileSize: {
           title: 'Upload failed',
@@ -206,23 +206,23 @@ const englishTranslation: Translation = {
       },
     },
     signature: {
-      title: 'signature',
+      title: 'Signature',
       deleteSignature: 'Delete signature',
       addSignature: 'Add signature',
       placeholder: {
         heading: 'Add your signature',
-        description: 'To sign your finished documentations just add your signature.',
+        description: 'To sign your finished documentation, just add your signature.',
       },
-      addSuccessTitle: 'added signature',
+      addSuccessTitle: 'Added signature',
       addSuccess: 'Your signature can now be used to automatically sign your reports.',
-      deleteSuccessTitle: 'deleted signature',
+      deleteSuccessTitle: 'Deleted signature',
       deleteSuccess: 'Your signature can no longer be used to sign documents automatically.',
       modal: {
         title: 'Scan your signature',
         label:
-          'Write your signature on a white piece of paper with a black pen and make sure the paper ist evenly illuminated so that the contrast between paper and signature is clearly visible.',
+          'Write your signature on a white piece of paper with a black pen and make sure the paper is evenly illuminated so that the contrast between paper and signature is clearly visible.',
         record: 'Record',
-        newtry: 'new try',
+        newtry: 'New try',
         error: 'Your browser is apparently not allowed to use your webcam. Please grant access.',
       },
     },
@@ -230,14 +230,14 @@ const englishTranslation: Translation = {
       headline: 'Your Alexa device',
       linkTitle: 'Add your Alexa device',
       unlinkTitle: 'Remove your Alexa device',
-      linkInstructions: 'Login with your amazon email to use Lara on your Alexa device.',
+      linkInstructions: 'Log in with your Amazon email to use Lara on your Alexa device.',
       linkButton: 'Login with Amazon',
-      unlinkInstructions: 'Remove your alexa device from your Lara account',
+      unlinkInstructions: 'Remove your Alexa device from your Lara account.',
       unlinkButton: 'Remove Alexa',
-      linkSuccess: 'Your Amazon account has been successfully linked with your Lara account',
-      linkError: 'Somethinkg went wrong while linking you Amazon account. Please try again later',
-      unlinkSuccess: 'Your Amazon account has been successfully removed',
-      unlinkError: 'Somethinkg went wrong while unlinking you Amazon account. Please try again later',
+      linkSuccess: 'Your Amazon account has been successfully linked with your Lara account.',
+      linkError: 'Something went wrong while linking your Amazon account. Please try again later.',
+      unlinkSuccess: 'Your Amazon account has been successfully removed.',
+      unlinkError: 'Something went wrong while unlinking your Amazon account. Please try again later.',
       loading: 'Your account is being linked. Please wait...',
     },
   },
@@ -251,12 +251,12 @@ const englishTranslation: Translation = {
     back: 'Return to Dashboard',
   },
   errors: {
-    error: 'error',
+    error: 'Error',
     authenticationError: 'Your user could not be found',
     authenticationSubtext: `If you are a trainee, please contact ${ENVIRONMENT.supportMail}.`,
     networkError: 'A network error occurred',
     default: 'An unknown error occurred',
-    subtext: `Please try again in some minutes. If this problem remains, please inform ${ENVIRONMENT.supportMail}`,
+    subtext: `Please try again in a few minutes. If this problem remains, please inform ${ENVIRONMENT.supportMail}.`,
   },
   support: {
     contactTitle: 'Contact',
@@ -267,7 +267,7 @@ const englishTranslation: Translation = {
       signature: {
         question: 'What can I do to make my scanned signature easier to recognize?',
         answer:
-          'The best thing to do is to write on a white piece of paper with a thicker pen that is as high-contrast as possible (e.g. blue / black).',
+          'The best thing to do is to write on a white piece of paper with a thicker pen that is as high‑contrast as possible (e.g. blue/black).',
       },
       name: {
         question: 'What does Lara stand for?',
@@ -275,9 +275,9 @@ const englishTranslation: Translation = {
           'Lara got its name from the Swedish word lära [˅læːra], which stands for learning or the “existence” of an apprentice.',
       },
       features: {
-        question: 'What can the report-tool do?',
+        question: 'What can the report‑tool do?',
         answer:
-          'With Lara you can write your report books, which are part of the dual vocational training, and hand them over digitally to your trainer. Then they can be checked by him / her and returned to you in the event of change requests or moved directly to your archive and saved.',
+          'With Lara you can write your report books, which are part of the dual vocational training, and hand them over digitally to your trainer. Then they can be checked by him/her and returned to you in the event of change requests or moved directly to your archive and saved.',
       },
       timetable: {
         question: 'Can I upload my schedule?',
@@ -290,7 +290,7 @@ const englishTranslation: Translation = {
       handoverMistake: {
         question: 'I sent my report book by mistake. What can I do?',
         answer:
-          'Get in touch with your trainer. They can return the report portfolio that has already been sent to you and you can make changes again.',
+          'Get in touch with your trainer. They can return the report portfolio that has already been sent to you, and you can make changes again.',
       },
       bug: {
         question: 'Who do I contact if I find bugs, have problems or any other suggestions?',
@@ -304,7 +304,7 @@ const englishTranslation: Translation = {
       autoSave: {
         question: 'Will my entries be saved automatically?',
         answer:
-          'As soon as you have entered an activity (and confirm it with Enter) your entry is automatically saved and you can simply exit the page without having to save manually.',
+          'As soon as you have entered an activity (and confirm it with Enter), your entry is automatically saved and you can simply exit the page without having to save manually.',
       },
       aboutUs: {
         question: 'Who is behind Lara?',
@@ -314,7 +314,7 @@ const englishTranslation: Translation = {
       darkmode: {
         question: 'Does Lara also exist in dark mode?',
         answer: 'Of course! You can choose between a light and dark appearance under {0}.',
-        link: 'Setting > Application',
+        link: 'Settings &gt; Application',
       },
       exportEmail: {
         question: 'How will the report books be delivered to me in the case of a bulk export?',
@@ -337,14 +337,14 @@ const englishTranslation: Translation = {
     todo: '{count} report is still in progress',
     todos: '{count} reports are still in progress',
     upToDate: 'Everything is up to date',
-    reportHandoverSuccessTitle: 'received report',
+    reportHandoverSuccessTitle: 'Received report',
     reportHandoverSuccess: '{name} has handed over a report.',
-    reportCommentSuccessTitle: 'added comment',
+    reportCommentSuccessTitle: 'Added comment',
     reportCommentSuccess: 'Your comment was added to the report.',
-    reportDeclinedSuccessTitle: 'handed report back',
+    reportDeclinedSuccessTitle: 'Handed report back',
     reportDeclinedSuccess: 'You handed the report back and asked for changes.',
-    reportToArchiveSuccessTitle: 'moved report to archive',
-    reportToArchiveSuccess: 'You approved the report and it’s now stored in the archive.',
+    reportToArchiveSuccessTitle: 'Moved report to archive',
+    reportToArchiveSuccess: 'You approved the report and it is now stored in the archive.',
   },
   numerals: {
     first: 'First',
@@ -356,69 +356,69 @@ const englishTranslation: Translation = {
     trainerPlaceholder: 'Trainee is not claimed yet',
     companyPlaceholder: 'Company is not set yet',
     yearPlaceholder: 'Start date is not set yet',
-    coursePlaceholder: 'Training Course is not set yet',
+    coursePlaceholder: 'Training course is not set yet',
   },
   noUserPage: {
     title: 'About Lara',
     description: 'Lara enables trainees to write reports intuitively with ease.',
     featureReports: {
-      title: 'Write Reports',
+      title: 'Write reports',
       description:
         'Always keep an overview and easily write your weekly reports with supportive features such as automated time calculation and dynamic export.',
     },
     featureHandover: {
-      title: 'Easy Handover',
+      title: 'Easy handover',
       description:
-        'Reduce the hassle of feedback processes with a simple digital submission to your trainer. Approved documents are signed automatically and can be printed at the end of your traineeship.',
+        'Reduce the hassle of feedback processes with a simple digital submission to your trainer. Approved documents are automatically signed and can be printed at the end of your traineeship.',
     },
     featureReviews: {
-      title: 'Create Reviews',
+      title: 'Create reviews',
       description:
-        'Summarize your experiences after each apprenticeship station with a rich text editor that supports media content, syntax highlighting and formulas.',
+        'Summarize your experiences after each apprenticeship station with a rich‑text editor that supports media content, syntax highlighting and formulas.',
     },
   },
   trainerReportsPage: {
     emptyState: {
       title: 'There are currently no trainees assigned to you',
-      caption: 'You can claim trainees by selecting them in the trainees page.',
+      caption: 'You can claim trainees by selecting them on the trainees page.',
     },
   },
   validation: {
-    maxLength: 'This field has a maxium length of {0} characters',
+    maxLength: 'This field has a maximum length of {0} characters',
     minLength: 'This field has a minimum length of {0} characters',
     required: 'This field is required',
-    dateBefore: 'This Date has to be before the end date',
-    dateAfter: 'This Date has to be after the start date',
-    startDateOutOfPeriod: 'Startdate has to be in the next 5 years',
-    endDateOutOfPeriod: 'Enddate has to be in the next 5 years',
+    dateBefore: 'This date has to be before the end date',
+    dateAfter: 'This date has to be after the start date',
+    startDateOutOfPeriod: 'Start date has to be in the next 5 years',
+    endDateOutOfPeriod: 'End date has to be in the next 5 years',
   },
   createTrainee: {
-    title: 'New Trainee',
+    title: 'New trainee',
     description:
-      'Please enter the informations of the new Trainee here so she/he can login. You can still change the data later.',
+      'Please enter the information of the new trainee here so she/he can log in. You can still change the data later.',
     success: 'The trainee {0} has been created',
   },
   createTrainer: {
-    title: 'New Trainer',
+    title: 'New trainer',
     description:
-      'Please enter the informations of the new Trainer here so she/he can login. You can still change the data later.',
+      'Please enter the information of the new trainer here so she/he can log in. You can still change the data later.',
     success: 'The trainer {0} has been created',
   },
   createAdmin: {
-    title: 'New Admin',
+    title: 'New admin',
     description:
-      'Please enter the informations of the new Admin here so she/he can login. You can still change the data later.',
+      'Please enter the information of the new admin here so she/he can log in. You can still change the data later.',
     success: 'The admin {0} has been created',
   },
   deleteTrainer: {
     title: 'Deactivate {0}?',
     description:
-      'If you delete the user, the account will be deactivated for 24 hours. After that you will receive an email with the possibility to delete the account. ',
+      'If you delete the user, the account will be deactivated for 24 hours. After that, you will receive an email with the possibility to delete the account.',
     success: 'You will shortly receive an email with the option to delete the user.',
   },
   userDelete: {
     title: 'User deactivated',
-    description: 'Shortly you will receive an email with the option to delete the user. ',
+    description: 'Shortly, you will receive an email with the option to delete the user.',
   },
   admin: {
     marking: 'Marked for deletion',
