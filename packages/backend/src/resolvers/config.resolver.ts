@@ -4,13 +4,13 @@ import { companies } from '../repositories/company.repo'
 
 export const LaraConfig: GqlLaraConfig = {
   minWorkDayMinutes: 180,
-  maxWorkDayMinutes: 600,
+  maxWorkDayMinutes: 480,
   expectedWorkDayMinutes: 480,
 
   minEducationDayMinutes: 0,
-  maxEducationDayMinutes: 600,
+  maxEducationDayMinutes: 480,
 
-  maxEntryMinutes: 600,
+  maxEntryMinutes: 480,
 
   maxPeriodYearsCount: 5,
 
