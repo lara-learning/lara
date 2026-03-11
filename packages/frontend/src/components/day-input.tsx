@@ -212,6 +212,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       })
     })
   }
+  const hideHalfDays = day?.status === 'vacation' || day?.status === 'sick' || day?.status === 'holiday'
 
   const handleStatusChange = (newStatus: EntryStatusType) => {
     clearTimeout(statusTimeout)
@@ -261,8 +262,12 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
         <>
           <InputHeading noMargin>{getHeading()}</InputHeading>
           <CBWrapper>
-            <CheckBox disabled={!!disabled} iconName={'Checkbox'} checked={halfDays} onClick={checkBox} />
-            <Text>{strings.report.halfDays}</Text>
+            {!hideHalfDays && (
+              <>
+                <CheckBox disabled={!!disabled} iconName="Checkbox" checked={halfDays} onClick={checkBox} />
+                <Text>{strings.report.halfDays}</Text>
+              </>
+            )}
           </CBWrapper>
           {day && <DayStatusSelect disabled={disabled} day={day} secondary={false} />}
         </>
