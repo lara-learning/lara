@@ -10,17 +10,14 @@ import { log } from '../utils/logging'
 import { createRandomToken } from '../utils/security'
 import { TokensResponse } from './oauth.service'
 
-const { IS_OFFLINE, BACKEND_TUNNEL_URL, FRONTEND_TUNNEL_URL, ALEXA_SKILL_STAGE } = process.env
+const { ALEXA_SKILL_STAGE } = process.env
 
 if (!ALEXA_SKILL_STAGE) {
   throw new Error('Missing Env Variable: ALEXA_SKILL_STAGE')
 }
 
-/**
- * if a tunnel is running for local debugging we use it
- */
-export const frontendAlexaUrl = `${IS_OFFLINE && FRONTEND_TUNNEL_URL ? FRONTEND_TUNNEL_URL : FrontendUrl}/alexa`
-const backendOAuthUrl = `${IS_OFFLINE && BACKEND_TUNNEL_URL ? BACKEND_TUNNEL_URL : BackendUrl}/backend/oauth/token`
+export const frontendAlexaUrl = `${FrontendUrl}/alexa`
+const backendOAuthUrl = `${BackendUrl}/backend/oauth/token`
 
 /**
  * Creates the Amazon Login Url

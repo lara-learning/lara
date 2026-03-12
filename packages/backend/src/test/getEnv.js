@@ -20,8 +20,6 @@ process.env = {
 
   FRONTEND_URL: 'http://localhost:8080',
   BACKEND_URL: 'http://localhost:3000/dev',
-  ENABLE_FRONTEND_TUNNEL: false,
-  ENABLE_BACKEND_TUNNEL: false,
 
   ALEXA_SKILL_ID: 'secret',
   ALEXA_SKILL_STAGE: 'development',
