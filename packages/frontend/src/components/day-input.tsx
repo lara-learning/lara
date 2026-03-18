@@ -293,7 +293,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
             {!hideHalfDays && (
               <>
                 <CheckBox disabled={!!disabled} iconName="Checkbox" checked={halfDays} onClick={checkBox} />
-                <Text>{strings.report.halfDays}</Text>
+                {reportStatus !== ReportStatus.Review ? <Text>{strings.report.halfDays}</Text> : null}
               </>
             )}
           </CBWrapper>
