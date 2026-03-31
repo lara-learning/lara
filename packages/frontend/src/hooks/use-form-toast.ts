@@ -1,8 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { FieldValues, FormState } from 'react-hook-form'
+import { FieldError, FieldValues, FormState } from 'react-hook-form'
 
 import strings from '../locales/localization'
 import { useToastContext } from './use-toast-context'
+
+function hasRef(error: unknown): error is FieldError {
+  return typeof error === 'object' && error !== null && 'ref' in error
+}
 
 export const useFormToasts = <T extends FieldValues>(formState: FormState<T>): void => {
   const { errors } = formState
@@ -20,7 +24,9 @@ export const useFormToasts = <T extends FieldValues>(formState: FormState<T>): v
     }
 
     // find the error that for the input that is currently focuseds
-    const errorEntry = errorEntries.find(([_key, value]) => value && document.activeElement === value.ref)
+    const errorEntry = errorEntries.find(
+      ([_key, value]) => hasRef(value) && value && document.activeElement === value.ref
+    )
 
     // fallback to the first error
     const [key, error] = errorEntry ?? errorEntries[0]

@@ -40,9 +40,7 @@
   },
   "resolutions": {
     "**/@types/node": "^22.9.0",
-    "@types/react": "^19.1.1",
-    "body-parser": "2.2.0",
-    "minimatch": "^3.0.8"
+    "@types/react": "^19.1.1"
   },
   "dependencies": {
     "uuid": "11.1.0"
@@ -62,15 +60,15 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "9.1.7",
-    "lerna": "^7.4.2",
-    "osls": "^3.53.0",
+    "lerna": "9.0.7",
+    "osls": "^3.63.2",
     "prettier": "^3.6.2",
-    "serverless-dynamodb": "^0.2.47",
+    "serverless-dynamodb": "^0.2.58",
     "serverless-iam-roles-per-function": "^3.2.0",
-    "serverless-jetpack": "^0.11.2",
-    "serverless-offline": "^14.4.0",
+    "serverless-jetpack": "^0.12.0",
+    "serverless-offline": "^14.5.0",
     "serverless-s3-local": "^0.8.5",
-    "serverless-s3-sync": "^3.4.0",
+    "serverless-s3-sync": "^3.5.1",
     "sort-package-json": "^3.4.0",
     "typescript": "^5.9.2"
   }
