@@ -37,7 +37,7 @@ export const useDayHelper = (): UseDayHelper => {
       return 480
     }
     if (day.status === DayStatusEnum.Education || day.status === DayStatusEnum.Work) {
-      return day.entries.reduce((accumulator, entry) => accumulator + (entry.time ? entry.time : entry.time_split!), 0)
+      return day.entries.reduce((accumulator, entry) => accumulator + (entry.time ?? 0) + (entry.time_split ?? 0), 0)
     } else {
       return 0
     }

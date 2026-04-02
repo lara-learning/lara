@@ -26,7 +26,7 @@ export const useReportHelper = (): UseReportHelper => {
   const getStatusColor: UseReportHelper['getStatusColor'] = (reportStatus) => TraineeReportStatusColors[reportStatus]
 
   const getDayMinutes = (day: ReportDay): number =>
-    day.entries.reduce((acc, entry) => acc + (entry.time ?? entry.time_split ?? 0), 0)
+    day.entries.reduce((acc, entry) => acc + (entry.time ?? 0) + (entry.time_split ?? 0), 0)
 
   const getFinishedDays: UseReportHelper['getFinishedDays'] = (report) => {
     let finishedDays = 0
