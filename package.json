@@ -72,6 +72,7 @@
     "serverless-s3-local": "^0.8.5",
     "serverless-s3-sync": "^3.4.0",
     "sort-package-json": "^3.4.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "@aiassistant/llm": "link:./packages/llm"
   }
 }
