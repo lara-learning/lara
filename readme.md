@@ -166,10 +166,6 @@ The following variables can be added to your cloned version of Lara.
   - String containing frontend development url
 - BACKEND_URL
   - String containing backend development url
-- ENABLE_FRONTEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok. You may need to temporarily install ngrok to your workspace first as it is not included in the package.json
-- ENABLE_BACKEND_TUNNEL
-  - Boolean. Tunnel localhost to a publicly available url using ngrok. You may need to temporarily install ngrok to your workspace first as it is not included in the package.json
 - ALEXA_SKILL_ID
   - String. Not required
 - ALEXA_SKILL_STAGE
@@ -207,6 +203,8 @@ The following secrets are set automatically during deployment by the GitHub Acti
   - e.g. localhost:8080
 - BACKEND_URL_WITHOUT_HTTPS
   - e.g. localhost:3000/dev
+- STRIPPED_FRONTEND_URL
+  - URL for frontend without any path, used in serverless.yml cors policy. e.g. https://localhost:8080
 - STRIPPED_BACKEND_URL
   - URL for backend without any path, used in serverless.yml cors policy. e.g. https://localhost:3000
 

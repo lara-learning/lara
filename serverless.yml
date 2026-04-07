@@ -588,8 +588,8 @@ resources:
                 - PATCH
             AccessControlAllowOrigins:
               Items:
-                - ${self:provider.environment.FRONTEND_URL}
-                - ${self:provider.environment.BACKEND_URL}
+                - ${env:STRIPPED_FRONTEND_URL}
+                - ${env:STRIPPED_BACKEND_URL}
             AccessControlExposeHeaders:
               Items: []
             OriginOverride: true
@@ -611,7 +611,7 @@ resources:
               ModeBlock: true
               Override: false
             ContentSecurityPolicy:
-              ContentSecurityPolicy: default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' ${env:IMAGE_URL} ${env:AVATAR_URL} https://${self:custom.config.s3.avatar}.s3.${self:provider.region}.amazonaws.com data:; connect-src 'self' ${env:STRIPPED_BACKEND_URL} ${env:MICROSOFT_LOGIN_URL};
+              ContentSecurityPolicy: default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' ${env:IMAGE_URL} ${env:AVATAR_URL} https://${self:custom.config.s3.avatar}.s3.${self:provider.region}.amazonaws.com data:; connect-src 'self' ${env:STRIPPED_FRONTEND_URL} ${env:STRIPPED_BACKEND_URL} ${env:MICROSOFT_LOGIN_URL};
               Override: true
           CustomHeadersConfig:
             Items:
