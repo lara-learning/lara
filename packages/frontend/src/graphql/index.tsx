@@ -685,7 +685,11 @@ export type AdminMarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-export type AdminMarkUserForDeleteMutation = { __typename?: 'Mutation', adminMarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type AdminMarkUserForDeleteMutation = { __typename?: 'Mutation', adminMarkUserForDeletion?:
+    | { __typename?: 'Admin', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string }
+   | undefined };
 
 export type AdminUnclaimTraineeMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -699,7 +703,11 @@ export type AdminUnmarkUserForDeleteMutationVariables = Exact<{
 }>;
 
 
-export type AdminUnmarkUserForDeleteMutation = { __typename?: 'Mutation', adminUnmarkUserForDeletion?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string } | undefined };
+export type AdminUnmarkUserForDeleteMutation = { __typename?: 'Mutation', adminUnmarkUserForDeletion?:
+    | { __typename?: 'Admin', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string }
+   | undefined };
 
 export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
   language?: InputMaybe<Scalars['String']['input']>;
@@ -708,7 +716,11 @@ export type ApplicationSettingsUpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type ApplicationSettingsUpdateUserMutation = { __typename?: 'Mutation', updateCurrentUser?: { __typename: 'Admin', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainee', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | { __typename: 'Trainer', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string } | undefined };
+export type ApplicationSettingsUpdateUserMutation = { __typename?: 'Mutation', updateCurrentUser?:
+    | { __typename: 'Admin', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string }
+    | { __typename: 'Trainee', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string }
+    | { __typename: 'Trainer', language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, id: string }
+   | undefined };
 
 export type AvatarSettingsGetSignedUrlMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -738,7 +750,15 @@ export type CreateCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentOnDayMutation = { __typename?: 'Mutation', createCommentOnDay: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
+export type CreateCommentOnDayMutation = { __typename?: 'Mutation', createCommentOnDay: { __typename?: 'CreateCommentPayload', commentable:
+      | { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report' }
+     } };
 
 export type CreateCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -747,7 +767,15 @@ export type CreateCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentOnEntryMutation = { __typename?: 'Mutation', createCommentOnEntry: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
+export type CreateCommentOnEntryMutation = { __typename?: 'Mutation', createCommentOnEntry: { __typename?: 'CreateCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Report' }
+     } };
 
 export type CreateCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -756,7 +784,15 @@ export type CreateCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentOnReportMutation = { __typename?: 'Mutation', createCommentOnReport: { __typename?: 'CreateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
+export type CreateCommentOnReportMutation = { __typename?: 'Mutation', createCommentOnReport: { __typename?: 'CreateCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+     } };
 
 export type CreateEntryMutationVariables = Exact<{
   dayId: Scalars['String']['input'];
@@ -806,7 +842,11 @@ export type DebugSetUsertypeMutationVariables = Exact<{
 }>;
 
 
-export type DebugSetUsertypeMutation = { __typename?: 'Mutation', _devsetusertype: { __typename?: 'DevSetUserPayload', user?: { __typename: 'Admin', id: string } | { __typename: 'Trainee', id: string } | { __typename: 'Trainer', id: string } | undefined } };
+export type DebugSetUsertypeMutation = { __typename?: 'Mutation', _devsetusertype: { __typename?: 'DevSetUserPayload', user?:
+      | { __typename: 'Admin', id: string }
+      | { __typename: 'Trainee', id: string }
+      | { __typename: 'Trainer', id: string }
+     | undefined } };
 
 export type DeleteCommentOnDayMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -815,7 +855,15 @@ export type DeleteCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnDayMutation = { __typename?: 'Mutation', deleteCommentOnDay: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
+export type DeleteCommentOnDayMutation = { __typename?: 'Mutation', deleteCommentOnDay: { __typename?: 'DeleteCommentPayload', commentable:
+      | { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report' }
+     } };
 
 export type DeleteCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -824,7 +872,15 @@ export type DeleteCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnEntryMutation = { __typename?: 'Mutation', deleteCommentOnEntry: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
+export type DeleteCommentOnEntryMutation = { __typename?: 'Mutation', deleteCommentOnEntry: { __typename?: 'DeleteCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Report' }
+     } };
 
 export type DeleteCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -833,7 +889,15 @@ export type DeleteCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCommentOnReportMutation = { __typename?: 'Mutation', deleteCommentOnReport: { __typename?: 'DeleteCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
+export type DeleteCommentOnReportMutation = { __typename?: 'Mutation', deleteCommentOnReport: { __typename?: 'DeleteCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+     } };
 
 export type DeleteEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -848,7 +912,11 @@ export type LinkAlexaMutationVariables = Exact<{
 }>;
 
 
-export type LinkAlexaMutation = { __typename?: 'Mutation', linkAlexa?: { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined } | undefined };
+export type LinkAlexaMutation = { __typename?: 'Mutation', linkAlexa?:
+    | { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined }
+    | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined }
+    | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined }
+   | undefined };
 
 export type LoginPageLoginMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -863,14 +931,22 @@ export type PublishAllCommentsMutationVariables = Exact<{
 }>;
 
 
-export type PublishAllCommentsMutation = { __typename?: 'Mutation', publishAllComments: { __typename?: 'PublishCommentsPayload', report: { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
+export type PublishAllCommentsMutation = { __typename?: 'Mutation', publishAllComments: { __typename?: 'PublishCommentsPayload', report: { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+          | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+         }> } } };
 
 export type SignatureSettingsUpdateSignatureMutationVariables = Exact<{
   signature?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type SignatureSettingsUpdateSignatureMutation = { __typename?: 'Mutation', updateCurrentUser?: { __typename?: 'Admin', id: string, signature?: string | undefined } | { __typename?: 'Trainee', id: string, signature?: string | undefined } | { __typename?: 'Trainer', id: string, signature?: string | undefined } | undefined };
+export type SignatureSettingsUpdateSignatureMutation = { __typename?: 'Mutation', updateCurrentUser?:
+    | { __typename?: 'Admin', id: string, signature?: string | undefined }
+    | { __typename?: 'Trainee', id: string, signature?: string | undefined }
+    | { __typename?: 'Trainer', id: string, signature?: string | undefined }
+   | undefined };
 
 export type TraineeSettingsUpdateTraineeMutationVariables = Exact<{
   course?: InputMaybe<Scalars['String']['input']>;
@@ -884,14 +960,22 @@ export type TrainerMarkTraineeForDeleteMutationVariables = Exact<{
 }>;
 
 
-export type TrainerMarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerMarkTraineeForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TrainerMarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerMarkTraineeForDeletion?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined };
 
 export type TrainerUnmarkTraineeForDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type TrainerUnmarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerUnmarkTraineeForDeletion?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type TrainerUnmarkTraineeForDeleteMutation = { __typename?: 'Mutation', trainerUnmarkTraineeForDeletion?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', deleteAt?: string | undefined, id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined };
 
 export type UnclaimTraineeMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -903,7 +987,11 @@ export type UnclaimTraineeMutation = { __typename?: 'Mutation', unclaimTrainee?:
 export type UnlinkAlexaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UnlinkAlexaMutation = { __typename?: 'Mutation', unlinkAlexa?: { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined } | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined } | undefined };
+export type UnlinkAlexaMutation = { __typename?: 'Mutation', unlinkAlexa?:
+    | { __typename?: 'Admin', id: string, alexaSkillLinked?: boolean | undefined }
+    | { __typename?: 'Trainee', id: string, alexaSkillLinked?: boolean | undefined }
+    | { __typename?: 'Trainer', id: string, alexaSkillLinked?: boolean | undefined }
+   | undefined };
 
 export type UpdateAdminMutationVariables = Exact<{
   input: UpdateAdminInput;
@@ -921,7 +1009,15 @@ export type UpdateCommentOnDayMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnDayMutation = { __typename?: 'Mutation', updateCommentOnDay: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Entry' } | { __typename?: 'Report' } } };
+export type UpdateCommentOnDayMutation = { __typename?: 'Mutation', updateCommentOnDay: { __typename?: 'UpdateCommentPayload', commentable:
+      | { __typename?: 'Day', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report' }
+     } };
 
 export type UpdateCommentOnEntryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -931,7 +1027,15 @@ export type UpdateCommentOnEntryMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnEntryMutation = { __typename?: 'Mutation', updateCommentOnEntry: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } | { __typename?: 'Report' } } };
+export type UpdateCommentOnEntryMutation = { __typename?: 'Mutation', updateCommentOnEntry: { __typename?: 'UpdateCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+      | { __typename?: 'Report' }
+     } };
 
 export type UpdateCommentOnReportMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -941,7 +1045,15 @@ export type UpdateCommentOnReportMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentOnReportMutation = { __typename?: 'Mutation', updateCommentOnReport: { __typename?: 'UpdateCommentPayload', commentable: { __typename?: 'Day' } | { __typename?: 'Entry' } | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> } } };
+export type UpdateCommentOnReportMutation = { __typename?: 'Mutation', updateCommentOnReport: { __typename?: 'UpdateCommentPayload', commentable:
+      | { __typename?: 'Day' }
+      | { __typename?: 'Entry' }
+      | { __typename?: 'Report', id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }
+     } };
 
 export type UpdateEntryOrderMutationVariables = Exact<{
   entryId: Scalars['ID']['input'];
@@ -1019,17 +1131,29 @@ export type AlexaLinkingUrlQuery = { __typename?: 'Query', alexaLinkingUrl?: str
 export type ArchivePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined }> }> } | undefined> };
+export type ArchivePageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined }
+    | { __typename?: 'Trainee', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined }
+    | { __typename?: 'Trainer', id: string, theme?: string | undefined, firstName: string, lastName: string, language?: string | undefined }
+   | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, summary?: string | undefined, traineeId: string, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined, text?: string | undefined }> }> } | undefined> };
 
 export type AvatarSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AvatarSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type AvatarSettingsDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined };
 
 export type CommentBoxDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CommentBoxDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type CommentBoxDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined };
 
 export type ConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1039,7 +1163,11 @@ export type ConfigQuery = { __typename?: 'Query', config: { __typename?: 'LaraCo
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum, company: { __typename?: 'Company', id: string } } | { __typename?: 'Trainer', id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string }> } | undefined };
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum }
+    | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum, company: { __typename?: 'Company', id: string } }
+    | { __typename?: 'Trainer', id: string, language?: string | undefined, theme?: string | undefined, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string }> }
+   | undefined };
 
 export type DashboardPageDataQueryVariables = Exact<{
   currentYear: Scalars['Int']['input'];
@@ -1047,34 +1175,70 @@ export type DashboardPageDataQueryVariables = Exact<{
 }>;
 
 
-export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined } | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
+export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, theme?: string | undefined }
+    | { __typename?: 'Trainee', id: string, theme?: string | undefined }
+    | { __typename?: 'Trainer', id: string, theme?: string | undefined }
+   | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+          | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+         }> }> } | undefined };
 
 export type DayInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DayInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string, type: UserTypeEnum } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, type: UserTypeEnum } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, type: UserTypeEnum } | undefined };
+export type DayInputDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, firstName: string, lastName: string, type: UserTypeEnum }
+    | { __typename?: 'Trainee', id: string, firstName: string, lastName: string, type: UserTypeEnum }
+    | { __typename?: 'Trainer', id: string, firstName: string, lastName: string, type: UserTypeEnum }
+   | undefined };
 
 export type EntryInputDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EntryInputDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string } | undefined };
+export type EntryInputDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, type: UserTypeEnum, firstName: string, lastName: string }
+    | { __typename?: 'Trainee', id: string, type: UserTypeEnum, firstName: string, lastName: string }
+    | { __typename?: 'Trainer', id: string, type: UserTypeEnum, firstName: string, lastName: string }
+   | undefined };
 
 export type UserPageQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type UserPageQuery = { __typename?: 'Query', getUser?: { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum } | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
+export type UserPageQuery = { __typename?: 'Query', getUser?:
+    | { __typename?: 'Admin', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum }
+    | { __typename?: 'Trainee', startDate?: string | undefined, startOfToolUsage?: string | undefined, endDate?: string | undefined, deleteAt?: string | undefined, course?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, company: { __typename?: 'Company', id: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined }
+    | { __typename?: 'Trainer', deleteAt?: string | undefined, id: string, firstName: string, lastName: string, email: string, type: UserTypeEnum, trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string }> }
+   | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined, currentUser?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined };
 
 export type NavigationDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationDataQuery = { __typename?: 'Query', currentUser?: { __typename: 'Admin', type: UserTypeEnum, id: string, firstName: string, lastName: string } | { __typename: 'Trainee', type: UserTypeEnum, id: string, firstName: string, lastName: string } | { __typename: 'Trainer', type: UserTypeEnum, id: string, firstName: string, lastName: string } | undefined };
+export type NavigationDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename: 'Admin', type: UserTypeEnum, id: string, firstName: string, lastName: string }
+    | { __typename: 'Trainee', type: UserTypeEnum, id: string, firstName: string, lastName: string }
+    | { __typename: 'Trainer', type: UserTypeEnum, id: string, firstName: string, lastName: string }
+   | undefined };
 
 export type OnboardingPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string } | { __typename?: 'Trainee', id: string, firstName: string } | { __typename?: 'Trainer', id: string, firstName: string } | undefined };
+export type OnboardingPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, firstName: string }
+    | { __typename?: 'Trainee', id: string, firstName: string }
+    | { __typename?: 'Trainer', id: string, firstName: string }
+   | undefined };
 
 export type PrintDataQueryVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
@@ -1089,7 +1253,23 @@ export type ReportPageDataQueryVariables = Exact<{
 }>;
 
 
-export type ReportPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, text_split?: string | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> }> } | undefined };
+export type ReportPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+    | { __typename?: 'Trainee', startOfToolUsage?: string | undefined, endOfToolUsage?: string | undefined, id: string, firstName: string, lastName: string }
+    | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+   | undefined, reportForYearAndWeek?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, previousReportLink?: string | undefined, nextReportLink?: string | undefined, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+        | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+        | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+        | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+       }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, date: string, id: string, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+          | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+         }>, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, text_split?: string | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }> }> } | undefined };
 
 export type ReportReviewPageDataQueryVariables = Exact<{
   year: Scalars['Int']['input'];
@@ -1098,17 +1278,41 @@ export type ReportReviewPageDataQueryVariables = Exact<{
 }>;
 
 
-export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, text_split?: string | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user: { __typename?: 'Admin', id: string, firstName: string, lastName: string } | { __typename?: 'Trainee', id: string, firstName: string, lastName: string } | { __typename?: 'Trainer', id: string, firstName: string, lastName: string } }> }> } | undefined };
+export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+    | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+    | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+   | undefined, reportForTrainee?: { __typename?: 'Report', id: string, week: number, year: number, summary?: string | undefined, department?: string | undefined, status: ReportStatus, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+        | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+        | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+        | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+       }>, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, text_split?: string | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+            | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+            | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+           }> }>, comments: Array<{ __typename?: 'Comment', id: string, text?: string | undefined, published: boolean, user:
+          | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
+          | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
+         }> }> } | undefined };
 
 export type SettingsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string } } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined }
+    | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string } }
+    | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined }
+   | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type SignatureSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignatureSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, signature?: string | undefined } | { __typename?: 'Trainee', id: string, signature?: string | undefined } | { __typename?: 'Trainer', id: string, signature?: string | undefined } | undefined };
+export type SignatureSettingsDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, signature?: string | undefined }
+    | { __typename?: 'Trainee', id: string, signature?: string | undefined }
+    | { __typename?: 'Trainer', id: string, signature?: string | undefined }
+   | undefined };
 
 export type SuggestionsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1118,17 +1322,29 @@ export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?:
+    | { __typename?: 'Admin', id: string }
+    | { __typename?: 'Trainee', id: string }
+    | { __typename?: 'Trainer', id: string }
+   | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin' } | { __typename: 'Trainee', id: string, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, company: { __typename?: 'Company', id: string, name: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined } | { __typename?: 'Trainer' } | undefined };
+export type TraineeSettingsDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin' }
+    | { __typename: 'Trainee', id: string, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, company: { __typename?: 'Company', id: string, name: string }, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined }
+    | { __typename?: 'Trainer' }
+   | undefined };
 
 export type TrainerReportsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, theme?: string | undefined } | { __typename?: 'Trainee', id: string, theme?: string | undefined } | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> } | undefined };
+export type TrainerReportsPageDataQuery = { __typename?: 'Query', currentUser?:
+    | { __typename?: 'Admin', id: string, theme?: string | undefined }
+    | { __typename?: 'Trainee', id: string, theme?: string | undefined }
+    | { __typename?: 'Trainer', id: string, theme?: string | undefined, trainees: Array<{ __typename?: 'Trainee', firstName: string, lastName: string, id: string, openReportsCount: number, reports: Array<{ __typename?: 'Report', id: string, status: ReportStatus, week: number, year: number, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined }> }> }> }
+   | undefined };
 
 export type TrainersPageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1962,6 +2178,9 @@ export function useAdminAdminsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
         }
+// @ts-ignore
+export function useAdminAdminsPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>;
+export function useAdminAdminsPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminAdminsPageQuery | undefined, AdminAdminsPageQueryVariables>;
 export function useAdminAdminsPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AdminAdminsPageQuery, AdminAdminsPageQueryVariables>(AdminAdminsPageDocument, options);
@@ -1991,6 +2210,9 @@ export function useAdminTraineesPageLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>(AdminTraineesPageDocument, options);
         }
+// @ts-ignore
+export function useAdminTraineesPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>;
+export function useAdminTraineesPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminTraineesPageQuery | undefined, AdminTraineesPageQueryVariables>;
 export function useAdminTraineesPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AdminTraineesPageQuery, AdminTraineesPageQueryVariables>(AdminTraineesPageDocument, options);
@@ -2016,6 +2238,9 @@ export function useAdminTrainersPageLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>(AdminTrainersPageDocument, options);
         }
+// @ts-ignore
+export function useAdminTrainersPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>;
+export function useAdminTrainersPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>): Apollo.UseSuspenseQueryResult<AdminTrainersPageQuery | undefined, AdminTrainersPageQueryVariables>;
 export function useAdminTrainersPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AdminTrainersPageQuery, AdminTrainersPageQueryVariables>(AdminTrainersPageDocument, options);
@@ -2036,6 +2261,9 @@ export function useAlexaLinkingUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>(AlexaLinkingUrlDocument, options);
         }
+// @ts-ignore
+export function useAlexaLinkingUrlSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>): Apollo.UseSuspenseQueryResult<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>;
+export function useAlexaLinkingUrlSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>): Apollo.UseSuspenseQueryResult<AlexaLinkingUrlQuery | undefined, AlexaLinkingUrlQueryVariables>;
 export function useAlexaLinkingUrlSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AlexaLinkingUrlQuery, AlexaLinkingUrlQueryVariables>(AlexaLinkingUrlDocument, options);
@@ -2083,6 +2311,9 @@ export function useArchivePageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ArchivePageDataQuery, ArchivePageDataQueryVariables>(ArchivePageDataDocument, options);
         }
+// @ts-ignore
+export function useArchivePageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArchivePageDataQuery, ArchivePageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ArchivePageDataQuery, ArchivePageDataQueryVariables>;
+export function useArchivePageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ArchivePageDataQuery, ArchivePageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ArchivePageDataQuery | undefined, ArchivePageDataQueryVariables>;
 export function useArchivePageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ArchivePageDataQuery, ArchivePageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ArchivePageDataQuery, ArchivePageDataQueryVariables>(ArchivePageDataDocument, options);
@@ -2105,6 +2336,9 @@ export function useAvatarSettingsDataLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>(AvatarSettingsDataDocument, options);
         }
+// @ts-ignore
+export function useAvatarSettingsDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>;
+export function useAvatarSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<AvatarSettingsDataQuery | undefined, AvatarSettingsDataQueryVariables>;
 export function useAvatarSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<AvatarSettingsDataQuery, AvatarSettingsDataQueryVariables>(AvatarSettingsDataDocument, options);
@@ -2127,6 +2361,9 @@ export function useCommentBoxDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CommentBoxDataQuery, CommentBoxDataQueryVariables>(CommentBoxDataDocument, options);
         }
+// @ts-ignore
+export function useCommentBoxDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CommentBoxDataQuery, CommentBoxDataQueryVariables>): Apollo.UseSuspenseQueryResult<CommentBoxDataQuery, CommentBoxDataQueryVariables>;
+export function useCommentBoxDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CommentBoxDataQuery, CommentBoxDataQueryVariables>): Apollo.UseSuspenseQueryResult<CommentBoxDataQuery | undefined, CommentBoxDataQueryVariables>;
 export function useCommentBoxDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CommentBoxDataQuery, CommentBoxDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<CommentBoxDataQuery, CommentBoxDataQueryVariables>(CommentBoxDataDocument, options);
@@ -2156,6 +2393,9 @@ export function useConfigLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Con
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ConfigQuery, ConfigQueryVariables>(ConfigDocument, options);
         }
+// @ts-ignore
+export function useConfigSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ConfigQuery, ConfigQueryVariables>): Apollo.UseSuspenseQueryResult<ConfigQuery, ConfigQueryVariables>;
+export function useConfigSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ConfigQuery, ConfigQueryVariables>): Apollo.UseSuspenseQueryResult<ConfigQuery | undefined, ConfigQueryVariables>;
 export function useConfigSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ConfigQuery, ConfigQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ConfigQuery, ConfigQueryVariables>(ConfigDocument, options);
@@ -2195,6 +2435,9 @@ export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
         }
+// @ts-ignore
+export function useCurrentUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>): Apollo.UseSuspenseQueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export function useCurrentUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>): Apollo.UseSuspenseQueryResult<CurrentUserQuery | undefined, CurrentUserQueryVariables>;
 export function useCurrentUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
@@ -2269,6 +2512,9 @@ export function useDashboardPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DashboardPageDataQuery, DashboardPageDataQueryVariables>(DashboardPageDataDocument, options);
         }
+// @ts-ignore
+export function useDashboardPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DashboardPageDataQuery, DashboardPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<DashboardPageDataQuery, DashboardPageDataQueryVariables>;
+export function useDashboardPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DashboardPageDataQuery, DashboardPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<DashboardPageDataQuery | undefined, DashboardPageDataQueryVariables>;
 export function useDashboardPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DashboardPageDataQuery, DashboardPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<DashboardPageDataQuery, DashboardPageDataQueryVariables>(DashboardPageDataDocument, options);
@@ -2294,6 +2540,9 @@ export function useDayInputDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DayInputDataQuery, DayInputDataQueryVariables>(DayInputDataDocument, options);
         }
+// @ts-ignore
+export function useDayInputDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DayInputDataQuery, DayInputDataQueryVariables>): Apollo.UseSuspenseQueryResult<DayInputDataQuery, DayInputDataQueryVariables>;
+export function useDayInputDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DayInputDataQuery, DayInputDataQueryVariables>): Apollo.UseSuspenseQueryResult<DayInputDataQuery | undefined, DayInputDataQueryVariables>;
 export function useDayInputDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DayInputDataQuery, DayInputDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<DayInputDataQuery, DayInputDataQueryVariables>(DayInputDataDocument, options);
@@ -2319,6 +2568,9 @@ export function useEntryInputDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<EntryInputDataQuery, EntryInputDataQueryVariables>(EntryInputDataDocument, options);
         }
+// @ts-ignore
+export function useEntryInputDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<EntryInputDataQuery, EntryInputDataQueryVariables>): Apollo.UseSuspenseQueryResult<EntryInputDataQuery, EntryInputDataQueryVariables>;
+export function useEntryInputDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntryInputDataQuery, EntryInputDataQueryVariables>): Apollo.UseSuspenseQueryResult<EntryInputDataQuery | undefined, EntryInputDataQueryVariables>;
 export function useEntryInputDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntryInputDataQuery, EntryInputDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<EntryInputDataQuery, EntryInputDataQueryVariables>(EntryInputDataDocument, options);
@@ -2378,6 +2630,9 @@ export function useUserPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<U
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UserPageQuery, UserPageQueryVariables>(UserPageDocument, options);
         }
+// @ts-ignore
+export function useUserPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UserPageQuery, UserPageQueryVariables>): Apollo.UseSuspenseQueryResult<UserPageQuery, UserPageQueryVariables>;
+export function useUserPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserPageQuery, UserPageQueryVariables>): Apollo.UseSuspenseQueryResult<UserPageQuery | undefined, UserPageQueryVariables>;
 export function useUserPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserPageQuery, UserPageQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<UserPageQuery, UserPageQueryVariables>(UserPageDocument, options);
@@ -2404,6 +2659,9 @@ export function useNavigationDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<NavigationDataQuery, NavigationDataQueryVariables>(NavigationDataDocument, options);
         }
+// @ts-ignore
+export function useNavigationDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<NavigationDataQuery, NavigationDataQueryVariables>): Apollo.UseSuspenseQueryResult<NavigationDataQuery, NavigationDataQueryVariables>;
+export function useNavigationDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<NavigationDataQuery, NavigationDataQueryVariables>): Apollo.UseSuspenseQueryResult<NavigationDataQuery | undefined, NavigationDataQueryVariables>;
 export function useNavigationDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<NavigationDataQuery, NavigationDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<NavigationDataQuery, NavigationDataQueryVariables>(NavigationDataDocument, options);
@@ -2427,6 +2685,9 @@ export function useOnboardingPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>(OnboardingPageDataDocument, options);
         }
+// @ts-ignore
+export function useOnboardingPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>;
+export function useOnboardingPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<OnboardingPageDataQuery | undefined, OnboardingPageDataQueryVariables>;
 export function useOnboardingPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<OnboardingPageDataQuery, OnboardingPageDataQueryVariables>(OnboardingPageDataDocument, options);
@@ -2449,6 +2710,9 @@ export function usePrintDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PrintDataQuery, PrintDataQueryVariables>(PrintDataDocument, options);
         }
+// @ts-ignore
+export function usePrintDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<PrintDataQuery, PrintDataQueryVariables>): Apollo.UseSuspenseQueryResult<PrintDataQuery, PrintDataQueryVariables>;
+export function usePrintDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PrintDataQuery, PrintDataQueryVariables>): Apollo.UseSuspenseQueryResult<PrintDataQuery | undefined, PrintDataQueryVariables>;
 export function usePrintDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PrintDataQuery, PrintDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<PrintDataQuery, PrintDataQueryVariables>(PrintDataDocument, options);
@@ -2531,6 +2795,9 @@ export function useReportPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportPageDataQuery, ReportPageDataQueryVariables>(ReportPageDataDocument, options);
         }
+// @ts-ignore
+export function useReportPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportPageDataQuery, ReportPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ReportPageDataQuery, ReportPageDataQueryVariables>;
+export function useReportPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReportPageDataQuery, ReportPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ReportPageDataQuery | undefined, ReportPageDataQueryVariables>;
 export function useReportPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReportPageDataQuery, ReportPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ReportPageDataQuery, ReportPageDataQueryVariables>(ReportPageDataDocument, options);
@@ -2607,6 +2874,9 @@ export function useReportReviewPageDataLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>(ReportReviewPageDataDocument, options);
         }
+// @ts-ignore
+export function useReportReviewPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>;
+export function useReportReviewPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<ReportReviewPageDataQuery | undefined, ReportReviewPageDataQueryVariables>;
 export function useReportReviewPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ReportReviewPageDataQuery, ReportReviewPageDataQueryVariables>(ReportReviewPageDataDocument, options);
@@ -2647,6 +2917,9 @@ export function useSettingsPageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingsPageDataQuery, SettingsPageDataQueryVariables>(SettingsPageDataDocument, options);
         }
+// @ts-ignore
+export function useSettingsPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingsPageDataQuery, SettingsPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<SettingsPageDataQuery, SettingsPageDataQueryVariables>;
+export function useSettingsPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SettingsPageDataQuery, SettingsPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<SettingsPageDataQuery | undefined, SettingsPageDataQueryVariables>;
 export function useSettingsPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SettingsPageDataQuery, SettingsPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SettingsPageDataQuery, SettingsPageDataQueryVariables>(SettingsPageDataDocument, options);
@@ -2670,6 +2943,9 @@ export function useSignatureSettingsDataLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>(SignatureSettingsDataDocument, options);
         }
+// @ts-ignore
+export function useSignatureSettingsDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>;
+export function useSignatureSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<SignatureSettingsDataQuery | undefined, SignatureSettingsDataQueryVariables>;
 export function useSignatureSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SignatureSettingsDataQuery, SignatureSettingsDataQueryVariables>(SignatureSettingsDataDocument, options);
@@ -2693,6 +2969,9 @@ export function useSuggestionsDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SuggestionsDataQuery, SuggestionsDataQueryVariables>(SuggestionsDataDocument, options);
         }
+// @ts-ignore
+export function useSuggestionsDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SuggestionsDataQuery, SuggestionsDataQueryVariables>): Apollo.UseSuspenseQueryResult<SuggestionsDataQuery, SuggestionsDataQueryVariables>;
+export function useSuggestionsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SuggestionsDataQuery, SuggestionsDataQueryVariables>): Apollo.UseSuspenseQueryResult<SuggestionsDataQuery | undefined, SuggestionsDataQueryVariables>;
 export function useSuggestionsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SuggestionsDataQuery, SuggestionsDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SuggestionsDataQuery, SuggestionsDataQueryVariables>(SuggestionsDataDocument, options);
@@ -2735,6 +3014,9 @@ export function useTraineePageDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TraineePageDataQuery, TraineePageDataQueryVariables>(TraineePageDataDocument, options);
         }
+// @ts-ignore
+export function useTraineePageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TraineePageDataQuery, TraineePageDataQueryVariables>): Apollo.UseSuspenseQueryResult<TraineePageDataQuery, TraineePageDataQueryVariables>;
+export function useTraineePageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineePageDataQuery, TraineePageDataQueryVariables>): Apollo.UseSuspenseQueryResult<TraineePageDataQuery | undefined, TraineePageDataQueryVariables>;
 export function useTraineePageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineePageDataQuery, TraineePageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TraineePageDataQuery, TraineePageDataQueryVariables>(TraineePageDataDocument, options);
@@ -2773,6 +3055,9 @@ export function useTraineeSettingsDataLazyQuery(baseOptions?: Apollo.LazyQueryHo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>(TraineeSettingsDataDocument, options);
         }
+// @ts-ignore
+export function useTraineeSettingsDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>;
+export function useTraineeSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>): Apollo.UseSuspenseQueryResult<TraineeSettingsDataQuery | undefined, TraineeSettingsDataQueryVariables>;
 export function useTraineeSettingsDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TraineeSettingsDataQuery, TraineeSettingsDataQueryVariables>(TraineeSettingsDataDocument, options);
@@ -2813,6 +3098,9 @@ export function useTrainerReportsPageDataLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>(TrainerReportsPageDataDocument, options);
         }
+// @ts-ignore
+export function useTrainerReportsPageDataSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>;
+export function useTrainerReportsPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>): Apollo.UseSuspenseQueryResult<TrainerReportsPageDataQuery | undefined, TrainerReportsPageDataQueryVariables>;
 export function useTrainerReportsPageDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TrainerReportsPageDataQuery, TrainerReportsPageDataQueryVariables>(TrainerReportsPageDataDocument, options);
@@ -2837,6 +3125,9 @@ export function useTrainersPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TrainersPageQuery, TrainersPageQueryVariables>(TrainersPageDocument, options);
         }
+// @ts-ignore
+export function useTrainersPageSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrainersPageQuery, TrainersPageQueryVariables>): Apollo.UseSuspenseQueryResult<TrainersPageQuery, TrainersPageQueryVariables>;
+export function useTrainersPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TrainersPageQuery, TrainersPageQueryVariables>): Apollo.UseSuspenseQueryResult<TrainersPageQuery | undefined, TrainersPageQueryVariables>;
 export function useTrainersPageSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TrainersPageQuery, TrainersPageQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TrainersPageQuery, TrainersPageQueryVariables>(TrainersPageDocument, options);
