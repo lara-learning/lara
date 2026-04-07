@@ -17,7 +17,7 @@
     "@aws-sdk/lib-dynamodb": "3.1020.0",
     "@aws-sdk/s3-request-presigner": "3.1020.0",
     "@aws-sdk/util-dynamodb": "3.996.2",
-    "@graphql-tools/schema": "^10.0.25",
+    "@graphql-tools/schema": "^10.0.31",
     "@lara/api": "^1.0.0",
     "apollo-server-lambda": "^3.13.0",
     "casual": "^1.6.2",

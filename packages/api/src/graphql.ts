@@ -688,7 +688,7 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -725,27 +725,29 @@ export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, 
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+export type SubscriptionResolver<TResult, TKey extends string, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> =
   | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
-export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+export type TypeResolveFn<TTypes, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>> = (
   parent: TParent,
   context: TContext,
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<TResult = Record<PropertyKey, never>, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
+
+
 
 
 
@@ -771,11 +773,11 @@ export type GqlResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   LaraConfig: ResolverTypeWrapper<GqlLaraConfig>;
   MutateEntryPayload: ResolverTypeWrapper<Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversTypes['Day'], entry?: Maybe<GqlResolversTypes['Entry']>, report: GqlResolversTypes['Report'] }>;
-  Mutation: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
   OAuthPayload: ResolverTypeWrapper<GqlOAuthPayload>;
   PrintPayload: ResolverTypeWrapper<GqlPrintPayload>;
   PublishCommentsPayload: ResolverTypeWrapper<Omit<GqlPublishCommentsPayload, 'report'> & { report: GqlResolversTypes['Report'] }>;
-  Query: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Report: ResolverTypeWrapper<Report>;
   ReportStatus: GqlReportStatus;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -815,11 +817,11 @@ export type GqlResolversParentTypes = ResolversObject<{
   Int: Scalars['Int']['output'];
   LaraConfig: GqlLaraConfig;
   MutateEntryPayload: Omit<GqlMutateEntryPayload, 'day' | 'entry' | 'report'> & { day: GqlResolversParentTypes['Day'], entry?: Maybe<GqlResolversParentTypes['Entry']>, report: GqlResolversParentTypes['Report'] };
-  Mutation: {};
+  Mutation: Record<PropertyKey, never>;
   OAuthPayload: GqlOAuthPayload;
   PrintPayload: GqlPrintPayload;
   PublishCommentsPayload: Omit<GqlPublishCommentsPayload, 'report'> & { report: GqlResolversParentTypes['Report'] };
-  Query: {};
+  Query: Record<PropertyKey, never>;
   Report: Report;
   String: Scalars['String']['output'];
   Suggestion: GqlSuggestion;
@@ -854,7 +856,6 @@ export type GqlAdminResolvers<ContextType = Context, ParentType extends GqlResol
 
 export type GqlAdminTraineePayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['AdminTraineePayload'] = GqlResolversParentTypes['AdminTraineePayload']> = ResolversObject<{
   trainee?: Resolver<GqlResolversTypes['Trainee'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlCommentResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Comment'] = GqlResolversParentTypes['Comment']> = ResolversObject<{
@@ -863,26 +864,21 @@ export type GqlCommentResolvers<ContextType = Context, ParentType extends GqlRes
   published?: Resolver<GqlResolversTypes['Boolean'], ParentType, ContextType>;
   text?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<GqlResolversTypes['UserInterface'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlCommentableInterfaceResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['CommentableInterface'] = GqlResolversParentTypes['CommentableInterface']> = ResolversObject<{
   __resolveType: TypeResolveFn<'Day' | 'Entry' | 'Report', ParentType, ContextType>;
-  comments?: Resolver<Array<GqlResolversTypes['Comment']>, ParentType, ContextType>;
-  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
 }>;
 
 export type GqlCompanyResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Company'] = GqlResolversParentTypes['Company']> = ResolversObject<{
   id?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   logo?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlCreateCommentPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['CreateCommentPayload'] = GqlResolversParentTypes['CreateCommentPayload']> = ResolversObject<{
   comment?: Resolver<GqlResolversTypes['Comment'], ParentType, ContextType>;
   commentable?: Resolver<GqlResolversTypes['CommentableInterface'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlDayResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Day'] = GqlResolversParentTypes['Day']> = ResolversObject<{
@@ -899,12 +895,10 @@ export type GqlDayResolvers<ContextType = Context, ParentType extends GqlResolve
 export type GqlDeleteCommentPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['DeleteCommentPayload'] = GqlResolversParentTypes['DeleteCommentPayload']> = ResolversObject<{
   comment?: Resolver<GqlResolversTypes['Comment'], ParentType, ContextType>;
   commentable?: Resolver<GqlResolversTypes['CommentableInterface'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlDevSetUserPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['DevSetUserPayload'] = GqlResolversParentTypes['DevSetUserPayload']> = ResolversObject<{
   user?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlEntryResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Entry'] = GqlResolversParentTypes['Entry']> = ResolversObject<{
@@ -928,14 +922,12 @@ export type GqlLaraConfigResolvers<ContextType = Context, ParentType extends Gql
   maxWorkDayMinutes?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   minEducationDayMinutes?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   minWorkDayMinutes?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlMutateEntryPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['MutateEntryPayload'] = GqlResolversParentTypes['MutateEntryPayload']> = ResolversObject<{
   day?: Resolver<GqlResolversTypes['Day'], ParentType, ContextType>;
   entry?: Resolver<Maybe<GqlResolversTypes['Entry']>, ParentType, ContextType>;
   report?: Resolver<GqlResolversTypes['Report'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Mutation'] = GqlResolversParentTypes['Mutation']> = ResolversObject<{
@@ -983,17 +975,14 @@ export type GqlOAuthPayloadResolvers<ContextType = Context, ParentType extends G
   accessToken?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   expiresIn?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   refreshToken?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlPrintPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PrintPayload'] = GqlResolversParentTypes['PrintPayload']> = ResolversObject<{
   estimatedWaitingTime?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlPublishCommentsPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['PublishCommentsPayload'] = GqlResolversParentTypes['PublishCommentsPayload']> = ResolversObject<{
   report?: Resolver<GqlResolversTypes['Report'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlQueryResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Query'] = GqlResolversParentTypes['Query']> = ResolversObject<{
@@ -1033,7 +1022,6 @@ export type GqlReportResolvers<ContextType = Context, ParentType extends GqlReso
 export type GqlSuggestionResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Suggestion'] = GqlResolversParentTypes['Suggestion']> = ResolversObject<{
   text?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
   time?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['Trainee'] = GqlResolversParentTypes['Trainee']> = ResolversObject<{
@@ -1081,34 +1069,20 @@ export type GqlTrainerResolvers<ContextType = Context, ParentType extends GqlRes
 export type GqlTrainerTraineePayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['TrainerTraineePayload'] = GqlResolversParentTypes['TrainerTraineePayload']> = ResolversObject<{
   trainee?: Resolver<GqlResolversTypes['Trainee'], ParentType, ContextType>;
   trainer?: Resolver<GqlResolversTypes['Trainer'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlUpdateCommentPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['UpdateCommentPayload'] = GqlResolversParentTypes['UpdateCommentPayload']> = ResolversObject<{
   comment?: Resolver<GqlResolversTypes['Comment'], ParentType, ContextType>;
   commentable?: Resolver<GqlResolversTypes['CommentableInterface'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlUpdateReportPayloadResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['UpdateReportPayload'] = GqlResolversParentTypes['UpdateReportPayload']> = ResolversObject<{
   report?: Resolver<GqlResolversTypes['Report'], ParentType, ContextType>;
   trainee?: Resolver<GqlResolversTypes['Trainee'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GqlUserInterfaceResolvers<ContextType = Context, ParentType extends GqlResolversParentTypes['UserInterface'] = GqlResolversParentTypes['UserInterface']> = ResolversObject<{
   __resolveType: TypeResolveFn<'Admin' | 'Trainee' | 'Trainer', ParentType, ContextType>;
-  alexaSkillLinked?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  createdAt?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  email?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  firstName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
-  language?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
-  lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
-  notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
-  signature?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
-  theme?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
-  type?: Resolver<GqlResolversTypes['UserTypeEnum'], ParentType, ContextType>;
 }>;
 
 export type GqlResolvers<ContextType = Context> = ResolversObject<{
