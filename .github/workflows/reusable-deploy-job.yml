@@ -89,6 +89,7 @@ jobs:
         run: |
           echo "FRONTEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.FRONTEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
           echo "BACKEND_URL_WITHOUT_HTTPS=$(echo ${{ secrets.BACKEND_URL }} | sed 's/^https:\/\///')" >> $GITHUB_ENV
+          echo "STRIPPED_FRONTEND_URL=$(echo "${{ secrets.FRONTEND_URL }}" | sed -E 's#^(https?://[^/]+).*#\1#')" >> $GITHUB_ENV
           echo "STRIPPED_BACKEND_URL=$(echo "${{ secrets.BACKEND_URL }}" | sed -E 's#^(https?://[^/]+).*#\1#')" >> $GITHUB_ENV
 
       - name: Deploy Frontend

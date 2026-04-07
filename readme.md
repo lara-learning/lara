@@ -203,6 +203,8 @@ The following secrets are set automatically during deployment by the GitHub Acti
   - e.g. localhost:8080
 - BACKEND_URL_WITHOUT_HTTPS
   - e.g. localhost:3000/dev
+- STRIPPED_FRONTEND_URL
+  - URL for frontend without any path, used in serverless.yml cors policy. e.g. https://localhost:8080
 - STRIPPED_BACKEND_URL
   - URL for backend without any path, used in serverless.yml cors policy. e.g. https://localhost:3000
 
