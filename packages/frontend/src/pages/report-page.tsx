@@ -1,5 +1,5 @@
 import { GraphQLError } from 'graphql'
-import React from 'react'
+import React, { useState } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router'
 
 import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box } from '@lara/components'
@@ -46,6 +46,7 @@ const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { getFinishedDays } = useReportHelper()
   const { trainee, year, week, term } = useParams()
+  const [response, setResponse] = useState()
 
   const variables: ReportPageDataQueryVariables = {
     year: parseInt(year ?? '', 10),
@@ -263,6 +264,25 @@ const ReportPage: React.FunctionComponent = () => {
     navigate('/')
   }
 
+  const askLLmForFeedback = async () => {
+    console.log('do sth')
+    const inputText = ''
+
+    const response = await fetch(`/ai_assistant`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ inputText }),
+
+      credentials: 'include',
+    })
+    const data = await response.json()
+    console.log(data, 'data')
+
+    setResponse(data)
+  }
+
   const finishedDays = report && getFinishedDays(report)
 
   const reportArchived = report?.status === ReportStatus.Archived
@@ -313,22 +333,32 @@ const ReportPage: React.FunctionComponent = () => {
       <Spacer y="l">
         <Flex justifyContent={'flex-end'} alignItems={'center'}>
           {(reportTodo || reportReopened) && (
-            <PrimaryButton
-              onClick={() => {
-                if (finishedDays !== 5 && !report.department) {
-                  addToast({
-                    icon: 'Error',
-                    title: strings.report.incomplete.title,
-                    text: strings.report.incomplete.description,
-                    type: 'error',
-                  })
-                  return
-                }
-                toggleHandoverModal()
-              }}
-            >
-              {strings.report.handover}
-            </PrimaryButton>
+            <>
+              <PrimaryButton
+                onClick={() => {
+                  if (finishedDays !== 5 && !report.department) {
+                    addToast({
+                      icon: 'Error',
+                      title: strings.report.incomplete.title,
+                      text: strings.report.incomplete.description,
+                      type: 'error',
+                    })
+                    return
+                  }
+                  toggleHandoverModal()
+                }}
+              >
+                {strings.report.handover}
+              </PrimaryButton>
+              <PrimaryButton
+                onClick={() => {
+                  askLLmForFeedback()
+                }}
+              >
+                {'KI-Assistent'}
+                {response ? response : ''}
+              </PrimaryButton>
+            </>
           )}
           {reportArchived && trainee === undefined && (
             <>

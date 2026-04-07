@@ -16,7 +16,7 @@ import { handleAuthorizeRequest } from './routes/authorize'
 import { validateJWT } from './services/oauth.service'
 import { parseBearerAuth } from './utils/security'
 import { handleAvatarDeletion, handleAvatarUpload } from './routes/avatar'
-import { getBedrockResponse } from '@aiassistant/llm'
+import { getBedrockResponse } from './routes/bedrock'
 
 const { STAGE, AUTH_HEADER } = process.env
 
@@ -100,11 +100,12 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
       try {
         const { inputText } = req.body
         if (!inputText) return res.status(400).json({ error: 'inputText required' })
-
-        const result = await getBedrockResponse(inputText)
+        const inputText2 = 'Das ist ein Testbericht'
+        const result = await getBedrockResponse(inputText2)
+        console.log(result, 'BEDROCK RESPONSE')
         return res.json({ result })
       } catch (err) {
-        console.error(err)
+        console.error(err, 'err returned')
         return res.status(500).json({ error: 'Failed to get LLM response' })
       }
     })
