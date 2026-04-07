@@ -265,22 +265,20 @@ const ReportPage: React.FunctionComponent = () => {
   }
 
   const askLLmForFeedback = async () => {
-    console.log('do sth')
-    const inputText = ''
-
-    const response = await fetch(`/ai_assistant`, {
+    const inputText = 'test'
+    const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
+    const response = await fetch(`${BackendUrl}/ai_assistant`, {
       method: 'POST',
       headers: {
+        authorization: 'allow',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ inputText }),
 
       credentials: 'include',
-    })
-    const data = await response.json()
-    console.log(data, 'data')
-
-    setResponse(data)
+    }).then((res) => res.json())
+    setResponse(response.result)
+    console.log(response, 'data')
   }
 
   const finishedDays = report && getFinishedDays(report)

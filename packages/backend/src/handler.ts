@@ -102,8 +102,8 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
         if (!inputText) return res.status(400).json({ error: 'inputText required' })
         const inputText2 = 'Das ist ein Testbericht'
         const result = await getBedrockResponse(inputText2)
-        console.log(result, 'BEDROCK RESPONSE')
-        return res.json({ result })
+        console.log(result, 'result', 'BEDROCK RESPONSE')
+        return res.json({ result: result })
       } catch (err) {
         console.error(err, 'err returned')
         return res.status(500).json({ error: 'Failed to get LLM response' })

@@ -52,10 +52,10 @@ export async function getBedrockResponse(inputText: string): Promise<string> {
   return outputText
 }
 
-async function main() {
-  const inputText = 'viele meetings nichts gemacht'
-  const result = await getBedrockResponse(inputText)
-  console.log(result)
-}
+// async function main() {
+//   const inputText = 'viele meetings nichts gemacht'
+//   const result = await getBedrockResponse(inputText)
+//   console.log(result)
+// }
 
-main()
+// main()
