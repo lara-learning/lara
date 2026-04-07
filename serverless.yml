@@ -588,10 +588,11 @@ resources:
                 - PATCH
             AccessControlAllowOrigins:
               Items:
-                - '*'
+                - ${self:provider.environment.FRONTEND_URL}
+                - ${self:provider.environment.BACKEND_URL}
             AccessControlExposeHeaders:
               Items: []
-            OriginOverride: false
+            OriginOverride: true
           SecurityHeadersConfig:
             ContentTypeOptions:
               Override: true
