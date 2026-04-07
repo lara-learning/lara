@@ -1,8 +1,8 @@
 import { GraphQLError } from 'graphql'
-import React from 'react'
+import React, { useState } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router'
 
-import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box } from '@lara/components'
+import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box, StyledIcon } from '@lara/components'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import DayInput from '../components/day-input'
@@ -35,12 +35,19 @@ import {
   useReportReviewPageDataQuery,
   useUpdateReportMutation,
   useUserPageQuery,
+  useSettingsPageDataQuery,
 } from '../graphql'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { useReportHelper } from '../helper/report-helper'
+import { LlmResponse, llmStore } from '../helper/llm-store'
+import { styled } from 'styled-components'
+
+const StyledDiv = styled.div`
+  margin-left: 10px;
+`
 
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
@@ -68,6 +75,7 @@ const ReportPage: React.FunctionComponent = () => {
     skip: !!trainee,
   })
 
+  //llmenabled from here?
   const userQuery = useUserPageQuery({
     variables: { id: trainee ?? '' },
     skip: !trainee,
@@ -99,6 +107,8 @@ const ReportPage: React.FunctionComponent = () => {
 
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const toggleUnarchiveModal = () => setShowUnarchiveModal(!showUnarchiveModal)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const updateReport = async (values: Partial<Report>) => {
     if (!report) return
@@ -140,6 +150,7 @@ const ReportPage: React.FunctionComponent = () => {
         }
       })
       .catch((error: GraphQLError) => {
+        console.log(error)
         addToast({ title: strings.errors.error, text: error.message, type: 'error' })
       })
   }
@@ -263,6 +274,41 @@ const ReportPage: React.FunctionComponent = () => {
     navigate('/')
   }
 
+  const askLLmForFeedback = async () => {
+    setIsLoading(true)
+    try {
+      const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
+      const response = await fetch(`${BackendUrl}/ai_assistant`, {
+        method: 'POST',
+        headers: {
+          authorization: 'allow',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ entries: allEntries }),
+        credentials: 'include',
+      }).then((res) => res.json() as Promise<LlmResponse>)
+      llmStore().setResponse(response)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  function checkIfAnythingWritten() {
+    const entriesText = report?.days.flatMap((day) => day.entries).map((entry) => entry.text)
+
+    if (entriesText && entriesText.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  const allEntries = report?.days
+    .flatMap((day) => day.entries)
+    .map((entry) => ({ id: entry.id, text: entry.text }))
+    .filter((entry): entry is { id: string; text: string } => entry.text !== undefined)
+
   const finishedDays = report && getFinishedDays(report)
 
   const reportArchived = report?.status === ReportStatus.Archived
@@ -306,29 +352,60 @@ const ReportPage: React.FunctionComponent = () => {
     )
   }
 
+  const { data: enablellmdata } = useSettingsPageDataQuery()
+
+  function checkLLMEnabled() {
+    const user = enablellmdata?.currentUser
+    if (user?.__typename === 'Trainee') {
+      return user.llmEnabled ?? true
+    }
+    return
+  }
+
   const renderReportPageButtons = () => {
     if (!report) return
 
     return (
       <Spacer y="l">
-        <Flex justifyContent={'flex-end'} alignItems={'center'}>
+        <Flex justifyContent={'space-between'} alignItems={'center'}>
           {(reportTodo || reportReopened) && (
-            <PrimaryButton
-              onClick={() => {
-                if (finishedDays !== 5 && !report.department) {
-                  addToast({
-                    icon: 'Error',
-                    title: strings.report.incomplete.title,
-                    text: strings.report.incomplete.description,
-                    type: 'error',
-                  })
-                  return
-                }
-                toggleHandoverModal()
-              }}
-            >
-              {strings.report.handover}
-            </PrimaryButton>
+            <>
+              <PrimaryButton
+                onClick={() => {
+                  if (finishedDays !== 5 && !report.department) {
+                    addToast({
+                      icon: 'Error',
+                      title: strings.report.incomplete.title,
+                      text: strings.report.incomplete.description,
+                      type: 'error',
+                    })
+                    return
+                  }
+                  toggleHandoverModal()
+                }}
+              >
+                {strings.report.handover}
+              </PrimaryButton>
+              {checkLLMEnabled() && (
+                <PrimaryButton
+                  llmButton
+                  onClick={() => {
+                    if (!checkIfAnythingWritten()) {
+                      addToast({
+                        icon: 'Error',
+                        text: strings.noentrieserrorforllm,
+                        type: 'error',
+                      })
+                    } else askLLmForFeedback()
+                  }}
+                >
+                  {strings.aiassistant}
+
+                  <StyledDiv>{isLoading && <StyledIcon name={'Loader'} size="24px" />}</StyledDiv>
+                </PrimaryButton>
+              )}
+              {Response}
+            </>
           )}
           {reportArchived && trainee === undefined && (
             <>

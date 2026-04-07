@@ -1,0 +1,70 @@
+import { Request, Response } from 'express'
+import { handleAIRequest } from '../routes/bedrock-api'
+import { getBedrockResponse } from '../routes/bedrock'
+
+jest.mock('../routes/bedrock', () => ({
+  getBedrockResponse: jest.fn(),
+}))
+
+const createTestMocks = (body: unknown = {}) => {
+  // response mocking
+
+  // mocks response.status(...) function to allow chaining and capture status code
+  const status = jest.fn().mockReturnThis()
+  // mocks response.json(...) function to capture JSON response
+  const json = jest.fn()
+  const res = { status, json } as unknown as Response
+
+  // request preparation
+  const req = { body } as Request
+  return { req, res, status, json }
+}
+
+describe('handleAIRequest', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should return 400 if entries are missing or empty', async () => {
+    const { req, res, status, json } = createTestMocks({ entries: [] })
+
+    await handleAIRequest(req, res)
+
+    expect(status).toHaveBeenCalledWith(400)
+    expect(json).toHaveBeenCalledWith({ error: 'entries required' })
+  })
+
+  it('should return 500 if getBedrockResponse throws an error', async () => {
+    const { req, res, status, json } = createTestMocks({
+      entries: [{ id: '1', text: 'test' }],
+    })
+    ;(getBedrockResponse as jest.Mock).mockRejectedValue(new Error('Mocked error'))
+
+    await handleAIRequest(req, res)
+
+    expect(status).toHaveBeenCalledWith(500)
+    expect(json).toHaveBeenCalledWith({
+      error: 'Failed to get LLM response',
+    })
+  })
+
+  it('should return 200 with results if getBedrockResponse succeeds and returns the correct json', async () => {
+    const { req, res, status, json } = createTestMocks({
+      entries: [
+        { id: '1', text: 'test1' },
+        { id: '2', text: 'test2' },
+      ],
+    })
+    ;(getBedrockResponse as jest.Mock).mockResolvedValue(['response1', 'response2'])
+
+    await handleAIRequest(req, res)
+
+    expect(status).not.toHaveBeenCalled()
+    expect(json).toHaveBeenCalledWith({
+      results: [
+        { id: '1', result: 'response1' },
+        { id: '2', result: 'response2' },
+      ],
+    })
+  })
+})

@@ -18,6 +18,7 @@ export const getItem = async <T>(tablename: string, key: GetCommandInput['Key'])
         Key: key,
       })
     )
+    console.log(res.Item, 'Item from db')
     return res.Item as T | undefined
   } catch (err) {
     console.error('Error fetching item from DDB:', err)

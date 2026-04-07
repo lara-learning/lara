@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import {
   ActionDivider,
@@ -36,6 +36,8 @@ import TextInput from './text-input'
 import TextTimeInput from './text-time-input'
 import { useToastContext } from '../hooks/use-toast-context'
 import { useDayHelper } from '../helper/day-helper'
+import CommentBoxLLM from './commentbox-llm'
+import { LlmResponse, llmStore } from '../helper/llm-store'
 
 interface EntryDisplayFieldProps {
   day: Pick<Day, 'id' | 'date'> & {
@@ -70,7 +72,18 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   updateMessage,
   term,
 }) => {
-  const { loading, data } = useEntryInputDataQuery()
+  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore().getResponse())
+
+  useEffect(() => {
+    const unsubscribe = llmStore().subscribe((res) => {
+      setLlmResponse(res)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  const matchingResult = llmResponse?.results?.find((r) => r.id === entry.id)
+
+  const { loading, data: entryInputData } = useEntryInputDataQuery()
 
   const { isValidTimeUpdate } = useDayHelper()
 
@@ -118,11 +131,11 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   }
 
   const commentOnEntry = (text: string) => {
-    if (!data) {
+    if (!entryInputData) {
       return
     }
 
-    const { currentUser: user } = data
+    const { currentUser: user } = entryInputData
     if (!user) {
       return
     }
@@ -163,11 +176,11 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   }
 
   const isCommentable = () => {
-    if (!data) {
+    if (!entryInputData) {
       return
     }
 
-    const { currentUser } = data
+    const { currentUser } = entryInputData
     return (
       (reportStatus === ReportStatus.Review && currentUser?.type !== UserTypeEnum.Trainee) ||
       reportStatus === ReportStatus.Reopened
@@ -326,7 +339,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
     return <Loader />
   }
 
-  if (!data) {
+  if (!entryInputData) {
     return null
   }
 
@@ -388,7 +401,9 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
           }
         />
       )}
+      {matchingResult && <CommentBoxLLM llmcommentforday={matchingResult.result} />}
       <CommentBox comments={entry.comments} updateMessage={updateMessage} />
+
       {showComment && (
         <StyledCommentInput>
           <TextInput label={strings.report.comments.addCommentToEntry} onKeyDown={handleKeyDown} onBlur={handleBlur} />

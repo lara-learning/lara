@@ -59,6 +59,16 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         trainer: currentUser,
       }
     },
+    enableLLMForTrainee: async (_parent, { traineeId, enable }, { currentUser }) => {
+      const trainee = await traineeById(traineeId)
+      if (!trainee) {
+        throw new GraphQLError('errors.missingUser')
+      }
+      return {
+        trainee: await updateUser({ ...trainee, llmEnabled: enable }, { updateKeys: ['llmEnabled'] }),
+        trainer: currentUser,
+      }
+    },
     unclaimTrainee: async (_parent, { id }, { currentUser }) => {
       const trainee = await traineeById(id)
       const t = createT(currentUser.language)
@@ -95,11 +105,6 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       if (!isTrainee(user)) {
         throw new GraphQLError(t('errors.insufficientPermissions'))
       }
-
-      // // Prüfe ob der Trainer der Trainer des Trainees ist
-      // if (user.trainerId !== currentUser.id) {
-      //   throw new GraphQLError(t('errors.cantDeleteOtherTrainersTrainee'))
-      // }
 
       user.deleteAt = addMonths(new Date(), 3).toISOString()
 

@@ -202,6 +202,8 @@ export type GqlMutation = {
   deleteCommentOnReport: GqlDeleteCommentPayload;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: GqlMutateEntryPayload;
+  /** Enables or disables the llm for a trainee */
+  enableLLMForTrainee?: Maybe<GqlTrainerTraineePayload>;
   /** Get Avatar Bucket Upload URL */
   getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Link Alexa account */
@@ -336,6 +338,12 @@ export type GqlMutationDeleteCommentOnReportArgs = {
 
 export type GqlMutationDeleteEntryArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type GqlMutationEnableLlmForTraineeArgs = {
+  enable?: InputMaybe<Scalars['Boolean']['input']>;
+  traineeId: Scalars['ID']['input'];
 };
 
 
@@ -578,6 +586,7 @@ export type GqlTrainee = GqlUserInterface & {
   id: Scalars['ID']['output'];
   language?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
+  llmEnabled?: Maybe<Scalars['Boolean']['output']>;
   notification?: Maybe<Scalars['Boolean']['output']>;
   openReportsCount: Scalars['Int']['output'];
   reports: Array<GqlReport>;
@@ -957,6 +966,7 @@ export type GqlMutationResolvers<ContextType = Context, ParentType extends GqlRe
   deleteCommentOnEntry?: Resolver<GqlResolversTypes['DeleteCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteCommentOnEntryArgs, 'commentId' | 'id' | 'traineeId'>>;
   deleteCommentOnReport?: Resolver<GqlResolversTypes['DeleteCommentPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteCommentOnReportArgs, 'commentId' | 'id' | 'traineeId'>>;
   deleteEntry?: Resolver<GqlResolversTypes['MutateEntryPayload'], ParentType, ContextType, RequireFields<GqlMutationDeleteEntryArgs, 'id'>>;
+  enableLLMForTrainee?: Resolver<Maybe<GqlResolversTypes['TrainerTraineePayload']>, ParentType, ContextType, RequireFields<GqlMutationEnableLlmForTraineeArgs, 'traineeId'>>;
   getAvatarSignedUrl?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType, RequireFields<GqlMutationGetAvatarSignedUrlArgs, 'id'>>;
   linkAlexa?: Resolver<Maybe<GqlResolversTypes['UserInterface']>, ParentType, ContextType, RequireFields<GqlMutationLinkAlexaArgs, 'code' | 'state'>>;
   login?: Resolver<Maybe<GqlResolversTypes['OAuthPayload']>, ParentType, ContextType, RequireFields<GqlMutationLoginArgs, 'email'>>;
@@ -1049,6 +1059,7 @@ export type GqlTraineeResolvers<ContextType = Context, ParentType extends GqlRes
   id?: Resolver<GqlResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<Maybe<GqlResolversTypes['String']>, ParentType, ContextType>;
   lastName?: Resolver<GqlResolversTypes['String'], ParentType, ContextType>;
+  llmEnabled?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   notification?: Resolver<Maybe<GqlResolversTypes['Boolean']>, ParentType, ContextType>;
   openReportsCount?: Resolver<GqlResolversTypes['Int'], ParentType, ContextType>;
   reports?: Resolver<Array<GqlResolversTypes['Report']>, ParentType, ContextType>;

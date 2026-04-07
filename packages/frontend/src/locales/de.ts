@@ -1,6 +1,8 @@
 import Translation from './translation'
 
 const germanTranslation: Translation = {
+  aiassistant: 'KI-Assistenz',
+  noentrieserrorforllm: 'Du hast noch nichts aufgeschrieben KI kann nicht antworten',
   today: 'Heute',
   week: 'Woche',
   open: 'Offen',
@@ -19,6 +21,10 @@ const germanTranslation: Translation = {
   done: 'fertig',
   markDelete: 'Für Löschung markieren',
   unmarkDelete: 'Löschmarkierung aufheben',
+  switchaion: 'KI einschalten',
+  switchaioff: 'KI ausschalten',
+  aiIsOn: 'eingeschaltet',
+  aiIsOff: 'ausgeschaltet',
   cancel: 'Abbrechen',
   createUser: 'Anlegen',
   deactivate: 'Deaktivieren',

@@ -1,26 +1,18 @@
-query TraineePageData {
+query TraineeLLMEnabledData {
   trainees {
     id
     firstName
     lastName
-    llmEnabled
     course
     startDate
+    llmEnabled
     trainer {
       id
       firstName
       lastName
     }
-    company {
-      id
-      name
-    }
   }
   currentUser {
     id
-  }
-  companies {
-    id
-    name
   }
 }

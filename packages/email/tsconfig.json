@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "commonjs",
-    "keyofStringsOnly": false
+    "keyofStringsOnly": false,
+    "skipLibCheck": true
   },
   "references": [{ "path": "../api" }],
   "include": ["src/**/*"]

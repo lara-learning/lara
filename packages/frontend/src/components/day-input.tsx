@@ -88,6 +88,7 @@ interface DayInputProps {
         user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
     })[]
+    llmcomment?: string
   }
   heading?: string
   disabled?: boolean
@@ -313,12 +314,15 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       total={day && <Total minutes={getTotalMinutes(day)} />}
       commentsection={
         reportStatus !== ReportStatus.Todo && day ? (
-          <CommentSection
-            comments={day.comments}
-            onSubmit={commentOnDay}
-            displayTextInput={isCommentable()}
-            updateMessage={updateMessageDay}
-          />
+          <>
+            <CommentSection
+              comments={day.comments}
+              date={day.date}
+              onSubmit={commentOnDay}
+              displayTextInput={isCommentable()}
+              updateMessage={updateMessageDay}
+            />
+          </>
         ) : undefined
       }
     >

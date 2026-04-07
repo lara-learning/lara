@@ -91,7 +91,6 @@ export const CommentBubbleLayout: React.FC<CommentBubbleLayoutProps> = ({
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement
     if (target.value === message && target.value !== '') return
-    console.log(commentId + ' UPDATE: ' + message + ' => ' + target.value)
     updateComment(target.value)
   }
 

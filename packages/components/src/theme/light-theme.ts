@@ -45,6 +45,7 @@ export const lightTheme: DefaultTheme = {
   primaryDisabled: '#D9D9D9',
   primaryHovered: '#244FF9',
   primaryPressed: '#4059BC',
+  primaryLLM: '#a78bfa',
 
   primaryDangerDefault: '#EB001B',
   primaryDangerDisabled: '#D9D9D9',

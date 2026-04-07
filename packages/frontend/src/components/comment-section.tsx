@@ -15,6 +15,7 @@ interface CommentSectionProps {
   displayTextInput: boolean
   bottomSpace?: boolean
   updateMessage?: (message: string, commentId: string) => void
+  date?: string
 }
 
 type onSubmitType = (comment: string) => void
@@ -42,6 +43,7 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
   return (
     <>
       <CommentBox comments={comments} updateMessage={updateMessage} />
+
       {displayTextInput && (
         <Spacer x="l" bottom={bottomSpace ? 'l' : undefined}>
           <form onSubmit={onSubmit} onBlur={onSubmit}>

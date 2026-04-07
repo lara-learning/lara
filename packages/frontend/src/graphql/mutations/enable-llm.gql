@@ -1,0 +1,12 @@
+mutation EnableLLMForTrainee($traineeId: ID!, $enable: Boolean) {
+  enableLLMForTrainee(traineeId: $traineeId, enable: $enable) {
+    trainee {
+      id
+      llmEnabled
+    }
+    trainer {
+      id
+    }
+  }
+}
+
