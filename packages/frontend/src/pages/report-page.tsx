@@ -41,6 +41,7 @@ import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { useReportHelper } from '../helper/report-helper'
+import { llmStore } from '../helper/llm-store'
 
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
@@ -278,6 +279,7 @@ const ReportPage: React.FunctionComponent = () => {
       credentials: 'include',
     }).then((res) => res.json())
     setResponse(response.result)
+    llmStore.setResponse(response)
     console.log(response, 'data')
   }
 
@@ -354,8 +356,8 @@ const ReportPage: React.FunctionComponent = () => {
                 }}
               >
                 {'KI-Assistent'}
-                {response ? response : ''}
               </PrimaryButton>
+              {response}
             </>
           )}
           {reportArchived && trainee === undefined && (

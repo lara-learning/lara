@@ -1,4 +1,4 @@
-import React, { JSX, useState } from 'react'
+import React, { JSX, ReactNode, useState } from 'react'
 import styled from 'styled-components'
 
 import { BorderRadii } from './border-radius'
@@ -63,54 +63,39 @@ interface CommentBubbleLayoutProps {
   right?: boolean
   updateMessage?: (message: string, commentId: string) => void
   commentId?: string
+  children?: ReactNode
 }
 
-export const CommentBubbleLayout: React.FC<CommentBubbleLayoutProps> = ({
-  avatar,
-  author,
-  message,
-  right,
-  updateMessage,
-  commentId,
-}) => {
-  const [msg, setMsg] = useState(message)
+export const CommentBubbleLayout: React.FC<CommentBubbleLayoutProps> = ({ avatar, author, message, right }) => {
+  const [msg] = useState(message)
 
-  const updateComment = (newMsg: string) => {
-    if (updateMessage) updateMessage(newMsg, commentId ?? '')
-  }
+  // const updateComment = (newMsg: string) => {
+  //   if (updateMessage) updateMessage(newMsg, commentId ?? '')
+  // }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement
-    const key = event.key
+  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   const target = event.target as HTMLInputElement
+  //   const key = event.key
 
-    if (key === 'Enter') {
-      target.blur()
-    }
-  }
+  //   if (key === 'Enter') {
+  //     target.blur()
+  //   }
+  // }
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement
-    if (target.value === message && target.value !== '') return
-    console.log(commentId + ' UPDATE: ' + message + ' => ' + target.value)
-    updateComment(target.value)
-  }
+  // const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  //   const target = event.target as HTMLInputElement
+  //   if (target.value === message && target.value !== '') return
+  //   console.log(commentId + ' UPDATE: ' + message + ' => ' + target.value)
+  //   updateComment(target.value)
+  // }
 
   return (
     <MessageContainer right={right}>
       <Bubble right={right}>
         <Author>{author}:</Author>
-        {updateMessage ? (
-          <MessageInput
-            value={msg}
-            onChange={(e) => {
-              setMsg(e.target.value)
-            }}
-            onKeyDown={handleKeyDown}
-            onBlur={handleBlur}
-          />
-        ) : (
-          message
-        )}
+
+        <MessageInput value={msg} />
+        {message}
       </Bubble>
       {avatar}
     </MessageContainer>

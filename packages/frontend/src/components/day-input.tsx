@@ -313,12 +313,14 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       total={day && <Total minutes={getTotalMinutes(day)} />}
       commentsection={
         reportStatus !== ReportStatus.Todo && day ? (
-          <CommentSection
-            comments={day.comments}
-            onSubmit={commentOnDay}
-            displayTextInput={isCommentable()}
-            updateMessage={updateMessageDay}
-          />
+          <>
+            <CommentSection
+              comments={day.comments}
+              onSubmit={commentOnDay}
+              displayTextInput={isCommentable()}
+              updateMessage={updateMessageDay}
+            />
+          </>
         ) : undefined
       }
     >
