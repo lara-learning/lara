@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Comment, UserInterface } from '../graphql'
-import CommentBubble from './comment-bubble'
 import { LlmResponse, llmStore } from '../helper/llm-store'
+import LLMCommentBubble from './llm-comment-bubble'
 
 interface CommentLLMBoxProps {
   comments?: (Pick<Comment, 'text' | 'id' | 'published'> & {
@@ -9,25 +9,18 @@ interface CommentLLMBoxProps {
   })[]
 }
 
-const CommentBoxLLM: React.FC<CommentLLMBoxProps> = ({ comments }) => {
+const CommentBoxLLM: React.FC<CommentLLMBoxProps> = () => {
   const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
 
   useEffect(() => {
     const unsubscribe = llmStore.subscribe(setLlmResponse)
+    console.log(llmResponse, 'commentbox-llm llmResponse')
     return () => unsubscribe()
-  }, [])
+  }, [llmResponse])
 
   return (
     <>
-      {comments?.map((comment) => (
-        <CommentBubble
-          key={comment.id}
-          author="LLM"
-          message={llmResponse ? llmResponse.text : ''}
-          id={comment.user.id}
-          commentId={comment.id}
-        />
-      ))}
+      <LLMCommentBubble author="LLM" message={llmResponse ? llmResponse.result : ''} />
     </>
   )
 }

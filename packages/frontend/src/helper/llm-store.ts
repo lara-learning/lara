@@ -1,6 +1,6 @@
 // LLM response type
 export interface LlmResponse {
-  text: string
+  result: string
   // add any other metadata if needed
 }
 
@@ -31,7 +31,7 @@ class LlmStore {
   // Set new response and notify subscribers
   setResponse(response: LlmResponse) {
     this.response = response
-    console.log(this.response, 'llm response store')
+
     this.subscribers.forEach((cb) => cb(this.response))
   }
 

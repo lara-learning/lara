@@ -280,7 +280,6 @@ const ReportPage: React.FunctionComponent = () => {
     }).then((res) => res.json())
     setResponse(response.result)
     llmStore.setResponse(response)
-    console.log(response, 'data')
   }
 
   const finishedDays = report && getFinishedDays(report)

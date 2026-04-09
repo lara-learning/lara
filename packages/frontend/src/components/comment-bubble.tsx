@@ -12,27 +12,27 @@ interface CommentBubbleProps {
   commentId?: string
 }
 
-const CommentBubble: React.FC<CommentBubbleProps> = ({ message, right, updateMessage, commentId }) => {
+const CommentBubble: React.FC<CommentBubbleProps> = ({ right, updateMessage, commentId }) => {
   const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
 
-  console.log(llmResponse, 'llmResponse')
+  console.log(llmResponse, 'llmResponse in comment bubble')
   useEffect(() => {
-    const unsubscribe = llmStore.subscribe(setLlmResponse)
+    const unsubscribe = llmStore.subscribe((res) => {
+      console.log('subscription fired:', res)
+      setLlmResponse(res)
+    })
     return () => unsubscribe()
   }, [])
-
+  console.log('passing to layout:', llmResponse?.result ?? '')
   return (
     <CommentBubbleLayout
-      // avatar={<>{id && <Avatar size={35} id={id} />}</>}
+      //avatar={<>{id && <Avatar size={35} id={id} />}</>}
       // author={author}
-      message={message}
+      message={llmResponse?.result ?? ''}
       right={right}
       updateMessage={updateMessage}
       commentId={commentId}
-    >
-      {/* Render LLM response text inside the children area */}
-      {llmResponse?.text ?? ''}
-    </CommentBubbleLayout>
+    ></CommentBubbleLayout>
   )
 }
 
