@@ -6,6 +6,9 @@ name: e2e-test
 on:
   workflow_call:
 
+permissions:
+  contents: read
+
 jobs:
   e2e:
     name: e2e-job
