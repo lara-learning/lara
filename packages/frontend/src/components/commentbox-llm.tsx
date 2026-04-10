@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from 'react'
 import { Comment, UserInterface } from '../graphql'
-import { LlmResponse, llmStore } from '../helper/llm-store'
 import LLMCommentBubble from './llm-comment-bubble'
 
 interface CommentLLMBoxProps {
   comments?: (Pick<Comment, 'text' | 'id' | 'published'> & {
     user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
   })[]
+  llmcommentforday: string | undefined
 }
 
-const CommentBoxLLM: React.FC<CommentLLMBoxProps> = () => {
-  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
+//update hier Änderungen von API am Kommentar überschreibe den Prop
 
-  useEffect(() => {
-    const unsubscribe = llmStore.subscribe(setLlmResponse)
-    console.log(llmResponse, 'commentbox-llm llmResponse')
-    return () => unsubscribe()
-  }, [llmResponse])
-
+const CommentBoxLLM: React.FC<CommentLLMBoxProps> = ({ llmcommentforday }) => {
+  if (!llmcommentforday) return null
   return (
     <>
-      <LLMCommentBubble author="LLM" message={llmResponse ? llmResponse.result : ''} />
+      <LLMCommentBubble author="LLM" llmcommentforday={llmcommentforday} />
     </>
   )
 }

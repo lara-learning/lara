@@ -98,12 +98,23 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
 
     app.post('/ai_assistant', async (req, res) => {
       try {
-        const { inputText } = req.body
-        if (!inputText) return res.status(400).json({ error: 'inputText required' })
-        const inputText2 = 'Das ist ein Testbericht'
-        const result = await getBedrockResponse(inputText2)
-        console.log(result, 'result', 'BEDROCK RESPONSE')
-        return res.json({ result: result })
+        const { entries } = req.body as {
+          entries: Array<{ id: string; text: string }>
+        }
+
+        console.log(entries, 'ENTRIES BEFORE SENDING TO BEDROCK IN BACKEND')
+        if (!entries || entries.length === 0) return res.status(400).json({ error: 'entries required' })
+
+        const texts = entries.map((e) => e.text)
+        const feedbacks = await getBedrockResponse(texts)
+
+        //add id before returning array to frontend
+        return res.json({
+          results: entries.map((e: { id: string; text: string }, index: number) => ({
+            id: e.id,
+            result: feedbacks[index],
+          })),
+        })
       } catch (err) {
         console.error(err, 'err returned')
         return res.status(500).json({ error: 'Failed to get LLM response' })

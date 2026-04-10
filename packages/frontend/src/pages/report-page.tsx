@@ -42,12 +42,13 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { useReportHelper } from '../helper/report-helper'
 import { llmStore } from '../helper/llm-store'
+//import { llmStore } from '../helper/llm-store'
 
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { getFinishedDays } = useReportHelper()
   const { trainee, year, week, term } = useParams()
-  const [response, setResponse] = useState()
+  const [response] = useState()
 
   const variables: ReportPageDataQueryVariables = {
     year: parseInt(year ?? '', 10),
@@ -266,7 +267,7 @@ const ReportPage: React.FunctionComponent = () => {
   }
 
   const askLLmForFeedback = async () => {
-    const inputText = 'test'
+    //const inputText = 'Dokumentation geschrieben'
     const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
     const response = await fetch(`${BackendUrl}/ai_assistant`, {
       method: 'POST',
@@ -274,13 +275,24 @@ const ReportPage: React.FunctionComponent = () => {
         authorization: 'allow',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ inputText }),
+      body: JSON.stringify({ entries: allEntries }),
 
       credentials: 'include',
     }).then((res) => res.json())
-    setResponse(response.result)
+    //setResponse(response.result)
+    console.log(response, 'responsefromhandler')
     llmStore.setResponse(response)
   }
+
+  const entriesText = report?.days.flatMap((day) => day.entries).map((entry) => entry.text)
+
+  console.log(entriesText)
+
+  const allEntries = report?.days
+    .flatMap((day) => day.entries)
+    .map((entry) => ({ id: entry.id, text: entry.text }))
+    .filter((entry): entry is { id: string; text: string } => entry.text !== undefined)
+  console.log(allEntries, 'ALLENTRIES')
 
   const finishedDays = report && getFinishedDays(report)
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import {
   ActionDivider,
@@ -36,6 +36,8 @@ import TextInput from './text-input'
 import TextTimeInput from './text-time-input'
 import { useToastContext } from '../hooks/use-toast-context'
 import { useDayHelper } from '../helper/day-helper'
+import CommentBoxLLM from './commentbox-llm'
+import { LlmResponse, llmStore } from '../helper/llm-store'
 
 interface EntryDisplayFieldProps {
   day: Pick<Day, 'id' | 'date'> & {
@@ -70,6 +72,31 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   updateMessage,
   term,
 }) => {
+  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
+
+  useEffect(() => {
+    const unsubscribe = llmStore.subscribe((res) => {
+      console.log('subscription fired:')
+      setLlmResponse(res)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  console.log(
+    llmResponse?.results?.map((r) => r.id),
+    'llmResponse in entry input id'
+  )
+
+  const matchingResult = llmResponse?.results?.find((r) => r.id === entry.id)
+
+  llmResponse?.results?.map((res) => {
+    console.log(res.id, 'resllm id')
+  })
+
+  console.log(day.id, day.entries, 'day.id')
+
+  //console.log(matchingResult, 'matchingResult in entry-input')
+
   const { loading, data } = useEntryInputDataQuery()
 
   const { isValidTimeUpdate } = useDayHelper()
@@ -389,6 +416,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
         />
       )}
       <CommentBox comments={entry.comments} updateMessage={updateMessage} />
+      {matchingResult && <CommentBoxLLM llmcommentforday={matchingResult.result} />}
       {showComment && (
         <StyledCommentInput>
           <TextInput label={strings.report.comments.addCommentToEntry} onKeyDown={handleKeyDown} onBlur={handleBlur} />

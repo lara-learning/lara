@@ -6,8 +6,6 @@ import { ErrorText, Input, Spacer, StyledTextInputLabel } from '@lara/components
 import { Comment, UserInterface } from '../graphql'
 import strings from '../locales/localization'
 import CommentBox from './comment-box'
-import CommentBoxLLM from './commentbox-llm'
-//import CommentBoxLLM from './commentbox-llm'
 
 interface CommentSectionProps {
   comments: (Pick<Comment, 'id' | 'text' | 'published'> & {
@@ -17,6 +15,7 @@ interface CommentSectionProps {
   displayTextInput: boolean
   bottomSpace?: boolean
   updateMessage?: (message: string, commentId: string) => void
+  date?: string
 }
 
 type onSubmitType = (comment: string) => void
@@ -44,7 +43,7 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
   return (
     <>
       <CommentBox comments={comments} updateMessage={updateMessage} />
-      <CommentBoxLLM />
+
       {displayTextInput && (
         <Spacer x="l" bottom={bottomSpace ? 'l' : undefined}>
           <form onSubmit={onSubmit} onBlur={onSubmit}>

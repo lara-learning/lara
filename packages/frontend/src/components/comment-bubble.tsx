@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { CommentBubbleLayout } from '@lara/components'
-import { LlmResponse, llmStore } from '../helper/llm-store'
+
+import Avatar from './avatar'
 
 interface CommentBubbleProps {
   id?: string
@@ -12,23 +13,19 @@ interface CommentBubbleProps {
   commentId?: string
 }
 
-const CommentBubble: React.FC<CommentBubbleProps> = ({ right, updateMessage, commentId }) => {
-  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
-
-  console.log(llmResponse, 'llmResponse in comment bubble')
-  useEffect(() => {
-    const unsubscribe = llmStore.subscribe((res) => {
-      console.log('subscription fired:', res)
-      setLlmResponse(res)
-    })
-    return () => unsubscribe()
-  }, [])
-  console.log('passing to layout:', llmResponse?.result ?? '')
+const CommentBubble: React.FunctionComponent<CommentBubbleProps> = ({
+  id,
+  author,
+  message,
+  right,
+  updateMessage,
+  commentId,
+}) => {
   return (
     <CommentBubbleLayout
-      //avatar={<>{id && <Avatar size={35} id={id} />}</>}
-      // author={author}
-      message={llmResponse?.result ?? ''}
+      avatar={<>{id && <Avatar size={35} id={id} />}</>}
+      author={author}
+      message={message}
       right={right}
       updateMessage={updateMessage}
       commentId={commentId}

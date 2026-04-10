@@ -18,16 +18,19 @@ const client = new BedrockRuntimeClient({
 const modelId = 'us.anthropic.claude-3-5-haiku-20241022-v1:0'
 
 // Prompts
-const systemPrompt =
-  'Du bist ein hilfreicher Assistent für Azubis um ihnen zu helfen ihre Berichtshefte ordentlich zu schreiben.'
+const systemPrompt = 'Du korrigierst Berichtshefte in einem kurzen Satz pro Eintrag'
 
-const userPromptTemplate = `Gebe dem User Tipps aber schreibe es nicht für ihn. Aussagekräftige Stichpunkte sind zulässig und Kurze Sätze. Rechtschreibung und Grammatik solltest du korrigieren und inhaltlich nur kommentieren wie man es besser schreiben könnte. Falls zu wenig input vom Azubi kommt stelle gezielt Fragen damit der Azubi auf neue Ideen kommt
-<text>
+const userPromptTemplate = `Für jeden Eintrag sage in einem kurzen Satz ob es Gemüse, Obst oder etwas anderes ist.
+Antworte NUR mit einem JSON-Array in dieser Form, ein Objekt pro Eintrag, in der gleichen Reihenfolge:
+[{"result": "..."}, {"result": "..."}]
+
+<entries>
 {{INPUT_TEXT}}
-</text>`
+</entries>`
 
-export async function getBedrockResponse(inputText: string): Promise<string> {
-  const userPrompt = userPromptTemplate.replace('{{INPUT_TEXT}}', inputText)
+export async function getBedrockResponse(inputText: string[]): Promise<string[]> {
+  const formatted = inputText.map((text, i) => `${i + 1}. ${text}`).join('\n')
+  const userPrompt = userPromptTemplate.replace('{{INPUT_TEXT}}', formatted)
 
   const messages: Message[] = [
     {
@@ -44,12 +47,10 @@ export async function getBedrockResponse(inputText: string): Promise<string> {
 
   const response = await client.send(command)
   const outputText = response.output?.message?.content?.[0]?.text
+  if (!outputText) throw new Error('No text content in response')
 
-  if (!outputText) {
-    throw new Error('No text content in response')
-  }
-
-  return outputText
+  const parsed: { result: string }[] = JSON.parse(outputText)
+  return parsed.map((item) => item.result)
 }
 
 // async function main() {

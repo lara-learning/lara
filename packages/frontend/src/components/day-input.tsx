@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DayInputLayout, StyledStatusLabel, H1, H2, IconName, StyledIcon } from '@lara/components'
 
@@ -26,6 +26,7 @@ import { useDayHelper } from '../helper/day-helper'
 import { useToastContext } from '../hooks/use-toast-context'
 import { CheckBox } from './checkbox'
 import styled from 'styled-components'
+import { LlmResponse, llmStore } from '../helper/llm-store'
 
 const SecondaryWrapper = styled.div`
   display: flex;
@@ -88,6 +89,7 @@ interface DayInputProps {
         user: Pick<UserInterface, 'id' | 'firstName' | 'lastName'>
       })[]
     })[]
+    llmcomment?: string
   }
   heading?: string
   disabled?: boolean
@@ -116,6 +118,16 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
   updateMessageEntry,
   term,
 }) => {
+  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
+
+  useEffect(() => {
+    const unsubscribe = llmStore.subscribe((res) => {
+      console.log('subscription fired:')
+      setLlmResponse(res)
+    })
+    return () => unsubscribe()
+  }, [])
+
   const { getTotalMinutes } = useDayHelper()
   const [mutate] = useDayStatusSelectUpdateDayMutation()
   const [deleteEntryMutation] = useDeleteEntryMutation()
@@ -283,6 +295,12 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
 
   const InputHeading = primary ? H1 : H2
 
+  //console.log(llmResponse, 'response entries render for each a comment bubble')
+  //console.log(day.comments, day.date, day.id, 'day comments')
+
+  const matchingResult = llmResponse?.results?.find((r) => r.id === day.id)
+  console.log(matchingResult)
+
   return (
     <DayInputLayout
       showEntriesInput={shouldRenderEntriesInput()}
@@ -316,6 +334,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
           <>
             <CommentSection
               comments={day.comments}
+              date={day.date}
               onSubmit={commentOnDay}
               displayTextInput={isCommentable()}
               updateMessage={updateMessageDay}

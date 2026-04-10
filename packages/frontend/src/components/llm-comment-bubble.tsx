@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
 import { BorderRadii, Spacings } from '@lara/components'
-import { LlmResponse, llmStore } from '../helper/llm-store'
 import styled from 'styled-components'
 
 interface CommentBubbleProps {
@@ -11,6 +8,7 @@ interface CommentBubbleProps {
   right?: boolean
   updateMessage?: (message: string, commentId: string) => void
   commentId?: string
+  llmcommentforday: string
 }
 
 const MessageInput = styled.input`
@@ -63,24 +61,12 @@ const Author = styled.span`
   display: block;
 `
 
-const LLMCommentBubble: React.FC<CommentBubbleProps> = ({ right }) => {
-  const [llmResponse, setLlmResponse] = useState<LlmResponse | null>(llmStore.getResponse())
-
-  console.log(llmResponse, 'llmResponse in comment bubble')
-  useEffect(() => {
-    const unsubscribe = llmStore.subscribe((res) => {
-      console.log('subscription fired:', res)
-      setLlmResponse(res)
-    })
-    return () => unsubscribe()
-  }, [])
-  console.log('passing to layout:', llmResponse?.result ?? '')
+const LLMCommentBubble: React.FC<CommentBubbleProps> = ({ right, llmcommentforday }) => {
   return (
     <MessageContainer right={right}>
       <Bubble right={right}>
         <Author>LLM:</Author>
-        <MessageInput value={llmResponse?.result ?? ''} />
-        {llmResponse?.result ?? ''}
+        <MessageInput value={llmcommentforday} />
       </Bubble>
       LLM AVATAR
     </MessageContainer>
