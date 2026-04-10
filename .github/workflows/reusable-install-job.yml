@@ -6,6 +6,9 @@ name: install
 on:
   workflow_call:
 
+permissions:
+  contents: read
+
 jobs:
   install:
     name: install-job

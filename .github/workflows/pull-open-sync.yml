@@ -4,6 +4,9 @@
 name: Action on Pullrequest creation and update
 on: pull_request
 
+permissions:
+  contents: read
+
 jobs:
   install:
     uses: ./.github/workflows/reusable-install-job.yml
