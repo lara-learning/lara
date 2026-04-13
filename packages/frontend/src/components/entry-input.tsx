@@ -97,7 +97,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
 
   //console.log(matchingResult, 'matchingResult in entry-input')
 
-  const { loading, data } = useEntryInputDataQuery()
+  const { loading, data: entryInputData } = useEntryInputDataQuery()
 
   const { isValidTimeUpdate } = useDayHelper()
 
@@ -145,11 +145,11 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   }
 
   const commentOnEntry = (text: string) => {
-    if (!data) {
+    if (!entryInputData) {
       return
     }
 
-    const { currentUser: user } = data
+    const { currentUser: user } = entryInputData
     if (!user) {
       return
     }
@@ -190,11 +190,11 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
   }
 
   const isCommentable = () => {
-    if (!data) {
+    if (!entryInputData) {
       return
     }
 
-    const { currentUser } = data
+    const { currentUser } = entryInputData
     return (
       (reportStatus === ReportStatus.Review && currentUser?.type !== UserTypeEnum.Trainee) ||
       reportStatus === ReportStatus.Reopened
@@ -353,7 +353,7 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
     return <Loader />
   }
 
-  if (!data) {
+  if (!entryInputData) {
     return null
   }
 

@@ -201,6 +201,8 @@ export type Mutation = {
   deleteCommentOnReport: DeleteCommentPayload;
   /** Deletes an entry by the given ID. Only considers entries made by the current user. Returns the ID of the deleted entry. */
   deleteEntry: MutateEntryPayload;
+  /** Enables or disables the llm for a trainee */
+  enableLLMForTrainee?: Maybe<TrainerTraineePayload>;
   /** Get Avatar Bucket Upload URL */
   getAvatarSignedUrl?: Maybe<Scalars['String']['output']>;
   /** Link Alexa account */
@@ -335,6 +337,12 @@ export type MutationDeleteCommentOnReportArgs = {
 
 export type MutationDeleteEntryArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationEnableLlmForTraineeArgs = {
+  enable?: InputMaybe<Scalars['Boolean']['input']>;
+  traineeId: Scalars['ID']['input'];
 };
 
 
@@ -578,6 +586,7 @@ export type Trainee = UserInterface & {
   id: Scalars['ID']['output'];
   language?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
+  llmEnabled?: Maybe<Scalars['Boolean']['output']>;
   notification?: Maybe<Scalars['Boolean']['output']>;
   openReportsCount: Scalars['Int']['output'];
   reports: Array<Report>;
@@ -841,6 +850,14 @@ export type DeleteEntryMutationVariables = Exact<{
 
 
 export type DeleteEntryMutation = { __typename?: 'Mutation', deleteEntry: { __typename?: 'MutateEntryPayload', day: { __typename: 'Day', id: string, entries: Array<{ __typename?: 'Entry', id: string }> } } };
+
+export type EnableLlmForTraineeMutationVariables = Exact<{
+  traineeId: Scalars['ID']['input'];
+  enable?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type EnableLlmForTraineeMutation = { __typename?: 'Mutation', enableLLMForTrainee?: { __typename?: 'TrainerTraineePayload', trainee: { __typename?: 'Trainee', id: string, llmEnabled?: boolean | undefined }, trainer: { __typename?: 'Trainer', id: string } } | undefined };
 
 export type LinkAlexaMutationVariables = Exact<{
   code: Scalars['String']['input'];
@@ -1114,6 +1131,11 @@ export type SuggestionsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SuggestionsDataQuery = { __typename?: 'Query', suggestions: Array<{ __typename?: 'Suggestion', text: string, time: string }> };
+
+export type TraineeLlmEnabledDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TraineeLlmEnabledDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, llmEnabled?: boolean | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined };
 
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1557,6 +1579,24 @@ export function useDeleteEntryMutation(baseOptions?: Apollo.MutationHookOptions<
         return Apollo.useMutation<DeleteEntryMutation, DeleteEntryMutationVariables>(DeleteEntryDocument, options);
       }
 export type DeleteEntryMutationHookResult = ReturnType<typeof useDeleteEntryMutation>;
+export const EnableLlmForTraineeDocument = gql`
+    mutation EnableLLMForTrainee($traineeId: ID!, $enable: Boolean) {
+  enableLLMForTrainee(traineeId: $traineeId, enable: $enable) {
+    trainee {
+      id
+      llmEnabled
+    }
+    trainer {
+      id
+    }
+  }
+}
+    `;
+export function useEnableLlmForTraineeMutation(baseOptions?: Apollo.MutationHookOptions<EnableLlmForTraineeMutation, EnableLlmForTraineeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EnableLlmForTraineeMutation, EnableLlmForTraineeMutationVariables>(EnableLlmForTraineeDocument, options);
+      }
+export type EnableLlmForTraineeMutationHookResult = ReturnType<typeof useEnableLlmForTraineeMutation>;
 export const LinkAlexaDocument = gql`
     mutation linkAlexa($code: String!, $state: String!) {
   linkAlexa(code: $code, state: $state) {
@@ -2700,6 +2740,41 @@ export function useSuggestionsDataSuspenseQuery(baseOptions?: Apollo.SkipToken |
 export type SuggestionsDataQueryHookResult = ReturnType<typeof useSuggestionsDataQuery>;
 export type SuggestionsDataLazyQueryHookResult = ReturnType<typeof useSuggestionsDataLazyQuery>;
 export type SuggestionsDataSuspenseQueryHookResult = ReturnType<typeof useSuggestionsDataSuspenseQuery>;
+export const TraineeLlmEnabledDataDocument = gql`
+    query TraineeLLMEnabledData {
+  trainees {
+    id
+    firstName
+    lastName
+    course
+    startDate
+    llmEnabled
+    trainer {
+      id
+      firstName
+      lastName
+    }
+  }
+  currentUser {
+    id
+  }
+}
+    `;
+export function useTraineeLlmEnabledDataQuery(baseOptions?: Apollo.QueryHookOptions<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>(TraineeLlmEnabledDataDocument, options);
+      }
+export function useTraineeLlmEnabledDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>(TraineeLlmEnabledDataDocument, options);
+        }
+export function useTraineeLlmEnabledDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TraineeLlmEnabledDataQuery, TraineeLlmEnabledDataQueryVariables>(TraineeLlmEnabledDataDocument, options);
+        }
+export type TraineeLlmEnabledDataQueryHookResult = ReturnType<typeof useTraineeLlmEnabledDataQuery>;
+export type TraineeLlmEnabledDataLazyQueryHookResult = ReturnType<typeof useTraineeLlmEnabledDataLazyQuery>;
+export type TraineeLlmEnabledDataSuspenseQueryHookResult = ReturnType<typeof useTraineeLlmEnabledDataSuspenseQuery>;
 export const TraineePageDataDocument = gql`
     query TraineePageData {
   trainees {

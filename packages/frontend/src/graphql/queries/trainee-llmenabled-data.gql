@@ -1,0 +1,18 @@
+query TraineeLLMEnabledData {
+  trainees {
+    id
+    firstName
+    lastName
+    course
+    startDate
+    llmEnabled
+    trainer {
+      id
+      firstName
+      lastName
+    }
+  }
+  currentUser {
+    id
+  }
+}

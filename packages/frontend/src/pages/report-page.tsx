@@ -35,6 +35,7 @@ import {
   useReportReviewPageDataQuery,
   useUpdateReportMutation,
   useUserPageQuery,
+  useTraineeLlmEnabledDataQuery,
 } from '../graphql'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
@@ -337,6 +338,18 @@ const ReportPage: React.FunctionComponent = () => {
     )
   }
 
+  const { data: enablellmdata } = useTraineeLlmEnabledDataQuery()
+
+  function checkLLMEnabled() {
+    if (!enablellmdata) return false
+    enablellmdata?.trainees.forEach((trainee) => {
+      console.log(trainee.llmEnabled, 'llm enabled?')
+    })
+
+    const isAnyLLMEnabled = enablellmdata?.trainees.some((trainee) => trainee.llmEnabled === true)
+    return isAnyLLMEnabled
+  }
+
   const renderReportPageButtons = () => {
     if (!report) return
 
@@ -363,6 +376,7 @@ const ReportPage: React.FunctionComponent = () => {
               </PrimaryButton>
               <PrimaryButton
                 onClick={() => {
+                  checkLLMEnabled()
                   askLLmForFeedback()
                 }}
               >

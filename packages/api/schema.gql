@@ -195,6 +195,11 @@ type Mutation {
   deleteEntry(id: ID!): MutateEntryPayload!
 
   """
+  Enables or disables the llm for a trainee
+  """
+  enableLLMForTrainee(traineeId: ID!, enable: Boolean): TrainerTraineePayload
+
+  """
   Login via microsoft
   """
   login(email: String!): OAuthPayload
@@ -435,6 +440,7 @@ type Trainee implements UserInterface {
   id: ID!
   language: String
   lastName: String!
+  llmEnabled: Boolean
   notification: Boolean
   reports: [Report!]!
   signature: String

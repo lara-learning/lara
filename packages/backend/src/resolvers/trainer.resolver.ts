@@ -59,6 +59,16 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
         trainer: currentUser,
       }
     },
+    enableLLMForTrainee: async (_parent, { traineeId, enable }, { currentUser }) => {
+      const trainee = await traineeById(traineeId)
+      if (!trainee) {
+        throw new GraphQLError('errors.missingUser')
+      }
+      return {
+        trainee: await updateUser({ ...trainee, llmEnabled: enable }, { updateKeys: ['llmEnabled'] }),
+        trainer: currentUser,
+      }
+    },
     unclaimTrainee: async (_parent, { id }, { currentUser }) => {
       const trainee = await traineeById(id)
       const t = createT(currentUser.language)

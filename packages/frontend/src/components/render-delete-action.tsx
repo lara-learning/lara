@@ -63,9 +63,11 @@ export const useDeleteActions = ({ currentUser, id }: UseDeleteActionsProps) => 
     }
 
     return (
-      <SecondaryButton danger disabled={deleteActionLoading} onClick={() => toggleDeletionModal()}>
-        {strings.markDelete}
-      </SecondaryButton>
+      <>
+        <SecondaryButton danger disabled={deleteActionLoading} onClick={() => toggleDeletionModal()}>
+          {strings.markDelete}
+        </SecondaryButton>
+      </>
     )
   }
 

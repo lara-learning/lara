@@ -5,7 +5,12 @@ import { AdminCreateUserLayout, EditUserLayout, H1, Paragraph } from '@lara/comp
 
 import Loader from '../components/loader'
 import TraineeRow from '../components/trainee-row'
-import { useCreateTraineeMutation, useTraineePageDataQuery, useUserPageQuery } from '../graphql'
+import {
+  useCreateTraineeMutation,
+  useEnableLlmForTraineeMutation,
+  useTraineePageDataQuery,
+  useUserPageQuery,
+} from '../graphql'
 import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { Fab } from '../components/fab'
@@ -15,6 +20,7 @@ import { useToastContext } from '../hooks/use-toast-context'
 import { GraphQLError } from 'graphql'
 import { DeletionModal } from '../components/deletion-modal'
 import { useDeleteActions } from '../components/render-delete-action'
+import { PrimaryButton } from '../components/button'
 
 const TraineePage: React.FunctionComponent = () => {
   const { trainee } = useParams()
@@ -24,6 +30,17 @@ const TraineePage: React.FunctionComponent = () => {
   const [mutate] = useCreateTraineeMutation()
   const { addToast } = useToastContext()
   const [showModal, setShowModal] = React.useState(false)
+
+  const [enableLLMForTrainee] = useEnableLlmForTraineeMutation()
+
+  const ToggleEnableLLMForTrainee = async (enableOrDisable: boolean) => {
+    await enableLLMForTrainee({
+      variables: {
+        traineeId: vars.variables.id,
+        enable: enableOrDisable,
+      },
+    })
+  }
 
   const isActive = (id: string): boolean => {
     return id === trainee
@@ -68,10 +85,11 @@ const TraineePage: React.FunctionComponent = () => {
   return (
     <Template type="Main">
       {loading && <Loader />}
-
       {!loading &&
         data?.trainees.map((trainee, index) => (
-          <TraineeRow trainee={trainee} trainerId={data.currentUser?.id} key={index} active={isActive(trainee.id)} />
+          <>
+            <TraineeRow trainee={trainee} trainerId={data.currentUser?.id} key={index} active={isActive(trainee.id)} />
+          </>
         ))}
       {activeTrainee && (
         <div>
@@ -88,9 +106,10 @@ const TraineePage: React.FunctionComponent = () => {
           )}
         </div>
       )}
-
+      {activeTrainee && (
+        <PrimaryButton onClick={() => ToggleEnableLLMForTrainee(false)}>KI ein/ausschalten</PrimaryButton>
+      )}
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />
-
       <Modal large show={showModal} handleClose={() => setShowModal(false)} customClose>
         <AdminCreateUserLayout
           headline={<H1 noMargin>{strings.createTrainee.title}</H1>}
