@@ -415,8 +415,9 @@ const EntryInput: React.FC<EntryDisplayFieldProps> = ({
           }
         />
       )}
-      <CommentBox comments={entry.comments} updateMessage={updateMessage} />
       {matchingResult && <CommentBoxLLM llmcommentforday={matchingResult.result} />}
+      <CommentBox comments={entry.comments} updateMessage={updateMessage} />
+
       {showComment && (
         <StyledCommentInput>
           <TextInput label={strings.report.comments.addCommentToEntry} onKeyDown={handleKeyDown} onBlur={handleBlur} />

@@ -1,5 +1,9 @@
 import { BorderRadii, Spacings } from '@lara/components'
 import styled from 'styled-components'
+import llmIcon from '../assets/llm-icon.png'
+
+// then use it as:
+;<img src={llmIcon} />
 
 interface CommentBubbleProps {
   id?: string
@@ -11,7 +15,7 @@ interface CommentBubbleProps {
   llmcommentforday: string
 }
 
-const MessageInput = styled.input`
+const MessageInput = styled.textarea`
   all: unset;
   width: 100%;
   height: 28px;
@@ -35,8 +39,9 @@ const Bubble = styled.div<{ right?: boolean }>`
   flex: 1;
   padding: ${Spacings.m};
   color: ${(props) => props.theme.mediumFont};
+
   line-height: 1.4;
-  background-color: ${(props) => props.theme.background};
+  background-color: #c3caff;
   border-radius: ${BorderRadii.xxs};
   margin-left: ${(props) => props.right && Spacings.m};
   margin-right: ${(props) => !props.right && Spacings.m};
@@ -61,6 +66,30 @@ const Author = styled.span`
   display: block;
 `
 
+const AvatarContainer = styled.div<{ size: number }>`
+  position: relative;
+  height: ${(props) => props.size}px;
+  width: ${(props) => props.size}px;
+  background: ${(props) => props.theme.background};
+  border-radius: ${BorderRadii.round};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+
+const StyledImageWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+`
+
 const LLMCommentBubble: React.FC<CommentBubbleProps> = ({ right, llmcommentforday }) => {
   return (
     <MessageContainer right={right}>
@@ -68,7 +97,12 @@ const LLMCommentBubble: React.FC<CommentBubbleProps> = ({ right, llmcommentforda
         <Author>LLM:</Author>
         <MessageInput value={llmcommentforday} />
       </Bubble>
-      LLM AVATAR
+
+      <AvatarContainer size={35}>
+        <StyledImageWrapper>
+          <img src={llmIcon} />
+        </StyledImageWrapper>
+      </AvatarContainer>
     </MessageContainer>
   )
 }

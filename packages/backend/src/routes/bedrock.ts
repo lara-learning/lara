@@ -18,9 +18,10 @@ const client = new BedrockRuntimeClient({
 const modelId = 'us.anthropic.claude-3-5-haiku-20241022-v1:0'
 
 // Prompts
-const systemPrompt = 'Du korrigierst Berichtshefte in einem kurzen Satz pro Eintrag'
+const systemPrompt =
+  'Du korrigierst Berichtshefte, wo der user schreibt was er oder sie an einem Tag auf der Arbeit gemacht hat, in einem kurzen Satz pro Eintrag'
 
-const userPromptTemplate = `Für jeden Eintrag sage in einem kurzen Satz ob es Gemüse, Obst oder etwas anderes ist.
+const userPromptTemplate = `Für jeden Eintrag sage in Stichpunkten ob der Eintrag verständlich ist, Grammatik und Rechtschreibung stimmen, gib einen kurzen Vorschlag wie man es besser schreiben könnte und stelle Fragen wenn du denkst es könnte noch etwas fehlen.
 Antworte NUR mit einem JSON-Array in dieser Form, ein Objekt pro Eintrag, in der gleichen Reihenfolge:
 [{"result": "..."}, {"result": "..."}]
 
