@@ -191,6 +191,8 @@ const ButtonWrapper = styled.button.withConfig({
 
   &:disabled {
     cursor: default;
+    opacity: 0.5;
+    box-shadow: none;
   }
 
   &:focus {
