@@ -60,10 +60,15 @@ export const trainerResolver: GqlResolvers<TrainerContext> = {
       }
     },
     enableLLMForTrainee: async (_parent, { traineeId, enable }, { currentUser }) => {
+      //neues Feld in der Datenbank an trainee anlegen
+      //Trainer ändert Feld llmEnabled an Trainee
       const trainee = await traineeById(traineeId)
       if (!trainee) {
         throw new GraphQLError('errors.missingUser')
       }
+      const updatedTrainee = await updateUser({ ...trainee, llmEnabled: enable }, { updateKeys: ['llmEnabled'] })
+      //console.log(`############## Updating trainee ${trainee.id}: llmEnabled from ${trainee.llmEnabled} → ${enable}`)
+      console.log(updatedTrainee, 'DATABASE FIELD CERATED updatedTrainee')
       return {
         trainee: await updateUser({ ...trainee, llmEnabled: enable }, { updateKeys: ['llmEnabled'] }),
         trainer: currentUser,

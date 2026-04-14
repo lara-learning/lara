@@ -33,11 +33,16 @@ const TraineePage: React.FunctionComponent = () => {
 
   const [enableLLMForTrainee] = useEnableLlmForTraineeMutation()
 
-  const ToggleEnableLLMForTrainee = async (enableOrDisable: boolean) => {
+  const ToggleEnableLLMForTrainee = async (isLLMEnabled: boolean) => {
+    //Button switch label ist ausgeschaltet label ausschalten
+    //im Azubipanel anzeigen ob für den das an oder aus ist klar anzeigen
+    //label KI ein/aus
+    console.log('changing enable/disable', isLLMEnabled)
+    const newValue = !isLLMEnabled
     await enableLLMForTrainee({
       variables: {
         traineeId: vars.variables.id,
-        enable: enableOrDisable,
+        enable: newValue,
       },
     })
   }
@@ -50,6 +55,11 @@ const TraineePage: React.FunctionComponent = () => {
     currentUser: dataPageQuery?.currentUser,
     id: trainee,
   })
+
+  // let currentUserIsTrainer
+  // if (dataPageQuery?.currentUser?.__typename === 'Trainer') {
+  //   return (currentUserIsTrainer = true)
+  // }
 
   const createTrainee = async (data: EditTraineeFormData) => {
     await mutate({
@@ -106,9 +116,7 @@ const TraineePage: React.FunctionComponent = () => {
           )}
         </div>
       )}
-      {activeTrainee && (
-        <PrimaryButton onClick={() => ToggleEnableLLMForTrainee(false)}>KI ein/ausschalten</PrimaryButton>
-      )}
+      {activeTrainee && <PrimaryButton onClick={() => ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>}
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />
       <Modal large show={showModal} handleClose={() => setShowModal(false)} customClose>
         <AdminCreateUserLayout
