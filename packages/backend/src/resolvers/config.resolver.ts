@@ -3,11 +3,11 @@ import { AuthenticatedContext, GqlLaraConfig, GqlResolvers } from '@lara/api'
 import { companies } from '../repositories/company.repo'
 
 export const LaraConfig: GqlLaraConfig = {
-  minWorkDayMinutes: 180,
+  minWorkDayMinutes: 480,
   maxWorkDayMinutes: 480,
   expectedWorkDayMinutes: 480,
 
-  minEducationDayMinutes: 0,
+  minEducationDayMinutes: 480,
   maxEducationDayMinutes: 480,
 
   maxEntryMinutes: 480,

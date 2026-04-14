@@ -335,7 +335,7 @@ const DayInput: React.FunctionComponent<DayInputProps> = ({
       {halfDays && (
         <SecondaryWrapper>{day && <DayStatusSelect disabled={disabled} day={day} secondary={true} />}</SecondaryWrapper>
       )}
-      {halfDays && day.status_split !== DayStatusEnum.Sick && (
+      {halfDays && day.status_split !== DayStatusEnum.Sick && day.status_split !== DayStatusEnum.Vacation && (
         <EntriesInput
           term={term}
           handleStatusChange={handleStatusChange}
