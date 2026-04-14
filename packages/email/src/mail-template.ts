@@ -20,7 +20,6 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
   const { headline, message, link } = translations
 
   let emailVariables = {
-    DEFAULTBACKGROUND: createBase64UrlfromPng('background_0.png'),
     GREETING: `${translations.hello} {{ receiverName }}`,
     HEADLINE: '',
     HEADLINEIMAGE: '',
@@ -43,7 +42,6 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
     case 'reportExport':
       emailVariables = {
         ...emailVariables,
-        DEFAULTBACKGROUND: createBase64UrlfromPng('background_2.png'),
         HEADLINE: headline.export,
         HEADLINEIMAGE: createBase64UrlfromPng('folder.png'),
         MAINTEXT: message.success,
@@ -62,7 +60,6 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
     case 'needChangesComment':
       emailVariables = {
         ...emailVariables,
-        DEFAULTBACKGROUND: createBase64UrlfromPng('background_1.png'),
         HEADLINE: headline.needChangesComment,
         HEADLINEIMAGE: createBase64UrlfromPng('tablet.png'),
         MAINTEXT: message.needChangesComment,
@@ -72,7 +69,6 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
     case 'needChangesNoComment':
       emailVariables = {
         ...emailVariables,
-        DEFAULTBACKGROUND: createBase64UrlfromPng('background_1.png'),
         HEADLINE: headline.needChangesNoComment,
         HEADLINEIMAGE: createBase64UrlfromPng('tablet.png'),
         MAINTEXT: message.needChangesNoComment,
@@ -109,7 +105,6 @@ export const generateEmailTemplate = (type: EmailType, translations: EmailTransl
     case 'reportInReview':
       emailVariables = {
         ...emailVariables,
-        DEFAULTBACKGROUND: createBase64UrlfromPng('background_2.png'),
         HEADLINE: headline.handOver,
         HEADLINEIMAGE: createBase64UrlfromPng('tablet.png'),
         MAINTEXT: message.handOver,
