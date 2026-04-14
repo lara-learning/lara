@@ -50,7 +50,9 @@ export const traineeTraineeResolver: GqlResolvers<TraineeContext> = {
     startOfToolUsage: (model) => startOfToolUsage(model).toISOString(),
     endOfToolUsage: (model) => endOfToolUsage(model).toISOString(),
     alexaSkillLinked,
+    llmEnabled: (model) => model.llmEnabled ?? true,
   },
+
   Query: {
     suggestions: async (_parent, _args, { currentUser }) => {
       const textCountsWithTime = {} as Record<string, { count: number; duration: number; text: string }>

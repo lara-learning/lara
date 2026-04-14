@@ -35,7 +35,7 @@ import {
   useReportReviewPageDataQuery,
   useUpdateReportMutation,
   useUserPageQuery,
-  useTraineeLlmEnabledDataQuery,
+  useSettingsPageDataQuery,
 } from '../graphql'
 import { useFetchPdf } from '../hooks/use-fetch-pdf'
 import { useToastContext } from '../hooks/use-toast-context'
@@ -72,6 +72,7 @@ const ReportPage: React.FunctionComponent = () => {
     skip: !!trainee,
   })
 
+  //llmenabled from here?
   const userQuery = useUserPageQuery({
     variables: { id: trainee ?? '' },
     skip: !trainee,
@@ -338,16 +339,15 @@ const ReportPage: React.FunctionComponent = () => {
     )
   }
 
-  const { data: enablellmdata } = useTraineeLlmEnabledDataQuery()
+  const { data: enablellmdata } = useSettingsPageDataQuery()
 
   function checkLLMEnabled() {
-    if (!enablellmdata) return false
-    enablellmdata?.trainees.forEach((trainee) => {
-      console.log(trainee.llmEnabled, 'llm enabled?')
-    })
-
-    const isAnyLLMEnabled = enablellmdata?.trainees.some((trainee) => trainee.llmEnabled === true)
-    return isAnyLLMEnabled
+    const user = enablellmdata?.currentUser
+    if (user?.__typename === 'Trainee') {
+      console.log(user.llmEnabled)
+      return user.llmEnabled
+    }
+    return false
   }
 
   const renderReportPageButtons = () => {
@@ -376,8 +376,9 @@ const ReportPage: React.FunctionComponent = () => {
               </PrimaryButton>
               <PrimaryButton
                 onClick={() => {
-                  checkLLMEnabled()
-                  askLLmForFeedback()
+                  if (checkLLMEnabled()) {
+                    askLLmForFeedback()
+                  }
                 }}
               >
                 {'KI-Assistent'}

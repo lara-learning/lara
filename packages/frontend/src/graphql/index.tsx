@@ -1120,7 +1120,7 @@ export type ReportReviewPageDataQuery = { __typename?: 'Query', currentUser?: { 
 export type SettingsPageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | { __typename?: 'Trainee', startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string } } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type SettingsPageDataQuery = { __typename?: 'Query', currentUser?: { __typename?: 'Admin', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | { __typename?: 'Trainee', llmEnabled?: boolean | undefined, startDate?: string | undefined, endDate?: string | undefined, course?: string | undefined, alexaSkillLinked?: boolean | undefined, id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined, company: { __typename?: 'Company', id: string, name: string } } | { __typename?: 'Trainer', id: string, type: UserTypeEnum, language?: string | undefined, theme?: string | undefined, notification?: boolean | undefined } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type SignatureSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2663,6 +2663,7 @@ export const SettingsPageDataDocument = gql`
     theme
     notification
     ... on Trainee {
+      llmEnabled
       company {
         id
         name

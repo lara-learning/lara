@@ -9,3 +9,4 @@ mutation EnableLLMForTrainee($traineeId: ID!, $enable: Boolean) {
     }
   }
 }
+
