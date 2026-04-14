@@ -45,7 +45,7 @@ export const darkTheme: DefaultTheme = {
   primaryDisabled: '#969696',
   primaryHovered: '#244FF9',
   primaryPressed: '#4059BC',
-  primaryLLM: '#c3caff',
+  primaryLLM: '#f1cbff',
 
   primaryDangerDefault: '#EB001B',
   primaryDangerDisabled: '#969696',
