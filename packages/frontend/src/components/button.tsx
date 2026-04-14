@@ -7,6 +7,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconName
   danger?: boolean
   ghost?: boolean
+  disabled?: boolean
+  llmButton?: boolean
 }
 
 export const PrimaryButton: React.FunctionComponent<ButtonProps> = (props) => {

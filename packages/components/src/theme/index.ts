@@ -46,6 +46,7 @@ declare module 'styled-components' {
     primaryDisabled: string
     primaryHovered: string
     primaryPressed: string
+    primaryLLM: string
 
     primaryDangerDefault: string
     primaryDangerDisabled: string

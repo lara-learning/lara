@@ -375,6 +375,7 @@ const ReportPage: React.FunctionComponent = () => {
                 {strings.report.handover}
               </PrimaryButton>
               <PrimaryButton
+                llmButton
                 disabled={!checkLLMEnabled()}
                 onClick={() => {
                   if (checkLLMEnabled()) {

@@ -10,6 +10,7 @@ export interface ButtonLayoutProps extends ButtonHTMLAttributes<HTMLButtonElemen
   fullsize?: boolean
   danger?: boolean
   ghost?: boolean
+  llmButton?: boolean
 }
 
 const primaryDangerStyles = css`
@@ -104,7 +105,7 @@ const secondaryGhostStyles = css`
 `
 
 const primaryButtonWrapper = css<ButtonLayoutProps>`
-  background: ${(props) => props.theme.primaryDefault};
+  background: ${(props) => (props.llmButton ? props.theme.primaryLLM : props.theme.primaryDefault)};
   color: ${(props) => props.theme.buttonPrimaryFont};
   fill: ${(props) => props.theme.iconWhite};
 
@@ -175,7 +176,7 @@ const buttonStyle = (props: ButtonLayoutProps) => css`
 `
 
 const ButtonWrapper = styled.button.withConfig({
-  shouldForwardProp: (prop) => !['styling', 'fullsize'].includes(prop),
+  shouldForwardProp: (prop) => !['styling', 'fullsize', 'llmButton'].includes(prop),
 })<ButtonLayoutProps>`
   font-size: ${FontSizes.button};
   border: none;
