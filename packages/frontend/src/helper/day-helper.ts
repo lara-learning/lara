@@ -33,7 +33,7 @@ export const useDayHelper = (): UseDayHelper => {
   }
 
   const getTotalMinutes: UseDayHelper['getTotalMinutes'] = (day) => {
-    if (day.status_split === DayStatusEnum.Sick) {
+    if (day.status_split === DayStatusEnum.Sick || day.status_split === DayStatusEnum.Holiday) {
       return 480
     }
     if (day.status === DayStatusEnum.Education || day.status === DayStatusEnum.Work) {

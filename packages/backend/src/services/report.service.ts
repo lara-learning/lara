@@ -124,7 +124,7 @@ export const finishedDays = (report: Report): number => {
       case 'holiday':
         return acc + 1
       case 'education':
-        if (dayMinutes(day) > LaraConfig.minEducationDayMinutes) {
+        if (dayMinutes(day) >= LaraConfig.minEducationDayMinutes) {
           return acc + 1
         }
         break
