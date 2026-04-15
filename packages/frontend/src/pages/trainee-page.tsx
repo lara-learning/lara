@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 import { AdminCreateUserLayout, EditUserLayout, H1, Paragraph } from '@lara/components'
@@ -8,6 +8,7 @@ import TraineeRow from '../components/trainee-row'
 import {
   useCreateTraineeMutation,
   useEnableLlmForTraineeMutation,
+  useSettingsPageDataQuery,
   useTraineePageDataQuery,
   useUserPageQuery,
 } from '../graphql'
@@ -32,13 +33,34 @@ const TraineePage: React.FunctionComponent = () => {
   const [showModal, setShowModal] = React.useState(false)
 
   const [enableLLMForTrainee] = useEnableLlmForTraineeMutation()
+  const [isLLMEnabled, setIsLLMEnabled] = useState<false | true>()
 
-  const ToggleEnableLLMForTrainee = async (isLLMEnabled: boolean) => {
+  const { data: enablellmdata } = useSettingsPageDataQuery()
+
+  useEffect(() => {
+    const user = enablellmdata?.currentUser
+    if (user?.__typename === 'Trainee') {
+      setIsLLMEnabled(user.llmEnabled)
+    }
+  }, [enablellmdata])
+
+  function checkLLMEnabled() {
+    const user = enablellmdata?.currentUser
+    if (user?.__typename === 'Trainee') {
+      console.log(user.llmEnabled, 'IS LLM ENABLED CHecking on Trainee')
+      return user.llmEnabled
+    }
+    return false
+  }
+
+  const ToggleEnableLLMForTrainee = async () => {
+    checkLLMEnabled()
     //Button switch label ist ausgeschaltet label ausschalten
     //im Azubipanel anzeigen ob für den das an oder aus ist klar anzeigen
     //label KI ein/aus
-    console.log('changing enable/disable', isLLMEnabled)
     const newValue = !isLLMEnabled
+    setIsLLMEnabled(newValue)
+    console.log('changing enable/disable', newValue)
     await enableLLMForTrainee({
       variables: {
         traineeId: vars.variables.id,
@@ -116,7 +138,7 @@ const TraineePage: React.FunctionComponent = () => {
           )}
         </div>
       )}
-      {activeTrainee && <PrimaryButton onClick={() => ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>}
+      {activeTrainee && <PrimaryButton onClick={ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>}
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />
       <Modal large show={showModal} handleClose={() => setShowModal(false)} customClose>
         <AdminCreateUserLayout

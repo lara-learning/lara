@@ -344,7 +344,7 @@ const ReportPage: React.FunctionComponent = () => {
   function checkLLMEnabled() {
     const user = enablellmdata?.currentUser
     if (user?.__typename === 'Trainee') {
-      console.log(user.llmEnabled)
+      console.log(user.llmEnabled, 'IS LLM ENABLED CHecking on Trainee')
       return user.llmEnabled
     }
     return false
