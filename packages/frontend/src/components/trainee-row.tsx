@@ -23,11 +23,13 @@ import strings from '../locales/localization'
 import Avatar from './avatar'
 import Badge from './badge'
 import Loader from './loader'
+
 interface TraineeRowProps {
   active?: boolean
   trainee: Pick<Trainee, 'startDate' | 'id' | 'firstName' | 'lastName' | 'course'> & {
     trainer?: Pick<Trainer, 'id' | 'firstName' | 'lastName'>
     company?: Pick<Company, 'id' | 'name'>
+    llmEnabled?: boolean
   }
   trainerId?: string
 }
@@ -52,6 +54,14 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
   const [claimTrainee] = useClaimTraineeMutation()
   const [unclaimTrainee] = useUnclaimTraineeMutation()
   const [loading, setLoading] = React.useState(false)
+
+  //currentSUer is Trainer but field needs to be read from Trainee
+  function checkLLMEnabled() {
+    if (props.trainee.llmEnabled) {
+      return true
+    }
+    return false
+  }
 
   const claim = async () => {
     setLoading(true)
@@ -85,11 +95,13 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
       <Flex justifyContent="center" alignItems="space-between">
         <StyledHeader to={headerDestination}>
           <Avatar size={44} id={trainee.id} />
+
           <StyledName>
             {trainee.firstName} {trainee.lastName}
           </StyledName>
           <StyledCourse>{trainee.course}</StyledCourse>
         </StyledHeader>
+
         <StyledControls>
           <motion.div
             animate={{
@@ -140,6 +152,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
                     ? `${trainee.trainer.firstName} ${trainee.trainer.lastName}`
                     : strings.traineePlaceholders.trainerPlaceholder}
                 </StyledInfoValue>
+
                 <StyledInfoLabel>{strings.traineeShipYear}</StyledInfoLabel>
                 <StyledInfoValue>
                   {trainee.startDate
@@ -158,6 +171,8 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
                 <StyledInfoValue>
                   {trainee.course ? trainee.course : strings.traineePlaceholders.coursePlaceholder}
                 </StyledInfoValue>
+                <StyledInfoLabel>KI-Assistenz</StyledInfoLabel>
+                <StyledInfoValue>{checkLLMEnabled() ? 'enabled' : 'disabled'}</StyledInfoValue>
               </Flex>
             </Box>
           </Flex>

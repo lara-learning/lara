@@ -124,22 +124,26 @@ const TraineePage: React.FunctionComponent = () => {
           </>
         ))}
       {activeTrainee && (
-        <div>
-          {!pagequeryloading && dataPageQuery?.companies && dataPageQuery?.getUser?.__typename === 'Trainee' && (
-            <EditUserLayout actions={renderDeleteAction(dataPageQuery?.getUser?.deleteAt)} />
-          )}
-          {!loading && (
-            <DeletionModal
-              show={showDeletionModal}
-              onClose={toggleDeletionModal}
-              onConfirm={() => markForDeleteTrainer(vars)}
-              userName={`${activeTrainee?.firstName} ${activeTrainee?.lastName}`}
-            />
-          )}
-        </div>
+        <>
+          <PrimaryButton onClick={ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>
+          <div>
+            {!pagequeryloading && dataPageQuery?.companies && dataPageQuery?.getUser?.__typename === 'Trainee' && (
+              <EditUserLayout actions={renderDeleteAction(dataPageQuery?.getUser?.deleteAt)} />
+            )}
+            {!loading && (
+              <DeletionModal
+                show={showDeletionModal}
+                onClose={toggleDeletionModal}
+                onConfirm={() => markForDeleteTrainer(vars)}
+                userName={`${activeTrainee?.firstName} ${activeTrainee?.lastName}`}
+              />
+            )}
+          </div>
+        </>
       )}
-      {activeTrainee && <PrimaryButton onClick={ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>}
+
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />
+      <h1>Render deleteactions has the button</h1>
       <Modal large show={showModal} handleClose={() => setShowModal(false)} customClose>
         <AdminCreateUserLayout
           headline={<H1 noMargin>{strings.createTrainee.title}</H1>}

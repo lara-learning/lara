@@ -1140,7 +1140,7 @@ export type TraineeLlmEnabledDataQuery = { __typename?: 'Query', trainees: Array
 export type TraineePageDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
+export type TraineePageDataQuery = { __typename?: 'Query', trainees: Array<{ __typename?: 'Trainee', id: string, firstName: string, lastName: string, llmEnabled?: boolean | undefined, course?: string | undefined, startDate?: string | undefined, trainer?: { __typename?: 'Trainer', id: string, firstName: string, lastName: string } | undefined, company: { __typename?: 'Company', id: string, name: string } }>, currentUser?: { __typename?: 'Admin', id: string } | { __typename?: 'Trainee', id: string } | { __typename?: 'Trainer', id: string } | undefined, companies?: Array<{ __typename?: 'Company', id: string, name: string }> | undefined };
 
 export type TraineeSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2782,6 +2782,7 @@ export const TraineePageDataDocument = gql`
     id
     firstName
     lastName
+    llmEnabled
     course
     startDate
     trainer {

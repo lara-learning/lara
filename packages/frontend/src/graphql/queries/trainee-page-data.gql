@@ -3,6 +3,7 @@ query TraineePageData {
     id
     firstName
     lastName
+    llmEnabled
     course
     startDate
     trainer {
