@@ -183,7 +183,8 @@ const ButtonWrapper = styled.button.withConfig({
   letter-spacing: 0.2px;
   border-radius: ${BorderRadii.xxs};
   padding: 0;
-  margin: 0;
+  align-self: ${(props) => (props.llmButton ? 'flex-end' : 'unset')};
+
   cursor: pointer;
   position: relative;
   transition: 0.2s ease;

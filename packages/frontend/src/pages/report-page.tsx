@@ -294,7 +294,6 @@ const ReportPage: React.FunctionComponent = () => {
     .flatMap((day) => day.entries)
     .map((entry) => ({ id: entry.id, text: entry.text }))
     .filter((entry): entry is { id: string; text: string } => entry.text !== undefined)
-  console.log(allEntries, 'ALLENTRIES')
 
   const finishedDays = report && getFinishedDays(report)
 
@@ -374,17 +373,23 @@ const ReportPage: React.FunctionComponent = () => {
               >
                 {strings.report.handover}
               </PrimaryButton>
-              <PrimaryButton
-                llmButton
-                disabled={!checkLLMEnabled()}
-                onClick={() => {
-                  if (checkLLMEnabled()) {
+              {checkLLMEnabled() && (
+                <PrimaryButton
+                  llmButton
+                  onClick={() => {
+                    if (allEntries?.length === 0) {
+                      addToast({
+                        icon: 'Error',
+                        text: strings.noentrieserrorforllm,
+                        type: 'error',
+                      })
+                    }
                     askLLmForFeedback()
-                  }
-                }}
-              >
-                {'KI-Assistent'}
-              </PrimaryButton>
+                  }}
+                >
+                  {strings.aiassistant}
+                </PrimaryButton>
+              )}
               {response}
             </>
           )}

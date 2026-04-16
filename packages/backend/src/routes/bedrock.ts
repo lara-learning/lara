@@ -53,7 +53,7 @@ export async function getBedrockResponse(inputText: string[]): Promise<string[]>
   const response = await client.send(command)
   const outputText = response.output?.message?.content?.[0]?.text
   if (!outputText) throw new Error('No text content in response')
-
+  console.log(JSON.stringify(response), 'STRINGIFIED RESPONSE')
   const parsed: { result: string }[] = JSON.parse(outputText)
   return parsed.map((item) => item.result)
 }

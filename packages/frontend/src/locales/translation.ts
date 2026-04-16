@@ -1,4 +1,6 @@
 export default interface Translation {
+  aiassistant: string
+  noentrieserrorforllm: string
   today: string
   week: string
   open: string
@@ -18,6 +20,8 @@ export default interface Translation {
   done: string
   markDelete: string
   unmarkDelete: string
+  switchaion: string
+  switchaioff: string
   createUser: string
   deactivate: string
   traineeShipYear: string

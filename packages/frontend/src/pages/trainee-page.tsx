@@ -22,6 +22,12 @@ import { GraphQLError } from 'graphql'
 import { DeletionModal } from '../components/deletion-modal'
 import { useDeleteActions } from '../components/render-delete-action'
 import { PrimaryButton } from '../components/button'
+import { styled } from 'styled-components'
+
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 
 const TraineePage: React.FunctionComponent = () => {
   const { trainee } = useParams()
@@ -56,7 +62,6 @@ const TraineePage: React.FunctionComponent = () => {
   const ToggleEnableLLMForTrainee = async () => {
     checkLLMEnabled()
     //Button switch label ist ausgeschaltet label ausschalten
-    //im Azubipanel anzeigen ob für den das an oder aus ist klar anzeigen
     //label KI ein/aus
     const newValue = !isLLMEnabled
     setIsLLMEnabled(newValue)
@@ -124,8 +129,10 @@ const TraineePage: React.FunctionComponent = () => {
           </>
         ))}
       {activeTrainee && (
-        <>
-          <PrimaryButton onClick={ToggleEnableLLMForTrainee}>KI ein/ausschalten</PrimaryButton>
+        <StyledDiv>
+          <PrimaryButton onClick={ToggleEnableLLMForTrainee} llmButton>
+            {!isLLMEnabled ? strings.switchaion : strings.switchaioff}
+          </PrimaryButton>
           <div>
             {!pagequeryloading && dataPageQuery?.companies && dataPageQuery?.getUser?.__typename === 'Trainee' && (
               <EditUserLayout actions={renderDeleteAction(dataPageQuery?.getUser?.deleteAt)} />
@@ -139,7 +146,7 @@ const TraineePage: React.FunctionComponent = () => {
               />
             )}
           </div>
-        </>
+        </StyledDiv>
       )}
 
       <Fab icon="Plus" large onClick={() => setShowModal(true)} />

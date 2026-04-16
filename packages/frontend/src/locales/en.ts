@@ -1,6 +1,8 @@
 import Translation from './translation'
 
 const englishTranslation: Translation = {
+  noentrieserrorforllm: 'You have nothing written down AI cannot answer',
+  aiassistant: 'AI-Assistant',
   today: 'Today',
   week: 'Week',
   open: 'Open',
@@ -21,6 +23,8 @@ const englishTranslation: Translation = {
   done: 'Done',
   markDelete: 'Mark for deletion',
   unmarkDelete: 'Remove deletion mark',
+  switchaion: 'Enable AI',
+  switchaioff: 'Disable AI',
   deactivate: 'Deactivate',
   traineeShipYear: 'Year of Traineeship',
   claimed: 'Claimed',
