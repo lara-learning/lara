@@ -47,8 +47,6 @@ export async function getBedrockResponse(inputText: string[]): Promise<string[]>
   })
 
   //Fehlerbehandlung für json im falschen Format
-  //bedrock ein json format schicken?
-  //pydantic?
 
   const response = await client.send(command)
   const outputText = response.output?.message?.content?.[0]?.text

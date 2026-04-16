@@ -109,6 +109,7 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
         const feedbacks = await getBedrockResponse(texts)
 
         //add id before returning array to frontend
+        console.log(res, 'RESSSSSSSSSSSSSSSSSSSSSS')
         return res.json({
           results: entries.map((e: { id: string; text: string }, index: number) => ({
             id: e.id,
@@ -117,6 +118,7 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
         })
       } catch (err) {
         console.error(err, 'err returned')
+
         return res.status(500).json({ error: 'Failed to get LLM response' })
       }
     })

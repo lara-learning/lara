@@ -286,14 +286,37 @@ const ReportPage: React.FunctionComponent = () => {
     llmStore.setResponse(response)
   }
 
+  const hasEmptyReport = report?.days.forEach((day) => {
+    day.entries.map((entry) => {
+      console.log(entry, 'entry')
+      if (entry.text) {
+        return true
+      } else return false
+    })
+  })
+
+  console.log(hasEmptyReport, 'hasEmptyReport')
+
   const entriesText = report?.days.flatMap((day) => day.entries).map((entry) => entry.text)
 
-  console.log(entriesText)
+  function checkIfAnythingWritten() {
+    const entriesText = report?.days.flatMap((day) => day.entries).map((entry) => entry.text)
+
+    if (entriesText && entriesText.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  console.log(entriesText, 'ENTRIESTEXT')
 
   const allEntries = report?.days
     .flatMap((day) => day.entries)
     .map((entry) => ({ id: entry.id, text: entry.text }))
     .filter((entry): entry is { id: string; text: string } => entry.text !== undefined)
+
+  const entryemptytest = report?.days.flatMap((day) => day.entries)
+  console.log(entryemptytest, 'entryemptytest')
 
   const finishedDays = report && getFinishedDays(report)
 
@@ -377,14 +400,13 @@ const ReportPage: React.FunctionComponent = () => {
                 <PrimaryButton
                   llmButton
                   onClick={() => {
-                    if (allEntries?.length === 0) {
+                    if (!checkIfAnythingWritten()) {
                       addToast({
                         icon: 'Error',
                         text: strings.noentrieserrorforllm,
                         type: 'error',
                       })
-                    }
-                    askLLmForFeedback()
+                    } else askLLmForFeedback()
                   }}
                 >
                   {strings.aiassistant}
