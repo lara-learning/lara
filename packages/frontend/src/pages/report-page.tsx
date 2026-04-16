@@ -354,7 +354,7 @@ const ReportPage: React.FunctionComponent = () => {
 
     return (
       <Spacer y="l">
-        <Flex justifyContent={'flex-end'} alignItems={'center'}>
+        <Flex justifyContent={'space-between'} alignItems={'center'}>
           {(reportTodo || reportReopened) && (
             <>
               <PrimaryButton
