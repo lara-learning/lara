@@ -2,7 +2,7 @@ import { GraphQLError } from 'graphql'
 import React, { useState } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router'
 
-import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box } from '@lara/components'
+import { Container, H2, Paragraph, Spacer, StyledTopBorderWrapper, Flex, Box, StyledIcon } from '@lara/components'
 
 import { PrimaryButton, SecondaryButton } from '../components/button'
 import DayInput from '../components/day-input'
@@ -43,7 +43,12 @@ import strings from '../locales/localization'
 import { Template } from '../templates/template'
 import { useReportHelper } from '../helper/report-helper'
 import { llmStore } from '../helper/llm-store'
+import { styled } from 'styled-components'
 //import { llmStore } from '../helper/llm-store'
+
+const StyledDiv = styled.div`
+  margin-left: 10px;
+`
 
 const ReportPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
@@ -410,6 +415,9 @@ const ReportPage: React.FunctionComponent = () => {
                   }}
                 >
                   {strings.aiassistant}
+                  <StyledDiv>
+                    <StyledIcon name={'Loader'} size="24px" />
+                  </StyledDiv>
                 </PrimaryButton>
               )}
               {response}

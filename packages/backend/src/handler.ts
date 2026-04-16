@@ -107,9 +107,9 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
 
         const texts = entries.map((e) => e.text)
         const feedbacks = await getBedrockResponse(texts)
-
+        console.log(feedbacks, 'FEEDBACKS')
         //add id before returning array to frontend
-        console.log(res, 'RESSSSSSSSSSSSSSSSSSSSSS')
+        // console.log(res, 'RESSSSSSSSSSSSSSSSSSSSSS')
         return res.json({
           results: entries.map((e: { id: string; text: string }, index: number) => ({
             id: e.id,
