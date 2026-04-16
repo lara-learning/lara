@@ -110,6 +110,8 @@ const ReportPage: React.FunctionComponent = () => {
   const toggleHandoverModal = () => setShowHandoverModal(!showHandoverModal)
   const toggleUnarchiveModal = () => setShowUnarchiveModal(!showUnarchiveModal)
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const updateReport = async (values: Partial<Report>) => {
     if (!report) return
     return updateReportMutation({
@@ -274,21 +276,26 @@ const ReportPage: React.FunctionComponent = () => {
   }
 
   const askLLmForFeedback = async () => {
-    //const inputText = 'Dokumentation geschrieben'
-    const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
-    const response = await fetch(`${BackendUrl}/ai_assistant`, {
-      method: 'POST',
-      headers: {
-        authorization: 'allow',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ entries: allEntries }),
+    setIsLoading(true)
+    try {
+      const BackendUrl = `${ENVIRONMENT.backendUrl}/backend`
+      const response = await fetch(`${BackendUrl}/ai_assistant`, {
+        method: 'POST',
+        headers: {
+          authorization: 'allow',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ entries: allEntries }),
+        credentials: 'include',
+      }).then((res) => res.json())
 
-      credentials: 'include',
-    }).then((res) => res.json())
-    //setResponse(response.result)
-    console.log(response, 'responsefromhandler')
-    llmStore.setResponse(response)
+      console.log(response, 'responsefromhandler')
+      llmStore.setResponse(response)
+    } catch (error) {
+      console.error('Failed to fetch LLM feedback:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const hasEmptyReport = report?.days.forEach((day) => {
@@ -415,9 +422,8 @@ const ReportPage: React.FunctionComponent = () => {
                   }}
                 >
                   {strings.aiassistant}
-                  <StyledDiv>
-                    <StyledIcon name={'Loader'} size="24px" />
-                  </StyledDiv>
+
+                  <StyledDiv>{isLoading && <StyledIcon name={'Loader'} size="24px" />}</StyledDiv>
                 </PrimaryButton>
               )}
               {response}
