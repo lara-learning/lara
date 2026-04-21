@@ -54,9 +54,9 @@ jobs:
       MICROSOFT_LOGIN_URL: ${{ secrets.MICROSOFT_LOGIN_URL }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
 
@@ -71,13 +71,13 @@ jobs:
       - run: npm i -g osls
 
       - name: Download built dist and lib
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v5
         with:
           name: dist-and-lib
           path: packages
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
