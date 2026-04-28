@@ -75,10 +75,13 @@ export const validateEntryUpdate = (report: Report, day: Day, newEntry: Entry, l
   }
 
   // calculate the time without the entry that is updated
-  const minutes = dayMinutes({
-    ...day,
-    entries: day.entries.filter((d) => d.id !== newEntry.id),
-  })
+  const minutes = dayMinutes(
+    {
+      ...day,
+      entries: day.entries.filter((d) => d.id !== newEntry.id),
+    },
+    true
+  )
 
   if (
     day.status === 'work' &&

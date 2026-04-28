@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 import { Day, GqlDayStatusEnum, Report } from '@lara/api'
 
 import { parseISODateString } from '../utils/date'
+import { LaraConfig } from '../resolvers/config.resolver'
 
 /**
  * Creates an array of all days by the given reports
@@ -94,12 +95,19 @@ export const reportDayByDayId = (dayId: string, reports: Report[]): ReportDayPay
  * @param day Day to calculate minutes
  * @returns Minutes of day
  */
-export const dayMinutes = (day: Day): number => {
+export const dayMinutes = (day: Day, ignoreSplitOOO?: boolean): number => {
   const status = dayStatus(day)
+
+  const isOOO = (status?: GqlDayStatusEnum) => status === 'sick' || status === 'vacation' || status === 'holiday'
+
+  if (isOOO(day.status_split)) {
+    if (ignoreSplitOOO) return 0
+    return status === 'education' ? LaraConfig.minEducationDayMinutes : LaraConfig.minWorkDayMinutes
+  }
 
   if (status === 'education' || status === 'work') {
     return day.entries.reduce((accumulator, entry) => accumulator + (entry.time ?? 0) + (entry.time_split ?? 0), 0)
   } else {
-    return 0
+    return LaraConfig.minWorkDayMinutes
   }
 }

@@ -1179,7 +1179,7 @@ export type DashboardPageDataQuery = { __typename?: 'Query', currentUser?:
     | { __typename?: 'Admin', id: string, theme?: string | undefined }
     | { __typename?: 'Trainee', id: string, theme?: string | undefined }
     | { __typename?: 'Trainer', id: string, theme?: string | undefined }
-   | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, time?: number | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user:
+   | undefined, reports: Array<{ __typename: 'Report', id: string, week: number, year: number, status: ReportStatus, department?: string | undefined, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, entries: Array<{ __typename?: 'Entry', id: string, time?: number | undefined, time_split?: number | undefined }> }> } | undefined>, reportForYearAndWeek?: { __typename?: 'Report', id: string, status: ReportStatus, days: Array<{ __typename?: 'Day', status?: DayStatusEnum | undefined, status_split?: DayStatusEnum | undefined, date: string, id: string, entries: Array<{ __typename?: 'Entry', id: string, text?: string | undefined, text_split?: string | undefined, time?: number | undefined, time_split?: number | undefined, orderId: number, comments: Array<{ __typename?: 'Comment', id: string, published: boolean, user:
             | { __typename?: 'Admin', id: string, firstName: string, lastName: string }
             | { __typename?: 'Trainee', id: string, firstName: string, lastName: string }
             | { __typename?: 'Trainer', id: string, firstName: string, lastName: string }
@@ -2459,6 +2459,7 @@ export const DashboardPageDataDocument = gql`
     department
     days {
       status
+      status_split
       entries {
         id
         time
@@ -2472,11 +2473,13 @@ export const DashboardPageDataDocument = gql`
     status
     days {
       status
+      status_split
       date
       id
       entries {
         id
         text
+        text_split
         time
         time_split
         orderId

@@ -1,8 +1,9 @@
 import { DefaultTheme } from '@lara/components'
 
 import { Day, DayStatusEnum, Entry, ReportStatus, useConfigQuery } from '../graphql'
+import { useDayHelper } from './day-helper'
 
-type ReportDay = Pick<Day, 'status'> & {
+type ReportDay = Pick<Day, 'status' | 'status_split'> & {
   entries: Pick<Entry, 'time' | 'time_split'>[]
 }
 
@@ -25,14 +26,13 @@ export const useReportHelper = (): UseReportHelper => {
 
   const getStatusColor: UseReportHelper['getStatusColor'] = (reportStatus) => TraineeReportStatusColors[reportStatus]
 
-  const getDayMinutes = (day: ReportDay): number =>
-    day.entries.reduce((acc, entry) => acc + (entry.time ?? 0) + (entry.time_split ?? 0), 0)
+  const { getTotalMinutes: getDayMinutes } = useDayHelper()
 
   const getFinishedDays: UseReportHelper['getFinishedDays'] = (report) => {
     let finishedDays = 0
 
-    const minEducationMinutes = data?.config.minEducationDayMinutes ?? 0
-    const minWorkMinutes = data?.config.minWorkDayMinutes ?? 180
+    const minEducationMinutes = data?.config.minEducationDayMinutes ?? 480
+    const minWorkMinutes = data?.config.minWorkDayMinutes ?? 480
 
     report.days.forEach((day) => {
       const minutes = getDayMinutes(day)
@@ -44,7 +44,7 @@ export const useReportHelper = (): UseReportHelper => {
           finishedDays++
           break
         case DayStatusEnum.Education:
-          if (minutes > minEducationMinutes) {
+          if (minutes >= minEducationMinutes) {
             finishedDays++
           }
           break
