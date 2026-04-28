@@ -40,6 +40,28 @@ const ApolloProvider: React.FunctionComponent<ApolloProviderProps> = ({ children
                 return incoming
               },
             },
+            status(rawVal) {
+              return rawVal ?? null
+            },
+            status_split(rawVal) {
+              return rawVal ?? null
+            },
+          },
+        },
+        Entry: {
+          fields: {
+            text(rawVal) {
+              return rawVal ?? null
+            },
+            text_split(rawVal) {
+              return rawVal ?? null
+            },
+            time(rawVal) {
+              return rawVal ?? null
+            },
+            time_split(rawVal) {
+              return rawVal ?? null
+            },
           },
         },
       },

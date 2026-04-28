@@ -11,6 +11,7 @@ query DashboardPageData($currentYear: Int!, $currentWeek: Int!) {
     department
     days {
       status
+      status_split
       entries {
         id
         time
@@ -24,11 +25,13 @@ query DashboardPageData($currentYear: Int!, $currentWeek: Int!) {
     status
     days {
       status
+      status_split
       date
       id
       entries {
         id
         text
+        text_split
         time
         time_split
         orderId
