@@ -22,6 +22,8 @@ export default interface Translation {
   unmarkDelete: string
   switchaion: string
   switchaioff: string
+  aiIsOn: string
+  aiIsOff: string
   createUser: string
   deactivate: string
   traineeShipYear: string

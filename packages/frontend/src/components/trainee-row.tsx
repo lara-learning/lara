@@ -172,7 +172,7 @@ const TraineeRow: React.FunctionComponent<TraineeRowProps> = (props) => {
                   {trainee.course ? trainee.course : strings.traineePlaceholders.coursePlaceholder}
                 </StyledInfoValue>
                 <StyledInfoLabel>KI-Assistenz</StyledInfoLabel>
-                <StyledInfoValue>{checkLLMEnabled() ? 'enabled' : 'disabled'}</StyledInfoValue>
+                <StyledInfoValue>{checkLLMEnabled() ? strings.aiIsOn : strings.aiIsOff}</StyledInfoValue>
               </Flex>
             </Box>
           </Flex>

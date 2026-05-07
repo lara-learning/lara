@@ -23,6 +23,8 @@ const germanTranslation: Translation = {
   unmarkDelete: 'Löschmarkierung aufheben',
   switchaion: 'KI einschalten',
   switchaioff: 'KI ausschalten',
+  aiIsOn: 'eingeschaltet',
+  aiIsOff: 'ausgeschaltet',
   cancel: 'Abbrechen',
   createUser: 'Anlegen',
   deactivate: 'Deaktivieren',

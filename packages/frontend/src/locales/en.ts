@@ -25,6 +25,8 @@ const englishTranslation: Translation = {
   unmarkDelete: 'Remove deletion mark',
   switchaion: 'Enable AI',
   switchaioff: 'Disable AI',
+  aiIsOn: 'On',
+  aiIsOff: 'Off',
   deactivate: 'Deactivate',
   traineeShipYear: 'Year of Traineeship',
   claimed: 'Claimed',
