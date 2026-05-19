@@ -1,5 +1,3 @@
-import { WriteRequest } from '@aws-sdk/client-dynamodb'
-import { marshall } from '@aws-sdk/util-dynamodb'
 import { Trainer } from '@lara/api'
 
 import { queryObjects, userTableName, userTypeIndex, batchWriteItem } from '../db'
@@ -19,12 +17,12 @@ export const trainerById = async (id: string): Promise<Trainer | undefined> => {
 export const deleteTrainerReferences = async (trainer: Trainer): Promise<boolean[]> => {
   const trainees = await traineesByTrainerId(trainer.id)
 
-  const putRequests: WriteRequest[] = trainees.map((trainee) => ({
+  const putRequests = trainees.map((trainee) => ({
     PutRequest: {
-      Item: marshall({
+      Item: {
         ...trainee,
         trainerId: undefined,
-      }),
+      },
     },
   }))
 
