@@ -1,5 +1,3 @@
-import { WriteRequest } from '@aws-sdk/client-dynamodb'
-import { marshall } from '@aws-sdk/util-dynamodb'
 import { Report } from '@lara/api'
 
 import {
@@ -23,18 +21,22 @@ export const saveReport = (report: Report): Promise<Report> => {
 }
 
 export const deleteReports = async (reports: Report[]): Promise<boolean> => {
-  const deleteRequests: WriteRequest[] = reports.map((report) => ({
+  const deleteRequests = reports.map((report) => ({
     DeleteRequest: {
-      Key: marshall({
+      Key: {
         id: report.id,
-      }),
+      },
     },
   }))
 
-  const deleteRequestChunks = chunk(deleteRequests, 25)
+  const chunks = chunk(deleteRequests, 25)
 
   const responses = await Promise.all(
-    deleteRequestChunks.map((request) => batchWriteItem({ [reportTableName]: request }))
+    chunks.map((request) =>
+      batchWriteItem({
+        [reportTableName]: request,
+      })
+    )
   )
 
   return !responses.includes(false)
