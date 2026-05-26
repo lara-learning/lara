@@ -577,17 +577,10 @@ resources:
         ResponseHeadersPolicyConfig:
           Name: Custom-CORS-and-SecurityHeadersPolicy
           CorsConfig:
-            AccessControlAllowCredentials: true
+            AccessControlAllowCredentials: false
             AccessControlAllowHeaders:
               Items:
-                - 'Content-Type'
-                - 'Authorization'
-                - 'Accept'
-                - 'X-Amz-Date'
-                - 'X-Api-Key'
-                - 'X-Amz-Security-Token'
-                - 'X-Amz-User-Agent'
-                - 'X-Amzn-Trace-Id'
+                - '*'
             AccessControlAllowMethods:
               Items:
                 - GET
