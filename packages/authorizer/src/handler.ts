@@ -24,10 +24,13 @@ const generatePolicy = (
   }
 }
 
-export const handler: APIGatewayAuthorizerHandler = (event, _context, callback) => {
+export const handler: APIGatewayAuthorizerHandler = async (event, _context) => {
   if (event.type === 'REQUEST') {
-    return callback('Wrong authentication type')
+    throw new Error('Wrong authentication type')
   }
 
-  return callback(null, generatePolicy('user', 'Allow', event.methodArn))
+  const policy = generatePolicy('user', 'Allow', event.methodArn)
+  if (!policy) throw new Error('No effect or resource was passed')
+
+  return policy
 }
