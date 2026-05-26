@@ -577,7 +577,7 @@ resources:
         ResponseHeadersPolicyConfig:
           Name: Custom-CORS-and-SecurityHeadersPolicy
           CorsConfig:
-            AccessControlAllowCredentials: false
+            AccessControlAllowCredentials: true
             AccessControlAllowHeaders:
               Items:
                 - '*'
