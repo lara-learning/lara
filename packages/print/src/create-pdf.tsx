@@ -46,7 +46,7 @@ export const createPDF = async (
   const templateString = createPage(reportData, userData, translations)
 
   await page.setContent(templateString, {
-    waitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+    waitUntil: ['load', 'domcontentloaded'],
     timeout: 30000,
   })
 

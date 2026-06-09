@@ -9,8 +9,8 @@
     "target": "ESNext",
     "lib": ["ESNEXT", "DOM"],
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "module": "esnext",
     "keyofStringsOnly": false
   },
   "references": [{ "path": "../api" }],
