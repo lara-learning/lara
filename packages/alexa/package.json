@@ -14,8 +14,8 @@
     "ask-sdk-express-adapter": "^2.14.0",
     "ask-sdk-model": "^1.86.0",
     "date-fns": "4.1.0",
-    "graphql": "^16.11.0",
-    "graphql-request": "^7.2.0",
+    "graphql": "^16.14.2",
+    "graphql-request": "^7.4.0",
     "iso8601-duration": "^2.1.2"
   },
   "devDependencies": {
