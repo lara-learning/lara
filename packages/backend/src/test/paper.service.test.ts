@@ -1,6 +1,6 @@
-import { GqlPaper, GqlPaperInput } from '@lara/api'
+import { GqlPaper, GqlPaperInput, GqlPaperUpdateInput } from '@lara/api'
 import { generateTrainee } from '../services/trainee.service'
-import { generatePaper } from '../services/paper.service'
+import { generatePaper, hasPaperCommentsIncreased } from '../services/paper.service'
 import { generateMentor } from '../services/mentor.service'
 import { generateTrainer } from '../services/trainer.service'
 
@@ -65,5 +65,53 @@ describe('createPaperData', () => {
 
   it('check if mentor has been assigned correctly', () => {
     expect(paperInput.mentorId).toBe(paper.mentorId)
+  })
+})
+
+describe('hasPaperCommentsIncreased', () => {
+  const basePaper: GqlPaper = {
+    id: 'paper-1',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    traineeId: '123',
+    trainerId: '456',
+    client: 'TestClient',
+    mentorId: '789',
+    subject: 'Test Subject',
+    status: 'TraineeDone',
+    briefing: [],
+    feedbackTrainee: [
+      {
+        id: '1',
+        questionId: '1',
+        question: 'Test question',
+        comments: [{ text: 'Existing comment', userId: '456', published: true, firstName: 'Trainer', lastName: 'One' }],
+      },
+    ],
+    feedbackMentor: [],
+  }
+
+  it('returns false when comments are unchanged', () => {
+    const input: GqlPaperUpdateInput = {
+      ...basePaper,
+    }
+
+    expect(hasPaperCommentsIncreased(basePaper, input)).toBe(false)
+  })
+
+  it('returns true when a new comment is added', () => {
+    const input: GqlPaperUpdateInput = {
+      ...basePaper,
+      feedbackTrainee: [
+        {
+          ...basePaper.feedbackTrainee[0],
+          comments: [
+            ...basePaper.feedbackTrainee[0].comments,
+            { text: 'New comment', userId: '456', published: true, firstName: 'Trainer', lastName: 'One' },
+          ],
+        },
+      ],
+    }
+
+    expect(hasPaperCommentsIncreased(basePaper, input)).toBe(true)
   })
 })

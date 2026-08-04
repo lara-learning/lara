@@ -83,6 +83,7 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
   const paper = papers?.find((p) => String(p?.id) === String(paperId))
 
   const [updatePaper] = useUpdatePaperMutation()
+  const canComment = currentUser?.__typename === 'Trainer'
 
   if (!paper || !currentUser) {
     return (
@@ -93,6 +94,8 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
   }
 
   const handleCommentSubmit = async (side: 'trainee' | 'mentor', entryId: string, text: string) => {
+    if (!canComment) return
+
     const t = text?.trim()
     if (!t) return
 
@@ -167,7 +170,7 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
                   key={entry.id}
                   entry={entry}
                   onSubmit={(text) => handleCommentSubmit('trainee', entry.id, text)}
-                  displayTextInput={true}
+                  displayTextInput={canComment}
                 />
               ))}
           </div>
@@ -183,7 +186,7 @@ export const PaperFeedbackDiscussionPage: React.FC = () => {
                   key={entry.id}
                   entry={entry}
                   onSubmit={(text) => handleCommentSubmit('mentor', entry.id, text)}
-                  displayTextInput={true}
+                  displayTextInput={canComment}
                 />
               ))}
           </div>

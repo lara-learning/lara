@@ -194,6 +194,7 @@ functions:
     package:
       include:
         - 'packages/print/**'
+        - 'node_modules/@sparticuz/chromium/bin/**'
     jetpack:
       roots:
         - '.'
@@ -213,6 +214,8 @@ functions:
     environment:
       EMAIL_FUNCTION: ${self:custom.config.lambda.email}
       EXPORT_BUCKET: ${self:custom.config.s3.export}
+      # Ensures @sparticuz/chromium extracts al2023.tar.br (libnspr4.so, etc.) on Node.js 22.
+      AWS_LAMBDA_JS_RUNTIME: nodejs22.x
 
   email:
     handler: packages/email/lib/handler.handler

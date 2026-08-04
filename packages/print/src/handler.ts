@@ -1,6 +1,8 @@
 import { Lambda } from '@aws-sdk/client-lambda'
 import AdmZip from 'adm-zip'
 import { Handler } from 'aws-lambda'
+import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
 import chromium from '@sparticuz/chromium'
 import { launch, Browser, Page } from 'puppeteer-core'
 
@@ -19,6 +21,31 @@ const lambda = new Lambda({
   region: 'eu-central-1',
   endpoint: IS_OFFLINE ? 'http://localhost:3002' : undefined,
 })
+
+/**
+ * Launches Chromium with library paths required on Amazon Linux 2023 (Node.js 20/22).
+ * @sparticuz/chromium extracts shared libs to /tmp/al2023/lib, but Puppeteer's child
+ * process does not always inherit process.env.LD_LIBRARY_PATH without an explicit env.
+ */
+const launchBrowser = async (): Promise<Browser> => {
+  const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
+  const executablePath = await chromium.executablePath()
+
+  const libraryPaths = [join(tmpdir(), 'al2023', 'lib'), dirname(executablePath), process.env.LD_LIBRARY_PATH]
+    .filter(Boolean)
+    .join(':')
+
+  return launch({
+    args: chromium.args,
+    executablePath,
+    headless: headlessMode,
+    acceptInsecureCerts: true,
+    env: {
+      ...process.env,
+      LD_LIBRARY_PATH: libraryPaths,
+    },
+  })
+}
 
 const generateBatch = async ({ userData, data, printTranslations }: PrintData, page: Page): Promise<Buffer> => {
   const zip = new AdmZip()
@@ -50,15 +77,8 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
   let browser: Browser | undefined
   const { data, userData, printTranslations, emailTranslations } = exportData
 
-  const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
-
   try {
-    browser = await launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: headlessMode,
-      acceptInsecureCerts: true,
-    })
+    browser = await launchBrowser()
 
     // create empty browser page
     const page = await browser.newPage()
