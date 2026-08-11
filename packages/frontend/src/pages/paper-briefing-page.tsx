@@ -55,6 +55,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
   const currentUser = trainerPaperPageData?.data?.currentUser as Trainer
 
   const paper = currentUser?.papers?.find((paper) => paper?.id == paperId)
+  const isTrainerOfPaper = paper?.trainerId === currentUser?.id
   useEffect(() => {
     if (paperBriefingInput) {
       setPaperBriefing((oldArray: PaperFormData[]) => [...oldArray, paperBriefingInput])
@@ -72,6 +73,11 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
     return null
   }
 
+  if (paper && !isTrainerOfPaper) {
+    navigate('/paper')
+    return null
+  }
+
   const savePaper = async (paperBriefing: PaperFormData[]) => {
     await updatePaperMutation({
       variables: {
@@ -86,7 +92,7 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
           periodStart: paper?.periodStart,
           schoolPeriodEnd: paper?.schoolPeriodEnd,
           schoolPeriodStart: paper?.schoolPeriodStart,
-          status: PaperStatus.NotStarted,
+          status: paper?.status ?? PaperStatus.NotStarted,
           subject: paper?.subject ?? '',
           traineeId: paper?.traineeId ?? '',
           trainerId: currentUser.id,
@@ -192,8 +198,8 @@ export const PaperBriefingPage: React.FunctionComponent = () => {
         <Flex width={'100%'} flexDirection={'row'} justifyContent={'space-between'}>
           <Box mr={'2'}>
             <SecondaryButton
-              onClick={() => {
-                savePaper(paperBriefing)
+              onClick={async () => {
+                await savePaper(paperBriefing)
                 navigate('/paper')
               }}
             >

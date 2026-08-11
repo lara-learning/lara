@@ -9,7 +9,7 @@ import {
 } from '@lara/components'
 
 export const SelectWithIcon: React.FC<SelectWithIconProps> = ({ label, icon, disabled, onChange, ...selectProps }) => {
-  const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {
       onChange(event)
     }

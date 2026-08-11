@@ -12,7 +12,22 @@ export const paperResolver: GqlResolvers<AuthenticatedContext> = {
       const briefing = input.briefing.map((entry: GqlPaperEntryInput) => generatePaperEntry(entry))
       return await updatePaper(
         { ...input, briefing },
-        { updateKeys: ['briefing', 'feedbackTrainee', 'feedbackMentor', 'status'] }
+        {
+          updateKeys: [
+            'briefing',
+            'feedbackTrainee',
+            'feedbackMentor',
+            'status',
+            'client',
+            'subject',
+            'traineeId',
+            'mentorId',
+            'periodStart',
+            'periodEnd',
+            'schoolPeriodStart',
+            'schoolPeriodEnd',
+          ],
+        }
       )
     },
     deletePaper: async (_parent, { paperId }, { currentUser }) => {

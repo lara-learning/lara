@@ -20,7 +20,7 @@ export const useFormToasts = <T extends FieldValues>(formState: FormState<T>): v
     }
 
     // find the error that for the input that is currently focuseds
-    const errorEntry = errorEntries.find(([_key, value]) => value && document.activeElement === value.ref)
+    const errorEntry = errorEntries.find(([_key, value]) => value && document.activeElement === value?.ref)
 
     // fallback to the first error
     const [key, error] = errorEntry ?? errorEntries[0]

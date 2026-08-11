@@ -97,7 +97,7 @@ export const TrainerPaperPage: React.FC = () => {
   }
 
   const navigateToEditPaperPage = (paperId: string) => {
-    navigate('/paper/briefing/' + paperId)
+    navigate('/paper/createBriefing/' + paperId)
   }
 
   const navigateToPaperDiscussionPage = (paperId: string) => {
@@ -188,19 +188,29 @@ export const TrainerPaperPage: React.FC = () => {
                   <Spacer y="xl">
                     <ProgressBar progress={mapStatusToProgess(paper.status)} color={'primaryDefault'} />
                   </Spacer>
-                  {[PaperStatus.NotStarted].includes(paper?.status) ? (
-                    <Flex justifyContent={'flex-end'}>
-                      <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
-                        {(paper?.feedbackTrainee?.length ?? 0) > 0 ? strings.edit : strings.start}
-                      </PrimaryButton>
-                    </Flex>
-                  ) : (
-                    <Flex justifyContent={'flex-end'}>
+                  <Flex justifyContent={'flex-end'}>
+                    {paper?.trainerId === currentUser.id ? (
+                      <>
+                        <Box mr={'2'}>
+                          <PrimaryButton onClick={() => navigateToEditPaperPage(paper.id)}>
+                            {paper.status !== PaperStatus.NotStarted || (paper?.briefing?.length ?? 0) > 0
+                              ? strings.edit
+                              : strings.start}
+                          </PrimaryButton>
+                        </Box>
+
+                        {paper.status !== PaperStatus.NotStarted ? (
+                          <PrimaryButton onClick={() => navigateToPaperDiscussionPage(paper.id)}>
+                            {strings.comment}
+                          </PrimaryButton>
+                        ) : null}
+                      </>
+                    ) : (
                       <PrimaryButton onClick={() => navigateToPaperDiscussionPage(paper.id)}>
                         {strings.comment}
                       </PrimaryButton>
-                    </Flex>
-                  )}
+                    )}
+                  </Flex>
                   <Modal show={showDeletePaperModal} customClose handleClose={() => toggleDeletePaperModal(undefined)}>
                     <Flex flexDirection={'row'} alignItems={'center'}>
                       <Box width={1 / 3}>

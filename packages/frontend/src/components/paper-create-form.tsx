@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Input, Text, TextProps, DefaultTheme, Spacer, StyledSelect } from '@lara/components'
 
@@ -12,6 +12,9 @@ interface CreateBriefingFormProps {
   trainer?: Trainer
   submit: (data: CreateBriefingFormData) => Promise<void>
   blurSubmit: boolean
+  initialData?: Partial<CreateBriefingFormData>
+  submitButtonLabel?: string
+  isEditMode?: boolean
 }
 
 export interface CreateBriefingFormData {
@@ -34,29 +37,65 @@ const inputLabelProps: TextProps = {
   uppercase: true,
 }
 
-export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, submit, blurSubmit }) => {
+const formatDateForInput = (date?: string) => {
+  if (!date) return ''
+  return date.includes('T') ? date.split('T')[0] : date
+}
+
+export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({
+  trainer,
+  submit,
+  blurSubmit,
+  initialData,
+  submitButtonLabel,
+  isEditMode,
+}) => {
   const { validateEmail } = useValidationHelper()
   const [getUserByEmail] = useUserEmailPageMutation()
   const [nameInputDisabled, setNameInputDisabled] = useState(false)
+  const [updating, setUpdating] = React.useState(false)
+
+  const currentUser = trainer
+
+  const defaultFormValues = useMemo<CreateBriefingFormData>(
+    () => ({
+      trainee: initialData?.trainee ?? currentUser?.trainees?.[0]?.id ?? '',
+      firstNameMentor: initialData?.firstNameMentor ?? '',
+      lastNameMentor: initialData?.lastNameMentor ?? '',
+      emailMentor: initialData?.emailMentor ?? '',
+      customer: initialData?.customer ?? '',
+      startDateProject: formatDateForInput(initialData?.startDateProject),
+      endDateProject: formatDateForInput(initialData?.endDateProject),
+      startDateSchool: formatDateForInput(initialData?.startDateSchool),
+      endDateSchool: formatDateForInput(initialData?.endDateSchool),
+      department: initialData?.department ?? '',
+    }),
+    [initialData, currentUser]
+  )
 
   const {
     register,
     setValue,
+    reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateBriefingFormData>()
+  } = useForm<CreateBriefingFormData>({
+    defaultValues: defaultFormValues,
+  })
+
+  useEffect(() => {
+    reset(defaultFormValues)
+  }, [])
 
   const onSubmit = handleSubmit((formdata) => {
-    console.log('HELLO')
     setUpdating(true)
-    submit(formdata).then(() => {
+    submit(formdata).finally(() => {
       setUpdating(false)
     })
   })
 
-  const [updating, setUpdating] = React.useState(false)
-  const currentUser = trainer
   const getFontColor = (hasError: unknown): keyof DefaultTheme => (hasError ? 'errorRed' : 'darkFont')
+
   return (
     <form onSubmit={onSubmit}>
       <CreateBriefingLayout
@@ -67,9 +106,9 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             </Text>
             <StyledSelect
               {...register('trainee', { required: strings.validation.required })}
-              defaultValue={currentUser?.trainees.length ? currentUser?.trainees[0].id : ''}
+              defaultValue={defaultFormValues.trainee}
               disabled={updating}
-              onChange={onSubmit}
+              onChange={blurSubmit ? onSubmit : undefined}
             >
               {currentUser?.trainees.map((trainee, index) => {
                 return (
@@ -88,9 +127,13 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             </Text>
             <Input
               type="email"
+              defaultValue={defaultFormValues.emailMentor}
               {...register('emailMentor', {
-                required: true,
-                validate: validateEmail,
+                required: !isEditMode,
+                validate: (value) => {
+                  if (isEditMode && !value) return true
+                  return validateEmail(value)
+                },
               })}
               disabled={updating}
               error={Boolean(errors.emailMentor)}
@@ -99,6 +142,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
                   setNameInputDisabled(false)
                   return
                 }
+
                 await getUserByEmail({
                   variables: {
                     email: e.target.value,
@@ -108,8 +152,11 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
                     setValue('firstNameMentor', response.data.getUserByEmail.firstName, { shouldValidate: true })
                     setValue('lastNameMentor', response.data.getUserByEmail.lastName, { shouldValidate: true })
                     setNameInputDisabled(true)
-                  } else setNameInputDisabled(false)
+                  } else {
+                    setNameInputDisabled(false)
+                  }
                 })
+
                 if (blurSubmit) onSubmit()
               }}
             />
@@ -121,10 +168,11 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
               {strings.paper.createBriefing.firstnameMentor}
             </Text>
             <Input
+              defaultValue={defaultFormValues.firstNameMentor}
               {...register('firstNameMentor', {
-                required: strings.validation.required,
+                required: !isEditMode ? strings.validation.required : false,
               })}
-              disabled={nameInputDisabled}
+              disabled={updating || nameInputDisabled}
               error={Boolean(errors.firstNameMentor)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
@@ -137,10 +185,11 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
               {strings.paper.createBriefing.lastnameMentor}
             </Text>
             <Input
+              defaultValue={defaultFormValues.lastNameMentor}
               {...register('lastNameMentor', {
-                required: strings.validation.required,
+                required: !isEditMode ? strings.validation.required : false,
               })}
-              disabled={nameInputDisabled}
+              disabled={updating || nameInputDisabled}
               error={Boolean(errors.lastNameMentor)}
               onBlur={blurSubmit ? onSubmit : undefined}
             />
@@ -150,11 +199,12 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
         customerInput={
           <>
             <Spacer bottom="m">
-              <Text {...inputLabelProps} color="darkFont" weight={700}>
+              <Text {...inputLabelProps} color={getFontColor(errors.customer)} weight={700}>
                 {strings.paper.createBriefing.customer}
               </Text>
               <Input
                 type="text"
+                defaultValue={defaultFormValues.customer}
                 {...register('customer', {
                   required: true,
                 })}
@@ -167,11 +217,12 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
         }
         startDateProjectInput={
           <>
-            <Text color={getFontColor(errors.startDateProject || errors.startDateProject)} {...inputLabelProps}>
+            <Text color={getFontColor(errors.startDateProject || errors.endDateProject)} {...inputLabelProps}>
               {strings.paper.createBriefing.projectPeriod}
             </Text>
             <Input
               type="date"
+              defaultValue={defaultFormValues.startDateProject}
               {...register('startDateProject', {})}
               block
               disabled={updating}
@@ -189,6 +240,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
           <>
             <Input
               type="date"
+              defaultValue={defaultFormValues.endDateProject}
               {...register('endDateProject', {})}
               block
               disabled={updating}
@@ -204,6 +256,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
             </Text>
             <Input
               type="date"
+              defaultValue={defaultFormValues.startDateSchool}
               {...register('startDateSchool', {})}
               block
               disabled={updating}
@@ -221,6 +274,7 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
           <>
             <Input
               type="date"
+              defaultValue={defaultFormValues.endDateSchool}
               {...register('endDateSchool', {})}
               block
               disabled={updating}
@@ -232,11 +286,12 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
         departmentInput={
           <>
             <Spacer bottom="m">
-              <Text {...inputLabelProps} color="darkFont" weight={700}>
+              <Text {...inputLabelProps} color={getFontColor(errors.department)} weight={700}>
                 {strings.paper.createBriefing.department}
               </Text>
               <Input
                 type="text"
+                defaultValue={defaultFormValues.department}
                 {...register('department', {
                   required: true,
                 })}
@@ -250,8 +305,8 @@ export const PaperCreateForm: React.FC<CreateBriefingFormProps> = ({ trainer, su
         buttonControls={
           !blurSubmit ? (
             <>
-              <PrimaryButton type="submit" onClick={onSubmit}>
-                {strings.continue}
+              <PrimaryButton type="submit" disabled={updating}>
+                {submitButtonLabel ?? strings.continue}
               </PrimaryButton>
             </>
           ) : undefined
