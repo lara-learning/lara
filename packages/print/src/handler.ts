@@ -2,12 +2,12 @@ import { Lambda } from '@aws-sdk/client-lambda'
 import AdmZip from 'adm-zip'
 import { Handler } from 'aws-lambda'
 import chromium from '@sparticuz/chromium'
-import { launch, Browser, Page } from 'puppeteer-core'
+import { defaultArgs, launch, Browser, Page } from 'puppeteer-core'
 
 import { EmailPayload, PrintData, PrintPayload } from '@lara/api'
 
-import { getExport, saveAttachments } from './s3'
-import { createPDF } from './create-pdf'
+import { getExport, saveAttachments } from './s3.js'
+import { createPDF } from './create-pdf.js'
 
 const { IS_OFFLINE, EMAIL_FUNCTION, FRONTEND_URL } = process.env
 
@@ -19,6 +19,17 @@ const lambda = new Lambda({
   region: 'eu-central-1',
   endpoint: IS_OFFLINE ? 'http://localhost:3002' : undefined,
 })
+
+const launchBrowser = async (): Promise<Browser> => {
+  const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
+
+  return launch({
+    args: await defaultArgs({ args: chromium.args, headless: headlessMode }),
+    executablePath: await chromium.executablePath(),
+    headless: headlessMode,
+    acceptInsecureCerts: true,
+  })
+}
 
 const generateBatch = async ({ userData, reportsData, printTranslations }: PrintData, page: Page): Promise<Buffer> => {
   const zip = new AdmZip()
@@ -50,15 +61,8 @@ export const handler: Handler<PrintPayload, 'success' | 'error'> = async (payloa
   let browser: Browser | undefined
   const { reportsData, userData, printTranslations, emailTranslations } = exportData
 
-  const headlessMode: boolean | 'shell' = IS_OFFLINE ? true : 'shell'
-
   try {
-    browser = await launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: headlessMode,
-      acceptInsecureCerts: true,
-    })
+    browser = await launchBrowser()
 
     // create empty browser page
     const page = await browser.newPage()
