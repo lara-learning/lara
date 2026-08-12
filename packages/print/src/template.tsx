@@ -23,11 +23,11 @@ import {
   StyledPrintUserInfoRowHeadline,
 } from '@lara/components'
 
-import { LaraLogo } from './components/lara-logo'
-import { Signature } from './components/signature'
-import { Total } from './components/total'
-import { statusToString, weekdayMapping } from './utils/day'
-import { entriesTotal, minutesToString } from './utils/time'
+import { LaraLogo } from './components/lara-logo.js'
+import { Signature } from './components/signature.js'
+import { Total } from './components/total.js'
+import { statusToString, weekdayMapping } from './utils/day.js'
+import { entriesTotal, minutesToString } from './utils/time.js'
 
 const GlobalStyle = createGlobalStyle`
   * {

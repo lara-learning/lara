@@ -5,6 +5,7 @@
   "description": "Pdf Generator Lambda for Html File",
   "license": "MIT",
   "author": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "debug": "node lib/mock.js"
@@ -14,9 +15,9 @@
     "@aws-sdk/types": "3.973.6",
     "@lara/api": "^1.0.0",
     "@lara/components": "^1.0.0",
-    "@sparticuz/chromium": "^138.0.2",
+    "@sparticuz/chromium": "149.0.0",
     "adm-zip": "^0.5.10",
-    "puppeteer-core": "^24.40.0",
+    "puppeteer-core": "25.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router": "^7.8.0",

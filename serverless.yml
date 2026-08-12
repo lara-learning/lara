@@ -180,6 +180,7 @@ functions:
     package:
       include:
         - 'packages/print/**'
+        - 'node_modules/@sparticuz/chromium/bin/**'
     jetpack:
       roots:
         - '.'

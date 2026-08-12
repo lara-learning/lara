@@ -5,7 +5,7 @@ import { ServerStyleSheet } from 'styled-components'
 
 import { PrintReportData, PrintTranslations, PrintUserData } from '@lara/api'
 
-import { Template } from './template'
+import { Template } from './template.js'
 
 export const renderComponent = (component: JSX.Element, styleSheet?: ServerStyleSheet): string => {
   let element = component
@@ -46,9 +46,10 @@ export const createPDF = async (
   const templateString = createPage(reportData, userData, translations)
 
   await page.setContent(templateString, {
-    waitUntil: ['load', 'domcontentloaded', 'networkidle0'],
+    waitUntil: 'load',
     timeout: 30000,
   })
+  await page.waitForNetworkIdle({ timeout: 30000 })
 
   const pdfData = await page.pdf({ format: 'a4', printBackground: true })
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { StyledPrintTotalContainer, StyledPrintTotalLabel, StyledPrintTotalValue } from '@lara/components'
 
-import { minutesToString } from '../utils/time'
+import { minutesToString } from '../utils/time.js'
 
 type TotalProps = {
   time: number
