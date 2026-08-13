@@ -75,7 +75,7 @@ export const Template: React.FC<TemplateProps> = ({
         <LaraLogo />
       </StyledPrintHeader>
       <StyledPrintUserInfo>
-        <StyledPrintUserInfoRow fullsize>
+        <StyledPrintUserInfoRow $fullsize>
           <StyledPrintUserInfoRowHeadline> {i18n.name}: </StyledPrintUserInfoRowHeadline>
           {firstName} {lastName}
         </StyledPrintUserInfoRow>
