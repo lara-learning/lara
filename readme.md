@@ -11,11 +11,20 @@ Lara is a tool for writing your "Berichtsheft" digitally. In Germany all trainee
 To run the project, ensure the following are installed:
 
 1. Node.js (version 22)
-2. Yarn
-   - Install Yarn globally using
+2. Yarn Yarn is managed via Corepack and the required version is defined in the root `package.json`.
+
+   Enable Corepack once:
+
    ```bash
-   npm install --global yarn
+   corepack enable
    ```
+
+   Verify that the active Yarn version matches the version defined in package.json:
+
+  ```bash
+    yarn --version
+  ```
+
 3. Java
    - Install Java using Homebrew
    ```bash
