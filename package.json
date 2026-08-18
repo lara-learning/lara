@@ -2,7 +2,6 @@
   "name": "lara",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "yarn@1.22.22",
   "license": "MIT",
   "workspaces": {
     "packages": [
@@ -71,5 +70,6 @@
     "serverless-s3-sync": "^3.5.1",
     "sort-package-json": "^3.4.0",
     "typescript": "^5.9.2"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }
