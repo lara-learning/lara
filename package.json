@@ -2,6 +2,7 @@
   "name": "lara",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "license": "MIT",
   "workspaces": {
     "packages": [
