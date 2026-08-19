@@ -21,9 +21,9 @@ To run the project, ensure the following are installed:
 
    Verify that the active Yarn version matches the version defined in package.json:
 
-  ```bash
-    yarn --version
-  ```
+```bash
+  yarn --version
+```
 
 3. Java
    - Install Java using Homebrew
