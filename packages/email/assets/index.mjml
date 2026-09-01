@@ -5,7 +5,7 @@
 
     <mj-attributes>
       <mj-title>Lara</mj-title>
-      <mj-all font-family="Inter, Arial" line-height="16px" color="#ffffff" />
+      <mj-all font-family="Inter, Arial" line-height="16px" color="{{TEXTCOLOR}}" />
       <mj-class name="header" font-size="30px" font-weight="800" align="center" line-height="32px" />
       <mj-class
         name="linkButton"
@@ -24,9 +24,9 @@
       }
     </mj-style>
   </mj-head>
-  <mj-body background-color="#050816">
-    <mj-section background-color="#050816">
-      <mj-column width="70%" background-color="#050816">
+  <mj-body background-color="{{BACKGROUND}}">
+    <mj-section background-color="{{BACKGROUND}}">
+      <mj-column width="70%" background-color="{{BACKGROUND}}">
         <mj-spacer height="104px" />
 
         <mj-text mj-class="header" height="48px">{{ HEADLINE }}</mj-text>

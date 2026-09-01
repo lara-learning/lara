@@ -16,10 +16,17 @@ const { html: compiledMjmlTemplate } = mjml2html(mjmlTemplate, options)
 
 const emailHtmlHandlebars = compile(compiledMjmlTemplate)
 
-export const generateEmailTemplate = (type: EmailType, translations: EmailTranslations): string => {
+export const generateEmailTemplate = (
+  type: EmailType,
+  translations: EmailTranslations,
+  theme?: 'dark' | 'light'
+): string => {
   const { headline, message, link } = translations
 
   let emailVariables = {
+    BACKGROUND: theme === 'dark' ? '#050816' : '#FFFFFF',
+    TEXTCOLOR: theme === 'dark' ? '#FFFFFF' : '#000000',
+
     GREETING: `${translations.hello} {{ receiverName }}`,
     HEADLINE: '',
     HEADLINEIMAGE: '',
