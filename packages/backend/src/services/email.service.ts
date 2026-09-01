@@ -24,6 +24,7 @@ const trainerNotificationMailPayload = (receiver: Trainer, sender: Trainee, repo
     trainee: sender.firstName,
     buttonLink: envLink(`/reports/${sender.id}/${report.year}/${report.week}`),
     week: report.week.toString(),
+    theme: receiver.theme as 'dark' | 'light',
   },
   translations: translations(receiver),
 })
@@ -46,6 +47,7 @@ const traineeNoficationMailPayload = (receiver: Trainee, sender: Trainer, report
     receiverName: receiver.firstName,
     trainer: sender.firstName,
     buttonLink: envLink(`/report/${report.year}/${report.week}`),
+    theme: receiver.theme as 'dark' | 'light',
   },
   translations: translations(receiver),
 })
@@ -82,6 +84,7 @@ export const adminDeletionMailPayload = (admin: Admin, user: Trainee | Trainer |
       receiverName: admin.firstName,
       user: user.firstName + ' ' + user.lastName,
       buttonLink: link,
+      theme: admin.theme as 'dark' | 'light',
     },
     translations: translations(admin),
   }
@@ -96,6 +99,7 @@ export const trainerDeletionMailPayload = (trainer: Trainer, user: Trainee): Ema
       receiverName: trainer.firstName,
       trainee: user.firstName + ' ' + user.lastName,
       buttonLink: envLink('/'),
+      theme: trainer.theme as 'dark' | 'light',
     },
     translations: translations(trainer),
   }
@@ -109,6 +113,7 @@ export const userToDeleteDeletionMailPayload = (userToDelete: Trainee | Trainer 
       receiverEmail: userToDelete.email,
       receiverName: userToDelete.firstName,
       buttonLink: envLink('/'),
+      theme: userToDelete.theme as 'dark' | 'light',
     },
     translations: translations(userToDelete),
   }
@@ -157,7 +162,12 @@ export const sendAlexaNotificationMail = async (user: User): Promise<void> => {
     payload: {
       emailType: 'alexa',
       translations: translations(user),
-      userData: { buttonLink: envLink('/settings'), receiverEmail: user.email, receiverName: user.firstName },
+      userData: {
+        buttonLink: envLink('/settings'),
+        receiverEmail: user.email,
+        receiverName: user.firstName,
+        theme: user.theme as 'dark' | 'light',
+      },
     },
   })
 }
