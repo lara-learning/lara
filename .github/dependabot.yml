@@ -12,6 +12,9 @@ updates:
     commit-message:
       prefix: 'build(deps)'
       prefix-development: 'build(deps-dev)'
+    allow:
+      - dependency-type: 'all'
+        update-type: 'version-update:semver-patch'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
@@ -20,3 +23,6 @@ updates:
     commit-message:
       prefix: 'build(deps)'
       prefix-development: 'build(deps-dev)'
+    allow:
+      - dependency-type: 'all'
+        update-type: 'version-update:semver-patch'
