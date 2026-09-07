@@ -89,7 +89,7 @@ export const server: APIGatewayProxyHandler = apolloServer.createHandler({
 
     app.use(cors(corsOptions))
 
-    app.post('/oauth/token', handleAuthorizeRequest)
+    app.post('/oauth/token', express.json(), handleAuthorizeRequest)
     app.post('/avatar', handleAvatarUpload)
     app.delete('/avatar', handleAvatarDeletion)
 
