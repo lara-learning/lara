@@ -1,12 +1,29 @@
 import { addSeconds, isFuture } from 'date-fns'
-import { OAuthPayload } from '../graphql'
+
+export type OAuthData = {
+  accessToken: string
+  refreshToken?: string
+  expiresIn: number
+}
+
+export const isOAuthData = (value: unknown): value is OAuthData => {
+  if (typeof value !== 'object' || value === null || !('accessToken' in value) || !('expiresIn' in value)) {
+    return false
+  }
+
+  return (
+    typeof value.accessToken === 'string' &&
+    typeof value.expiresIn === 'number' &&
+    (!('refreshToken' in value) || typeof value.refreshToken === 'string')
+  )
+}
 
 const storage = localStorage
 
 const accessTokenKey = 'access-token'
 const expiresDateKey = 'access-token-expires'
 
-export const saveOAuthData = ({ accessToken, expiresIn, refreshToken }: OAuthPayload): void => {
+export const saveOAuthData = ({ accessToken, expiresIn, refreshToken }: OAuthData): void => {
   storage.setItem(accessTokenKey, accessToken)
   storage.setItem(expiresDateKey, addSeconds(new Date(), expiresIn).toISOString())
 

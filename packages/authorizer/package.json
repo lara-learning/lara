@@ -8,9 +8,16 @@
   "author": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "scripts": {},
-  "dependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.161"
+    "@types/aws-lambda": "^8.10.161",
+    "@types/jest": "^30.0.5",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1"
   }
 }

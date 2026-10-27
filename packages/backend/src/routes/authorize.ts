@@ -5,7 +5,6 @@ import { User } from '@lara/api'
 
 import { updateUser, userById, userByOAuthCode } from '../repositories/user.repo'
 import { createOAuthData, TokensRequest, TokensResponse, validateJWT } from '../services/oauth.service'
-import { log } from '../utils/logging'
 
 type AuthorizeResponse = TokensResponse | string
 
@@ -17,20 +16,14 @@ type AuthorizeResponse = TokensResponse | string
  * @returns void
  */
 export const handleAuthorizeRequest: RequestHandler<unknown, AuthorizeResponse, TokensRequest> = async (
-  { body, headers },
+  { body },
   res
 ) => {
-  if (!headers.authorization) {
-    return res.status(401).send('Missing authorization')
-  }
-
   if (!body) {
-    return res.status(400).send('Mailformed request')
+    return res.status(400).send('Malformed request')
   }
 
   let user: User | undefined
-
-  log('Authorize request ', JSON.stringify(body))
 
   // On first authorization we need to remove the auth code
   // that identifies the user.
@@ -58,8 +51,6 @@ export const handleAuthorizeRequest: RequestHandler<unknown, AuthorizeResponse, 
   }
 
   const { accessToken, expiresIn, refreshToken } = createOAuthData(user)
-
-  log('Tokens ', accessToken, refreshToken ?? 'no refresh token')
 
   return res.status(200).send({
     access_token: accessToken,

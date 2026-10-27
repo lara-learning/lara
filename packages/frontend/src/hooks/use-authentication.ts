@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 
-import { OAuthPayload } from '../graphql'
-import { clearOAuthData, saveOAuthData } from '../helper/auth-helper'
+import { clearOAuthData, OAuthData, saveOAuthData } from '../helper/auth-helper'
 
 export type AuthenticatedState = 'loading' | 'authenticated' | 'unauthenticated'
 
@@ -16,7 +15,7 @@ export const AuthenticationContext = React.createContext<AuthenticationContext>(
 })
 
 type AuthenticationFCs = AuthenticationContext & {
-  login: (payload?: OAuthPayload) => void
+  login: (payload?: OAuthData) => void
   logout: () => void
 }
 

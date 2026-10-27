@@ -10,8 +10,11 @@ export const useAuthenticationLink = (): ApolloLink => {
     const authHeaders: Record<string, string> = {}
     const token = getAccessToken()
 
-    // Fallback to allow so the AWS API Gateway token authorizer doesn't block the request
-    authHeaders['Authorization'] = token ? `Bearer ${token}` : 'allow'
+    if (token) {
+      authHeaders.Authorization = `Bearer ${token}`
+    } else {
+      logout()
+    }
 
     operation.setContext(({ headers = {} }) => ({
       headers: {
@@ -30,7 +33,12 @@ export const useAuthenticationLink = (): ApolloLink => {
         return response
       }
 
-      const authenticated: boolean = JSON.parse(headers.get(ENVIRONMENT.authHeader))
+      const authenticationHeader = headers.get(ENVIRONMENT.authHeader)
+      if (authenticationHeader === null) {
+        return response
+      }
+
+      const authenticated = authenticationHeader === 'true'
 
       if (authenticated) {
         login()

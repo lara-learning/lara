@@ -110,6 +110,21 @@ functions:
           cors:
             origin: ${self:provider.environment.FRONTEND_URL}
             allowCredentials: true
+      - http:
+          path: /backend/oauth/login
+          method: post
+          cors:
+            origin: ${self:provider.environment.FRONTEND_URL}
+            allowCredentials: true
+      - http:
+          path: /backend/oauth/token
+          method: post
+          cors:
+            origin: ${self:provider.environment.FRONTEND_URL}
+            allowCredentials: true
+      - http:
+          path: /backend/internal/cleanup
+          method: post
     package:
       include:
         - 'packages/backend/**'
@@ -166,6 +181,8 @@ functions:
 
   authorizer:
     handler: packages/authorizer/lib/handler.handler
+    environment:
+      LARA_SECRET: ${self:provider.environment.LARA_SECRET}
     package:
       include:
         - 'packages/authorizer/**'

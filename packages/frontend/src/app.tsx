@@ -47,7 +47,7 @@ const InnerApp: React.FunctionComponent = () => {
         <ToastContextProvider>
           <BrowserRouter>
             <AppRoutes currentUser={currentUser} />
-            {ENVIRONMENT.debug && <StatusBar currentUser={currentUser} />}
+            {ENVIRONMENT.debug && <StatusBar />}
           </BrowserRouter>
         </ToastContextProvider>
       )}

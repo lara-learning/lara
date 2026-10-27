@@ -34,7 +34,6 @@ export const useTokenRefreshLink = (): TokenRefreshLink => {
       return fetch(`${BackendUrl}/oauth/token`, {
         method: 'POST',
         headers: {
-          authorization: 'allow',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

@@ -47,5 +47,5 @@ export const parseBasicAuth = (header: string): Credentials => {
  * @returns Access token
  */
 export const parseBearerAuth = (header: string): string => {
-  return header.replace('Bearer ', '')
+  return /^Bearer\s+(\S+)$/i.exec(header)?.[1] ?? ''
 }
