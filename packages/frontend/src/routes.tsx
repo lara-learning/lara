@@ -40,6 +40,7 @@ const AppRoutes: React.FunctionComponent<RoutesProps> = ({ currentUser }) => {
   if (authenticated === 'unauthenticated') {
     return (
       <Routes>
+        <Route path="/no-user-found" element={<NoUserPage />} />
         <Route path="*" element={<LoginPage />} />
       </Routes>
     )
