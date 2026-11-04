@@ -10,10 +10,7 @@ export type UpdateDayAttributes = { confirm: 'UPDATE_DAY'; day: string }
 export type NextActionAttributes = { confirm: 'NEXT_ACTION' }
 
 export type ConfirmAttributes =
-  | SubmitReportAttributes
-  | CreateEntryAttributes
-  | UpdateDayAttributes
-  | NextActionAttributes
+  SubmitReportAttributes | CreateEntryAttributes | UpdateDayAttributes | NextActionAttributes
 
 // write the converstion context into the session attributes for the YesNoIntent
 export const prepareYesNoIntent = (attributesManager: AttributesManager, session: ConfirmAttributes): void => {
