@@ -59,7 +59,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "9.1.7",
-    "lerna": "9.0.7",
+    "lerna": "10.1.1",
     "osls": "3.74.0",
     "prettier": "^3.6.2",
     "serverless-dynamodb": "^0.2.58",
