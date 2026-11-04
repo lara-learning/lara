@@ -251,25 +251,7 @@
     "@smithy/types" "^4.19.0"
     tslib "^2.6.2"
 
-"@aws-sdk/client-dynamodb@3.1064.0":
-  version "3.1064.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.1064.0.tgz#2763a09c4dcb9de5b629d04f68cc9af9c252fcb0"
-  integrity sha512-JF0qF2IHPTXMO5GIIXRc3zDQsewzaDfYrEucIK7S7dXEFd4FDt5BpN3SUlLHAMo1AiCyIYXYyA/3x6yWIgC8mA==
-  dependencies:
-    "@aws-crypto/sha256-browser" "5.2.0"
-    "@aws-crypto/sha256-js" "5.2.0"
-    "@aws-sdk/core" "^3.974.19"
-    "@aws-sdk/credential-provider-node" "^3.972.53"
-    "@aws-sdk/dynamodb-codec" "^3.973.19"
-    "@aws-sdk/middleware-endpoint-discovery" "^3.972.18"
-    "@aws-sdk/types" "^3.973.12"
-    "@smithy/core" "^3.24.6"
-    "@smithy/fetch-http-handler" "^5.4.6"
-    "@smithy/node-http-handler" "^4.7.6"
-    "@smithy/types" "^4.14.3"
-    tslib "^2.6.2"
-
-"@aws-sdk/client-dynamodb@^3.1064.0", "@aws-sdk/client-dynamodb@^3.474.0":
+"@aws-sdk/client-dynamodb@3.1161.0", "@aws-sdk/client-dynamodb@^3.1064.0", "@aws-sdk/client-dynamodb@^3.474.0":
   version "3.1161.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.1161.0.tgz#53c477b7c9dbef7d9e4535e9058b9867dd9af07d"
   integrity sha512-Z7F2Yh0YXEG516FXfXZE4iqe2Pg6PG1M8Ejzu+K4o0tj5Hv4u5+AaO6fxPpIeFz5VI/O+z6wJMFMnX4t+1hbnw==
@@ -551,7 +533,7 @@
     "@smithy/types" "^4.19.0"
     tslib "^2.6.2"
 
-"@aws-sdk/dynamodb-codec@^3.973.19", "@aws-sdk/dynamodb-codec@^3.973.54":
+"@aws-sdk/dynamodb-codec@^3.973.54":
   version "3.973.54"
   resolved "https://registry.yarnpkg.com/@aws-sdk/dynamodb-codec/-/dynamodb-codec-3.973.54.tgz#c0c123119ea83f33383b9cddb53cfbea7309b483"
   integrity sha512-+Z4tyUabT/ATvXw7Bpo2j8Sh5ot5XqhvJYwNqHaKEib1KIgrVByZKSw7ndeAMOHjMAhygZnH09N9D1ygD/uTRg==
@@ -591,7 +573,7 @@
     "@smithy/types" "^4.19.0"
     tslib "^2.6.2"
 
-"@aws-sdk/middleware-endpoint-discovery@^3.972.18", "@aws-sdk/middleware-endpoint-discovery@^3.972.37":
+"@aws-sdk/middleware-endpoint-discovery@^3.972.37":
   version "3.972.37"
   resolved "https://registry.yarnpkg.com/@aws-sdk/middleware-endpoint-discovery/-/middleware-endpoint-discovery-3.972.37.tgz#7ed7bdc8bb1935a989a65d5c07c48a4f9319d913"
   integrity sha512-+KAK020JY95Q7Swwo5b9pl9S11VPuNLqecCW5bzkksWiU5pmI85lAloOD4qlIKIA/P8FlrRJ60XJ6+lnDQK/DQ==
