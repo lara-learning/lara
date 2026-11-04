@@ -51,6 +51,10 @@ type JWTPayload = {
   exp?: number
 }
 
+type ValidatedJWTPayload = JWTPayload & {
+  exp: number
+}
+
 /**
  * Creates random tokens and expire time
  * @returns Tokens and expiresIn
@@ -77,10 +81,22 @@ export const createOAuthData = (user: User): OAuthData => {
  * @param jwt Token string
  * @returns Payload or nothing
  */
-export const validateJWT = (jwt: string): JWTPayload | undefined => {
+export const validateJWT = (jwt: string): ValidatedJWTPayload | undefined => {
   try {
-    const decoded = verify(jwt, LaraSecret)
-    return typeof decoded !== 'object' ? JSON.parse(decoded) : (decoded as JWTPayload)
+    const decoded = verify(jwt, LaraSecret, { algorithms: ['HS256'] })
+    if (
+      typeof decoded !== 'object' ||
+      typeof decoded.sub !== 'string' ||
+      !decoded.sub.trim() ||
+      typeof decoded.exp !== 'number'
+    ) {
+      return
+    }
+
+    return {
+      sub: decoded.sub,
+      exp: decoded.exp,
+    }
   } catch (_) {
     return undefined
   }

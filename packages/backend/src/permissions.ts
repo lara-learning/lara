@@ -1,4 +1,4 @@
-import { and, or, rule, shield } from 'graphql-shield'
+import { allow, and, deny, or, rule, shield } from 'graphql-shield'
 
 import { Admin, AuthenticatedContext, Context, Trainee, Trainer, User } from '@lara/api'
 
@@ -32,13 +32,13 @@ const admin = rule({ cache: 'contextual' })(
 
 export const isDebug = (): boolean => DEBUG === 'true'
 
-const debug = rule({ cache: 'contextual' })(() => isDebug() || 'Wrong Env')
-
 export const permissions = shield<unknown, Context>(
   {
     Query: {
       currentUser: authenticated,
       companies: authenticated,
+      cleanup: admin,
+      config: authenticated,
 
       alexaLinkingUrl: authenticated,
 
@@ -55,14 +55,11 @@ export const permissions = shield<unknown, Context>(
       trainees: and(authenticated, or(trainer, admin)),
       getUser: and(authenticated, or(admin, trainer)),
 
-      // Admin Queris
+      // Admin Queries
       trainers: and(authenticated, admin),
       admins: and(authenticated, admin),
     },
     Mutation: {
-      _devsetusertype: and(authenticated, debug),
-      _devloginuser: debug,
-
       updateCurrentUser: authenticated,
 
       linkAlexa: authenticated,
@@ -74,6 +71,13 @@ export const permissions = shield<unknown, Context>(
       createCommentOnEntry: and(authenticated, or(trainee, trainer)),
       createCommentOnDay: and(authenticated, or(trainee, trainer)),
       createCommentOnReport: and(authenticated, or(trainee, trainer)),
+      updateCommentOnEntry: and(authenticated, or(trainee, trainer)),
+      updateCommentOnDay: and(authenticated, or(trainee, trainer)),
+      updateCommentOnReport: and(authenticated, or(trainee, trainer)),
+      deleteCommentOnEntry: and(authenticated, or(trainee, trainer)),
+      deleteCommentOnDay: and(authenticated, or(trainee, trainer)),
+      deleteCommentOnReport: and(authenticated, or(trainee, trainer)),
+      publishAllComments: and(authenticated, or(trainee, trainer)),
 
       // Trainee mutations
       createEntry: and(authenticated, trainee),
@@ -88,6 +92,7 @@ export const permissions = shield<unknown, Context>(
       unclaimTrainee: and(authenticated, trainer),
       trainerMarkTraineeForDeletion: and(authenticated, trainer),
       trainerUnmarkTraineeForDeletion: and(authenticated, trainer),
+      adminUnclaimTrainee: and(authenticated, admin),
 
       // Trainer and Admin mutations
       createTrainee: and(authenticated, or(admin, trainer)),
@@ -96,10 +101,32 @@ export const permissions = shield<unknown, Context>(
       updateTrainee: and(authenticated, admin),
       createTrainer: and(authenticated, admin),
       updateTrainer: and(authenticated, admin),
+      createAdmin: and(authenticated, admin),
+      updateAdmin: and(authenticated, admin),
       adminMarkUserForDeletion: and(authenticated, admin),
       adminUnmarkUserForDeletion: and(authenticated, admin),
-      adminUnclaimTrainee: and(authenticated, admin),
+      getAvatarSignedUrl: authenticated,
     },
+
+    Admin: allow,
+    AdminTraineePayload: allow,
+    Comment: allow,
+    Company: allow,
+    CreateCommentPayload: allow,
+    Day: allow,
+    DeleteCommentPayload: allow,
+    Entry: allow,
+    LaraConfig: allow,
+    MutateEntryPayload: allow,
+    PrintPayload: allow,
+    PublishCommentsPayload: allow,
+    Report: allow,
+    Suggestion: allow,
+    Trainee: allow,
+    Trainer: allow,
+    TrainerTraineePayload: allow,
+    UpdateCommentPayload: allow,
+    UpdateReportPayload: allow,
   },
-  { allowExternalErrors: true }
+  { allowExternalErrors: true, fallbackRule: deny }
 )

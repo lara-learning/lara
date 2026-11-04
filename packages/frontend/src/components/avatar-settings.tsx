@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { BackendUrl } from '../apollo-provider'
 import { useToastContext } from '../hooks/use-toast-context'
 import eventBus from '../helper/event-bus-helper'
+import { getAccessToken } from '../helper/auth-helper'
 import { getAvatarURL } from './avatar'
 import imageCompression from 'browser-image-compression'
 
@@ -88,6 +89,8 @@ const AvatarSettings: React.FunctionComponent = () => {
 
   async function handleAvatarUpload(file: File) {
     if (!currentUser) return
+    const token = getAccessToken()
+    if (!token) return
 
     const maxSize = 250 * 1024
     if (file.size > maxSize) {
@@ -115,7 +118,7 @@ const AvatarSettings: React.FunctionComponent = () => {
       const response = await fetch(`${BackendUrl}/avatar`, {
         method: 'POST',
         headers: {
-          authorization: 'allow',
+          authorization: `Bearer ${token}`,
           'Content-Type': file.type,
         },
         body: JSON.stringify({ id: currentUser.id, data: base64String }),
@@ -160,11 +163,13 @@ const AvatarSettings: React.FunctionComponent = () => {
 
   async function removeAvatar() {
     if (!currentUser) return
+    const token = getAccessToken()
+    if (!token) return
 
     const response = await fetch(`${BackendUrl}/avatar`, {
       method: 'DELETE',
       headers: {
-        authorization: 'allow',
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ id: currentUser.id }),
       credentials: 'include',

@@ -1,7 +1,0 @@
-mutation LoginPageLogin($email: String!) {
-  login(email: $email) {
-    accessToken
-    refreshToken
-    expiresIn
-  }
-}

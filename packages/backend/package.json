@@ -30,6 +30,7 @@
     "graphql-middleware": "^6.1.35",
     "graphql-shield": "^7.6.5",
     "i18next": "^26.0.3",
+    "jose": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
     "object-hash": "3",
     "uuid": "^11.1.0"

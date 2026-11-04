@@ -3,12 +3,12 @@ import { PrimaryButton } from './button'
 import { useMsal } from '@azure/msal-react'
 import { loginRequest } from '../hooks/ms-auth'
 import { useAuthentication } from '../hooks/use-authentication'
-import { useLoginPageLoginMutation } from '../graphql'
 import { useIsAuthenticated } from '@azure/msal-react'
 import { EventMessage, EventType, PopupEvent } from '@azure/msal-browser'
 import { useNavigate } from 'react-router'
 import { useToastContext } from '../hooks/use-toast-context'
 import strings from '../locales/localization'
+import { isOAuthData } from '../helper/auth-helper'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullsize?: boolean
@@ -17,7 +17,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
   const { instance } = useMsal()
   const { login } = useAuthentication()
-  const [mutate] = useLoginPageLoginMutation()
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
   const { addToast } = useToastContext()
@@ -42,30 +41,39 @@ export const SignInButton: React.FunctionComponent<ButtonProps> = () => {
 
     try {
       const loginResponse = await instance.loginPopup(loginRequest)
-
-      const email = loginResponse.account?.username
-      if (email) {
-        mutate({ variables: { email } })
-          .then((response) => {
-            const { data } = response
-            if (!data?.login) {
-              navigate('/no-user-found')
-              return
-            }
-            login(data.login)
-          })
-          .catch((err) => {
-            console.error(err)
-            addToast({
-              icon: 'Error',
-              title: strings.login.userNotRegisteredError.title,
-              text: strings.login.userNotRegisteredError.description,
-              type: 'error',
-            })
-          })
+      if (!loginResponse.idToken) {
+        throw new Error('Microsoft did not return an ID token')
       }
+
+      const response = await fetch(`${ENVIRONMENT.backendUrl}/backend/oauth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken: loginResponse.idToken }),
+      })
+
+      if (response.status === 404) {
+        navigate('/no-user-found')
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(`Microsoft sign-in failed with status ${response.status}`)
+      }
+
+      const oauthData: unknown = await response.json()
+      if (!isOAuthData(oauthData)) {
+        throw new Error('Microsoft sign-in returned an invalid response')
+      }
+
+      login(oauthData)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      addToast({
+        icon: 'Error',
+        title: strings.login.userNotRegisteredError.title,
+        text: strings.login.userNotRegisteredError.description,
+        type: 'error',
+      })
     } finally {
       setPopupWindow(null)
     }

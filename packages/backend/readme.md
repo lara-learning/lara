@@ -26,6 +26,8 @@ The 'src/templates' folder contains the react templates for the email notificati
 
 The permissions are managed by GraphQL shield inside the 'src/permissions.ts' file. All Guards and the connection with the schema is handled in there.
 
+GraphQL requests require a valid bearer access token and use deny-by-default field permissions. Microsoft sign-in is handled by `POST /backend/oauth/login`, which validates the Microsoft ID token before issuing Lara tokens. The OAuth token endpoint validates authorization codes or refresh tokens independently. Scheduled cleanup uses a short-lived, purpose-restricted token on the internal cleanup endpoint.
+
 ## Mocks
 
 Local mocks can be accessed under the '/backend/mocks' path. New mocks can be added in the 'mocks.service.ts'.

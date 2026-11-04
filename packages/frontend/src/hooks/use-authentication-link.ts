@@ -1,17 +1,40 @@
-import { ApolloLink, NextLink, Operation } from '@apollo/client'
+import { ApolloLink, NextLink, Observable, Operation } from '@apollo/client'
 
 import { getAccessToken } from '../helper/auth-helper'
 import { useAuthentication } from './use-authentication'
 
-export const useAuthenticationLink = (): ApolloLink => {
-  const { logout, login } = useAuthentication()
+export const isUnauthorizedNetworkError = (error: unknown): boolean => {
+  if (!error || typeof error !== 'object') {
+    return false
+  }
 
-  return new ApolloLink((operation: Operation, forward: NextLink) => {
+  const networkError = error as { statusCode?: unknown; response?: { status?: unknown } }
+
+  if (typeof networkError.statusCode === 'number') {
+    return networkError.statusCode === 401
+  }
+
+  return typeof networkError.response?.status === 'number' && networkError.response.status === 401
+}
+
+export const createAuthenticationLink = ({
+  getAccessToken: readAccessToken,
+  login,
+  logout,
+}: {
+  getAccessToken: () => string | undefined
+  login: () => void
+  logout: () => void
+}): ApolloLink =>
+  new ApolloLink((operation: Operation, forward: NextLink) => {
     const authHeaders: Record<string, string> = {}
-    const token = getAccessToken()
+    const token = readAccessToken()
 
-    // Fallback to allow so the AWS API Gateway token authorizer doesn't block the request
-    authHeaders['Authorization'] = token ? `Bearer ${token}` : 'allow'
+    if (token) {
+      authHeaders.Authorization = `Bearer ${token}`
+    } else {
+      logout()
+    }
 
     operation.setContext(({ headers = {} }) => ({
       headers: {
@@ -20,25 +43,54 @@ export const useAuthenticationLink = (): ApolloLink => {
       },
     }))
 
-    return forward(operation).map((response) => {
-      const context = operation.getContext()
-      const {
-        response: { headers },
-      } = context
+    return new Observable((observer) => {
+      const subscription = forward(operation).subscribe({
+        next: (response) => {
+          const context = operation.getContext()
+          const {
+            response: { headers },
+          } = context
 
-      if (!headers) {
-        return response
-      }
+          if (!headers) {
+            observer.next(response)
+            return
+          }
 
-      const authenticated: boolean = JSON.parse(headers.get(ENVIRONMENT.authHeader))
+          const authenticationHeader = headers.get(ENVIRONMENT.authHeader)
+          if (authenticationHeader === null) {
+            observer.next(response)
+            return
+          }
 
-      if (authenticated) {
-        login()
-      } else {
-        logout()
-      }
+          const authenticated = authenticationHeader === 'true'
 
-      return response
+          if (authenticated) {
+            login()
+          } else {
+            logout()
+          }
+
+          observer.next(response)
+        },
+        error: (error) => {
+          if (isUnauthorizedNetworkError(error) && readAccessToken()) {
+            logout()
+          }
+          observer.error(error)
+        },
+        complete: () => observer.complete(),
+      })
+
+      return () => subscription.unsubscribe()
     })
+  })
+
+export const useAuthenticationLink = (): ApolloLink => {
+  const { logout, login } = useAuthentication()
+
+  return createAuthenticationLink({
+    getAccessToken,
+    login: () => login(),
+    logout,
   })
 }

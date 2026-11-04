@@ -15,46 +15,48 @@ import { deleteTrainer, generateTrainer, validateTrainer } from '../services/tra
 import { parseISODateString } from '../utils/date'
 import { createT, t } from '../i18n'
 
+export const cleanupUsers = async (): Promise<boolean> => {
+  const users = await allUsers()
+
+  await Promise.all(
+    users.map(async (user) => {
+      if (!user.deleteAt) {
+        return
+      }
+
+      const deleteAt = parseISODateString(user.deleteAt)
+
+      if (isToday(subWeeks(deleteAt, 1))) {
+        await sendDeletionMail(user)
+      }
+
+      if (isFuture(deleteAt)) {
+        return
+      }
+
+      if (isTrainee(user)) {
+        await deleteTrainee(user)
+      }
+
+      if (isTrainer(user)) {
+        await deleteTrainer(user)
+      }
+
+      if (isAdmin(user)) {
+        await deleteAdmin(user)
+      }
+    })
+  )
+
+  return true
+}
+
 export const adminResolver: GqlResolvers<AdminContext> = {
   Admin: {},
   Query: {
     admins: allAdmins,
     trainers: allTrainers,
-    async cleanup() {
-      const users = await allUsers()
-
-      await Promise.all(
-        users.map(async (user) => {
-          if (!user.deleteAt) {
-            return
-          }
-
-          const deleteAt = parseISODateString(user.deleteAt)
-
-          if (isToday(subWeeks(deleteAt, 1))) {
-            await sendDeletionMail(user)
-          }
-
-          if (isFuture(deleteAt)) {
-            return
-          }
-
-          if (isTrainee(user)) {
-            await deleteTrainee(user)
-          }
-
-          if (isTrainer(user)) {
-            await deleteTrainer(user)
-          }
-
-          if (isAdmin(user)) {
-            await deleteAdmin(user)
-          }
-        })
-      )
-
-      return true
-    },
+    cleanup: cleanupUsers,
     getUser: async (_parent, { id }, { currentUser }) => {
       const user = await userById<User>(id)
 
