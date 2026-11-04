@@ -569,18 +569,7 @@
     mnemonist "0.38.3"
     tslib "^2.6.2"
 
-"@aws-sdk/lib-dynamodb@3.1064.0":
-  version "3.1064.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/lib-dynamodb/-/lib-dynamodb-3.1064.0.tgz#04dd3a09eb586dafaaccf380f3304e7a46eca032"
-  integrity sha512-I3HhCkykktXt66/uUU9NikmPn5q3krE+Gzqwr6joYCR5sDN336FKUUtcy3isfF+rJcKlixphPXJ6tp2ty1vOyA==
-  dependencies:
-    "@aws-sdk/core" "^3.974.19"
-    "@aws-sdk/util-dynamodb" "^3.996.4"
-    "@smithy/core" "^3.24.6"
-    "@smithy/types" "^4.14.3"
-    tslib "^2.6.2"
-
-"@aws-sdk/lib-dynamodb@^3.1064.0", "@aws-sdk/lib-dynamodb@^3.474.0":
+"@aws-sdk/lib-dynamodb@3.1161.0", "@aws-sdk/lib-dynamodb@^3.1064.0", "@aws-sdk/lib-dynamodb@^3.474.0":
   version "3.1161.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/lib-dynamodb/-/lib-dynamodb-3.1161.0.tgz#bdf5738435ed0c1078ffa903ab4ac2ba8fbb6beb"
   integrity sha512-7BBhAGJHc5bbw8PenvVg2GN0L6JkNGrnZI0JBm7nQ8fCiGgwmA0c+jWrJkQtI+1R65MTpuFLAVU1qq0wsPsXaw==
@@ -703,7 +692,7 @@
   dependencies:
     tslib "^2.6.2"
 
-"@aws-sdk/util-dynamodb@^3.996.4", "@aws-sdk/util-dynamodb@^3.996.9":
+"@aws-sdk/util-dynamodb@^3.996.9":
   version "3.996.9"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.996.9.tgz#493c00ffec4280450492966867197bbd26d50b83"
   integrity sha512-16x2tRvl7OYpZ0W/DdFJieFriD13+RvuRBDbe5sj/tCEfK86HSGd7I2s5j0ivz8p6KWGkS+5wKRO9OliJkjUOQ==
