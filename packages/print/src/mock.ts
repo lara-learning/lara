@@ -2,7 +2,7 @@ import http, { RequestListener } from 'http'
 
 import { PrintData } from '@lara/api'
 
-import { createPage } from './create-pdf'
+import { createPage } from './create-pdf.js'
 
 export const DUMMY_DATA: PrintData = {
   reportsData: [

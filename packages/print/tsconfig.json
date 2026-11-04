@@ -9,8 +9,8 @@
     "target": "ESNEXT",
     "lib": ["ESNEXT", "DOM"],
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "keyofStringsOnly": false
   },
   "references": [{ "path": "../components" }, { "path": "../api" }],

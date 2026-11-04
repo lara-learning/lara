@@ -96,7 +96,7 @@ const DashboardPage: React.FunctionComponent = () => {
             <H1 center>{strings.dashboard.noReport.headline}</H1>
             <Paragraph center>{strings.dashboard.noReport.description}</Paragraph>
           </Box>
-          <Box>
+          <Box mt={4}>
             <Illustrations.EmptyStateHappy darkMode={isDarkMode} />
           </Box>
         </Flex>

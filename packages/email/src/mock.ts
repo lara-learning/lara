@@ -10,6 +10,7 @@ export const DUMMY_DATA: EmailPayload = {
     receiverName: 'FirstName',
     trainer: 'TrainerName',
     buttonLink: 'www.lara.exampleCompany.com',
+    theme: 'light',
   },
   translations: {
     hello: 'Hallo',
@@ -74,35 +75,39 @@ const requestListener: RequestListener = (_req, res) => {
   switch (url) {
     case '/error':
       res.writeHead(200)
-      res.end(generateEmailTemplate('error', translations))
+      res.end(generateEmailTemplate('error', translations, DUMMY_DATA.userData.theme))
       break
     case '/reportExport':
       res.writeHead(200)
-      res.end(compile(generateEmailTemplate('reportExport', translations))(DUMMY_DATA.userData))
+      res.end(
+        compile(generateEmailTemplate('reportExport', translations, DUMMY_DATA.userData.theme))(DUMMY_DATA.userData)
+      )
       break
     case '/acceptReport':
       res.writeHead(200)
-      res.end(generateEmailTemplate('acceptReport', translations))
+      res.end(
+        compile(generateEmailTemplate('acceptReport', translations, DUMMY_DATA.userData.theme))(DUMMY_DATA.userData)
+      )
       break
     case '/needChanges':
       res.writeHead(200)
-      res.end(generateEmailTemplate('needChangesNoComment', translations))
+      res.end(generateEmailTemplate('needChangesNoComment', translations, DUMMY_DATA.userData.theme))
       break
     case '/deleteYourTrainee':
       res.writeHead(200)
-      res.end(generateEmailTemplate('deleteYourTrainee', translations))
+      res.end(generateEmailTemplate('deleteYourTrainee', translations, DUMMY_DATA.userData.theme))
       break
     case '/deleteAccount':
       res.writeHead(200)
-      res.end(generateEmailTemplate('deleteAccount', translations))
+      res.end(generateEmailTemplate('deleteAccount', translations, DUMMY_DATA.userData.theme))
       break
     case '/deleteUser':
       res.writeHead(200)
-      res.end(generateEmailTemplate('deleteUser', translations))
+      res.end(generateEmailTemplate('deleteUser', translations, DUMMY_DATA.userData.theme))
       break
     case '/reportInReview':
       res.writeHead(200)
-      res.end(generateEmailTemplate('reportInReview', translations))
+      res.end(generateEmailTemplate('reportInReview', translations, DUMMY_DATA.userData.theme))
       break
     default:
       res.writeHead(200)

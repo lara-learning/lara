@@ -59,7 +59,7 @@ export const handler: Handler<EmailPayload, Response> = async (payload) => {
   const { emailType, translations, userData } = payload
 
   // generate correct email html with placeholders for personal data
-  const htmlTemplate = generateEmailTemplate(emailType, translations)
+  const htmlTemplate = generateEmailTemplate(emailType, translations, userData.theme)
 
   // prepare html for handlebars templating
   const htmlHandlebarsTemplate = compile(htmlTemplate)

@@ -2,6 +2,7 @@ export type BaseMailUserData = {
   receiverEmail: string
   receiverName: string
   buttonLink: string
+  theme?: 'dark' | 'light'
 }
 
 export type BaseEmailPayload = {
