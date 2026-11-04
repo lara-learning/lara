@@ -12,7 +12,7 @@ const createBase64UrlfromPng = (pngName: string) =>
 const options = {
   keepComments: false,
 }
-const { html: compiledMjmlTemplate } = mjml2html(mjmlTemplate, options)
+const { html: compiledMjmlTemplate } = await mjml2html(mjmlTemplate, options)
 
 const emailHtmlHandlebars = compile(compiledMjmlTemplate)
 
